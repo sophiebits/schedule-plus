@@ -1,0 +1,12 @@
+<%= form_for @schedule do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :semeste %><br />
+    <%= f.text_field :semeste %>
+  </p>
+  <p>
+    <%= f.label :class_id %><br />
+    <%= f.text_field :class_id %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>

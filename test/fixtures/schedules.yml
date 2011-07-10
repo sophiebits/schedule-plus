@@ -1,0 +1,7 @@
+one:
+  semeste: MyString
+  class_id: 1
+
+two:
+  semeste: MyString
+  class_id: 1

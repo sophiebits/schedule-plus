@@ -1,0 +1,19 @@
+<% title "Schedules" %>
+
+<table>
+  <tr>
+    <th>Semeste</th>
+    <th>Class</th>
+  </tr>
+  <% for schedule in @schedules %>
+    <tr>
+      <td><%= schedule.semeste %></td>
+      <td><%= schedule.class_id %></td>
+      <td><%= link_to "Show", schedule %></td>
+      <td><%= link_to "Edit", edit_schedule_path(schedule) %></td>
+      <td><%= link_to "Destroy", schedule, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Schedule", new_schedule_path %></p>
