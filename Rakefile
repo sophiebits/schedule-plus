@@ -7,10 +7,4 @@ require 'rake'
 AcmSchedule::Application.load_tasks
 
 
-module ::acm-schedule
-  class Application
-    include Rake::DSL
-  end
-end
-
 
