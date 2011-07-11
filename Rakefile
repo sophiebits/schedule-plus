@@ -5,3 +5,12 @@ require File.expand_path('../config/application', __FILE__)
 require 'rake'
 
 AcmSchedule::Application.load_tasks
+
+
+module ::acm-schedule
+  class Application
+    include Rake::DSL
+  end
+end
+
+
