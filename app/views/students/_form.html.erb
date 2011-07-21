@@ -1,0 +1,12 @@
+<%= form_for @student do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :scheduleman_url %><br />
+    <%= f.text_field :scheduleman_url %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>

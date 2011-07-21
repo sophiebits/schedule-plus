@@ -8,6 +8,7 @@
     <%= yield(:head) %>
   </head>
   <body>
+    <%= render :partial => 'partials/header' %>
     <div id="container">
       <% flash.each do |name, msg| %>
         <%= content_tag :div, msg, :id => "flash_#{name}" %>

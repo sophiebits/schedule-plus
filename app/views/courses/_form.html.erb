@@ -1,0 +1,56 @@
+<%= form_for @course do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :course_number %><br />
+    <%= f.text_field :course_number %>
+  </p>
+  <p>
+    <%= f.label :section %><br />
+    <%= f.text_field :section %>
+  </p>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :description %><br />
+    <%= f.text_area :description %>
+  </p>
+  <p>
+    <%= f.label :units %><br />
+    <%= f.text_field :units %>
+  </p>
+  <p>
+    <%= f.label :lecture_time %><br />
+    <%= f.time_select :lecture_time %>
+  </p>
+  <p>
+    <%= f.label :lecture_duration %><br />
+    <%= f.text_field :lecture_duration %>
+  </p>
+  <p>
+    <%= f.label :lecture_datys %><br />
+    <%= f.text_field :lecture_datys %>
+  </p>
+  <p>
+    <%= f.label :lecture_room %><br />
+    <%= f.text_field :lecture_room %>
+  </p>
+  <p>
+    <%= f.label :recitatino_time %><br />
+    <%= f.time_select :recitatino_time %>
+  </p>
+  <p>
+    <%= f.label :recitation_duration %><br />
+    <%= f.text_field :recitation_duration %>
+  </p>
+  <p>
+    <%= f.label :recitation_room %><br />
+    <%= f.text_field :recitation_room %>
+  </p>
+  <p>
+    <%= f.label :recitation_days %><br />
+    <%= f.text_field :recitation_days %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>

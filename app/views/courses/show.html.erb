@@ -1,0 +1,60 @@
+<% title "Course" %>
+
+<p>
+  <strong>Course Number:</strong>
+  <%= @course.course_number %>
+</p>
+<p>
+  <strong>Section:</strong>
+  <%= @course.section %>
+</p>
+<p>
+  <strong>Name:</strong>
+  <%= @course.name %>
+</p>
+<p>
+  <strong>Description:</strong>
+  <%= @course.description %>
+</p>
+<p>
+  <strong>Units:</strong>
+  <%= @course.units %>
+</p>
+<p>
+  <strong>Lecture Time:</strong>
+  <%= @course.lecture_time %>
+</p>
+<p>
+  <strong>Lecture Duration:</strong>
+  <%= @course.lecture_duration %>
+</p>
+<p>
+  <strong>Lecture Datys:</strong>
+  <%= @course.lecture_datys %>
+</p>
+<p>
+  <strong>Lecture Room:</strong>
+  <%= @course.lecture_room %>
+</p>
+<p>
+  <strong>Recitatino Time:</strong>
+  <%= @course.recitatino_time %>
+</p>
+<p>
+  <strong>Recitation Duration:</strong>
+  <%= @course.recitation_duration %>
+</p>
+<p>
+  <strong>Recitation Room:</strong>
+  <%= @course.recitation_room %>
+</p>
+<p>
+  <strong>Recitation Days:</strong>
+  <%= @course.recitation_days %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_course_path(@course) %> |
+  <%= link_to "Destroy", @course, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", courses_path %>
+</p>
