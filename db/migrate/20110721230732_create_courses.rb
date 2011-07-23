@@ -8,9 +8,9 @@ class CreateCourses < ActiveRecord::Migration
       t.integer :units
       t.time :lecture_time
       t.integer :lecture_duration
-      t.string :lecture_datys
+      t.string :lecture_days
       t.string :lecture_room
-      t.time :recitatino_time
+      t.time :recitation_time
       t.integer :recitation_duration
       t.string :recitation_room
       t.string :recitation_days

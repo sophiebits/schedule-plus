@@ -6,9 +6,9 @@ one:
   units: 1
   lecture_time: 2011-07-21 16:07:31
   lecture_duration: 1
-  lecture_datys: MyString
+  lecture_days: MyString
   lecture_room: MyString
-  recitatino_time: 2011-07-21 16:07:31
+  recitation_time: 2011-07-21 16:07:31
   recitation_duration: 1
   recitation_room: MyString
   recitation_days: MyString
@@ -21,9 +21,9 @@ two:
   units: 1
   lecture_time: 2011-07-21 16:07:31
   lecture_duration: 1
-  lecture_datys: MyString
+  lecture_days: MyString
   lecture_room: MyString
-  recitatino_time: 2011-07-21 16:07:31
+  recitation_time: 2011-07-21 16:07:31
   recitation_duration: 1
   recitation_room: MyString
   recitation_days: MyString
