@@ -5,7 +5,14 @@ require 'rake/dsl_definition'
 require File.expand_path('../config/application', __FILE__)
 require 'rake'
 
+module ::AcmSchedule
+  class Application
+    include Rake::DSL
+  end
+end
+
+module ::RakeFileUtils
+  extend Rake::FileUtilsExt
+end
+
 AcmSchedule::Application.load_tasks
-
-
-

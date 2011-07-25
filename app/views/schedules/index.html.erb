@@ -17,3 +17,14 @@
 </table>
 
 <p><%= link_to "New Schedule", new_schedule_path %></p>
+
+<p>
+<% if current_user %>
+  Welcome <%= current_user.name %>!
+	<%= current_user.inspect %>
+	<%= session.inspect %>
+	<%= fb_user.friends %>
+<% else %>
+  <%= link_to "Sign in with Facebook", "/auth/facebook" %>
+<% end %>
+</p>
