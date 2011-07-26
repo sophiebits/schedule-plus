@@ -131,6 +131,7 @@
 }
 
 #main-page .container {
+  z-index:10;
   height:100%;
 }
 
