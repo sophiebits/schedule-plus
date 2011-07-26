@@ -13,7 +13,7 @@ class SchedulesController < ApplicationController
 
   def create
     @schedule = Schedule.new(params[:schedule])
-    if @schedule.save
+    if @schedule.save 
       redirect_to @schedule, :notice => "Successfully created schedule."
     else
       render :action => 'new'

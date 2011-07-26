@@ -36,3 +36,5 @@ gem 'mocha', :group => :test
 gem 'nokogiri', '1.5.0'
 gem 'omniauth', :git => 'https://github.com/intridea/omniauth.git'
 gem 'fb_graph'
+
+gem 'jquery-rails'

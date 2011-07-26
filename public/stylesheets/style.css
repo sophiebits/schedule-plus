@@ -1,0 +1,438 @@
+.container {
+    position:relative;
+      margin:0 auto;
+        width:960px;
+}
+ 
+ form input {
+     padding:0.2em 0.5em;
+       font-family:'Nunito';
+         font-weight:300;
+           background-color:#fff;
+             border:1px solid #ddd;
+               border-radius:5px;
+ }
+
+ form input:focus {
+     border:1px solid #1fbbbd;
+ }
+
+ .tooltip {
+     font-size:0.8em;
+       padding:0.7em;
+         border-radius:5px;
+ }
+
+ .tooltip:after {
+     display:block; 
+      content:"";
+        position:absolute;
+          border-style:solid;
+            width:0;
+ }
+
+#start-page .tooltip {
+  position:absolute;
+    left:4em; top:-1em;
+      color:#fff;
+        background-color:#1fbbbd;
+}
+
+#start-page .tooltip:after {
+  top:-20px; /* value = - border-top-width - border-bottom-width */
+    right:100px;
+      border-width:0 20px 20px 0;
+        border-color:#1fbbbd transparent; 
+}
+
+
+#page-header {
+  z-index:5;
+    display:block;
+      position:absolute;
+        padding:1em 0;
+          width:100%
+} 
+
+#page-header #schedule-plus-logo {
+  float:left;
+    margin:0 1em;
+}
+
+#page-header #acm-cmu-logo {
+  position:absolute;
+    top:1em; right:2em;
+}
+ 
+#page-content {
+   position:relative;
+     width:100%;
+       min-width:960px;
+         min-height:720px;
+           overflow:hidden;
+}
+
+#pages {
+  border-top:300px solid #d6eeee;
+    position:absolute;
+      width:200%;
+        /*overflow:hidden;*/
+}
+
+.page {
+    position:relative;
+      float:left;
+        min-width:960px;
+          min-height:720px;
+}
+
+#start-page h1 {
+  position:absolute;
+    top:-1.3em;
+      margin-right:0.4em;
+        padding-left:0.2em;
+          color:#1fbbbd;
+            font-size:5em;
+              letter-spacing:-0.05em;
+}
+
+#start-page p {
+  position:relative;
+    top:1em;
+      padding:2em;
+        color:#666;
+          font-size:1.2em;
+            line-height:1.3em;
+}
+
+#add-schedule {
+  position:absolute;
+    top:-2em;
+      left:50%;
+        width:50%;
+          top:-4.5em
+}
+
+#add-schedule input[type=text] {
+  float:left;
+    margin-right:0.5em;
+      font-size:1.0em;
+        width:90%
+}
+
+#add-schedule input[type=submit] {
+  width:20px;
+    height:0;
+      margin-top:0.3em;
+        padding:20px 0 0;
+          background:transparent url('/images/form-add.png') no-repeat center;
+            border:0;
+              cursor:pointer
+}
+
+#main-page .container {
+  height:100%;
+}
+
+#main-page #bg-mask {
+  position:absolute;
+    top:-300px;
+      left:50%;
+        height:300px;
+          background-color:#1fbbbd
+}
+
+.sidebar {
+    position:relative;
+      top:-300px;
+        float:left;
+          width:132px;
+}
+
+#main-nav {
+  display:block;
+    position:relative;
+      padding-top:60px;
+        height:240px;
+}
+
+#main-nav .tooltip {
+  display:block;
+    position:relative;
+      top:20px; right:-10px;
+        width:100%;
+          text-align:center;
+            background-color:#fbb03b;
+}
+
+#main-nav .tooltip:after {
+  top:-10px;
+    border-width:0 0 10px 10px;
+      border-color:#fbb03b transparent;
+        right:10px
+}
+
+#main-nav li {
+  padding:10px 40px 10px 0;
+    font-size:0.8em;
+      text-align:right;
+        color:#333
+}
+
+#main-nav .nav-link {
+  text-decoration:none;
+    color:#666;
+      position:relative;
+}
+#main-nav .nav-link:hover,
+#main-nav .selected.nav-link { 
+  color:#1fbbbd; 
+}
+
+#main-nav .nav-link:after {
+  display:block;
+    content:"";
+      width:15px;height:15px;
+        background-image:url('/images/main-nav.png');
+          position:absolute;
+            top:2px;
+              right:-23px;
+}
+#main-nav-schedules .selected.nav-link:after,
+#main-nav-schedules .nav-link:hover:after { background-position:-15px 0; }
+#main-nav-friends .nav-link:after { background-position:0 -15px; }
+#main-nav-friends .selected.nav-link:after,
+#main-nav-friends .nav-link:hover:after { background-position:-15px -15px; }
+#main-nav-logout .nav-link:after { background-position:0 -30px; }
+#main-nav-logout .selected.nav-link:after,
+#main-nav-logout .nav-link:hover:after { background-position:-15px -30px }
+
+#main-nav-logout {
+  position:absolute;
+    bottom:10px;
+      width:90px
+}
+
+#main-content {
+  position:relative;
+    top:-300px;
+      float:left;
+        width:812px;
+          height:100%;
+            background-color:#fff;
+              border:8px solid #1fbbbd;
+                border-width:0 8px;
+}
+
+.content-list {
+    float:left;
+      padding:10px;
+        width:180px;
+          height:100%;
+            background-color:#eee;
+}
+
+.content-list li {
+    position:relative;
+      font-size:0.65em;
+        margin-bottom:1px;
+          padding:6px;
+            color:#333;
+}
+
+.content-list .nav-schedules {
+    padding-left:25px;
+      margin-bottom:10px;
+}
+
+.content-list .nav-schedules:after {
+    content:"";
+      display:block;
+        width:15px; height:15px;
+          background-image:url('/images/main-nav.png');
+            background-position:0 -30px;
+              position:absolute;
+                top:3px;
+                  left:0;
+}
+  
+  .content-list .course {
+      position:relative;
+        color:#333;
+          background-color:#ddd;
+            border-radius:5px 0;
+              cursor:pointer;
+  }
+  .content-list .selected.course,
+  .content-list .course:hover {
+      background-color:#f9f9f9;
+  }
+  .content-list .selected.course { border:1px solid #1fbbbd; }
+
+  .content-list .course .number {
+      font-weight:700;
+  }
+
+  .content-list .course .friends {
+      position:absolute;
+        right:5px;
+  }
+
+  .content-list .course .name {
+      color:#333;
+        display:block;
+          margin-top:0.2em;
+            line-height:1.3em
+  }
+  .content-list .selected.course .name,
+  .content-list .course:hover .name {
+      color:#333;
+  }
+
+  .content-list .tooltip {
+      padding: 0.7em; 
+        color:#f3f3f3;
+          font-size:0.8em;
+            background-color:#1fbbbd; 
+              margin: 20px 0 10px;
+  }
+  .content-list .tooltip:after {
+      border-color:#1fbbbd transparent;
+        border-width:0 0 15px 15px;
+          left:30px; top:-15px;
+  }
+
+#course-detail {
+  float:left;
+  padding-top:20px;
+  width:635px;
+  height:100%;
+  background:#fff;
+}
+
+#course-detail .number {
+  display:block;
+  color:#1fbbbd;
+  font-size:1em;
+  margin-bottom:10px;
+  padding:0 20px
+}
+
+#course-detail .name {
+  color:#fff;
+  font-size:1.4em;
+  padding:0 20px
+}
+
+
+#calendar {
+  float:left;
+  position:relative;
+  left:40px;
+  top:1em;
+  width:526px;
+  height:601px;
+  margin:1em;
+  background-color:#eee;
+  list-style-type:none;
+}
+
+#calendar #times {
+  position:absolute;
+  left:-5%;
+  width:105%;
+  height:100%;
+}
+
+#calendar #times li {
+  display:block;
+  position:absolute;
+  width:100%;
+  height:6.25%;
+  text-align:left;
+  font-size:0.6em;
+  border-top:1px solid #bbb;
+  overflow:hidden;
+}
+#calendar #times li:last-child {
+  border-bottom:1px solid #bbb;
+}
+
+#calendar #times .alt {
+  background-color:#fff;
+}
+
+#calendar #times .half-hour {
+  display:block;
+  position:absolute;
+  top:50%; right:-5%;
+  width:100%;
+  border-top:1px dashed #ccc;
+}
+.s700 { }
+.s730 { top:3.125% }
+.s800 { top:6.25% }
+.s830 { top:9.375% }
+.s900 { top:12.5% }
+.s930 { top:15.625% }
+.s1000 { top:18.75% }
+.s1030 { top:21.875% }
+.s1100 { top:25% }
+.s1130 { top:28.125% }
+.s1200 { top:31.25% }
+.s1230 { top:34.375% }
+.s1300 { top:37.5% }
+.s1330 { top:40.625% }
+.s1400 { top:43.75% }
+.s1430 { top:46.875% }
+.s1500 { top:50% }
+.s1530 { top:53.125% }
+.s1600 { top:56.25% }
+.s1630 { top:59.375% }
+.s1700 { top:62.5% }
+.s1730 { top:65.625% }
+.s1800 { top:68.75% }
+.s1830 { top:71.875% }
+.s1900 { top:75% }
+.s1930 { top:78.125% }
+.s2000 { top:81.25% }
+.s2030 { top:84.375% }
+.s2100 { top:87.5% }
+.s2130 { top:90.625% }
+.s2200 { top:93.75% }
+.s2230 { top:96.875% }
+.s2300 { top:100% }
+
+.begin420 { }
+.begin450 { top:3.125% }
+.begin480 { top:6.25% }
+.begin510 { top:9.375% }
+.begin540 { top:12.5% }
+.begin570 { top:15.625% }
+.begin600 { top:18.75% }
+.begin630 { top:21.875% }
+.begin660 { top:25% }
+.begin690 { top:28.125% }
+.begin720 { top:31.25% }
+.begin750 { top:34.375% }
+.begin780 { top:37.5% }
+.begin810 { top:40.625% }
+.begin840 { top:43.75% }
+.begin870 { top:46.875% }
+.begin900 { top:50% }
+.begin930 { top:53.125% }
+.begin960 { top:56.25% }
+.begin990 { top:59.375% }
+.begin1020 { top:62.5% }
+.begin1050 { top:65.625% }
+.begin1080 { top:68.75% }
+.begin1110 { top:71.875% }
+.begin1140 { top:75% }
+.begin1170 { top:78.125% }
+.begin1200 { top:81.25% }
+.begin1230 { top:84.375% }
+.begin1260 { top:87.5% }
+.begin1290 { top:90.625% }
+.begin1320 { top:93.75% }
+.begin1350 { top:96.875% }
+.begin1380 { top:100% }
