@@ -38,9 +38,9 @@
 user1 = User.create(:uid => "1234", :name => "Bob")
 user2 = User.create(:uid => "5678", :name => "Sally")
 
-course1 = Course.create(:course_number => "15213", :section => "A", :name => "Intro to Computer Systems")
-course2 = Course.create(:course_number => "15212", :section => "C", :name => "Principle of Prog")
-course3 = Course.create(:course_number => "15212", :section => "D", :name => "Principle of Prog")
+course1 = ScheduledCourse.create(:course_number => "15213", :section => "A")
+course2 = ScheduledCourse.create(:course_number => "15212", :section => "C")
+course3 = ScheduledCourse.create(:course_number => "15212", :section => "D")
 
-user1.courses = [course1, course2]
-user2.courses = [course2, course3]
+user1.scheduled_courses = [course1, course2]
+user2.scheduled_courses = [course2, course3]

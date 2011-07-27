@@ -10,29 +10,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110727060550) do
+ActiveRecord::Schema.define(:version => 20110727084958) do
 
-  create_table "courses", :force => true do |t|
-    t.string   "course_number"
-    t.string   "section"
-    t.string   "name"
-    t.text     "description"
-    t.integer  "units"
-    t.time     "lecture_time"
-    t.integer  "lecture_duration"
-    t.string   "lecture_days"
-    t.string   "lecture_room"
-    t.time     "recitation_time"
-    t.integer  "recitation_duration"
-    t.string   "recitation_room"
-    t.string   "recitation_days"
+  create_table "scheduled_course_to_users", :force => true do |t|
+    t.integer  "scheduled_course_id"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "user_to_courses", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "course_id"
+  create_table "scheduled_courses", :force => true do |t|
+    t.string   "course_number"
+    t.string   "section"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
