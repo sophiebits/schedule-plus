@@ -41,7 +41,7 @@
 					<div class="sidebar">
 						<ul id="main-nav">
 							<li id="main-nav-schedules"><%= link_to "schedules", schedules_path, :class => "selected nav-link" %></li>
-							<li id="main-nav-friends"><%= link_to "friends", friends_path, :class => "nav-link" %></li>
+							<li id="main-nav-friends"><%= link_to "friends", friends_path, :class => "nav-link" %>
 								<span class="tooltip">
 									<fb:login-button>Connect</fb>
 								</span></li>
@@ -49,11 +49,7 @@
 							</ul>
 						</div>
 						<div id="main-content">
-							<ul class="content-list">
-
-							</ul>
-
-							<%= content_tag :h1, yield(:title) if show_title? %>
+							<!--<%= content_tag :h1, yield(:title) if show_title? %>-->
 							<%= yield %>
 						</div>
 					</div>
