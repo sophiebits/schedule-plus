@@ -225,28 +225,21 @@
                 border-width:0 8px;
 }
 
-.content-list {
+.main-aside {
     float:left;
       padding:10px;
         width:180px;
           height:100%;
+      font-size:0.65em;
             background-color:#eee;
 }
 
-.content-list li {
-    position:relative;
-      font-size:0.65em;
-        margin-bottom:1px;
-          padding:6px;
-            color:#333;
-}
-
-.content-list .nav-schedules {
+.main-aside .nav-schedules {
     padding-left:25px;
       margin-bottom:10px;
 }
 
-.content-list .nav-schedules:after {
+.main-aside .nav-schedules:after {
     content:"";
       display:block;
         width:15px; height:15px;
@@ -257,48 +250,57 @@
                   left:0;
 }
   
-  .content-list .course {
+.schedule li {
+    position:relative;
+        margin-bottom:1px;
+          padding:6px;
+}
+
+  .schedule .course {
       position:relative;
         color:#333;
           background-color:#ddd;
             border-radius:5px 0;
               cursor:pointer;
   }
-  .content-list .selected.course,
-  .content-list .course:hover {
+  .schedule .selected.course,
+  .schedule .course:hover {
       background-color:#f9f9f9;
   }
-  .content-list .selected.course { border:1px solid #1fbbbd; }
+  .schedule .selected.course { border:1px solid #1fbbbd; }
 
-  .content-list .course .number {
+  .schedule .course .number {
       font-weight:700;
   }
 
-  .content-list .course .friends {
+  .schedule .course .friends {
       position:absolute;
         right:5px;
   }
 
-  .content-list .course .name {
-      color:#333;
+  .schedule .course .name {
+      color:#000;
         display:block;
           margin-top:0.2em;
             line-height:1.3em
   }
-  .content-list .selected.course .name,
-  .content-list .course:hover .name {
+  .schedule .selected.course .name,
+  .schedule .course:hover .name {
       color:#333;
   }
 
-  .content-list .tooltip {
+  .main-aside .tooltip {
+      position:relative;
       padding: 0.7em; 
-        color:#f3f3f3;
-          font-size:0.8em;
-            background-color:#1fbbbd; 
+        color:#333;
+          font-size:1.3em;
+            background-color:#7eddde; 
               margin: 20px 0 10px;
+      display:block;
+      text-align:left;
   }
-  .content-list .tooltip:after {
-      border-color:#1fbbbd transparent;
+  .main-aside .tooltip:after {
+      border-color:#7eddde transparent;
         border-width:0 0 15px 15px;
           left:30px; top:-15px;
   }
@@ -329,19 +331,18 @@
 #calendar {
   float:left;
   position:relative;
-  left:40px;
   top:1em;
   width:526px;
   height:601px;
-  margin:1em;
-  background-color:#eee;
+  margin:1em 0 0 60px;
+  background-color:#f6f6f6;
   list-style-type:none;
 }
 
 #calendar #times {
   position:absolute;
-  left:-5%;
-  width:105%;
+  left:-30px;
+  width:556px;
   height:100%;
 }
 
@@ -366,43 +367,16 @@
 #calendar #times .half-hour {
   display:block;
   position:absolute;
-  top:50%; right:-5%;
-  width:100%;
+  bottom:-50%; left:30px;
+  width:100%; height:100%;
   border-top:1px dashed #ccc;
 }
-.s700 { }
-.s730 { top:3.125% }
-.s800 { top:6.25% }
-.s830 { top:9.375% }
-.s900 { top:12.5% }
-.s930 { top:15.625% }
-.s1000 { top:18.75% }
-.s1030 { top:21.875% }
-.s1100 { top:25% }
-.s1130 { top:28.125% }
-.s1200 { top:31.25% }
-.s1230 { top:34.375% }
-.s1300 { top:37.5% }
-.s1330 { top:40.625% }
-.s1400 { top:43.75% }
-.s1430 { top:46.875% }
-.s1500 { top:50% }
-.s1530 { top:53.125% }
-.s1600 { top:56.25% }
-.s1630 { top:59.375% }
-.s1700 { top:62.5% }
-.s1730 { top:65.625% }
-.s1800 { top:68.75% }
-.s1830 { top:71.875% }
-.s1900 { top:75% }
-.s1930 { top:78.125% }
-.s2000 { top:81.25% }
-.s2030 { top:84.375% }
-.s2100 { top:87.5% }
-.s2130 { top:90.625% }
-.s2200 { top:93.75% }
-.s2230 { top:96.875% }
-.s2300 { top:100% }
+
+.monday { }
+.tuesday { left:105px }
+.wednesday { left:210px }
+.thursday { left:315px }
+.friday { left:420px }
 
 .begin420 { }
 .begin450 { top:3.125% }
@@ -437,3 +411,56 @@
 .begin1320 { top:93.75% }
 .begin1350 { top:96.875% }
 .begin1380 { top:100% }
+
+.duration60 { height:6.25% }
+.duration90 { height:9.375% }
+.duration120 { height:12.5% }
+.duration150 { height:15.625% }
+.duration180 { height:18.75% }
+
+.monday,.tuesday,.wednesday,.thursday,.friday {
+    position:absolute;
+      width:104px;
+        height:100%;
+          border-left:1px solid #999;
+}
+.friday {
+  border-right:1px solid #999;
+}
+
+#calendar .lecture,
+#calendar .section {
+  position:absolute;
+    /*left:-1px;*/
+      width:100px;
+        color:#333;
+          text-align:center;
+            border-top:1px solid #333;
+  border-right:5px solid #333;
+              /*background-color:#7eddde;*/
+                border-radius:5px 0;
+}
+
+#calendar .number,
+#calendar .location {
+  display:block;
+    font-size:0.65em;
+      padding:5px 8px 0;
+        text-align:right;
+}
+
+#calendar .number {
+  font-weight:700;
+}
+
+#calendar .location {
+  padding-top:0;
+}
+
+.schedule .blue.course, .blue { background-color:rgb(69,117,212) }
+.schedule .steel.course, .steel { background-color:rgb(56,178,206) }
+.schedule .shamrock.course, .shamrock { background-color:rgb(54,215,146) }
+.schedule .lime.course, .lime { background-color:rgb(155,243,61) }
+.schedule .yellow.course, .yellow { background-color:rgb(255,217,64) }
+.schedule .orange.course, .orange { background-color:rgb(255,133,64) }
+.schedule .red.course, .red { background-color:rgb(250,62,84) }
