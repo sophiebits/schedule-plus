@@ -58,39 +58,103 @@ $(document).ready(function() {
     {
       'number':'15-396',
       'name':'Special Topic: Science of the Web',
-      'section':'A',
-      'hasRecitation':false
+      'hasRecitation':false,
+      'selected':0,
+      'lectures': [
+        { 
+          'section':'A',
+          'times':[
+            { 'day':'tuesday', 'begin':'900',
+              'duration':'90', 'location':'HBH 1000' },
+            { 'day':'thursday', 'begin':'900',
+              'duration':'90', 'location':'HBH 1000' }
+          ]
+        }
+      ]
     },
     {
       'number':'15-221',
       'name':'Technical Communication for Computer Scientists',
-      'section':'C',
-      'hasRecitation':true
+      'hasRecitation':true,
+      'selected':2,
+      'lectures': [
+        {
+          'section':'1',
+          'times':[
+            { 'day':'tuesday', 'begin':'540',
+              'duration':'90', 'location':'BH A51' },
+            { 'day':'thursday', 'begin':'540',
+              'duration':'90', 'location':'BH A51' }
+          ]
+        }
+      ],
+      'recitations': [
+        {},{},
+        {
+          'section':'C', 'reqLecture':0,
+          'times':[
+            { 'day':'friday', 'begin':'690',
+              'duration':'60', 'location':'GHC 4211' }
+          ]
+        }
+      ]
     },
     {
       'number':'21-301',
       'name':'Combinatorics',
-      'section':'A',
-      'hasRecitation':false
+      'hasRecitation':false,
+      'selected':0,
+      'lectures': [
+        {
+          'section':'A',
+          'times': [
+            { 'day':'monday', 'begin':'750',
+              'duration':'60', 'location':'BH A51' },
+            { 'day':'wednesday', 'begin':'750',
+              'duration':'60', 'location':'BH A51' },
+            { 'day':'friday', 'begin':'750',
+              'duration':'60', 'location':'BH A51' }
+          ]
+        },{}
+      ]
     },
     {
       'number':'98-163',
       'name':'StuCo: The Art of Tetris',
-      'section':'A',
-      'hasRecitation':false
+      'hasRecitation':false,
+      'selected':0,
+      'lectures': [
+        {
+          'section':'A',
+          'times': [
+            { 'day':'tuesday', 'begin':'1110',
+              'duration':'60', 'location':'WEH 5415' }
+          ]
+        }
+      ]
     },
     {
       'number':'15-295',
       'name':'Special Topic: Competition Programming and Problem Solving',
-      'section':'A',
-      'hasRecitation':false
+      'hasRecitation':false,
+      'selected':0,
+      'lectures': [
+        {
+          'section':'A',
+          'times': [
+            { 'day':'wednesday', 'begin':'1110',
+              'duration':'180', 'location':'WEH 5421' }
+          ]
+        }
+      ] 
     }
   ];
 
-  var colors = ["blue","steel","shamrock","yellow","orange","red"];
+  var colors = ["blue","steel","shamrock","yellow",
+                "orange","red","magenta","purple"];
   var randomColors = 
     //[0,1,2,3,4,5,6];
-    [5,3,1,4,2,0];
+    [5,3,1,2,7,4,6,0];
 
   var startTime = 7;
   var endTime = 22;
@@ -108,17 +172,26 @@ $(document).ready(function() {
   
   function assignColor(number, colorName) {
     
-    $('.course'+number).addClass(colorName);
+    $('.course'+number+', .course'+number+' .color').addClass(colorName);
   }
 
   function addToCalendar(schedule, number, section, data, lec_rec) {
-    
+   
     $('#'+schedule+' .' + data.day + ' .courses').append(
       '<li class="course' + number + ' ' + lec_rec + ' begin' + data.begin
-      + ' duration' + data.duration + '"><span class="number">' + number
+      + ' duration' + data.duration + '" title="' + number + '"><span class="number">' + number
       + ' ' + (lec_rec=='lecture' ? 'Lec ' : '') + section
       + '</span><span class="location">' + data.location + '</span></li>');
-      
+    
+    var conflicts = $('#'+schedule+' .' + data.day + ' .courses .begin' + data.begin);
+    conflicts.stop(true,true).hide();
+    if (conflicts.length > 1) {
+      conflicts.css('width', (105/conflicts.length)-4+'px');
+      for (var i = 1; i < conflicts.length; ++i)
+        conflicts.eq(i).css({ left:i*105/conflicts.length+'px' });
+    }
+    conflicts.fadeIn();
+  
   }
 
   function addCourse(schedule) {
@@ -140,12 +213,16 @@ $(document).ready(function() {
     for (var i = 0; i < courses.length; ++i) {
       
       /* add to schedule list */
-      $('.schedule').append('<li class="course'+courses[i].number
-        +' course"><span class="number">'+courses[i].number+' '
-        +courses[i].section+'</span><span class="name">'
-        +courses[i].name+'</span></li>');
+      $('.schedule').append('<li class="course' + courses[i].number
+        + ' course" title="' + courses[i].number + '"><span class="number">'
+        + courses[i].number + ' '
+        + (courses[i].hasRecitation ? 
+            courses[i].recitations[courses[i].selected].section
+          : courses[i].lectures[courses[i].selected].section)
+        + '</span><span class="name">'
+        + courses[i].name + '</span></li>');
 
-      if (courses[i].selected) {
+      if (courses[i].selected != null) {
         if (courses[i].hasRecitation) {
           var rec = courses[i].recitations[courses[i].selected];
           for (var j = 0; j < rec.times.length; ++j)
@@ -155,13 +232,19 @@ $(document).ready(function() {
 
         var lec = courses[i].lectures[courses[i].hasRecitation ? 
           rec.reqLecture : courses[i].selected];
-        
+       
         for (var j = 0; j < lec.times.length; ++j)
           addToCalendar(scheduleId, courses[i].number, 
-            lec.section, lec.times[j], 'lecture');
+            lec.section, lec.times[j], courses[i].hasRecitation ? 'lecture' : 'section');
       }
 
       assignColor(courses[i].number,colors[randomColors[i%colors.length]]);
+
+      $('.course' + courses[i].number).hover(function() {
+        $('.course' + $(this).attr('title')).addClass('highlight');
+      },function() {
+        $('.course' + $(this).attr('title')).removeClass('highlight');
+      });
     }
 
   }
@@ -169,12 +252,6 @@ $(document).ready(function() {
 
   initCalendar();
   addSchedule(myCourses);
-/*
-  $('.course15-210').hover(function() {
-    $('#calendar .course15-210').css({ borderColor:'#333' });
-  },
-  function() {
-    $('#calendar .course15-210').css({ borderColor:'#ddd' }); 
-  });
-*/
+
+
 });

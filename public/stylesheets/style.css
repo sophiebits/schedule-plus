@@ -73,7 +73,7 @@
 }
 
 #pages {
-  border-top:300px solid #d6eeee;
+  border-top:300px solid #eee;
     position:absolute;
       width:200%;
         /*overflow:hidden;*/
@@ -140,7 +140,7 @@
     top:-300px;
       left:50%;
         height:300px;
-          background-color:#1fbbbd
+          background-color:#666
 }
 
 .sidebar {
@@ -221,7 +221,7 @@
         width:812px;
           height:100%;
             background-color:#fff;
-              border:8px solid #1fbbbd;
+              border:8px solid #666;
                 border-width:0 8px;
 }
 
@@ -262,10 +262,13 @@
           background-color:#ddd;
             border-radius:5px 0;
               cursor:pointer;
+              border-right:5px solid #000;
+      border-top:1px solid #ccc;
   }
   .schedule .selected.course,
-  .schedule .course:hover {
-      background-color:#f9f9f9;
+  .schedule .course.highlight {
+      background-color:#f6f6f6;
+      color:#333
   }
   .schedule .selected.course { border:1px solid #1fbbbd; }
 
@@ -285,7 +288,7 @@
             line-height:1.3em
   }
   .schedule .selected.course .name,
-  .schedule .course:hover .name {
+  .schedule .course.highlight .name {
       color:#333;
   }
 
@@ -335,7 +338,7 @@
   width:526px;
   height:601px;
   margin:1em 0 0 60px;
-  background-color:#f6f6f6;
+  background-color:#eee;
   list-style-type:none;
 }
 
@@ -433,19 +436,20 @@
   position:absolute;
     /*left:-1px;*/
       width:100px;
-        color:#333;
           text-align:center;
             border-top:1px solid #333;
-  border-right:5px solid #333;
-              /*background-color:#7eddde;*/
+  border-right-width:5px;
+  border-style:solid;
+  border-right-color:#333;
                 border-radius:5px 0;
+  cursor:pointer;        
 }
 
 #calendar .number,
 #calendar .location {
   display:block;
     font-size:0.65em;
-      padding:5px 8px 0;
+      padding:5px 6px 0;
         text-align:right;
 }
 
@@ -457,10 +461,42 @@
   padding-top:0;
 }
 
-.schedule .blue.course, .blue { background-color:rgb(69,117,212) }
-.schedule .steel.course, .steel { background-color:rgb(56,178,206) }
-.schedule .shamrock.course, .shamrock { background-color:rgb(54,215,146) }
-.schedule .lime.course, .lime { background-color:rgb(155,243,61) }
-.schedule .yellow.course, .yellow { background-color:rgb(255,217,64) }
-.schedule .orange.course, .orange { background-color:rgb(255,133,64) }
-.schedule .red.course, .red { background-color:rgb(250,62,84) }
+.schedule .color {
+  position:absolute;
+  width:10px; height:10px;
+  right:5px; top:5px;
+  border-radius:3px;
+}
+
+.blue { background-color:rgb(69,117,212) }
+.steel { background-color:rgb(56,178,206) }
+.shamrock { background-color:rgb(54,215,146) }
+.yellow { background-color:rgb(255,217,64) }
+.orange { background-color:rgb(255,173,64) }
+.red { background-color:rgb(250,62,84) }
+.magenta { background-color:rgb(231,58,149) }
+.purple { background-color:rgb(179,59,212) }
+
+#calendar .section.highlight, 
+#calendar .lecture.highlight {
+  background-color:#333;
+  color:#ddd;
+}
+
+#calendar .blue.highlight { border-right-color:rgb(69,117,212) }
+#calendar .steel.highlight { border-right-color:rgb(56,178,206) }
+#calendar .shamrock.highlight { border-right-color:rgb(54,215,146) }
+#calendar .yellow.highlight { border-right-color:rgb(255,217,64) }
+#calendar .orange.highlight { border-right-color:rgb(255,173,64) }
+#calendar .red.highlight { border-right-color:rgb(250,62,84) }
+#calendar .magenta.highlight { border-right-color:rgb(231,58,149) }
+#calendar .purple.highlight { border-right-color:rgb(179,59,212) }
+
+.schedule .blue { border-right-color:rgb(69,117,212) }
+.schedule .steel { border-right-color:rgb(56,178,206) }
+.schedule .shamrock { border-right-color:rgb(54,215,146) }
+.schedule .yellow { border-right-color:rgb(255,217,64) }
+.schedule .orange { border-right-color:rgb(255,173,64) }
+.schedule .red { border-right-color:rgb(250,62,84) }
+.schedule .magenta { border-right-color:rgb(231,58,149) }
+.schedule .purple { border-right-color:rgb(179,59,212) }
