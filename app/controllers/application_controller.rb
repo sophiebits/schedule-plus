@@ -14,4 +14,7 @@ class ApplicationController < ActionController::Base
   def fb_user
     @fb_user ||= FbGraph::User.me(session[:token]).fetch if session[:token]
   end
+
+  
+
 end
