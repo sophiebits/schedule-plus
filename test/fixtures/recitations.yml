@@ -1,7 +1,9 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  course_id: 1
+  lecture_id: 1
+  section: MyString
 
 two:
-  course_id: 1
+  lecture_id: 1
+  section: MyString

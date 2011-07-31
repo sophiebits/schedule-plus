@@ -10,18 +10,61 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110727084958) do
+ActiveRecord::Schema.define(:version => 20110731002337) do
 
-  create_table "scheduled_course_to_users", :force => true do |t|
-    t.integer  "scheduled_course_id"
-    t.integer  "user_id"
+  create_table "courses", :force => true do |t|
+    t.string   "number"
+    t.string   "name"
+    t.boolean  "has_recitation"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "lecture_section_times", :force => true do |t|
+    t.integer  "lecture_id"
+    t.string   "day"
+    t.string   "begin"
+    t.string   "end"
+    t.string   "location"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "lectures", :force => true do |t|
+    t.integer  "course_id"
+    t.string   "section"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "recitation_section_times", :force => true do |t|
+    t.integer  "recitation_id"
+    t.string   "day"
+    t.string   "begin"
+    t.string   "end"
+    t.string   "location"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "recitations", :force => true do |t|
+    t.integer  "lecture_id"
+    t.string   "section"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "scheduled_courses", :force => true do |t|
-    t.string   "course_number"
-    t.string   "section"
+    t.integer  "course_id"
+    t.string   "lecture_section"
+    t.string   "recitation_section"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "schedules", :force => true do |t|
+    t.integer  "scheduled_course_id"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

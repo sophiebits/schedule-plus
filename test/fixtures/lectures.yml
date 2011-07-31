@@ -2,6 +2,8 @@
 
 one:
   course_id: 1
+  section: MyString
 
 two:
   course_id: 1
+  section: MyString

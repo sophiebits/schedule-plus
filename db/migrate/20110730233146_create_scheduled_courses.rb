@@ -1,8 +1,9 @@
 class CreateScheduledCourses < ActiveRecord::Migration
   def self.up
     create_table :scheduled_courses do |t|
-      t.string :course_number
-      t.string :section
+      t.integer :course_id
+      t.string :lecture_section
+      t.string :recitation_section
 
       t.timestamps
     end
