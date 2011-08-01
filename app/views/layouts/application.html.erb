@@ -10,6 +10,16 @@
 	<%= yield(:head) %>
 </head>
 <body>
+	<div id="fb-root"></div>
+	<script src="http://connect.facebook.net/en_US/all.js"></script>
+  <script>
+    FB.init({
+      appId: '125852147502350',
+      cookie: true,
+      xfbml: true,
+			oauth: true
+    });
+  </script>
 	<%= render :partial => 'partials/header' %>
 	<!--
 	<% flash.each do |name, msg| %>
@@ -41,8 +51,10 @@
 							<li id="main-nav-schedules"><%= link_to "schedules", schedules_path, :class => "selected nav-link" %></li>
 							<li id="main-nav-friends"><%= link_to "friends", friends_path, :class => "nav-link" %>
 								<span class="tooltip">
-									<fb:login-button>Connect</fb>
-								</span></li>
+									
+									<fb:login-button onclick="location.href = '/auth/facebook'">Connect</fb:login-button>
+									
+										</span></li>
 								<li id="main-nav-logout"><a href="#" class="nav-link">logout</a></li>
 							</ul>
 						</div>

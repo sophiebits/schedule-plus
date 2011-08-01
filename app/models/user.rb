@@ -10,10 +10,6 @@ class User < ActiveRecord::Base
     end
   end
   
-  def self.find_by_uid(uid)
-    find(uid) rescue nil
-  end
-  
   def get_scheduleman_data
     data = open('https://scheduleman.org/schedules/sqGWsIDrvN.ics') {|f| f.read}
   end

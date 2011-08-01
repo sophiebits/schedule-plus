@@ -1,6 +1,7 @@
 <p>
 	<ul>
-		<li>Friend1</li>
-		<li>Friend2</li>
+	<% @friends.each do |friend| %>
+	<li><%= friend.name %></li>
+	<% end %>
 	</ul>
 </p>

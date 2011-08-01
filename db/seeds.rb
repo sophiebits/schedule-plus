@@ -35,8 +35,8 @@
 #   
 # end
 
-user1 = User.create(:uid => "1234234523", :name => "Bob")
-user2 = User.create(:uid => "5678098349", :name => "Sally")
+user1 = User.create(:uid => "1326120295", :name => "Eric Wu")
+user2 = User.create(:uid => "1326120240", :name => "Jen")
 
 
 
