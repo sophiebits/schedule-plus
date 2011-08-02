@@ -1,0 +1,11 @@
+
+alert('url submitted by ajax. return status and schedule object if available');
+
+  $('#login').fadeOut();
+  //$(this).css('background-image',"url(/images/form-add.png)");
+  $('#pages').animate({ left:'-100%' }).queue(function() {
+
+alert('loading placeholder schedule');
+addSchedule(schedules[0]);
+
+  });

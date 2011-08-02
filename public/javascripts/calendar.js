@@ -1,6 +1,5 @@
-$(document).ready(function() {
  
-  var myCourses = [
+  var schedules = [[
     {
       'number':'15-210',
       'name':'Parallel and Sequential Data Structures and Algorithms',
@@ -148,7 +147,7 @@ $(document).ready(function() {
         }
       ] 
     }
-  ];
+  ]];
 
   var colors = ["blue","steel","shamrock","yellow",
                 "orange","red","magenta","purple"];
@@ -160,8 +159,8 @@ $(document).ready(function() {
   var endTime = 22;
   var days = ["monday","tuesday","wednesday","thursday","friday"];
 
+  /* generates calendar time dividers */
   function initCalendar() { 
-    /* print times */
     $('#calendar').append('<li><ul id="times"></ul></li>');
     for (var i = startTime; i <= endTime; ++i)
       $('#times').append('<li class="begin'+(i*60)+'">'+((i-1)%12+1)
@@ -170,11 +169,13 @@ $(document).ready(function() {
     $('#times li:odd').addClass('alt');
   }
   
+  /* assigns display color to a course by adding color class to elements */
   function assignColor(number, colorName) {
     
     $('.course'+number+', .course'+number+' .color').addClass(colorName);
   }
 
+  /* adds a course to calendar and adjusts conflicting courses with the same begin time */
   function addToCalendar(schedule, number, section, data, lec_rec) {
    
     $('#'+schedule+' .' + data.day + ' .courses').append(
@@ -194,8 +195,8 @@ $(document).ready(function() {
   
   }
 
-  function addCourse(schedule) {
-
+  function addCourse(schedule, course) {
+    alert(course);
   }
 
   function addSchedule(courses, name) {
@@ -221,6 +222,9 @@ $(document).ready(function() {
           : courses[i].lectures[courses[i].selected].section)
         + '</span><span class="name">'
         + courses[i].name + '</span></li>');
+      
+      $('.schedule .course' + courses[i].number).hide();
+      $('.schedule .course' + courses[i].number).slideDown();
 
       if (courses[i].selected != null) {
         if (courses[i].hasRecitation) {
@@ -249,9 +253,9 @@ $(document).ready(function() {
 
   }
   
+$(document).ready(function() {
 
   initCalendar();
-  addSchedule(myCourses);
-
+  //addSchedule(schedules[0]);
 
 });

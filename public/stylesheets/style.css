@@ -201,9 +201,9 @@
 }
 #main-nav-schedules .selected.nav-link:after,
 #main-nav-schedules .nav-link:hover:after { background-position:-15px 0; }
-#main-nav-friends .nav-link:after { background-position:0 -15px; }
-#main-nav-friends .selected.nav-link:after,
-#main-nav-friends .nav-link:hover:after { background-position:-15px -15px; }
+#main-nav-friends.locked .nav-link:after { background-position:0 -15px; }
+#main-nav-friends.locked .selected.nav-link:after,
+#main-nav-friends.locked .nav-link:hover:after { background-position:-15px -15px; }
 #main-nav-logout .nav-link:after { background-position:0 -30px; }
 #main-nav-logout .selected.nav-link:after,
 #main-nav-logout .nav-link:hover:after { background-position:-15px -30px }
@@ -479,7 +479,7 @@
 
 #calendar .section.highlight, 
 #calendar .lecture.highlight {
-  background-color:#333;
+  background-color:#666;
   color:#ddd;
 }
 

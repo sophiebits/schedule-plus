@@ -15,6 +15,7 @@ $(document).ready(function() {
   $(window).resize();
 
   /** TEMPORARY ANIMATION TO SHOW MAIN PAGE **/
+  /*
   $('#add-schedule input[type=submit]').click(function() {
     $(this).css('background-image',"url(/images/ajax-small.gif)")
       .delay(1000).queue(function() {
@@ -24,6 +25,7 @@ $(document).ready(function() {
     });
     return false;
   });
+  */
 
 });
 
