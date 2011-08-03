@@ -4,7 +4,7 @@ class CreateLectures < ActiveRecord::Migration
       t.integer :course_id
       t.string :section
 
-      t.timestamps
+#      t.timestamps
     end
   end
 

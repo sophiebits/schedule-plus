@@ -21,43 +21,35 @@ ActiveRecord::Schema.define(:version => 20110731002337) do
   end
 
   create_table "lecture_section_times", :force => true do |t|
-    t.integer  "lecture_id"
-    t.string   "day"
-    t.string   "begin"
-    t.string   "end"
-    t.string   "location"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "lecture_id"
+    t.string  "day"
+    t.string  "begin"
+    t.string  "end"
+    t.string  "location"
   end
 
   create_table "lectures", :force => true do |t|
-    t.integer  "course_id"
-    t.string   "section"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "course_id"
+    t.string  "section"
   end
 
   create_table "recitation_section_times", :force => true do |t|
-    t.integer  "recitation_id"
-    t.string   "day"
-    t.string   "begin"
-    t.string   "end"
-    t.string   "location"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "recitation_id"
+    t.string  "day"
+    t.string  "begin"
+    t.string  "end"
+    t.string  "location"
   end
 
   create_table "recitations", :force => true do |t|
-    t.integer  "lecture_id"
-    t.string   "section"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "lecture_id"
+    t.string  "section"
   end
 
   create_table "scheduled_courses", :force => true do |t|
     t.integer  "course_id"
-    t.string   "lecture_section"
-    t.string   "recitation_section"
+    t.integer  "lecture_id"
+    t.integer  "recitation_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

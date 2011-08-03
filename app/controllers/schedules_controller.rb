@@ -1,7 +1,7 @@
 class SchedulesController < ApplicationController
   def import
     # parse params[:url]
-    # ?? Schedule.import(params[:url])
+    @schedule = User.find(3)
   end
   
   def new
@@ -9,6 +9,6 @@ class SchedulesController < ApplicationController
   end
 
   def show
-    
+    # @schedule = Schedule.find(params[:id])
   end
 end

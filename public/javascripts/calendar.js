@@ -177,21 +177,21 @@
 
   /* adds a course to calendar and adjusts conflicting courses with the same begin time */
   function addToCalendar(schedule, number, section, data, lec_rec) {
-   
+
     $('#'+schedule+' .' + data.day + ' .courses').append(
       '<li class="course' + number + ' ' + lec_rec + ' begin' + data.begin
-      + ' duration' + data.duration + '" title="' + number + '"><span class="number">' + number
+      + ' duration' + (data.end - data.begin) + '" title="' + number + '"><span class="number">' + number
       + ' ' + (lec_rec=='lecture' ? 'Lec ' : '') + section
       + '</span><span class="location">' + data.location + '</span></li>');
     
     var conflicts = $('#'+schedule+' .' + data.day + ' .courses .begin' + data.begin);
     conflicts.stop(true,true).hide();
     if (conflicts.length > 1) {
-      conflicts.css('width', (105/conflicts.length)-4+'px');
+      conflicts.css('width', (105/conflicts.length)-5+'px');
       for (var i = 1; i < conflicts.length; ++i)
         conflicts.eq(i).css({ left:i*105/conflicts.length+'px' });
     }
-    conflicts.fadeIn();
+    conflicts.fadeIn(800);
   
   }
 
@@ -213,38 +213,40 @@
     
     for (var i = 0; i < courses.length; ++i) {
       
-      /* add to schedule list */
-      $('.schedule').append('<li class="course' + courses[i].number
-        + ' course" title="' + courses[i].number + '"><span class="number">'
-        + courses[i].number + ' '
-        + (courses[i].hasRecitation ? 
-            courses[i].recitations[courses[i].selected].section
-          : courses[i].lectures[courses[i].selected].section)
-        + '</span><span class="name">'
-        + courses[i].name + '</span></li>');
-      
-      $('.schedule .course' + courses[i].number).hide();
-      $('.schedule .course' + courses[i].number).slideDown();
+      var course = courses[i].course;
+      var lecture = courses[i].lecture;
+      var recitation = courses[i].recitation;
 
-      if (courses[i].selected != null) {
-        if (courses[i].hasRecitation) {
-          var rec = courses[i].recitations[courses[i].selected];
-          for (var j = 0; j < rec.times.length; ++j)
-            addToCalendar(scheduleId, courses[i].number, 
-              rec.section, rec.times[j], 'section');
+      /* add to schedule list */
+      $('.schedule').append('<li class="course' + course.number
+        + ' course" title="' + course.number + '"><span class="number">'
+        + course.number + ' '
+        + (course.has_recitation ? recitation.section : lecture.section)
+        + '</span><span class="name">'
+        + course.name + '</span></li>');
+      
+      $('.schedule .course' + course.number)
+        .css({ height:$('.schedule .course' + course.number).height() })
+        .hide()
+        .delay(i*400)
+        .slideDown(400);
+
+        if (course.has_recitation) {
+          recitation.times = recitation.recitation_section_times;
+          for (var j = 0; j < recitation.times.length; ++j)
+            addToCalendar(scheduleId, course.number, 
+              recitation.section, recitation.times[j], 'section');
         }
 
-        var lec = courses[i].lectures[courses[i].hasRecitation ? 
-          rec.reqLecture : courses[i].selected];
-       
-        for (var j = 0; j < lec.times.length; ++j)
-          addToCalendar(scheduleId, courses[i].number, 
-            lec.section, lec.times[j], courses[i].hasRecitation ? 'lecture' : 'section');
-      }
+        lecture.times = lecture.lecture_section_times
+        for (var j = 0; j < lecture.times.length; ++j)
+          addToCalendar(scheduleId, course.number, 
+            lecture.section, lecture.times[j], 
+            course.has_recitation ? 'lecture' : 'section');
 
-      assignColor(courses[i].number,colors[randomColors[i%colors.length]]);
+      assignColor(course.number,colors[randomColors[i%colors.length]]);
 
-      $('.course' + courses[i].number).hover(function() {
+      $('.course' + course.number).hover(function() {
         $('.course' + $(this).attr('title')).addClass('highlight');
       },function() {
         $('.course' + $(this).attr('title')).removeClass('highlight');

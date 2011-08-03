@@ -7,7 +7,7 @@ class CreateRecitationSectionTimes < ActiveRecord::Migration
       t.string :end
       t.string :location
 
-      t.timestamps
+#      t.timestamps
     end
   end
 

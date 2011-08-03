@@ -32,7 +32,7 @@
       <li id="start-page" class="page">
 				<div class="container">
 					<h1>Get Started</h1>
-					<% form_tag schedules_path, :id => 'add-schedule', 
+					<%= form_tag 'schedules/import', :id => 'add-schedule', 
             :method => :get, :remote => true do %>
             <%= text_field_tag :url, nil, :placeholder => 'http://scheduleman.org/schedules/cTUJ2tAnlw' %>
             <%= submit_tag "Add" %>

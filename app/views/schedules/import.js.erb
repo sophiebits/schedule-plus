@@ -1,0 +1,25 @@
+var data = 
+<%= 
+@schedule.to_json(:include => {
+  :scheduled_courses => {:include => 
+    {
+      :course => {}, 
+      :lecture => {:include => :lecture_section_times}, 
+      :recitation => {:include => :recitation_section_times}
+    }
+  }
+}).html_safe 
+%>;
+
+
+
+$('#login').fadeOut();
+$('#pages').animate({ left:'-100%' }).queue(function() {
+
+  addSchedule(data.user.scheduled_courses);
+  /*
+  alert('loading placeholder schedule');
+  addSchedule(schedules[0]);
+  */
+
+});

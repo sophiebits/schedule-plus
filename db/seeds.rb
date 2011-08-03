@@ -37,18 +37,21 @@
 
 user1 = User.create(:uid => "1326120295", :name => "Eric Wu")
 user2 = User.create(:uid => "1326120240", :name => "Jen")
+vincent = User.create(:uid => "9999", :name => "Vincent Siao")
 
+c15210 = Course.create(:number => '15-210', :name => 'Parallel and Sequential Data Structures and Algorithms', :has_recitation => true)
+l152101 = Lecture.create(:section => '1', :course_id => c15210.id)
+LectureSectionTime.create(:day => 'tuesday', :location => 'BH 136A', :begin => '630', :end => '720', :lecture_id => l152101.id)
+LectureSectionTime.create(:day => 'thursday', :location => 'BH 136A', :begin => '630', :end => '720', :lecture_id => l152101.id)
+r15210D = Recitation.create(:section => 'D', :lecture_id => l152101.id)
+RecitationSectionTime.create(:day => 'wednesday', :location => 'DH 1211', :begin => '810', :end => '870', :recitation_id => r15210D.id)
+sc15210D = ScheduledCourse.create(:course_id => c15210.id, :lecture_id => l152101.id, :recitation_id => r15210D.id)
 
+c15396 = Course.create(:number => '15-396', :name => 'Special Topic: Science of the Web', :has_recitation => false)
+l15396A = Lecture.create(:section => 'A', :course_id => c15396.id)
+LectureSectionTime.create(:day => 'tuesday', :location => 'HBH 1000', :begin => '900', :end => '990', :lecture_id => l15396A.id)
+LectureSectionTime.create(:day => 'thursday', :location => 'HBH 1000', :begin => '900', :end => '990', :lecture_id => l15396A.id)
+sc15396A = ScheduledCourse.create(:course_id => c15396.id, :lecture_id => l15396A.id)
 
-c1 = Course.create(:number => '15-213', :name => 'Computer Systems', :has_recitation => false)
-
-l1 = Lecture.create(:section => '1', :course_id => c1.id)
-lst1 = LectureSectionTime.create(:day => 'monday', :begin => '1330', :end => '1500', :lecture_id => l1.id)
-l2 = Lecture.create(:section => '2', :course_id => c1.id)
-lst2 = LectureSectionTime.create(:day => 'friday', :begin => '830', :end => '900', :lecture_id => l2.id)
-
-sc1 = ScheduledCourse.create(:course_id => c1.id, :lecture_section => '1')
-
-
-Schedule.create(:scheduled_course_id => sc1, :user_id => user1.id)
-Schedule.create(:scheduled_course_id => sc1, :user_id => user2.id)
+Schedule.create(:scheduled_course_id => sc15210D.id, :user_id => vincent.id)
+Schedule.create(:scheduled_course_id => sc15396A.id, :user_id => vincent.id)

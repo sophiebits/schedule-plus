@@ -4,7 +4,7 @@ class CreateRecitations < ActiveRecord::Migration
       t.integer :lecture_id
       t.string :section
 
-      t.timestamps
+#      t.timestamps
     end
   end
 
