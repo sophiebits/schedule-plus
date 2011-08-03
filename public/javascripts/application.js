@@ -1,5 +1,7 @@
 $(document).ready(function() {
-  
+ 
+  (new Image()).src = "/images/form-add.png";
+
   var speed = 600;
   
   $(window).resize(function() {
@@ -14,18 +16,10 @@ $(document).ready(function() {
   });
   $(window).resize();
 
-  /** TEMPORARY ANIMATION TO SHOW MAIN PAGE **/
-  /*
+  
   $('#add-schedule input[type=submit]').click(function() {
     $(this).css('background-image',"url(/images/ajax-small.gif)")
-      .delay(1000).queue(function() {
-        $('#pages').animate({ left:'-100%' }, speed);
-        $('#login').fadeOut(speed);
-        $(this).css('background-image',"url(/images/form-add.png)");
-    });
-    return false;
   });
-  */
 
 });
 

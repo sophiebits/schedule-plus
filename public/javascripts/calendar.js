@@ -176,7 +176,7 @@
   }
 
   /* adds a course to calendar and adjusts conflicting courses with the same begin time */
-  function addToCalendar(schedule, number, section, data, lec_rec) {
+  function addToCalendar(schedule, number, section, data, lec_rec, delay) {
 
     $('#'+schedule+' .' + data.day + ' .courses').append(
       '<li class="course' + number + ' ' + lec_rec + ' begin' + data.begin
@@ -191,7 +191,7 @@
       for (var i = 1; i < conflicts.length; ++i)
         conflicts.eq(i).css({ left:i*105/conflicts.length+'px' });
     }
-    conflicts.fadeIn(800);
+    conflicts.delay(delay).fadeIn(800);
   
   }
 
@@ -235,14 +235,16 @@
           recitation.times = recitation.recitation_section_times;
           for (var j = 0; j < recitation.times.length; ++j)
             addToCalendar(scheduleId, course.number, 
-              recitation.section, recitation.times[j], 'section');
+              recitation.section, recitation.times[j], 'section',
+              i*400);
         }
 
         lecture.times = lecture.lecture_section_times
         for (var j = 0; j < lecture.times.length; ++j)
           addToCalendar(scheduleId, course.number, 
             lecture.section, lecture.times[j], 
-            course.has_recitation ? 'lecture' : 'section');
+            course.has_recitation ? 'lecture' : 'section',
+            i*400);
 
       assignColor(course.number,colors[randomColors[i%colors.length]]);
 

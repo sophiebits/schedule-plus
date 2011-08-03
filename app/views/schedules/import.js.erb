@@ -11,15 +11,14 @@ var data =
 }).html_safe 
 %>;
 
-
-
 $('#login').fadeOut();
+$('#add-schedule input[type=submit]')
+  .css('background-image',"url(/images/form-add.png)");
+$('.main-aside .tooltip').hide();
 $('#pages').animate({ left:'-100%' }).queue(function() {
-
+  
   addSchedule(data.user.scheduled_courses);
-  /*
-  alert('loading placeholder schedule');
-  addSchedule(schedules[0]);
-  */
+  
+  $('.main-aside .tooltip').delay(data.user.scheduled_courses.length * 400).fadeIn(800);
 
 });
