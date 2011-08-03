@@ -178,21 +178,23 @@
   /* adds a course to calendar and adjusts conflicting courses with the same begin time */
   function addToCalendar(schedule, number, section, data, lec_rec, delay) {
 
-    $('#'+schedule+' .' + data.day + ' .courses').append(
-      '<li class="course' + number + ' ' + lec_rec + ' begin' + data.begin
+    
+    $('<li class="course' + number + ' ' + lec_rec + ' begin' + data.begin
       + ' duration' + (data.end - data.begin) + '" title="' + number + '"><span class="number">' + number
       + ' ' + (lec_rec=='lecture' ? 'Lec ' : '') + section
-      + '</span><span class="location">' + data.location + '</span></li>');
+      + '</span><span class="location">' + data.location + '</span></li>')
+     .appendTo('#'+schedule+' .' + data.day + ' .courses').hide().delay(delay);
+   
     
     var conflicts = $('#'+schedule+' .' + data.day + ' .courses .begin' + data.begin);
-    conflicts.stop(true,true).hide();
-    if (conflicts.length > 1) {
-      conflicts.css('width', (105/conflicts.length)-5+'px');
-      for (var i = 1; i < conflicts.length; ++i)
-        conflicts.eq(i).css({ left:i*105/conflicts.length+'px' });
-    }
-    conflicts.delay(delay).fadeIn(800);
-  
+    
+      for (var i = 0; i < conflicts.length; ++i)
+        conflicts.eq(i).show().css({ opacity:0 })
+          .animate({ 
+            width: (105/conflicts.length)-5+'px',
+            left:i*105/conflicts.length+'px',
+            opacity:1
+          });
   }
 
   function addCourse(schedule, course) {
@@ -228,15 +230,15 @@
       $('.schedule .course' + course.number)
         .css({ height:$('.schedule .course' + course.number).height() })
         .hide()
-        .delay(i*400)
-        .slideDown(400);
+        .delay(i*200)
+        .slideDown();
 
         if (course.has_recitation) {
           recitation.times = recitation.recitation_section_times;
           for (var j = 0; j < recitation.times.length; ++j)
             addToCalendar(scheduleId, course.number, 
               recitation.section, recitation.times[j], 'section',
-              i*400);
+              i*200);
         }
 
         lecture.times = lecture.lecture_section_times
@@ -244,7 +246,7 @@
           addToCalendar(scheduleId, course.number, 
             lecture.section, lecture.times[j], 
             course.has_recitation ? 'lecture' : 'section',
-            i*400);
+            i*200);
 
       assignColor(course.number,colors[randomColors[i%colors.length]]);
 

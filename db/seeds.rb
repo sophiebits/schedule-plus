@@ -63,7 +63,7 @@ sc15396A = ScheduledCourse.create(:course_id => c15396.id, :lecture_id => l15396
 
 c21301 = Course.create(:number => '21-301', :name => 'Combninatorics', :has_recitation => false)
 l21301A = Lecture.create(:section => 'A', :course_id => c21301.id)
-LectureSectionTime.create(:day => 'monday', :location => 'BH A51', :begin => '750', :end => '810', :lecture_id => l21301A.id)
+LectureSectionTime.create(:day => 'monday', :location => 'BH A51', :begin => '810', :end => '900', :lecture_id => l21301A.id)
 LectureSectionTime.create(:day => 'wednesday', :location => 'BH A51', :begin => '750', :end => '810', :lecture_id => l21301A.id)
 LectureSectionTime.create(:day => 'friday', :location => 'BH A51', :begin => '750', :end => '810', :lecture_id => l21301A.id)
 sc21301A = ScheduledCourse.create(:course_id => c21301.id, :lecture_id => l21301A.id)
