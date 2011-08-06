@@ -1,5 +1,6 @@
+require 'rubygems'
 require 'ri_cal'
-
+require 'net/http'
 
 class Parser
 
