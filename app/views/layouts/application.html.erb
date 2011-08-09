@@ -27,6 +27,7 @@
 	<% end %>
 	-->
 	<div id="page-content">
+    <div id="page-bg"></div>
 		<ul id="pages">
 			<% if !current_user %>
       <li id="start-page" class="page">
@@ -34,7 +35,7 @@
 					<h1>Get Started</h1>
 					<%= form_tag 'schedules/import', :id => 'add-schedule', 
             :method => :get, :remote => true do %>
-            <%= text_field_tag :url, nil, :placeholder => 'http://scheduleman.org/schedules/cTUJ2tAnlw' %>
+            <%= text_field_tag :schedulemanurl, nil, :placeholder => 'http://scheduleman.org/schedules/cTUJ2tAnlw' %>
             <%= submit_tag "Add" %>
           <% end %>
           <!--<form id="add-schedule">
@@ -78,5 +79,6 @@
 			</ul>
 		</div>
 	</div>
+    <div id="main-bg"><div style="height:100%;background-color:#eee;width:200px"</div>
 </body>
 </html>

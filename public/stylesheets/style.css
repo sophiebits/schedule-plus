@@ -33,7 +33,7 @@
 
 #start-page .tooltip {
   position:absolute;
-    left:4em; top:-1em;
+    left:4em; top:290px;;
       color:#fff;
         background-color:#1fbbbd;
 }
@@ -68,27 +68,34 @@
    position:relative;
      width:100%;
        min-width:960px;
-         min-height:720px;
+         min-height:640px;
            overflow:hidden;
 }
 
 #pages {
-  border-top:300px solid #eee;
-    position:absolute;
+    position:relative;
+      top:0;
       width:200%;
         /*overflow:hidden;*/
 }
+#page-bg {
+  position:absolute;
+  width:100%;
+  height:300px;
+  background-color:#eee;
+}
 
 .page {
-    position:relative;
-      float:left;
+    position:absolute;
         min-width:960px;
-          min-height:720px;
+          min-height:640px;
 }
+#start-page { }
+#main-page { left:100% }
 
 #start-page h1 {
   position:absolute;
-    top:-1.3em;
+    top:200px;
       margin-right:0.4em;
         padding-left:0.2em;
           color:#1fbbbd;
@@ -98,7 +105,7 @@
 
 #start-page p {
   position:relative;
-    top:1em;
+    top:320px;
       padding:2em;
         color:#666;
           font-size:1.2em;
@@ -107,10 +114,9 @@
 
 #add-schedule {
   position:absolute;
-    top:-2em;
+    top:225px;
       left:50%;
         width:50%;
-          top:-4.5em
 }
 
 #add-schedule input[type=text] {
@@ -132,12 +138,10 @@
 
 #main-page .container {
   z-index:10;
-  height:100%;
 }
 
 #main-page #bg-mask {
   position:absolute;
-    top:-300px;
       left:50%;
         height:300px;
           background-color:#666
@@ -145,7 +149,6 @@
 
 .sidebar {
     position:relative;
-      top:-300px;
         float:left;
           width:132px;
 }
@@ -216,22 +219,27 @@
 
 #main-content {
   position:relative;
-    top:-300px;
       float:left;
-        width:812px;
-          height:100%;
-            background-color:#fff;
-              border:8px solid #666;
-                border-width:0 8px;
+        width:828px;
+}
+
+#main-bg {
+  width:812px;
+  position:fixed; left:100%;
+  top:0;
+  background-color:#fff;
+  border:8px solid #666;
+  border-width:0 8px;
 }
 
 .main-aside {
+  position:relative;
     float:left;
       padding:10px;
         width:180px;
-          height:100%;
       font-size:0.65em;
-            background-color:#eee;
+      left:8px;
+  min-height:600px;
 }
 
 .main-aside .nav-schedules {
@@ -249,7 +257,7 @@
                 top:3px;
                   left:0;
 }
-  
+
 .schedule li {
     position:relative;
         margin-bottom:1px;
@@ -263,22 +271,21 @@
             border-radius:5px 0;
               cursor:pointer;
               border-right:5px solid #000;
-      border-top:1px solid #ccc;
+      border-bottom:1px solid #aaa;
+      background:-webkit-gradient(linear,left top,left bottom,from(#ddd),to(#d6d6d6));
+      background:-moz-linear-gradient(top,#ddd,#d6d6d6);
+      filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ddd',endColorstr='#d6d6d6');
   }
   .schedule .selected.course,
   .schedule .course.highlight {
+      background:none;
       background-color:#f6f6f6;
-      color:#333
+      color:#333;
+      border-bottom-color:#ddd
   }
-  .schedule .selected.course { border:1px solid #1fbbbd; }
 
   .schedule .course .number {
       font-weight:700;
-  }
-
-  .schedule .course .friends {
-      position:absolute;
-        right:5px;
   }
 
   .schedule .course .name {
@@ -295,24 +302,30 @@
   .main-aside .tooltip {
       position:relative;
       padding: 0.7em; 
-        color:#333;
+        color:#ddd;
           font-size:1.3em;
-            background-color:#7eddde; 
+            background-color:#666; 
               margin: 20px 0 10px;
       display:block;
       text-align:left;
   }
   .main-aside .tooltip:after {
-      border-color:#7eddde transparent;
+      border-color:#666 transparent;
         border-width:0 0 15px 15px;
           left:30px; top:-15px;
   }
+
+#article {
+  width:612px;
+  float:left;
+  position:relative;
+  left:8px;
+}
 
 #course-detail {
   float:left;
   padding-top:20px;
   width:635px;
-  height:100%;
   background:#fff;
 }
 
@@ -332,14 +345,13 @@
 
 
 #calendar {
-  float:left;
   position:relative;
-  top:1em;
   width:526px;
   height:601px;
-  margin:1em 0 0 60px;
+  margin:20px 0 20px 60px;
   background-color:#eee;
   list-style-type:none;
+  clear:both;
 }
 
 #calendar #times {
@@ -500,3 +512,83 @@
 .schedule .red { border-right-color:rgb(250,62,84) }
 .schedule .magenta { border-right-color:rgb(231,58,149) }
 .schedule .purple { border-right-color:rgb(179,59,212) }
+
+#course-friends {
+  width:588px;
+  float:left;
+  position:relative;
+  left:20px;
+  height:72px;
+  background-color:#666;
+  border-radius:5px 0;
+  margin-top:10px;
+}
+
+#course-friends .course-id {
+  display:block;
+  background-color:#fbb03b;
+  padding:5px 8px;
+  font-size:12px;
+  border-radius:5px 0 0 0
+}
+
+#course-friends .course-id .number {
+  font-weight:700;
+  font-size:0.8em;
+}
+
+#course-friends #friends {
+  display:block;
+  padding:5px 8px;
+}
+
+#course-friends #friends li {
+  float:left;
+  display:block;width:40px;height:40px;
+  background-color:#ddd;
+  margin-right:5px;
+}
+
+.schedule .loading {
+  position:absolute;
+  top:5px;
+  right:8px
+}
+
+.schedule .friends {
+  margin-top:5px;
+}
+
+.schedule .friends li {
+  display:inline-block;
+  width:16px;height:18px;
+  margin-right:2px;
+  background-color:#aaa;
+  border-radius:5px 0;
+  border:1px solid transparent;
+}
+
+.schedule .friends .me {
+  border-color:#fbb03b;
+}
+
+#calendar-header {
+  height:50px;
+  margin-bottom:10px;
+}
+
+#calendar-header img {
+  width:30px;
+  height:30px;
+  background-color:#ddd;
+  margin:20px 0 0 60px;
+  border-radius:5px 0;
+  float:left
+}
+
+#calendar-header h1 {
+  float:left;
+  font-size:1.2em;
+  position:relative;
+  margin:28px 0 0 10px;
+}

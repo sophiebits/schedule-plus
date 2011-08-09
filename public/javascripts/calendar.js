@@ -194,7 +194,7 @@
             width: (105/conflicts.length)-5+'px',
             left:i*105/conflicts.length+'px',
             opacity:1
-          });
+          },200);
   }
 
   function addCourse(schedule, course) {
@@ -233,6 +233,8 @@
         .delay(i*200)
         .slideDown();
 
+
+        
         if (course.has_recitation) {
           recitation.times = recitation.recitation_section_times;
           for (var j = 0; j < recitation.times.length; ++j)
@@ -254,6 +256,34 @@
         $('.course' + $(this).attr('title')).addClass('highlight');
       },function() {
         $('.course' + $(this).attr('title')).removeClass('highlight');
+      });
+      $('.course' + course.number).click(function() {
+        var number = $(this).attr('title');
+        
+        $('.schedule .friends')
+          .slideUp().queue(function(){
+            $(this).remove();
+          });
+        
+        if ($('.schedule .course' + number).hasClass('selected')) {
+          $('.schedule .course').removeClass('selected')
+          $('.schedule .loading').remove();
+        } else {
+          $('.schedule .course').removeClass('selected')
+          $('.schedule .loading').remove();
+          $('.schedule .course' + number)
+            .addClass('selected')
+            .height('auto');
+          $('<img class="loading" src="/images/ajax-friends.gif" />')
+            .appendTo('.schedule .course' + number)
+            .delay(1000)
+            .fadeOut()
+            .queue(function() {
+          $('<ul class="friends"><li class="me"></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul>')
+            .appendTo('.schedule .course' + number)
+            .hide().slideDown();
+            });
+        }
       });
     }
 

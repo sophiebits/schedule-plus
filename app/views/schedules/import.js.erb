@@ -15,8 +15,11 @@ $('#login').fadeOut();
 $('#add-schedule input[type=submit]')
   .css('background-image',"url(/images/form-add.png)");
 $('.main-aside .tooltip').hide();
-$('#pages').animate({ left:'-100%' }).queue(function() {
-  
+$('#start-page').animate({ left:'-100%' });
+$('#main-bg').animate({ left:'0%' });
+$('#main-page').animate({ left:'0%' }).queue(function() {
+  $('#main-page').css('position','relative');
+
   addSchedule(data.user.scheduled_courses);
   
   $('.main-aside .tooltip').delay(data.user.scheduled_courses.length * 200).fadeIn(800);
