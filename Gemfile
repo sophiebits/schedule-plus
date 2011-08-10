@@ -38,4 +38,4 @@ gem 'fb_graph'
 gem 'omniauth', :git => 'git://github.com/intridea/omniauth.git'
 gem 'jquery-rails'
 gem 'hpricot'
-gem 'ri_cal'
+gem 'ri_cal', :git => "git://github.com/ctide/ri_cal.git"
