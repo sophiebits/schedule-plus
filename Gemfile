@@ -34,7 +34,7 @@ gem 'sqlite3'
 gem 'nifty-generators'
 gem 'mocha', :group => :test
 gem 'nokogiri', '~> 1.5.0'
-#gem 'omniauth'
 gem 'fb_graph'
 gem 'omniauth', :git => 'git://github.com/intridea/omniauth.git'
 gem 'jquery-rails'
+gem 'hpricot'

@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(:version => 20110731002337) do
   create_table "courses", :force => true do |t|
     t.string   "number"
     t.string   "name"
+    t.string   "units"
     t.boolean  "has_recitation"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -31,6 +32,7 @@ ActiveRecord::Schema.define(:version => 20110731002337) do
   create_table "lectures", :force => true do |t|
     t.integer "course_id"
     t.string  "section"
+    t.string  "instructor"
   end
 
   create_table "recitation_section_times", :force => true do |t|
@@ -44,6 +46,7 @@ ActiveRecord::Schema.define(:version => 20110731002337) do
   create_table "recitations", :force => true do |t|
     t.integer "lecture_id"
     t.string  "section"
+    t.string  "instructor"
   end
 
   create_table "scheduled_courses", :force => true do |t|

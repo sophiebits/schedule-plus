@@ -3,6 +3,7 @@ class CreateRecitations < ActiveRecord::Migration
     create_table :recitations do |t|
       t.integer :lecture_id
       t.string :section
+      t.string :instructor
 
 #      t.timestamps
     end

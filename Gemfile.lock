@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/intridea/omniauth.git
-  revision: e38a4503ed9f53313997bb54f14a10c4c8e504fd
+  revision: 5aaa1ae45c9e9401bfb7cd7767358159c2b135eb
   specs:
     oa-basic (0.3.0.rc1)
       oa-core (= 0.3.0.rc1)
@@ -79,6 +79,7 @@ GEM
     fb_graph (1.9.4)
       httpclient (>= 2.2.0.2)
       rack-oauth2 (>= 0.8.0)
+    hpricot (0.8.4)
     httpclient (2.2.1)
     i18n (0.5.0)
     jquery-rails (1.0.12)
@@ -151,6 +152,7 @@ PLATFORMS
 
 DEPENDENCIES
   fb_graph
+  hpricot
   jquery-rails
   mocha
   nifty-generators

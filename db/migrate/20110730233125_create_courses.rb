@@ -3,6 +3,7 @@ class CreateCourses < ActiveRecord::Migration
     create_table :courses do |t|
       t.string :number
       t.string :name
+      t.string :units
       t.boolean :has_recitation
 
       t.timestamps
