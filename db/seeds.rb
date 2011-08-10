@@ -120,18 +120,21 @@ end
 ##########################################################
 ##########################################################
 
-def timetostring(time)
-	return 'TBA' if (!time) || (time == 'TBA') || (time == '') || (isemptystr(time))
-	
-	is_pm = (((time.include? 'PM') && !(time.include? '12:')) || (!(time.include? 'PM') && (time.include? '12:')))
-	times = time[0,5].split(':')
-	hour = times[0]
-	min = times[1]
-	if is_pm
-		hour = (hour.to_i + 12).to_s
-	end
+def timetostring(time)     
+is_pm = (time.include? 'PM')
+times = time[0,5].split(':')
+hour = times[0]
+min = times[1]
 
-	hour + min
+if (hour.include? "12")
+	hour = (hour.to_i - 12).to_s
+end
+
+if is_pm
+	hour = (hour.to_i + 12).to_s
+end
+
+(hour.to_i*60 + min.to_i).to_s
 end
 
 

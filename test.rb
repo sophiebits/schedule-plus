@@ -12,6 +12,6 @@ filename = 'sample.ics'
 writeOut = open(filename, "wb")
 writeOut.write(open(urlToGet).read)
 writeOut.close
-puts "downloaded" + urlToGet + "\n"
+puts "downloaded: " + urlToGet + "\n"
 
-Parser.parse(filename)
+Parser.parse(filename, 3)
