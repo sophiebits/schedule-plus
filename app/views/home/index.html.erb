@@ -1,0 +1,25 @@
+			<% if !current_user %>
+      <li id="start-page" class="page">
+				<script>$(document).ready(function(){
+          $('#main-bg').css('left','100%');
+        })</script>
+        <div class="container">
+					<h1>Get Started</h1>
+					<%= form_tag 'schedules/import', :id => 'add-schedule', 
+            :method => :get do %>
+            <%= text_field_tag :schedulemanurl, nil, :placeholder => 'http://scheduleman.org/schedules/cTUJ2tAnlw' %>
+            <%= submit_tag "Add" %>
+          <% end %>
+          <!--<form id="add-schedule">
+          
+						<input type="text" placeholder="http://scheduleman.org/schedules/cTUJ2tAnlw"></input>
+						<input type="submit" value="Add"></input>
+					</form>-->
+					<span class="tooltip">
+						Paste the URL of your ScheduleMan schedule here and begin sharing with your friends on Facebook!
+					</span>
+					<p>schedule+ connects you to your Carnegie Mellon friends on Facebook by matching your planned course schedules. See which courses are most common among your friends, or find out which of your friends are free for a lunchtime get-together.</p>
+				</div>
+
+			</li>
+      <% end %>

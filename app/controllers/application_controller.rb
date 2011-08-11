@@ -7,6 +7,12 @@ class ApplicationController < ActionController::Base
 
   private
 
+  before_filter :instantiate_controller_and_action_names
+  def instantiate_controller_and_action_names
+    @action_name = action_name
+    @controller_name = controller_name
+  end
+
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end

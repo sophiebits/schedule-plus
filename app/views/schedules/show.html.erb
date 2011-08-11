@@ -1,8 +1,6 @@
-
-<!--script src="/javascripts/calendar.js" type="text/javascript"></script-->
-  
-  <!--<li class="nav-schedules">All Schedules</li>-->
+<% content_for :content do %>
 <div class="main-aside">
+ <!--<li class="nav-schedules">All Schedules</li>-->
   <ul class="schedule">
     
   </ul>
@@ -13,11 +11,32 @@
   </div>
 </div>
 <div id="article">
-<div id="calendar-header">
-<img />
-<h1>Vincent Siao</h1>
-</div>
-<ul id="calendar">
+  <div id="calendar-header">
+  <img src="http://graph.facebook.com/vincentsiao/picture"/>
+  <h1>Vincent Siao</h1>
+  </div>
+  <ul id="calendar">
 
-</ul>
+  </ul>
+<script src="/javascripts/calendar.js" type="text/javascript"></script>
+<% if controller.action_name == 'show' %>
+<script type="text/javascript">
+$(document).ready(function() {
+  var sched = <%=
+        @schedule.to_json(:include => {
+          :scheduled_courses => {:include => 
+            {
+              :course => {}, 
+              :lecture => {:include => :lecture_section_times}, 
+             :recitation => {:include => :recitation_section_times}
+            }
+          }
+        }).html_safe
+ %>;
+ addSchedule(sched.user.scheduled_courses);
+});
+</script>
+<% end %>
 </div>
+<% end %>
+<%= render :partial => 'partials/mainpage' %>

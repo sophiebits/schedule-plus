@@ -121,6 +121,8 @@ end
 ##########################################################
 
 def timetostring(time)     
+return 'TBA' if !time || time == ''
+
 is_pm = (time.include? 'PM')
 times = time[0,5].split(':')
 hour = times[0]
@@ -179,7 +181,11 @@ catch(:done) do
 		throw :done if i >= rows.length
 	
 		abort 'Error (1)' if isempty(cells[0]) || isempty(cells[1]) || isempty(cells[2])
-		# Create Course
+    
+    # Prints name and number so that I know something's happening
+    puts cells[0].inner_text + ' ' + cells[1].inner_text
+		
+    # Create Course
 		db_course = Course.create(:number => cells[0].inner_text,
 															:name		=> cells[1].inner_text,
 															:units	=> cells[2].inner_text)
@@ -310,23 +316,23 @@ c21301 = Course.find_by_number("21301")
 
 l15210 = Lecture.find_by_course_id_and_section(c15210.id, '1')
 r15210 = Recitation.find_by_lecture_id_and_section(l15210.id, 'D')
-sc15210 = ScheduledCourse.create(:course_id => c15210.id, 
-																	:lecture_id => l15210.id,
-																	:recitation_id => r15210.id)
+sc15210D = ScheduledCourse.create(:course_id => c15210.id, 
+                                  :lecture_id => l152101.id, 
+                                  :recitation_id => r15210D.id)
 
 l15213 = Lecture.find_by_course_id_and_section(c15213.id, '1')
 r15213 = Recitation.find_by_lecture_id_and_section(l15213.id, 'F')
-sc15213 = ScheduledCourse.create(:course_id => c15213.id, 
-																	:lecture_id => l15213.id,
-																	:recitation_id => r15213.id)																
+sc15213F = ScheduledCourse.create(:course_id => c15213.id, 
+                                  :lecture_id => l152131.id, 
+                                  :recitation_id => r15213F.id)
 
 l15396 = Lecture.find_by_course_id_and_section(c15396.id, 'A')
-sc15396 = ScheduledCourse.create(:course_id => c15396.id, 
-																	:lecture_id => l15396.id)														
+sc15396A = ScheduledCourse.create(:course_id => c15396.id, 
+                                  :lecture_id => l15396A.id)
 
 l21301 = Lecture.find_by_course_id_and_section(c21301.id, 'A')
-sc21301 = ScheduledCourse.create(:course_id => c21301.id, 
-																	:lecture_id => l21301.id)																
+sc21301A = ScheduledCourse.create(:course_id => c21301.id, 
+                                  :lecture_id => l21301A.id)
 
 
 Schedule.create(:scheduled_course_id => sc15210.id, :user_id => vincent.id)

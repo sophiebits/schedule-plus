@@ -1,153 +1,4 @@
  
-  var schedules = [[
-    {
-      'number':'15-210',
-      'name':'Parallel and Sequential Data Structures and Algorithms',
-      'hasRecitation':true,
-      'selected':3,
-      'lectures': [
-        {
-          'section':'1',
-          'times':[
-            { 'day':'tuesday', 'begin':'630', 
-              'duration':'90', 'location':'BH 136A' },
-            { 'day':'thursday', 'begin':'630', 
-              'duration':'90', 'location':'BH 136A' }
-          ]
-        },{}
-      ],
-      'recitations': [
-        {},{},{},
-        {
-          'section':'D', 'reqLecture':0,
-          'times':[
-            { 'day':'wednesday', 'begin':'810',
-              'duration':'60', 'location':'DH 1211' }
-          ]
-        }
-      ]
-    },
-    {
-      'number':'15-213',
-      'name':'Introduction to Computer Systems',
-      'hasRecitation':true,
-      'selected':5,
-      'lectures': [
-        {
-          'section':'1',
-          'times':[
-            { 'day':'tuesday', 'begin':'810', 
-              'duration':'90', 'location':'DH 2315' },
-            { 'day':'thursday', 'begin':'810', 
-              'duration':'90', 'location':'DH 2315' }
-          ]
-        }
-      ],
-      'recitations': [
-        {},{},{},{},{},
-        {
-          'section':'F', 'reqLecture':0,
-          'times':[
-            { 'day':'monday', 'begin':'810',
-              'duration':'60', 'location':'DH 1211' }
-          ]
-        }
-      ]
-    },
-    {
-      'number':'15-396',
-      'name':'Special Topic: Science of the Web',
-      'hasRecitation':false,
-      'selected':0,
-      'lectures': [
-        { 
-          'section':'A',
-          'times':[
-            { 'day':'tuesday', 'begin':'900',
-              'duration':'90', 'location':'HBH 1000' },
-            { 'day':'thursday', 'begin':'900',
-              'duration':'90', 'location':'HBH 1000' }
-          ]
-        }
-      ]
-    },
-    {
-      'number':'15-221',
-      'name':'Technical Communication for Computer Scientists',
-      'hasRecitation':true,
-      'selected':2,
-      'lectures': [
-        {
-          'section':'1',
-          'times':[
-            { 'day':'tuesday', 'begin':'540',
-              'duration':'90', 'location':'BH A51' },
-            { 'day':'thursday', 'begin':'540',
-              'duration':'90', 'location':'BH A51' }
-          ]
-        }
-      ],
-      'recitations': [
-        {},{},
-        {
-          'section':'C', 'reqLecture':0,
-          'times':[
-            { 'day':'friday', 'begin':'690',
-              'duration':'60', 'location':'GHC 4211' }
-          ]
-        }
-      ]
-    },
-    {
-      'number':'21-301',
-      'name':'Combinatorics',
-      'hasRecitation':false,
-      'selected':0,
-      'lectures': [
-        {
-          'section':'A',
-          'times': [
-            { 'day':'monday', 'begin':'750',
-              'duration':'60', 'location':'BH A51' },
-            { 'day':'wednesday', 'begin':'750',
-              'duration':'60', 'location':'BH A51' },
-            { 'day':'friday', 'begin':'750',
-              'duration':'60', 'location':'BH A51' }
-          ]
-        },{}
-      ]
-    },
-    {
-      'number':'98-163',
-      'name':'StuCo: The Art of Tetris',
-      'hasRecitation':false,
-      'selected':0,
-      'lectures': [
-        {
-          'section':'A',
-          'times': [
-            { 'day':'tuesday', 'begin':'1110',
-              'duration':'60', 'location':'WEH 5415' }
-          ]
-        }
-      ]
-    },
-    {
-      'number':'15-295',
-      'name':'Special Topic: Competition Programming and Problem Solving',
-      'hasRecitation':false,
-      'selected':0,
-      'lectures': [
-        {
-          'section':'A',
-          'times': [
-            { 'day':'wednesday', 'begin':'1110',
-              'duration':'180', 'location':'WEH 5421' }
-          ]
-        }
-      ] 
-    }
-  ]];
 
   var colors = ["blue","steel","shamrock","yellow",
                 "orange","red","magenta","purple"];
@@ -178,16 +29,23 @@
   /* adds a course to calendar and adjusts conflicting courses with the same begin time */
   function addToCalendar(schedule, number, section, data, lec_rec, delay) {
 
-    
-    $('<li class="course' + number + ' ' + lec_rec + ' begin' + data.begin
-      + ' duration' + (data.end - data.begin) + '" title="' + number + '"><span class="number">' + number
+    //var begin = parseInt(data.begin/100)*60+parseInt(data.begin%100);
+    //var end = parseInt(data.end/100)*60+parseInt(data.end%100)+10;
+
+    var begin = data.begin;
+    var end = parseInt(data.end)+10;
+
+    data.day = data.day.toLowerCase();
+
+    $('<li class="course' + number + ' ' + lec_rec + ' begin' + begin
+      + ' duration' + (end - begin) + '" title="' 
+      + number + '"><span class="number">' + number
       + ' ' + (lec_rec=='lecture' ? 'Lec ' : '') + section
       + '</span><span class="location">' + data.location + '</span></li>')
      .appendTo('#'+schedule+' .' + data.day + ' .courses').hide().delay(delay);
    
     
-    var conflicts = $('#'+schedule+' .' + data.day + ' .courses .begin' + data.begin);
-    
+    var conflicts = $('#'+schedule+' .' + data.day + ' .courses .begin' + begin);
       for (var i = 0; i < conflicts.length; ++i)
         conflicts.eq(i).show().css({ opacity:0 })
           .animate({ 
@@ -202,7 +60,6 @@
   }
 
   function addSchedule(courses, name) {
-
     /* create schedule */
     if (!name) name = "my";
     scheduleId = name+'-schedule';
@@ -219,21 +76,22 @@
       var lecture = courses[i].lecture;
       var recitation = courses[i].recitation;
 
+      course.has_recitation = true;
+
       /* add to schedule list */
       $('.schedule').append('<li class="course' + course.number
         + ' course" title="' + course.number + '"><span class="number">'
         + course.number + ' '
         + (course.has_recitation ? recitation.section : lecture.section)
         + '</span><span class="name">'
-        + course.name + '</span></li>');
+        + course.name + '</span><div class="friends" style="display:none"><img class="loading" src="/images/ajax-friends.gif" /></div></li>');
       
       $('.schedule .course' + course.number)
         .css({ height:$('.schedule .course' + course.number).height() })
         .hide()
         .delay(i*200)
-        .slideDown();
-
-
+        .slideDown()
+        .height('auto');
         
         if (course.has_recitation) {
           recitation.times = recitation.recitation_section_times;
@@ -260,29 +118,32 @@
       $('.course' + course.number).click(function() {
         var number = $(this).attr('title');
         
-        $('.schedule .friends')
-          .slideUp().queue(function(){
-            $(this).remove();
-          });
+          $('.schedule .friends').stop(true,true).slideUp(); 
         
-        if ($('.schedule .course' + number).hasClass('selected')) {
-          $('.schedule .course').removeClass('selected')
-          $('.schedule .loading').remove();
+        if ($('.course' + number).hasClass('selected')) {
+          $('.course, .lecture, .section').removeClass('selected')
         } else {
-          $('.schedule .course').removeClass('selected')
-          $('.schedule .loading').remove();
-          $('.schedule .course' + number)
-            .addClass('selected')
-            .height('auto');
-          $('<img class="loading" src="/images/ajax-friends.gif" />')
-            .appendTo('.schedule .course' + number)
+          $('.course, .lecture, .section').removeClass('selected')
+          $('.course' + number).addClass('selected')
+          $('.schedule .course' + number + ' .friends')
+            .slideDown()
             .delay(1000)
-            .fadeOut()
             .queue(function() {
-          $('<ul class="friends"><li class="me"></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul>')
-            .appendTo('.schedule .course' + number)
-            .hide().slideDown();
+              $('.schedule .course' + number + ' .friends')
+              .html('<ul><li class="me"><img src="http://graph.facebook.com/vincentsiao/picture" /></li><li><img src="http://graph.facebook.com/adam.weis1/picture" /></li><li><img src="http://graph.facebook.com/jason.macdonald1/picture" /></li><li><img src="http://graph.facebook.com/ericwu56/picture" /></li><li><img /></li><li><img /></li><li><img /></li><li><img /></li><li><img /></li><li><img /></li></ul>')
+              
             });
+         /* 
+          $.ajax({
+            url:
+            type:
+            dataType: 'json',
+            data:     'number='+number,
+            complete: function() {
+
+            },
+          });
+        */
         }
       });
     }

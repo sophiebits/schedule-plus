@@ -1,7 +1,14 @@
-<p>
-	<ul>
-	<% @friends.each do |friend| %>
-	<li><%= friend.name %></li>
-	<% end %>
-	</ul>
-</p>
+<% content_for :content do %>
+<div class="main-aside">
+ <!--<li class="nav-schedules">All Schedules</li>-->
+	<ul id="friends">
+	  <% @friends.each do |friend| %>
+	  <li><img src="http://graph.facebook.com/<%= friend.uid %>/picture" /><span class="name"><%= friend.name %></span></li>
+	  <% end %>  
+  </ul>
+</div>
+<div id="article">
+  <h1>Friends</h1>
+</div>
+<% end %>
+<%= render :partial => 'partials/mainpage' %>

@@ -47,16 +47,15 @@
 
 
 #page-header {
-  z-index:5;
+  z-index:11;
     display:block;
       position:absolute;
-        padding:1em 0;
           width:100%
 } 
 
 #page-header #schedule-plus-logo {
-  float:left;
-    margin:0 1em;
+  position:absolute;
+    margin:1em;
 }
 
 #page-header #acm-cmu-logo {
@@ -75,7 +74,7 @@
 #pages {
     position:relative;
       top:0;
-      width:200%;
+      width:100%;
         /*overflow:hidden;*/
 }
 #page-bg {
@@ -86,12 +85,13 @@
 }
 
 .page {
-    position:absolute;
         min-width:960px;
           min-height:640px;
 }
-#start-page { }
-#main-page { left:100% }
+#start-page { 
+    position:absolute;
+    }
+#main-page { }
 
 #start-page h1 {
   position:absolute;
@@ -225,11 +225,17 @@
 
 #main-bg {
   width:812px;
-  position:fixed; left:100%;
+  position:fixed;
   top:0;
   background-color:#fff;
   border:8px solid #666;
   border-width:0 8px;
+}
+
+#aside-bg {
+  height:100%;
+  width:200px;
+  background-color:#eee
 }
 
 .main-aside {
@@ -489,6 +495,8 @@
 .magenta { background-color:rgb(231,58,149) }
 .purple { background-color:rgb(179,59,212) }
 
+#calendar .section.selected,
+#calendar .lecture.selected,
 #calendar .section.highlight, 
 #calendar .lecture.highlight {
   background-color:#666;
@@ -550,9 +558,7 @@
 }
 
 .schedule .loading {
-  position:absolute;
-  top:5px;
-  right:8px
+  margin:0 auto;
 }
 
 .schedule .friends {
@@ -561,14 +567,18 @@
 
 .schedule .friends li {
   display:inline-block;
-  width:16px;height:18px;
   margin-right:2px;
+  padding:0
+}
+
+.schedule .friends li img {
+  width:28px;height:28px;
   background-color:#aaa;
   border-radius:5px 0;
   border:1px solid transparent;
 }
 
-.schedule .friends .me {
+.schedule .friends .me img {
   border-color:#fbb03b;
 }
 
@@ -591,4 +601,24 @@
   font-size:1.2em;
   position:relative;
   margin:28px 0 0 10px;
+}
+
+ul#friends li {
+  margin-bottom:2px;
+  padding:5px;
+  background-color:#ddd;
+  border-radius:5px 0;
+}
+
+ul#friends img {
+  width:22px;
+  height:22px;
+  vertical-align:middle
+}
+
+ul#friends li .name {
+  font-size:1.3em;
+  position:relative;
+  top:2px;
+  margin-left:5px
 }

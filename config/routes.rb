@@ -1,4 +1,6 @@
 AcmSchedule::Application.routes.draw do
+  get "home/index"
+
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action
@@ -46,8 +48,9 @@ AcmSchedule::Application.routes.draw do
     get 'import', :on => :member
   end
   
-  root :to => "schedules#show"
+  root :to => "home#index"
 
   match "/auth/:provider/callback" => "sessions#show"
-   
+  match "/main" => "home#main"
+
 end
