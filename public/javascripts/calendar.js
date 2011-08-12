@@ -76,7 +76,7 @@
       var lecture = courses[i].lecture;
       var recitation = courses[i].recitation;
 
-      course.has_recitation = true;
+      course.has_recitation = recitation != null;
 
       /* add to schedule list */
       $('.schedule').append('<li class="course' + course.number
