@@ -5,6 +5,10 @@ class ApplicationController < ActionController::Base
   
   helper_method :current_user, :fb_user, :friends
 
+	@@current_user = nil
+	@@fb_user = nil
+	@@friends = nil
+
   private
 
   def current_user
