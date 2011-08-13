@@ -4,10 +4,9 @@
   <div class="container">
     <a href="/"><img id="schedule-plus-logo" src="/images/schedule-plus-logo-sm.png" alt="schedule+" /></a>
     <!--login-->
-    <div id="login">
-    <br /><br /><br /><br /><fb:login-button>Login</fb>
-    <!--a href="/auth/facebook">Login with Facebook</a-->
-    </div>
+    <% if !current_user %>
+      <a href="/auth/facebook" id="fb-login">Login with Facebook</a>
+    <% end %>
     <!--end-->
   </div>
 </div>

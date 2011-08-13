@@ -32,7 +32,7 @@ $(document).ready(function() {
       },
       success: function(data,textStatus,jqXHR) {
         $.get('main',function(mainPage) {
-          $('#login').fadeOut();
+          $('#fb-login').fadeOut();
           $(mainPage).css({
               position:'absolute',
               left:'100%',
@@ -40,7 +40,7 @@ $(document).ready(function() {
             })
             .appendTo('#pages');
           FB.XFBML.parse();
-          $('.main-aside .tooltip').hide();
+          $('<div id="courses-after-tooltip" style="text-align:center"><span class="tooltip">Now that your schedule has been imported, connect to Facebook to see your friends\' schedules!</span></div>').appendTo('.main-aside').hide();
           $(window).resize();
           $('#page-footer').fadeOut();
           $('#page-content').animate({height:$('#main-content').height()+8},800);
