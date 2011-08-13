@@ -54,7 +54,7 @@ $(document).ready(function() {
               $('#page-content').height('auto');
               $('#page-footer')
                 .removeClass('start')
-                .fadeIn();
+                .slideDown();
               addSchedule(data.user.scheduled_courses);
               $('.main-aside .tooltip')
                 .delay(data.user.scheduled_courses.length*200)
