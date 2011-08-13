@@ -38,7 +38,7 @@
     data.day = data.day.toLowerCase();
 
     $('<li class="course' + number + ' ' + lec_rec + ' begin' + begin
-      + ' duration' + (end - begin) + '" title="' 
+      + ' duration' + (end - begin) + '" course-number="' 
       + number + '"><span class="number">' + number
       + ' ' + (lec_rec=='lecture' ? 'Lec ' : '') + section
       + '</span><span class="location">' + data.location + '</span></li>')
@@ -113,26 +113,27 @@
       assignColor(course.number,colors[randomColors[i%colors.length]]);
 
       $('.course' + course.number).hover(function() {
-        $('.course' + $(this).attr('title')).addClass('highlight');
+        $('.course' + $(this).attr('course-number')).addClass('highlight');
       },function() {
-        $('.course' + $(this).attr('title')).removeClass('highlight');
+        $('.course' + $(this).attr('course-number')).removeClass('highlight');
       });
       
       $('.course' + course.number).click(function() {
         var number = $(this).attr('course-number');
-        var course_id = $(this).attr('course-id');
-        var sched_id = $(this).attr('sched-id');
+        var course_id = $('.schedule .course'+number).attr('course-id');
+        var sched_id = $('.schedule .course'+number).attr('sched-id');
 
-          $('.schedule .friends').stop(true,true).slideUp(); 
+        $('.schedule .friends').stop(true,true).slideUp(); 
         
         if ($('.course' + number).hasClass('selected')) {
+          alert('off');
           $('.course, .lecture, .section').removeClass('selected')
         } else {
           $('.course, .lecture, .section').removeClass('selected');
           $('.course' + number).addClass('selected');
           $('.schedule .course' + number + ' .friends')
             .slideDown();
-         
+          
           $.ajax({
             url:      '/schedules/get_friends_in_course',
             type:     'GET',
