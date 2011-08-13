@@ -52,5 +52,6 @@ AcmSchedule::Application.routes.draw do
 
   match "/auth/:provider/callback" => "sessions#show"
   match "/main" => "home#main"
+	match "/schedules/get_friends_in_course" => "schedules#get_friends_in_course"
 
 end

@@ -55,4 +55,20 @@ class SchedulesController < ApplicationController
         
     end
   end
+
+	def get_friends_in_course
+		if request.xhr?
+			scheduled_course_id = params[:scheduled_course_id]
+			course_id = params[:course_id]
+
+			friends_includes = friends.includes(:scheduled_courses => [:course])
+			if scheduled_course_id
+				render :json => friends_includes.where('scheduled_courses.id = ?', scheduled_course_id).to_json
+			elsif course_id
+				render :json => friends_includes.where('courses.id = ?', course_id).to_json
+			end
+		else
+			redirect_to schedules_path
+		end
+	end
 end
