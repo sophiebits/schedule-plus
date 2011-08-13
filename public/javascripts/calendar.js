@@ -80,8 +80,10 @@
 
       /* add to schedule list */
       $('.schedule').append('<li class="course' + course.number
-        + ' course" title="' + course.number + '"><span class="number">'
-        + course.number + ' '
+        + ' course" course-number="' + course.number 
+        + '" course-id="' + course.id 
+        + '" sched-id="' + courses[i].id
+        + '"><span class="number">' + course.number + ' '
         + (course.has_recitation ? recitation.section : lecture.section)
         + '</span><span class="name">'
         + course.name + '</span><div class="friends" style="display:none"><img class="loading" src="/images/ajax-friends.gif" /></div></li>');
@@ -115,35 +117,41 @@
       },function() {
         $('.course' + $(this).attr('title')).removeClass('highlight');
       });
+      
       $('.course' + course.number).click(function() {
-        var number = $(this).attr('title');
-        
+        var number = $(this).attr('course-number');
+        var course_id = $(this).attr('course-id');
+        var sched_id = $(this).attr('sched-id');
+
           $('.schedule .friends').stop(true,true).slideUp(); 
         
         if ($('.course' + number).hasClass('selected')) {
           $('.course, .lecture, .section').removeClass('selected')
         } else {
-          $('.course, .lecture, .section').removeClass('selected')
-          $('.course' + number).addClass('selected')
+          $('.course, .lecture, .section').removeClass('selected');
+          $('.course' + number).addClass('selected');
           $('.schedule .course' + number + ' .friends')
-            .slideDown()
-            .delay(1000)
-            .queue(function() {
-              $('.schedule .course' + number + ' .friends')
-              .html('<ul><li class="me"><img src="http://graph.facebook.com/vincentsiao/picture" /></li><li><img src="http://graph.facebook.com/adam.weis1/picture" /></li><li><img src="http://graph.facebook.com/jason.macdonald1/picture" /></li><li><img src="http://graph.facebook.com/ericwu56/picture" /></li><li><img /></li><li><img /></li><li><img /></li><li><img /></li><li><img /></li><li><img /></li></ul>')
-              
-            });
-         /* 
+            .slideDown();
+         
           $.ajax({
-            url:
-            type:
+            url:      '/schedules/get_friends_in_course',
+            type:     'GET',
             dataType: 'json',
-            data:     'number='+number,
-            complete: function() {
-
+            data:     'scheduled_course_id='+sched_id,
+            complete: function() {},
+            success: function(data,textStatus,jqXHR) {
+              html = '<ul><li class="me"><img src="http://graph.facebook.com/vincentsiao/picture" /></li>';
+              for (var j = 0; j < data.length; ++j)
+                html += '<li><img src="http://graph.facebook.com/'+data[j].user.uid+'/picture" /></li>';
+              html += '</ul>';
+              $('.schedule .course'+ number + ' .friends')
+                .html(html);
             },
+            error: function(jqXHR,textStatus,errorThrown) {
+              alert(errorThrown);
+            }
           });
-        */
+        
         }
       });
     }

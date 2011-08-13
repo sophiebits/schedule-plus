@@ -58,17 +58,33 @@
     margin:1em;
 }
 
-#page-header #acm-cmu-logo {
-  position:absolute;
-    top:1em; right:2em;
-}
- 
 #page-content {
    position:relative;
      width:100%;
        min-width:960px;
-         min-height:640px;
+         min-height:470px;
            overflow:hidden;
+}
+
+#page-footer {
+  font-size:0.8em;
+}
+
+#page-footer #footer-inner {
+  color:#ddd;
+  width:748px;
+  padding:20px 40px 20px;
+  position:relative;
+  background:transparent url('/images/footer-top.gif') right top no-repeat;
+  left:132px
+}
+
+#page-footer.start #footer-inner {
+  color:#666;
+  border-top:1px solid #1fbbbd;
+  background:transparent none;
+  width:880px;
+  left:0;
 }
 
 #pages {
@@ -81,12 +97,12 @@
   position:absolute;
   width:100%;
   height:300px;
-  background-color:#eee;
+  background:#eee url('/images/eee-bg.gif');
 }
 
 .page {
         min-width:960px;
-          min-height:640px;
+          min-height:540px;
 }
 #start-page { 
     position:absolute;
@@ -220,12 +236,15 @@
 #main-content {
   position:relative;
       float:left;
-        width:828px;
+        width:812px;
+  background-color:#eee;
+  border:8px solid #666;
+  border-width:0 8px;
 }
 
 #main-bg {
   width:812px;
-  position:fixed;
+  position:absolute;
   top:0;
   background-color:#fff;
   border:8px solid #666;
@@ -244,8 +263,8 @@
       padding:10px;
         width:180px;
       font-size:0.65em;
-      left:8px;
-  min-height:600px;
+  min-height:620px;
+  background-color:#eee
 }
 
 .main-aside .nav-schedules {
@@ -325,7 +344,7 @@
   width:612px;
   float:left;
   position:relative;
-  left:8px;
+  background-color:#fff;
 }
 
 #course-detail {
@@ -354,7 +373,7 @@
   position:relative;
   width:526px;
   height:601px;
-  margin:20px 0 20px 60px;
+  margin:20px 0 40px 60px;
   background-color:#eee;
   list-style-type:none;
   clear:both;

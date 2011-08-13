@@ -4,10 +4,6 @@
     $('#main-bg').css({ marginLeft:Math.max(132,($(window).width()-960)/2+132) });
     $('.page').css({ width:$(window).width() });
     $('#main-page #bg-mask').css({ width:$(window).width()/2 });
-    if ($(window).width() < 1200)
-      $('#acm-cmu-logo').hide();
-    else
-      $('#acm-cmu-logo').show();
   });
 
 $(document).ready(function() {
@@ -43,8 +39,11 @@ $(document).ready(function() {
               width:$(window).width()
             })
             .appendTo('#pages');
+          FB.XFBML.parse();
           $('.main-aside .tooltip').hide();
           $(window).resize();
+          $('#page-footer').fadeOut();
+          $('#page-content').animate({height:$('#main-content').height()+8},800);
           $('#start-page').animate({left:'-100%'},800)
             .queue(function() { $(this).remove() });
           $('#main-bg').animate({ left:'0%' },800);
@@ -52,6 +51,10 @@ $(document).ready(function() {
             .animate({ left:'0%' },800)
             .queue(function() {
               $(this).css('position','relative');
+              $('#page-content').height('auto');
+              $('#page-footer')
+                .removeClass('start')
+                .fadeIn();
               addSchedule(data.user.scheduled_courses);
               $('.main-aside .tooltip')
                 .delay(data.user.scheduled_courses.length*200)

@@ -17,7 +17,7 @@ class SchedulesController < ApplicationController
     #   end
     # end
      
-    @schedule = User.find(3)
+    @schedule = User.last
     if request.xhr?
       render :json => 
         @schedule.to_json(:include => {
@@ -39,7 +39,7 @@ class SchedulesController < ApplicationController
   end
 
   def show
-    @schedule = User.find(3)
+    @schedule = User.last
     if request.xhr?
       render :json => 
         @schedule.to_json(:include => {

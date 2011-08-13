@@ -10,7 +10,7 @@ Schedule.delete_all
 ###
 eric = User.create(:uid => "1326120295", :name => "Eric Wu")
 jen = User.create(:uid => "1326120240", :name => "Jen")
-vincent = User.create(:uid => "9999", :name => "Vincent Siao")
+vincent = User.create(:uid => "1638210122", :name => "Vincent Siao")
 
 
 c15210 = Course.find_by_number("15210")
