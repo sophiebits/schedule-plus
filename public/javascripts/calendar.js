@@ -126,7 +126,6 @@
         $('.schedule .friends').stop(true,true).slideUp(); 
         
         if ($('.course' + number).hasClass('selected')) {
-          alert('off');
           $('.course, .lecture, .section').removeClass('selected')
         } else {
           $('.course, .lecture, .section').removeClass('selected');
