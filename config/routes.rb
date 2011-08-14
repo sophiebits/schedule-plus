@@ -47,11 +47,12 @@ AcmSchedule::Application.routes.draw do
   resource :schedules do
     get 'import', :on => :member
   end
-  
+	match "/schedules/get_friends_in_course" => "schedules#get_friends_in_course"
+  match "/schedules/:id" => "schedules#show"
+
   root :to => "home#index"
 
   match "/auth/:provider/callback" => "sessions#show"
   match "/main" => "home#main"
-	match "/schedules/get_friends_in_course" => "schedules#get_friends_in_course"
 
 end

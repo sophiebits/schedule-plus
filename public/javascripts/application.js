@@ -7,7 +7,7 @@
   });
 
 $(document).ready(function() {
- 
+
   (new Image()).src = "/images/ajax-small.gif";
 
   var speed = 600;
@@ -39,11 +39,10 @@ $(document).ready(function() {
               width:$(window).width()
             })
             .appendTo('#pages');
-          FB.XFBML.parse();
-          $('<div id="courses-after-tooltip" style="text-align:center"><span class="tooltip">Now that your schedule has been imported, connect to Facebook to see your friends\' schedules!</span></div>').appendTo('.main-aside').hide();
           $(window).resize();
+          $('<div id="courses-after-tooltip" style="text-align:center"><span class="tooltip">Now that your schedule has been imported, connect to Facebook to see your friends\' schedules!</span></div>').appendTo('.main-aside').hide();
           $('#page-footer').fadeOut();
-          $('#page-content').animate({height:$('#main-content').height()+8},800);
+          $('#page-content').animate({height:$('#main-content').height()},800);
           $('#start-page').animate({left:'-100%'},800)
             .queue(function() { $(this).remove() });
           $('#main-bg').animate({ left:'0%' },800);
@@ -54,10 +53,10 @@ $(document).ready(function() {
               $('#page-content').height('auto');
               $('#page-footer')
                 .removeClass('start')
-                .slideDown();
-              addSchedule(data.user.scheduled_courses);
-              $('.main-aside .tooltip')
-                .delay(data.user.scheduled_courses.length*200)
+                .show();
+              addSchedule(data);
+              $('.main-aside #courses-after-tooltip')
+                .delay(data.length*200)
                 .fadeIn(800);
             });
         });

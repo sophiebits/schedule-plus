@@ -50,7 +50,7 @@
   z-index:11;
     display:block;
       position:absolute;
-          width:100%
+  width:100%
 } 
 
 #page-header #schedule-plus-logo {
@@ -60,7 +60,7 @@
 
 #fb-login {
   position:absolute;
-  top:15px; right:30px;
+  top:15px; right:50px;
   display:block;
   width:65px; height:0;
   padding-top:22px;
@@ -87,9 +87,9 @@
 #page-footer #footer-inner {
   color:#ddd;
   width:748px;
-  padding:20px 40px 20px;
-  position:relative;
-  background:transparent url('/images/footer-top.gif') right top no-repeat;
+  padding:70px 40px  00;
+  position:relative; top:-70px; z-index:10;
+  background:transparent url('/images/footer-top.png') top repeat-x;
   left:132px
 }
 
@@ -98,7 +98,8 @@
   border-top:1px solid #1fbbbd;
   background:transparent none;
   width:880px;
-  left:0;
+  padding-top:20px;
+  top:0; left:0;
 }
 
 #pages {
@@ -249,7 +250,9 @@
 #main-nav-friends.locked .nav-link:after { background-position:0 -15px; }
 #main-nav-friends.locked .selected.nav-link:after,
 #main-nav-friends.locked .nav-link:hover:after { background-position:-15px -15px; }
-#main-nav-friends .nav-link:after { }
+#main-nav-friends .nav-link:after { background-position:0 -45px; }
+#main-nav-friends .selected.nav-link:after,
+#main-nav-friends .nav-link:hover:after { background-position:-15px -45px; }
 #main-nav-logout .nav-link:after { background-position:0 -30px; }
 #main-nav-logout .selected.nav-link:after,
 #main-nav-logout .nav-link:hover:after { background-position:-15px -30px }
@@ -262,11 +265,14 @@
 
 #main-content {
   position:relative;
-      float:left;
+  float:left;
         width:812px;
-  background-color:#eee;
-  border:8px solid #666;
-  border-width:0 8px;
+  background:#fff url('/images/main-content-bg.gif') left repeat-y;
+  border-right:1px solid #333;
+  border-left:1px solid #666;
+  /*border:8px solid #666;*/
+  /*border-width:0 8px 0 0;*/
+  padding-bottom:50px
 }
 
 #main-bg {
@@ -291,7 +297,6 @@
         width:180px;
       font-size:0.65em;
   min-height:620px;
-  background-color:#eee
 }
 
 .main-aside .nav-schedules {
@@ -400,7 +405,7 @@
   position:relative;
   width:526px;
   height:601px;
-  margin:20px 0 40px 60px;
+  margin:10px 0 40px 60px;
   background-color:#eee;
   list-style-type:none;
   clear:both;
@@ -629,24 +634,24 @@
 }
 
 #calendar-header {
-  height:50px;
-  margin-bottom:10px;
+  height:40px;
+  position:relative;
 }
 
 #calendar-header img {
   width:30px;
   height:30px;
   background-color:#ddd;
-  margin:20px 0 0 60px;
+  margin:10px 30px 0;
   border-radius:5px 0;
-  float:left
+  float:right
 }
 
 #calendar-header h1 {
-  float:left;
-  font-size:1.2em;
-  position:relative;
-  margin:28px 0 0 10px;
+  float:right;
+  font-size:1.1em;
+  position:absolute;
+  bottom:0; right:70px
 }
 
 ul#friends li {

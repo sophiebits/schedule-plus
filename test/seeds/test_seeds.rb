@@ -38,15 +38,23 @@ l21301 = Lecture.find_by_course_id_and_section(c21301.id, 'A')
 sc21301 = ScheduledCourse.create(:course_id => c21301.id, 
                                   :lecture_id => l21301.id)
 
-Schedule.create(:scheduled_course_id => sc15210.id, :user_id => vincent.id)
-Schedule.create(:scheduled_course_id => sc15213.id, :user_id => vincent.id)
-Schedule.create(:scheduled_course_id => sc15396.id, :user_id => vincent.id)
-Schedule.create(:scheduled_course_id => sc21301.id, :user_id => vincent.id)
+vs = Schedule.create(:user_id => vincent.id)
+es = Schedule.create(:user_id => eric.id)
+js = Schedule.create(:user_id => jen.id)
 
-Schedule.create(:scheduled_course_id => sc15210.id, :user_id => eric.id)
-Schedule.create(:scheduled_course_id => sc15396.id, :user_id => eric.id)
+ActiveSchedule.create([{:user_id => vincent.id, :schedule_id => vs.id},
+                       {:user_id => eric.id, :schedule_id => es.id},
+                       {:user_id => jen.id, :schedule_id => js.id}])
 
-Schedule.create(:scheduled_course_id => sc15396.id, :user_id => jen.id)
-Schedule.create(:scheduled_course_id => sc21301.id, :user_id => jen.id)
+CourseSelection.create(:scheduled_course_id => sc15210.id, :schedule_id => vs.id)
+CourseSelection.create(:scheduled_course_id => sc15213.id, :schedule_id => vs.id)
+CourseSelection.create(:scheduled_course_id => sc15396.id, :schedule_id => vs.id)
+CourseSelection.create(:scheduled_course_id => sc21301.id, :schedule_id => vs.id)
+
+CourseSelection.create(:scheduled_course_id => sc15210.id, :schedule_id => es.id)
+CourseSelection.create(:scheduled_course_id => sc15396.id, :schedule_id => es.id)
+
+CourseSelection.create(:scheduled_course_id => sc15396.id, :schedule_id => js.id)
+CourseSelection.create(:scheduled_course_id => sc21301.id, :schedule_id => js.id)
 
 puts "Completed successfully!"

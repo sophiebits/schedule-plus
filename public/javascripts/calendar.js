@@ -71,7 +71,9 @@
         +'"><ul class="courses"></ul></li>');
     
     for (var i = 0; i < courses.length; ++i) {
-      
+     
+      courses[i] = courses[i].scheduled_course;
+
       var course = courses[i].course;
       var lecture = courses[i].lecture;
       var recitation = courses[i].recitation;

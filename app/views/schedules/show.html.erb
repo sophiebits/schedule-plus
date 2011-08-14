@@ -7,8 +7,10 @@
 </div>
 <div id="article">
   <div id="calendar-header">
+  <% if current_user %>
   <img src="http://graph.facebook.com/vincentsiao/picture"/>
-  <h1><%= @foo %></h1>
+  <h1>Vincent Siao</h1>
+  <% end %>
   </div>
   <ul id="calendar">
 
@@ -18,17 +20,14 @@
 <script type="text/javascript">
 $(document).ready(function() {
   var sched = <%=
-        @schedule.to_json(:include => {
-          :scheduled_courses => {:include => 
+      @schedule.to_json(:include =>
             {
               :course => {}, 
               :lecture => {:include => :lecture_section_times}, 
-             :recitation => {:include => :recitation_section_times}
-            }
-          }
-        }).html_safe
+              :recitation => {:include => :recitation_section_times}
+            }).html_safe
  %>;
- addSchedule(sched.user.scheduled_courses);
+ addSchedule(sched);
 });
 </script>
 <% end %>

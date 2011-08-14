@@ -17,18 +17,14 @@ class SchedulesController < ApplicationController
     #   end
     # end
      
-    @schedule = User.last
+    @schedule = User.last.schedules.first.scheduled_courses
     if request.xhr?
-      render :json => 
-        @schedule.to_json(:include => {
-          :scheduled_courses => {:include => 
+      render :json => @schedule.to_json(:include =>
             {
               :course => {}, 
               :lecture => {:include => :lecture_section_times}, 
-             :recitation => {:include => :recitation_section_times}
-            }
-          }
-        })
+              :recitation => {:include => :recitation_section_times}
+            })
     else
       redirect_to schedules_path
     end
@@ -39,20 +35,24 @@ class SchedulesController < ApplicationController
   end
 
   def show
-    @schedule = User.last
-    if request.xhr?
-      render :json => 
-        @schedule.to_json(:include => {
-          :scheduled_courses => {:include => 
-            {
-              :course => {}, 
-              :lecture => {:include => :lecture_section_times}, 
-              :recitation => {:include => :recitation_section_times}
-            }
-          }
-        })
+    if (!params[:id]) 
+      if current_user
+        @schedule = current_user.main_schedule.scheduled_courses
+      else
+        redirect_to root_path
+      end
     else
+      @schedule = Schedule.find(params[:id]).scheduled_courses
+      if request.xhr?
+        render :json => @schedule.to_json(:include =>
+             {
+               :course => {}, 
+               :lecture => {:include => :lecture_section_times}, 
+               :recitation => {:include => :recitation_section_times}
+             })
+      else
         
+      end
     end
   end
 
@@ -61,10 +61,10 @@ class SchedulesController < ApplicationController
 			scheduled_course_id = params[:scheduled_course_id]
 			course_id = params[:course_id]
 
-			friends_includes = friends.includes(:scheduled_courses => [:course])
+			friends_includes = friends.includes(:main_schedule => {:scheduled_courses => [:course]})
 			if scheduled_course_id
 				render :json => friends_includes.where('scheduled_courses.id = ?', scheduled_course_id).to_json
-			elsif course_id
+		elsif course_id
 				render :json => friends_includes.where('courses.id = ?', course_id).to_json
 			end
 		else

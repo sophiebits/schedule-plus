@@ -10,7 +10,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110731002337) do
+ActiveRecord::Schema.define(:version => 20110814230915) do
+
+  create_table "active_schedules", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "schedule_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "course_selections", :force => true do |t|
+    t.integer  "schedule_id"
+    t.integer  "scheduled_course_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "courses", :force => true do |t|
     t.string   "number"

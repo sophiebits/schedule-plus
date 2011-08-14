@@ -1,8 +1,10 @@
 require 'open-uri'
 
 class User < ActiveRecord::Base
+  has_one :active_schedule
+  has_one :main_schedule, :through => :active_schedule, :source => :schedule
   has_many :schedules
-  has_many :scheduled_courses, :through => :schedules
+  has_many :scheduled_courses, :through => :main_schedule
   
   def self.create_with_omniauth(auth)
     create! do |user|
