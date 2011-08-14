@@ -9,7 +9,7 @@ Schedule.delete_all
 # Seed with test user/schedule info
 ###
 eric = User.create(:uid => "1326120295", :name => "Eric Wu")
-jen = User.create(:uid => "1326120240", :name => "Jen")
+jen = User.create(:uid => "1326120240", :name => "Jen Solyanik")
 vincent = User.create(:uid => "1638210122", :name => "Vincent Siao")
 
 
