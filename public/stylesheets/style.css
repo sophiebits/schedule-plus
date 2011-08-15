@@ -21,6 +21,7 @@
      font-size:0.8em;
        padding:0.7em;
          border-radius:5px;
+   position:relative
  }
 
  .tooltip:after {
@@ -90,16 +91,23 @@
   padding:70px 40px  00;
   position:relative; top:-70px; z-index:10;
   background:transparent url('/images/footer-top.png') top repeat-x;
-  left:132px
+  left:132px;
+  color:#ccc;
+  text-align:right;
 }
 
 #page-footer.start #footer-inner {
-  color:#666;
   border-top:1px solid #1fbbbd;
   background:transparent none;
   width:880px;
   padding-top:20px;
   top:0; left:0;
+}
+
+#acm-cmu-logo {
+  vertical-align:bottom;
+  margin-right:30px;
+  float:left;
 }
 
 #pages {
@@ -175,7 +183,7 @@
   position:absolute;
       left:50%;
         height:300px;
-          background-color:#666
+          /*background-color:#666*/
 }
 
 .sidebar {
@@ -268,8 +276,8 @@
   float:left;
         width:812px;
   background:#fff url('/images/main-content-bg.gif') left repeat-y;
-  border-right:1px solid #333;
-  border-left:1px solid #666;
+  border-right:1px solid #ccc;
+  border-left:1px solid #ccc;
   /*border:8px solid #666;*/
   /*border-width:0 8px 0 0;*/
   padding-bottom:50px
@@ -299,11 +307,38 @@
   min-height:620px;
 }
 
+.main-aside #add-course input[type=text] {
+  font-size:1em;
+  width:140px;
+  float:left;
+  margin:10px 0 15px
+}
+
+.main-aside #add-course input[type=submit] {
+  float:left;
+  width:20px;
+  height:0;
+  margin-top:10px;
+  margin-left:5px;
+  padding-top:20px;
+  background:transparent url('/images/form-add.png') no-repeat center;
+            border:0;
+              cursor:pointer
+}
+
+.main-aside .nav-friends,
 .main-aside .nav-schedules {
+  display:block;
+  position:relative;
+  padding:5px;
+  font-size:1.2em;
+  color:#333;
+  text-decoration:none;
     padding-left:25px;
       margin-bottom:10px;
 }
 
+.main-aside .nav-friends:after,
 .main-aside .nav-schedules:after {
     content:"";
       display:block;
@@ -312,13 +347,19 @@
             background-position:0 -30px;
               position:absolute;
                 top:3px;
-                  left:0;
+                  left:0px;
+}
+
+.main-aside .nav-friends:hover,
+.main-aside .nav-schedules:hover {
+  color:#1fbbbd
 }
 
 .schedule li {
-    position:relative;
-        margin-bottom:1px;
-          padding:6px;
+  clear:both;
+  position:relative;
+  margin-bottom:1px;
+  padding:6px;
 }
 
   .schedule .course {
@@ -506,7 +547,7 @@
     /*left:-1px;*/
       width:100px;
           text-align:center;
-            border-top:1px solid #333;
+            border-bottom:1px solid #999;
   border-style:solid;
   border-radius:5px 0;
   cursor:pointer;        
@@ -611,7 +652,8 @@
 }
 
 .schedule .loading {
-  margin:0 auto;
+  position:absolute;
+  top:5px; right:5px
 }
 
 .schedule .friends {
@@ -662,20 +704,48 @@
 
 ul#friends li {
   margin-bottom:2px;
+}
+
+ul#friends li a {
+  text-decoration:none;
+  display:block;
   padding:5px;
   background-color:#ddd;
   border-radius:5px 0;
+  border-right:5px solid #666;
+  border-bottom:1px solid #aaa;
+  background:-webkit-gradient(linear,left top,left bottom,from(#ddd),to(#d6d6d6));
+  background:-moz-linear-gradient(top,#ddd,#d6d6d6);
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ddd',endColorstr='#d6d6d6');
+}
+
+ul#friends li a:hover {
+  background:#f6f6f6 none;
 }
 
 ul#friends img {
-  width:22px;
-  height:22px;
-  vertical-align:middle
+  width:25px;
+  height:25px;
+  vertical-align:top
 }
 
 ul#friends li .name {
-  font-size:1.3em;
+  color:#333;
+  font-size:1.1em;
   position:relative;
   top:2px;
-  margin-left:5px
+  margin-left:8px
+}
+
+#friends-tooltip {
+  margin:40px;
+  padding:20px;
+  background-color:#1fbbbd;
+  font-size:1.3em
+}
+
+#friends-tooltip:after {
+  border-color:#1fbbbd transparent;
+  border-width:30px 30px 0 0;
+  bottom:-30px; right:50px;
 }

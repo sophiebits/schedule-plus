@@ -1,6 +1,15 @@
 <% content_for :content do %>
 <div class="main-aside">
- <!--<li class="nav-schedules">All Schedules</li>-->
+  <% if current_user && current_user == @schedule.user%>
+    <!--<a class="nav-schedules">All Schedules</a>-->
+    <!--<%= form_tag '/schedules/add-course', :id => 'add-course', :method => :get do %>
+      <%= text_field_tag :course, nil, :placeholder => '99101A' %>
+      <%= submit_tag "Add" %>
+    <% end %>-->
+  <% end %>
+  <% if controller.controller_name == 'friends' %>
+    <a href="/friends" class="nav-friends">All Friends</a>
+  <% end %>
   <ul class="schedule">
     
   </ul>
@@ -8,8 +17,8 @@
 <div id="article">
   <div id="calendar-header">
   <% if current_user %>
-  <img src="http://graph.facebook.com/vincentsiao/picture"/>
-  <h1>Vincent Siao</h1>
+    <img src="http://graph.facebook.com/<%= @schedule.user.uid %>/picture"/>
+    <h1><%= @schedule.user.name %></h1>
   <% end %>
   </div>
   <ul id="calendar">
@@ -19,15 +28,19 @@
 <% if controller.action_name == 'show' %>
 <script type="text/javascript">
 $(document).ready(function() {
-  var sched = <%=
-      @schedule.to_json(:include =>
+  var data = <%=
+      @schedule.to_json(:include => 
+        {:scheduled_courses => 
+          {:include => 
             {
-              :course => {}, 
-              :lecture => {:include => :lecture_section_times}, 
-              :recitation => {:include => :recitation_section_times}
-            }).html_safe
+              :course => {},
+              :lecture => { :include => :lecture_section_times },
+              :recitation => { :include => :recitation_section_times }
+            }
+          }
+        }).html_safe
  %>;
- addSchedule(sched);
+ addSchedule(data.schedule.scheduled_courses);
 });
 </script>
 <% end %>

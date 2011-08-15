@@ -24,7 +24,7 @@ $(document).ready(function() {
       url:      f.attr('action'),
       type:     f.attr('method'),
       dataType: 'json',
-      data:     f.serialize(),
+      data:     'url='+f.find('input[type=text]').attr('value'),
       complete: function() {
         f.find('input').attr('disabled',false);
         f.find('input[type=submit]')
@@ -54,15 +54,18 @@ $(document).ready(function() {
               $('#page-footer')
                 .removeClass('start')
                 .show();
-              addSchedule(data);
+              addSchedule(data.schedule.scheduled_courses);
               $('.main-aside #courses-after-tooltip')
-                .delay(data.length*200)
+                .delay(data.schedule.scheduled_courses.length*200)
                 .fadeIn(800);
+              $('#fb-login')
+                .delay(data.schedule.scheduled_courses.length*200)
+                .fadeIn();
             });
         });
       },
       error: function(jqXHR,textStatus,errorThrown) {
-        alert(errorThrown);
+        alert('error:' + errorThrown);
       }
     });
   });

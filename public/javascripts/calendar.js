@@ -55,8 +55,42 @@
           },200);
   }
 
-  function addCourse(schedule, course) {
-    alert(course);
+  function addCourse(scheduleId,data,i) {
+      
+      var course = data.course;
+      var lecture = data.lecture;
+      var recitation = data.recitation;
+      course.has_recitation = recitation != null;
+      /* add to schedule list */
+      $('.schedule').append('<li class="course' + course.number
+        + ' course" course-number="' + course.number 
+        + '" course-id="' + course.id 
+        + '" sched-id="' + data.id
+        + '"><span class="number">' + course.number + ' '
+        + (course.has_recitation ? recitation.section : lecture.section)
+        + '</span><span class="name">'
+        + course.name + '</span><div class="friends" style="display:none"></div></li>');
+      $('.schedule .course' + course.number)
+        .css({ height:$('.schedule .course' + course.number).height() })
+        .hide()
+        .delay(i*200)
+        .slideDown()
+        .height('auto');
+      if (course.has_recitation) {
+        recitation.times = recitation.recitation_section_times;
+        for (var j = 0; j < recitation.times.length; ++j)
+          addToCalendar(scheduleId, course.number, 
+            recitation.section, recitation.times[j], 'section',
+            i*200);
+      }
+      lecture.times = lecture.lecture_section_times
+      for (var j = 0; j < lecture.times.length; ++j)
+        addToCalendar(scheduleId, course.number, 
+          lecture.section, lecture.times[j], 
+          course.has_recitation ? 'lecture' : 'section',
+          i*200);
+      
+      assignColor(course.number,colors[randomColors[i%colors.length]]);
   }
 
   function addSchedule(courses, name) {
@@ -70,62 +104,23 @@
       $('#'+scheduleId+' ol').append('<li class="'+days[i]
         +'"><ul class="courses"></ul></li>');
     
-    for (var i = 0; i < courses.length; ++i) {
-     
-      courses[i] = courses[i].scheduled_course;
-
-      var course = courses[i].course;
-      var lecture = courses[i].lecture;
-      var recitation = courses[i].recitation;
-
-      course.has_recitation = recitation != null;
-
-      /* add to schedule list */
-      $('.schedule').append('<li class="course' + course.number
-        + ' course" course-number="' + course.number 
-        + '" course-id="' + course.id 
-        + '" sched-id="' + courses[i].id
-        + '"><span class="number">' + course.number + ' '
-        + (course.has_recitation ? recitation.section : lecture.section)
-        + '</span><span class="name">'
-        + course.name + '</span><div class="friends" style="display:none"><img class="loading" src="/images/ajax-friends.gif" /></div></li>');
-      
-      $('.schedule .course' + course.number)
-        .css({ height:$('.schedule .course' + course.number).height() })
-        .hide()
-        .delay(i*200)
-        .slideDown()
-        .height('auto');
-        
-        if (course.has_recitation) {
-          recitation.times = recitation.recitation_section_times;
-          for (var j = 0; j < recitation.times.length; ++j)
-            addToCalendar(scheduleId, course.number, 
-              recitation.section, recitation.times[j], 'section',
-              i*200);
-        }
-
-        lecture.times = lecture.lecture_section_times
-        for (var j = 0; j < lecture.times.length; ++j)
-          addToCalendar(scheduleId, course.number, 
-            lecture.section, lecture.times[j], 
-            course.has_recitation ? 'lecture' : 'section',
-            i*200);
-
-      assignColor(course.number,colors[randomColors[i%colors.length]]);
-
-      $('.course' + course.number).hover(function() {
-        $('.course' + $(this).attr('course-number')).addClass('highlight');
-      },function() {
-        $('.course' + $(this).attr('course-number')).removeClass('highlight');
-      });
-      
-      $('.course' + course.number).click(function() {
-      });
-    }
+    for (var i = 0; i < courses.length; ++i)
+      addCourse(scheduleId,courses[i],i);
 
   }
 
+//
+// Event listener to add highlight class to course
+//////////////////////////////////////////////////////////
+$('#main-content').delegate('.course, .section, .lecture','hover',function(e) {
+  if (e.type === 'mouseenter')
+    $('.course' + $(this).attr('course-number')).addClass('highlight');
+  else
+    $('.course' + $(this).attr('course-number')).removeClass('highlight');
+});
+//
+// Event listener to load friends in a course
+/////////////////////////////////////////////////////////
 $('#main-content').delegate('.course, .section, .lecture','click',function() {
       
   var number = $(this).attr('course-number');
@@ -140,6 +135,7 @@ $('#main-content').delegate('.course, .section, .lecture','click',function() {
     $('.course, .lecture, .section').removeClass('selected');
     $('.course' + number).addClass('selected');
     $('.schedule .course' + number + ' .friends')
+      .append('<img class="loading" src="/images/ajax-friends.gif" />')
       .slideDown();
     
     $.ajax({
@@ -161,7 +157,7 @@ $('#main-content').delegate('.course, .section, .lecture','click',function() {
           .html(html);
       },
       error: function(jqXHR,textStatus,errorThrown) {
-        alert(errorThrown);
+        alert('error: '+errorThrown);
       }
     }); 
   }
@@ -171,5 +167,31 @@ $(document).ready(function() {
 
   initCalendar();
   //addSchedule(schedules[0]);
+  
+  $('#add-course').live('submit',function(e) {
+    e.preventDefault();
+    var f = $(this);
+    f.find('input').attr('disabled',true);
+    f.find('input[type=submit]')
+     .css('background-image',"url(/images/ajax-small.gif)")
+    $.ajax({
+      url:  f.attr('action'),
+      type: f.attr('method'),
+      dataType: 'json',
+      data: 'course='+f.find('input[type=text]').attr('value'),
+      complete: function() {
+        f.find('input').attr('disabled',false);
+        f.find('input[type=submit]')
+         .css('background-image',"url(/images/form-add.png)") 
+      },
+      success: function(data,textStatus,jqXHR) {
+        //alert(JSON.stringify(data));
+        addCourse('my-schedule',data.scheduled_course,$('.schedule .course').length);
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        alert('error: '+errorThrown);
+      }
+    });
+  });
 
 });

@@ -3,12 +3,14 @@
  <!--<li class="nav-schedules">All Schedules</li>-->
 	<ul id="friends">
 	  <% @friends.each do |friend| %>
-	  <li><img src="http://graph.facebook.com/<%= friend.uid %>/picture" /><span class="name"><%= friend.name %></span></li>
+	  <li><a href="/friends/<%= friend.id %>"><img src="http://graph.facebook.com/<%= friend.uid %>/picture" /><span class="name"><%= friend.name %></span></a></li>
 	  <% end %>  
   </ul>
 </div>
 <div id="article">
-  <h1>Friends</h1>
+  <div id="friends-tooltip" class="tooltip">
+  Click a friend's name to see their schedule. Invite more friends with this link. Yeah really cool.
+  </div>
 </div>
 <% end %>
 <%= render :partial => 'partials/mainpage' %>

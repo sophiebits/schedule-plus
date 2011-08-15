@@ -17,14 +17,17 @@ class SchedulesController < ApplicationController
     #   end
     # end
      
-    @schedule = User.last.schedules.first.scheduled_courses
+    @schedule = User.last.main_schedule
     if request.xhr?
       render :json => @schedule.to_json(:include =>
+        {:scheduled_courses => {:include =>
             {
               :course => {}, 
               :lecture => {:include => :lecture_section_times}, 
               :recitation => {:include => :recitation_section_times}
-            })
+            }
+        }
+      })
     else
       redirect_to schedules_path
     end
@@ -37,19 +40,22 @@ class SchedulesController < ApplicationController
   def show
     if (!params[:id]) 
       if current_user
-        @schedule = current_user.main_schedule.scheduled_courses
+        @schedule = current_user.main_schedule
       else
         redirect_to root_path
       end
     else
-      @schedule = Schedule.find(params[:id]).scheduled_courses
+      @schedule = Schedule.find(params[:id])
       if request.xhr?
         render :json => @schedule.to_json(:include =>
+          {:scheduled_courses => {:include =>
              {
                :course => {}, 
                :lecture => {:include => :lecture_section_times}, 
                :recitation => {:include => :recitation_section_times}
-             })
+             }
+          }
+        })
       else
         
       end
@@ -71,4 +77,34 @@ class SchedulesController < ApplicationController
 			redirect_to schedules_path
 		end
 	end
+
+  def add_course
+    if request.xhr?
+      input = params[:course]
+      letter = input[5..-1]
+      number = input[0,5]
+      
+      course = Course.find_by_number(number)
+      section = course.find_by_section(letter)
+p "COURSE " + course.number
+p "SECTION " + section.section
+
+      if course.lectures.find_by_section(letter)
+        @course = ScheduledCourse.find_or_create_by_course_id_and_lecture_id(
+          :course_id => course.id, :lecture_id => section.id)
+      else
+        @course = ScheduledCourse.find_or_create_by_course_id_and_lecture_id_and_recitation_id(
+          :course_id => course.id, :lecture_id => section.lecture.id, :recitation_id => section.id)
+      end
+
+      CourseSelection.create(:schedule_id => current_user.main_schedule.id, :scheduled_course_id => @course.id)
+      render :json => @course.to_json(:include => {
+        :course => {},
+        :lecture => { :include => :lecture_section_times },
+        :recitation => { :include => :recitation_section_times }
+      })
+    else
+
+    end
+  end
 end
