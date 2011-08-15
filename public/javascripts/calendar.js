@@ -104,9 +104,10 @@
       $('#'+scheduleId+' ol').append('<li class="'+days[i]
         +'"><ul class="courses"></ul></li>');
     
-    for (var i = 0; i < courses.length; ++i)
+    for (var i = 0; i < courses.length; ++i) {
+      alert('adding course ' + i);
       addCourse(scheduleId,courses[i],i);
-
+    }
   }
 
 //
