@@ -105,7 +105,6 @@
         +'"><ul class="courses"></ul></li>');
     
     for (var i = 0; i < courses.length; ++i) {
-      alert('adding course ' + i);
       addCourse(scheduleId,courses[i],i);
     }
   }
