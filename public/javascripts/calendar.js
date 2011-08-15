@@ -49,8 +49,8 @@
       for (var i = 0; i < conflicts.length; ++i)
         conflicts.eq(i).show().css({ opacity:0 })
           .animate({ 
-            width: (105/conflicts.length)-5+'px',
-            left:i*105/conflicts.length+'px',
+            width: (105/conflicts.length),//-5,
+            left:i*105/conflicts.length,
             opacity:1
           },200);
   }
@@ -121,45 +121,52 @@
       });
       
       $('.course' + course.number).click(function() {
-        var number = $(this).attr('course-number');
-        var course_id = $('.schedule .course'+number).attr('course-id');
-        var sched_id = $('.schedule .course'+number).attr('sched-id');
-
-        $('.schedule .friends').stop(true,true).slideUp(); 
-        
-        if ($('.course' + number).hasClass('selected')) {
-          $('.course, .lecture, .section').removeClass('selected')
-        } else {
-          $('.course, .lecture, .section').removeClass('selected');
-          $('.course' + number).addClass('selected');
-          $('.schedule .course' + number + ' .friends')
-            .slideDown();
-          
-          $.ajax({
-            url:      '/schedules/get_friends_in_course',
-            type:     'GET',
-            dataType: 'json',
-            data:     'scheduled_course_id='+sched_id,
-            complete: function() {},
-            success: function(data,textStatus,jqXHR) {
-              html = '<ul><li class="me"><img src="http://graph.facebook.com/vincentsiao/picture" /></li>';
-              for (var j = 0; j < data.length; ++j)
-                html += '<li><img src="http://graph.facebook.com/'+data[j].user.uid+'/picture" /></li>';
-              html += '</ul>';
-              $('.schedule .course'+ number + ' .friends')
-                .html(html);
-            },
-            error: function(jqXHR,textStatus,errorThrown) {
-              alert(errorThrown);
-            }
-          });
-        
-        }
       });
     }
 
   }
-  
+
+$('#main-content').delegate('.course, .section, .lecture','click',function() {
+      
+  var number = $(this).attr('course-number');
+  var course_id = $('.schedule .course'+number).attr('course-id');
+  var sched_id = $('.schedule .course'+number).attr('sched-id');
+
+  $('.schedule .friends').stop(true,true).slideUp(); 
+      
+  if ($('.course' + number).hasClass('selected')) {
+    $('.course, .lecture, .section').removeClass('selected')
+  } else {
+    $('.course, .lecture, .section').removeClass('selected');
+    $('.course' + number).addClass('selected');
+    $('.schedule .course' + number + ' .friends')
+      .slideDown();
+    
+    $.ajax({
+      url:      '/schedules/get_friends_in_course',
+      type:     'GET',
+      dataType: 'json',
+      data:     'scheduled_course_id='+sched_id,
+      complete: function() {},
+      success: function(data,textStatus,jqXHR) {
+        html = '<ul><li class="me"><img src="http://graph.facebook.com/vincentsiao/picture" /></li>';
+        for (var j = 0; j < data.length; ++j) {
+          var friend = data[j].user
+          html += '<li><a href="/friends/' + friend.id + '">'
+                + '<img src="http://graph.facebook.com/' + friend.uid 
+                + '/picture" /></a></li>';
+        }
+        html += '</ul>';
+        $('.schedule .course'+ number + ' .friends')
+          .html(html);
+      },
+      error: function(jqXHR,textStatus,errorThrown) {
+        alert(errorThrown);
+      }
+    }); 
+  }
+});
+
 $(document).ready(function() {
 
   initCalendar();

@@ -338,7 +338,7 @@
       background:none;
       background-color:#f6f6f6;
       color:#333;
-      border-bottom-color:#ddd
+      border-bottom-color:#ddd;
   }
 
   .schedule .course .number {
@@ -507,10 +507,8 @@
       width:100px;
           text-align:center;
             border-top:1px solid #333;
-  border-right-width:5px;
   border-style:solid;
-  border-right-color:#333;
-                border-radius:5px 0;
+  border-radius:5px 0;
   cursor:pointer;        
 }
 
@@ -552,6 +550,10 @@
 #calendar .lecture.highlight {
   background-color:#666;
   color:#ddd;
+      
+      background:-webkit-gradient(linear,left top,left bottom,from(#777),to(#666));
+      background:-moz-linear-gradient(top,#777,#666);
+      filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#777',endColorstr='#666');
 }
 
 #calendar .blue.highlight { border-right-color:rgb(69,117,212) }
@@ -620,6 +622,10 @@
   display:inline-block;
   margin-right:2px;
   padding:0
+}
+
+.schedule .friends li a:hover img {
+  border-color:#1fbbbd;
 }
 
 .schedule .friends li img {

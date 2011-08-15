@@ -4,9 +4,11 @@
 				<div class="container">
 					<div class="sidebar">
 						<ul id="main-nav">
-							<li id="main-nav-schedules"><%= link_to "schedule", schedules_path, :class => "selected nav-link" %></li>
+							<li id="main-nav-schedules">
+                <a href="schedules" class="<% if controller.controller_name == 'schedules' %>selected <% end %>nav-link">schedule</a>
+              </li>
 							<li id="main-nav-friends"<% if !current_user %> class="locked"<% end %>>
-                <a class="nav-link"<% if current_user %> href="friends"<% end %>>friends</a>
+                <a class="<% if controller.controller_name == 'friends' %>selected <% end %>nav-link"<% if current_user %> href="friends"<% end %>>friends</a>
 								<% if !current_user %>
                 <span class="tooltip">
 									<script type="text/javascript">
