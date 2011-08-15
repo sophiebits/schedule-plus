@@ -11,7 +11,7 @@ Schedule.delete_all
 eric = User.create(:uid => "1326120295", :name => "Eric Wu")
 jen = User.create(:uid => "1326120240", :name => "Jen Solyanik")
 vincent = User.create(:uid => "1638210122", :name => "Vincent Siao")
-
+jason = User.create(:uid => "1232652999", :name => "Jason MacDonald")
 
 c15210 = Course.find_by_number("15210")
 c15213 = Course.find_by_number("15213")
@@ -41,15 +41,22 @@ sc21301 = ScheduledCourse.create(:course_id => c21301.id,
 vs = Schedule.create(:user_id => vincent.id)
 es = Schedule.create(:user_id => eric.id)
 js = Schedule.create(:user_id => jen.id)
+jmacs = Schedule.create(:user_id => jason.id)
 
 ActiveSchedule.create([{:user_id => vincent.id, :schedule_id => vs.id},
                        {:user_id => eric.id, :schedule_id => es.id},
-                       {:user_id => jen.id, :schedule_id => js.id}])
+                       {:user_id => jen.id, :schedule_id => js.id},
+											 {:user_id => jason.id, :schedule_id => jmacs.id}])
 
 CourseSelection.create(:scheduled_course_id => sc15210.id, :schedule_id => vs.id)
 CourseSelection.create(:scheduled_course_id => sc15213.id, :schedule_id => vs.id)
 CourseSelection.create(:scheduled_course_id => sc15396.id, :schedule_id => vs.id)
 CourseSelection.create(:scheduled_course_id => sc21301.id, :schedule_id => vs.id)
+
+CourseSelection.create(:scheduled_course_id => sc15210.id, :schedule_id => jmacs.id)
+CourseSelection.create(:scheduled_course_id => sc15213.id, :schedule_id => jmacs.id)
+CourseSelection.create(:scheduled_course_id => sc15396.id, :schedule_id => jmacs.id)
+CourseSelection.create(:scheduled_course_id => sc21301.id, :schedule_id => jmacs.id)
 
 CourseSelection.create(:scheduled_course_id => sc15210.id, :schedule_id => es.id)
 CourseSelection.create(:scheduled_course_id => sc15396.id, :schedule_id => es.id)

@@ -120,8 +120,8 @@ end
 ##########################################################
 ##########################################################
 
-def timetostring(time)     
-return 'TBA' if !time || time == ''
+def timetominutes(time)     
+return -1 if !time || time == ''
 
 is_pm = (time.include? 'PM')
 times = time[0,5].split(':')
@@ -129,14 +129,14 @@ hour = times[0]
 min = times[1]
 
 if (hour.include? "12")
-	hour = (hour.to_i - 12).to_s
+	hour = (hour.to_i - 12)
 end
 
 if is_pm
-	hour = (hour.to_i + 12).to_s
+	hour = (hour.to_i + 12)
 end
 
-(hour.to_i*60 + min.to_i).to_s
+(hour.to_i*60 + min.to_i)
 end
 
 
@@ -211,8 +211,8 @@ catch(:done) do
 				getdays(cells[4].inner_text).each do |day|
 					db_lec_sec_time = LectureSectionTime.create(:lecture_id => db_lecture.id,
 																											:day 				=> day,
-																											:begin 			=> timetostring(cells[5].inner_text),
-																											:end 				=> timetostring(cells[6].inner_text),
+																											:begin 			=> timetominutes(cells[5].inner_text),
+																											:end 				=> timetominutes(cells[6].inner_text),
 																											:location 	=> cells[7].inner_text)
 				end
 				i += 1
@@ -249,8 +249,8 @@ catch(:done) do
 						getdays(cells[4].inner_text).each do |day|
 							db_rec_sec_time = RecitationSectionTime.create(	:recitation_id => db_recitation.id,
 																															:day 				=> day,
-																															:begin 			=> timetostring(cells[5].inner_text),
-																															:end 				=> timetostring(cells[6].inner_text),
+																															:begin 			=> timetominutes(cells[5].inner_text),
+																															:end 				=> timetominutes(cells[6].inner_text),
 																															:location 	=> cells[7].inner_text)
 						end
 						i += 1

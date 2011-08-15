@@ -38,8 +38,8 @@ ActiveRecord::Schema.define(:version => 20110814230915) do
   create_table "lecture_section_times", :force => true do |t|
     t.integer "lecture_id"
     t.string  "day"
-    t.string  "begin"
-    t.string  "end"
+    t.integer "begin"
+    t.integer "end"
     t.string  "location"
   end
 
@@ -72,7 +72,6 @@ ActiveRecord::Schema.define(:version => 20110814230915) do
   end
 
   create_table "schedules", :force => true do |t|
-    t.integer  "scheduled_course_id"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
