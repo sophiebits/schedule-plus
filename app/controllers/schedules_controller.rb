@@ -1,23 +1,8 @@
 class SchedulesController < ApplicationController
   def import
-    # Parser.parse(params[:url])
-    # if valid
-    #   if request.xhr?
-    #     
-    #   else
-    #     flash[:notice] = "Imported Schedule."
-    #     redirect_to schedule_path(...)
-    #   end
-    # else
-    #   if request.xhr?
-    #     render :status => 403
-    #   else
-    #     flash[:error] = "Schedule could not be imported. Check your Scheduleman URL and try again."
-    #     redirect_to schedule_path(...)
-    #   end
-    # end
-     
-    @schedule = User.last.main_schedule
+    @schedule = Parser.parse(params[:url]+".ics")
+    # store imported schedule id in session var to retrieve after oauth
+    session[:imported] = @schedule.id
     if request.xhr?
       render :json => @schedule.to_json(:include =>
         {:scheduled_courses => {:include =>

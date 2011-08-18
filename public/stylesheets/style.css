@@ -724,9 +724,10 @@ ul#friends li a:hover {
 }
 
 ul#friends img {
+  float:left;
   width:25px;
   height:25px;
-  vertical-align:top
+  margin-right:5px;
 }
 
 ul#friends li .name {
@@ -734,14 +735,20 @@ ul#friends li .name {
   font-size:1.1em;
   position:relative;
   top:2px;
-  margin-left:8px
+}
+
+ul#friends li .status { 
+  display:block;
+  font-style:italic;
+  color:#aaa;
+  margin:2px 3px 3px 8px;
 }
 
 #friends-tooltip {
-  margin:40px;
+  margin:80px 80px;
   padding:20px;
   background-color:#1fbbbd;
-  font-size:1.3em
+  font-size:1.2em
 }
 
 #friends-tooltip:after {

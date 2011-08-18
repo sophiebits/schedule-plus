@@ -8,10 +8,11 @@ Schedule.delete_all
 ###
 # Seed with test user/schedule info
 ###
-eric = User.create(:uid => "1326120295", :name => "Eric Wu")
-jen = User.create(:uid => "1326120240", :name => "Jen Solyanik")
+temp = User.create(:uid    => "-1", :name => "Temp User")
+eric = User.create(:uid    => "1326120295", :name => "Eric Wu")
+jen = User.create(:uid     => "1326120240", :name => "Jen Solyanik")
 vincent = User.create(:uid => "1638210122", :name => "Vincent Siao")
-jason = User.create(:uid => "1232652999", :name => "Jason MacDonald")
+jason = User.create(:uid   => "1232652999", :name => "Jason MacDonald")
 
 c15210 = Course.find_by_number("15210")
 c15213 = Course.find_by_number("15213")

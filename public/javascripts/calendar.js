@@ -94,6 +94,7 @@
   }
 
   function addSchedule(courses, name) {
+
     /* create schedule */
     if (!name) name = "my";
     scheduleId = name+'-schedule';
@@ -121,7 +122,9 @@ $('#main-content').delegate('.course, .section, .lecture','hover',function(e) {
 //
 // Event listener to load friends in a course
 /////////////////////////////////////////////////////////
-$('#main-content').delegate('.course, .section, .lecture','click',function() {
+$('#main-content').delegate('.course, .section, .lecture','click',loadFriends);
+
+function loadFriends() {
       
   var number = $(this).attr('course-number');
   var course_id = $('.schedule .course'+number).attr('course-id');
@@ -161,7 +164,7 @@ $('#main-content').delegate('.course, .section, .lecture','click',function() {
       }
     }); 
   }
-});
+}
 
 $(document).ready(function() {
 

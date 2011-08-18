@@ -3,7 +3,10 @@
  <!--<li class="nav-schedules">All Schedules</li>-->
 	<ul id="friends">
 	  <% @friends.each do |friend| %>
-	  <li><a href="/friends/<%= friend.id %>"><img src="http://graph.facebook.com/<%= friend.uid %>/picture" /><span class="name"><%= friend.name %></span></a></li>
+	  <li><a href="/friends/<%= friend.id %>">
+      <img src="http://graph.facebook.com/<%= friend.uid %>/picture" /><span class="name"><%= friend.name %></span>
+      <span class="status">currently in 15-410</span>
+    </a></li>
 	  <% end %>  
   </ul>
 </div>
