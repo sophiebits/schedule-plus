@@ -1,6 +1,6 @@
 class SchedulesController < ApplicationController
   def import
-    @schedule = Parser.parse(params[:url]+".ics")
+    @schedule = Parser.parse(params[:url])
     # store imported schedule id in session var to retrieve after oauth
     session[:imported] = @schedule.id
     if request.xhr?
