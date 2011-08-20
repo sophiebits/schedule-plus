@@ -1,26 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>We're sorry, but something went wrong (500)</title>
-  <style type="text/css">
-    body { background-color: #fff; color: #666; text-align: center; font-family: arial, sans-serif; }
-    div.dialog {
-      width: 25em;
-      padding: 0 4em;
-      margin: 4em auto 0 auto;
-      border: 1px solid #ccc;
-      border-right-color: #999;
-      border-bottom-color: #999;
-    }
-    h1 { font-size: 100%; color: #f00; line-height: 1.5em; }
-  </style>
+	<title>schedule+ - 500'd</title>
+	<link href='http://fonts.googleapis.com/css?family=Nunito:300,700&v2' rel='stylesheet' type='text/css' />
+  <link href="/stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/stylesheets/style.css" media="screen" rel="stylesheet" type="text/css" />
 </head>
-
 <body>
-  <!-- This file lives in public/500.html -->
-  <div class="dialog">
-    <h1>We're sorry, but something went wrong.</h1>
-    <p>We've been notified about this issue and we'll take a look at it shortly.</p>
+	<div id="page-header">
+    <div class="container">
+      <a href="/"><img id="schedule-plus-logo" src="/images/schedule-plus-logo-sm.png" alt="schedule+" /></a>
+      <a href="/auth/facebook" id="fb-login">Login with Facebook</a>
+    </div>
+  </div>
+	<div id="page-content">
+    <div id="page-bg"></div>
+		<ul id="pages">
+			<li id="error-page" class="e500 page">
+      <div class="container">
+        <h1>Fail :-(</h1>
+        <span class="tooltip">500 Internal Server Error</span>
+        <p>Rest assured, we're working out the kinks. Like the pros,
+        we've dispatched our own squadron of highly trained code monkeys 
+        to bash the bugs using Model M keyboards for maximum aural feedback.
+        This issue will be fixed soon - guaranteed or your money back!</p>
+      </div>
+      </li>
+	  </ul>
+  </div>
+  <div id="page-footer" class="start">
+  <div class="container">
+    <div id="footer-inner">
+    <a href="http://acm-site.heroku.com/"><img id="acm-cmu-logo" src="/images/acm-cmu-logo.png" alt="acm@cmu" /></a>
+    Terms of Use | Privacy Policy | Feedback
+    </div>
+  </div>
   </div>
 </body>
 </html>

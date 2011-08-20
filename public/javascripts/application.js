@@ -13,10 +13,12 @@ $(document).ready(function() {
   var speed = 600;
   
   $(window).resize();
- 
+
+  $('#start-page .error.tooltip').hide();
   $('#start-page #add-schedule').submit(function(e) {
     e.preventDefault();
     var f = $(this);
+    $('#start-page .error.tooltip').fadeOut();
     f.find('input').attr('disabled',true);
     f.find('input[type=submit]')
      .css('background-image',"url(/images/ajax-small.gif)")
@@ -31,7 +33,7 @@ $(document).ready(function() {
          .css('background-image',"url(/images/form-add.png)")
       },
       success: function(data,textStatus,jqXHR) {
-        $.get('main',function(mainPage) {
+        $.get('/main?schedule='+data.schedule.id,function(mainPage) {
           $('#fb-login').fadeOut();
           $(mainPage).css({
               position:'absolute',
@@ -54,7 +56,7 @@ $(document).ready(function() {
               $('#page-footer')
                 .removeClass('start')
                 .show();
-              addSchedule(data.schedule.scheduled_courses);
+              //addSchedule(data.schedule.scheduled_courses);
               $('.main-aside #courses-after-tooltip')
                 .delay(data.schedule.scheduled_courses.length*200)
                 .fadeIn(800);
@@ -65,7 +67,8 @@ $(document).ready(function() {
         });
       },
       error: function(jqXHR,textStatus,errorThrown) {
-        alert('error:' + errorThrown);
+        $('#start-page .error.tooltip').html(//errorThrown
+          "We couldn't import your schedule. Check your URL and try again.").fadeIn();
       }
     });
   });

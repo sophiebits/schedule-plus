@@ -122,7 +122,7 @@ $('#main-content').delegate('.course, .section, .lecture','hover',function(e) {
 //
 // Event listener to load friends in a course
 /////////////////////////////////////////////////////////
-$('#main-content').delegate('.course, .section, .lecture','click',loadFriends);
+// $('#main-content').delegate('.course, .section, .lecture','click',loadFriends);
 
 function loadFriends() {
       

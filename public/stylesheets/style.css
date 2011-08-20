@@ -32,13 +32,21 @@
             width:0;
  }
 
+#error-page .tooltip,
 #start-page .tooltip {
   position:absolute;
-    left:4em; top:290px;;
+    left:4em; top:290px;
       color:#fff;
         background-color:#1fbbbd;
 }
-
+#error-page .tooltip {
+  left:6em;
+}
+#error-page .tooltip:after {
+  top:-10px; right:20px;
+  border-width:0 10px 10px 0;
+  border-color:#1fbbbd transparent;
+}
 #start-page .tooltip:after {
   top:-20px; /* value = - border-top-width - border-bottom-width */
     right:100px;
@@ -46,6 +54,19 @@
         border-color:#1fbbbd transparent; 
 }
 
+#start-page .error.tooltip {
+  top:170px;
+  right:40px; left:auto;
+  background-color:rgb(250,62,84);
+}
+
+#start-page .error.tooltip:after {
+  top:auto;
+  bottom:-20px;
+  right:40px;
+  border-color:transparent rgb(250,62,84);
+  border-width:0 0 20px 20px;
+}
 
 #page-header {
   z-index:11;
@@ -129,9 +150,9 @@
 }
 #start-page { 
     position:absolute;
-    }
-#main-page { }
+}
 
+#error-page h1,
 #start-page h1 {
   position:absolute;
     top:200px;
@@ -142,6 +163,7 @@
               letter-spacing:-0.05em;
 }
 
+#error-page p,
 #start-page p {
   position:relative;
     top:320px;
@@ -149,6 +171,15 @@
         color:#666;
           font-size:1.2em;
             line-height:1.3em;
+}
+
+#error-page p {
+  top:335px;
+  padding:1em 2em 0;
+}
+#error-page.e500 p {
+  top:320px;
+  padding:2em;
 }
 
 #add-schedule {
@@ -755,4 +786,15 @@ ul#friends li .status {
   border-color:#1fbbbd transparent;
   border-width:30px 30px 0 0;
   bottom:-30px; right:50px;
+}
+
+#schedule-permalink {
+  font-size:0.7em;
+  color:#aaa;
+  float:left;
+  margin:20px 30px;
+  padding:3px;
+  width:240px;
+  border:1px solid #ddd;
+  border-radius:5px;
 }

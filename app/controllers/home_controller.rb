@@ -7,6 +7,7 @@ class HomeController < ApplicationController
   
   def main
     if request.xhr?
+      @schedule = Schedule.find(params[:schedule])
       render 'schedules/show', :layout => false
     else
       redirect_to root_path
