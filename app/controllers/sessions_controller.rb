@@ -26,7 +26,7 @@ class SessionsController < ApplicationController
 			end
 		end
 		
-    redirect_to root_url
+    redirect_to schedules_url
   end
 
   def destroy

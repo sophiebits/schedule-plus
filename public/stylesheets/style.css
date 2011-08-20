@@ -82,7 +82,7 @@
 
 #fb-login {
   position:absolute;
-  top:15px; right:50px;
+  top:14px; right:25px;
   display:block;
   width:65px; height:0;
   padding-top:22px;
@@ -304,8 +304,9 @@
 
 #main-content {
   position:relative;
+  top:10px;
   float:left;
-        width:812px;
+  width:812px;
   background:#fff url('/images/main-content-bg.gif') left repeat-y;
   border-right:1px solid #ccc;
   border-left:1px solid #ccc;
@@ -477,7 +478,7 @@
   position:relative;
   width:526px;
   height:601px;
-  margin:10px 0 40px 60px;
+  margin:20px 0 40px 60px;
   background-color:#eee;
   list-style-type:none;
   clear:both;
@@ -713,7 +714,7 @@
 }
 
 #calendar-header {
-  height:40px;
+  height:50px;
   position:relative;
 }
 
@@ -723,14 +724,14 @@
   background-color:#ddd;
   margin:10px 30px 0;
   border-radius:5px 0;
-  float:right
+  position:absolute;
+  left:0; bottom:0
 }
 
 #calendar-header h1 {
-  float:right;
   font-size:1.1em;
   position:absolute;
-  bottom:0; right:70px
+  bottom:0; left:70px
 }
 
 ul#friends li {
@@ -791,10 +792,28 @@ ul#friends li .status {
 #schedule-permalink {
   font-size:0.7em;
   color:#aaa;
-  float:left;
-  margin:20px 30px;
   padding:3px;
   width:240px;
   border:1px solid #ddd;
   border-radius:5px;
+  position:absolute;
+  right:30px; bottom:0
+}
+
+#info {
+  text-align:right;
+  background-color:#1fbbbd;
+  color:#eee;
+  font-size:13px;
+  padding:8px 10px;
+}
+
+#add-schedule-main {
+  position:absolute;
+  left:8px; top:5px
+}
+
+#add-schedule-main input[type=text] {
+  font-size:10px;
+  width:200px;
 }
