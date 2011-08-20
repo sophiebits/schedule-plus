@@ -17,6 +17,18 @@ end
 class Parser < ActiveRecord::Base
 
   def self.parse(url, current_user_id = -1)
+    
+    #if the link has a trailing '/' remove it
+    if (url[url.length-1] == '/')
+       url[url.length-1] = ''
+    end
+
+    if ((url[url.length-4,url.length-1]).eql?(".ics"))
+       url = url[0..(url.length-5)]
+    end
+
+    #append .ics to get the file from scheduleman server, not the html code
+    url = url + ".ics"
 	
 		scheduled_courses = Hash.new
 		
