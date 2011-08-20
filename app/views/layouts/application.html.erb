@@ -20,7 +20,16 @@
 			oauth: true
     });
   </script>
-	<%= render :partial => 'partials/header' %>
+	<script type="text/javascript">
+    var uvOptions = {};
+    (function() {
+      var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
+      uv.src = ('https:' == document.location.protocole ? 'https://' : 'http://') +
+        'widget.uservoice.com/I5D8gB6nZoiZqoWPrj2Faw.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
+    })();
+  </script>
+  <%= render :partial => 'partials/header' %>
 	<!--
 	<% flash.each do |name, msg| %>
 	<%= content_tag :div, msg, :id => "flash_#{name}" %>
