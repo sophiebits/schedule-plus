@@ -22,9 +22,20 @@ class Parser < ActiveRecord::Base
     if (url[url.length-1] == '/')
        url[url.length-1] = ''
     end
-
+ 
+    #if the url has a trailing '.ics' remove it
     if ((url[url.length-4,url.length-1]).eql?(".ics"))
        url = url[0..(url.length-5)]
+    end
+
+    #if the url is http, add in the 's' to make it https
+    if ((url[0..4]).eql?("http:"))
+       url = "https" + url[4..(url.length-1)]
+    end
+
+    #if the url doesnt have any http/https protocal prefix, add it
+    if (!url.include?("https://"))
+       url = "https://" + url
     end
 
     #append .ics to get the file from scheduleman server, not the html code
