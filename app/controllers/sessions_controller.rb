@@ -3,6 +3,8 @@ require 'net/https'
 
 class SessionsController < ApplicationController
   def show
+    reset_session
+    
     auth = request.env['omniauth.auth']
     user = User.find_by_uid(auth['uid']) || User.create_with_omniauth(auth)
     
@@ -30,7 +32,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    session[:user_id] = nil
+    reset_session
     redirect_to root_url
   end
 end
