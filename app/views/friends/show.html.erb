@@ -18,7 +18,7 @@
   <fb:serverFbml width="490px">
   <script type="text/fbml">
   <fb:fbml>
-  <fb:request-form action="http://<%= 'acm-schedule' if request.domain == 'heroku.com' %><%= request.domain %><%= ':3000' if request.domain == 'localhost' %>/friends" method="POST" invite="true" type="schedule+" content="Import your ScheduleMan schedule and see your friends' schedules!">
+  <fb:request-form action="http://<%= 'acm-schedule.' if request.domain == 'heroku.com' %><%= request.domain %><%= ':3000' if request.domain == 'localhost' %>/friends" method="POST" invite="true" type="schedule+" content="Import your ScheduleMan schedule and see your friends' schedules!">
     <fb:multi-friend-selector cols="3" showborder="false" actiontext="Invite Your Friends to schedule+" />
   </fb:request-form>
   </fb:fbml>
