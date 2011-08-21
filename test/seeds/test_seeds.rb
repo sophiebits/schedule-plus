@@ -4,6 +4,8 @@
 User.delete_all
 ScheduledCourse.delete_all
 Schedule.delete_all
+ActiveSchedule.delete_all
+CourseSelection.delete_all
 
 ###
 # Seed with test user/schedule info
