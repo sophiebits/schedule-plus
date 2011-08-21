@@ -49,7 +49,7 @@ class User < ActiveRecord::Base
 		if number == ''
 			return 'free'
 		else
-			return number + ' ' + section
+			return 'in' + number + ' ' + section
 		end
 	end
 end

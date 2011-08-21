@@ -777,16 +777,15 @@ ul#friends li .status {
 }
 
 #friends-tooltip {
-  margin:80px 80px;
-  padding:20px;
+  margin:20px 130px;
+  padding:10px;
   background-color:#1fbbbd;
-  font-size:1.2em
 }
 
 #friends-tooltip:after {
   border-color:#1fbbbd transparent;
-  border-width:30px 30px 0 0;
-  bottom:-30px; right:50px;
+  border-width:20px 20px 0 0;
+  bottom:-20px; right:50px;
 }
 
 #schedule-permalink {

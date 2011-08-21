@@ -54,8 +54,19 @@ class SchedulesController < ApplicationController
 
 			friends_includes = friends.includes(:main_schedule => {:scheduled_courses => [:course]})
 			if scheduled_course_id
-				render :json => friends_includes.where('scheduled_courses.id = ?', scheduled_course_id).to_json
-		elsif course_id
+				
+        friends = friends_includes.where('scheduled_courses.id = ?', scheduled_course_id)
+        response = Hash.new
+
+        response[:data] = friends
+        if current_user.main_schedule.scheduled_courses.exists? scheduled_course_id
+          response[:me] = current_user.uid 
+        else
+          response[:me] = nil
+        end
+
+        render :json => response.to_json
+		  elsif course_id
 				render :json => friends_includes.where('courses.id = ?', course_id).to_json
 			end
 		else

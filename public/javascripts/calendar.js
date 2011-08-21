@@ -148,14 +148,17 @@ function loadFriends() {
         dataType: 'json',
         data:     'scheduled_course_id='+sched_id,
         complete: function() {},
-        success: function(data,textStatus,jqXHR) {
-          html = '<ul><li class="me"><img src="http://graph.facebook.com/vincentsiao/picture" /></li>';
-          for (var j = 0; j < data.length; ++j) {
-            var friend = data[j].user
+        success: function(resp,textStatus,jqXHR) {
+          html = '<ul>';
+          if (resp.me)
+            html += '<li class="me"><img src="http://graph.facebook.com/'
+                  + resp.me + '/picture" /></li>';
+          for (var j = 0; j < resp.data.length; ++j) {
+            var friend = resp.data[j].user
             html += '<li><a href="/friends/' + friend.id + '">'
                   + '<img src="http://graph.facebook.com/' + friend.uid 
                   + '/picture" /></a></li>';
-         }
+          }
           html += '</ul>';
           $('.schedule .course'+ number + ' .friends')
             .html(html).addClass('loaded');
