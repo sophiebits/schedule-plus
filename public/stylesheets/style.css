@@ -735,6 +735,7 @@
 }
 
 ul#friends li {
+  clear:both;
   margin-bottom:2px;
 }
 
