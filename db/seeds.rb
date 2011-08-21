@@ -185,8 +185,10 @@ catch(:done) do
     # Prints name and number so that I know something's happening
     puts cells[0].inner_text + ' ' + cells[1].inner_text
 		
+		number = cells[0].inner_text
+		number.insert(2, '-')
     # Create Course
-		db_course = Course.create(:number => cells[0].inner_text,
+		db_course = Course.create(:number => number,
 															:name		=> cells[1].inner_text,
 															:units	=> cells[2].inner_text)
 

@@ -52,9 +52,9 @@ class Parser < ActiveRecord::Base
 
       if summary.include? "Lec"
 	
-				number = summary.split(" ")[-2].delete('-')
+				number = summary.split(" ")[-2]
 				if number == "Lec"
-					number = summary.split(" ")[-3].delete('-')
+					number = summary.split(" ")[-3]
 				end
 				
 				section = getsection(summary.split(" ")[-1])
@@ -65,7 +65,7 @@ class Parser < ActiveRecord::Base
 				
 				scheduled_courses[number][:lecture_section] = section
 			else
-				number = summary.split(" ")[-2].delete('-')
+				number = summary.split(" ")[-2]
 				section = getsection(summary.split(" ")[-1])
 				if !(scheduled_courses[number])
 					scheduled_courses[number] = Hash.new
