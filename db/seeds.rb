@@ -145,7 +145,11 @@ end
 file = 'https://enr-apps.as.cmu.edu/assets/SOC/sched_layout_fall.htm'
 #file = 'scheduleman_small.html'
 
-parse_file = File.new("_parse_file.html", "w")
+if Rails.env.production?
+	parse_file = File.new("#{RAILS_ROOT}/tmp/parse_file_#{Process.pid}.html", "w")
+else
+	parse_file = File.new("parse_file.html", "w")
+end
 file = open(file)
 
 File.readlines(file).each do |line|
