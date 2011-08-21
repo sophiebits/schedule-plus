@@ -29,9 +29,6 @@
   /* adds a course to calendar and adjusts conflicting courses with the same begin time */
   function addToCalendar(schedule, number, section, data, lec_rec, delay) {
 
-    //var begin = parseInt(data.begin/100)*60+parseInt(data.begin%100);
-    //var end = parseInt(data.end/100)*60+parseInt(data.end%100)+10;
-
     var begin = data.begin;
     var end = parseInt(data.end)+10;
 
@@ -79,16 +76,16 @@
       if (course.has_recitation) {
         recitation.times = recitation.recitation_section_times;
         for (var j = 0; j < recitation.times.length; ++j)
-          addToCalendar(scheduleId, course.number, 
-            recitation.section, recitation.times[j], 'section',
-            i*200);
+          if (recitation.times[j].begin != -1)
+            addToCalendar(scheduleId, course.number, 
+              recitation.section, recitation.times[j], 'section', i*200);
       }
       lecture.times = lecture.lecture_section_times
       for (var j = 0; j < lecture.times.length; ++j)
-        addToCalendar(scheduleId, course.number, 
-          lecture.section, lecture.times[j], 
-          course.has_recitation ? 'lecture' : 'section',
-          i*200);
+        if (lecture.times[j].begin != -1)
+          addToCalendar(scheduleId, course.number, 
+            lecture.section, lecture.times[j], 
+            course.has_recitation ? 'lecture' : 'section', i*200);
       
       assignColor(course.number,colors[randomColors[i%colors.length]]);
   }
@@ -138,31 +135,35 @@ function loadFriends() {
     $('.course, .lecture, .section').removeClass('selected');
     $('.course' + number).addClass('selected');
     $('.schedule .course' + number + ' .friends')
-      .append('<img class="loading" src="/images/ajax-friends.gif" />')
       .slideDown();
-    
-    $.ajax({
-      url:      '/schedules/get_friends_in_course',
-      type:     'GET',
-      dataType: 'json',
-      data:     'scheduled_course_id='+sched_id,
-      complete: function() {},
-      success: function(data,textStatus,jqXHR) {
-        html = '<ul><li class="me"><img src="http://graph.facebook.com/vincentsiao/picture" /></li>';
-        for (var j = 0; j < data.length; ++j) {
-          var friend = data[j].user
-          html += '<li><a href="/friends/' + friend.id + '">'
-                + '<img src="http://graph.facebook.com/' + friend.uid 
-                + '/picture" /></a></li>';
-        }
-        html += '</ul>';
-        $('.schedule .course'+ number + ' .friends')
-          .html(html);
-      },
-      error: function(jqXHR,textStatus,errorThrown) {
-        alert('error: '+errorThrown);
-      }
-    }); 
+   
+    if (!$('.schedule .course' + number + ' .friends').hasClass('loaded'))
+      
+      $('.schedule .course' + number + ' .friends')
+        .append('<img class="loading" src="/images/ajax-friends.gif" />')
+      
+      $.ajax({
+        url:      '/schedules/get_friends_in_course',
+        type:     'GET',
+        dataType: 'json',
+        data:     'scheduled_course_id='+sched_id,
+        complete: function() {},
+        success: function(data,textStatus,jqXHR) {
+          html = '<ul><li class="me"><img src="http://graph.facebook.com/vincentsiao/picture" /></li>';
+          for (var j = 0; j < data.length; ++j) {
+            var friend = data[j].user
+            html += '<li><a href="/friends/' + friend.id + '">'
+                  + '<img src="http://graph.facebook.com/' + friend.uid 
+                  + '/picture" /></a></li>';
+         }
+          html += '</ul>';
+          $('.schedule .course'+ number + ' .friends')
+            .html(html).addClass('loaded');
+        },
+        error: function(jqXHR,textStatus,errorThrown) {
+          alert('error: '+errorThrown);
+       }
+     }); 
   }
 }
 

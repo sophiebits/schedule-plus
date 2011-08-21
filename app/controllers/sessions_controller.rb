@@ -24,8 +24,10 @@ class SessionsController < ApplicationController
 			else
 				ActiveSchedule.create(:user_id => user.id, :schedule_id => imported_schedule.id)
 			end
+
+      session[:imported] = nil
 		end
-		
+	  	
     redirect_to schedules_url
   end
 
