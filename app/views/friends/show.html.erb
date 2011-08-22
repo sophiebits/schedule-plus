@@ -12,19 +12,19 @@
 </div>
 <div id="article">
   <div id="friends-tooltip" class="tooltip">
-    Invite your friends on facebook to see more schedules!
+    <a href="#" id="fb-invite">Invite your friends</a> on facebook to see more schedules!
   </div>
-  <div style="margin:0 auto; width:580px">
-  <fb:serverFbml width="580px">
-  <script type="text/fbml">
-  <fb:fbml>
-  <fb:request-form action="http://<%= request.host %><%= ':3000' if request.domain == 'localhost' %>/friends" method="GET" invite="true" type="schedule+" content="Import your ScheduleMan schedule and see your friends' schedules!">
-    <fb:multi-friend-selector cols="3" showborder="false" actiontext="Invite Your Friends to schedule+" />
-  </fb:request-form>
-  </fb:fbml>
+  <script type="text/javascript">
+    $('#fb-invite').click(function(e) {
+      e.preventDefault();
+      FB.ui({ method:'apprequests',
+        filters:['app_non_users'],
+        title:'Invite Friends to use schedule+!',
+        message:'Import your ScheduleMan using schedule+ and share your schedule with me!'
+      });
+      return false;
+    });
   </script>
-  </fb:serverFbml>
-  </div>
 </div>
 <% end %>
 <%= render :partial => 'partials/mainpage' %>

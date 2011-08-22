@@ -31,5 +31,9 @@ class ApplicationController < ActionController::Base
     end
     @friends
   end
-
+  
+  rescue_from FbGraph::Unauthorized do |exception|
+    reset_session
+    redirect_to root_path
+  end
 end
