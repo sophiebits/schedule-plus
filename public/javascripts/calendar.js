@@ -151,8 +151,8 @@ function loadFriends() {
         success: function(resp,textStatus,jqXHR) {
           html = '<ul>';
           if (resp.me)
-            html += '<li class="me"><img src="http://graph.facebook.com/'
-                  + resp.me + '/picture" /></li>';
+            html += '<li class="me"><a href="/schedules"><img src="http://graph.facebook.com/'
+                  + resp.me + '/picture" /></a></li>';
           for (var j = 0; j < resp.data.length; ++j) {
             var friend = resp.data[j].user
             html += '<li><a href="/friends/' + friend.id + '">'
