@@ -1,19 +1,24 @@
 class FriendsController < ApplicationController
   def show
-    if (params[:id])
-      @friend = User.find(params[:id])
-      if friends.exists? @friend
-        if request.xhr?
-          
+    if !current_user 
+      redirect_to root_path
+    else
+
+      if (params[:id])
+        @friend = User.find(params[:id])
+        if friends.exists? @friend
+          if request.xhr?
+            
+          else
+            @schedule = @friend.main_schedule
+            render 'schedules/show'
+          end
         else
-          @schedule = @friend.main_schedule
-          render 'schedules/show'
+          redirect_to friends_path
         end
       else
-        redirect_to friends_path
+        @friends = friends
       end
-    else
-      @friends = friends
     end
   end
 end
