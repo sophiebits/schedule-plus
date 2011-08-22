@@ -164,8 +164,9 @@ function loadFriends() {
             .html(html).addClass('loaded');
         },
         error: function(jqXHR,textStatus,errorThrown) {
-          alert('error: '+errorThrown);
-       }
+          $('.schedule .course'+ number + ' .friends')
+            .html('<span class="error">There was an error loading your friends. Please try again later.</span>');
+        }
      }); 
   }
 }
@@ -196,7 +197,7 @@ $(document).ready(function() {
         addCourse('my-schedule',data.scheduled_course,$('.schedule .course').length);
       },
       error: function(jqXHR, textStatus, errorThrown) {
-        alert('error: '+errorThrown);
+        //alert('error: '+errorThrown);
       }
     });
   });

@@ -845,3 +845,14 @@ ul#friends li .status {
   /*background:transparent url('/images/friends-main-bg.png') center 30px no-repeat;*/
   min-height:400px;
 }
+
+.friends .error {
+  display:block;
+  background-color:#fff;
+  border:1px solid rgb(250,62,84);
+  color:#333;
+  padding:2px 5px;
+  border-radius:5px;
+  margin:3px 0;
+  line-height:1.1em;
+}

@@ -13,26 +13,26 @@
 ActiveRecord::Schema.define(:version => 20110814230915) do
 
   create_table "active_schedules", :force => true do |t|
-    t.integer   "user_id"
-    t.integer   "schedule_id"
-    t.timestamp "created_at"
-    t.timestamp "updated_at"
+    t.integer  "user_id"
+    t.integer  "schedule_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "course_selections", :force => true do |t|
-    t.integer   "schedule_id"
-    t.integer   "scheduled_course_id"
-    t.timestamp "created_at"
-    t.timestamp "updated_at"
+    t.integer  "schedule_id"
+    t.integer  "scheduled_course_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "courses", :force => true do |t|
-    t.string    "number"
-    t.string    "name"
-    t.string    "units"
-    t.boolean   "has_recitation"
-    t.timestamp "created_at"
-    t.timestamp "updated_at"
+    t.string   "number"
+    t.string   "name"
+    t.string   "units"
+    t.boolean  "has_recitation"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "lecture_section_times", :force => true do |t|
@@ -52,8 +52,8 @@ ActiveRecord::Schema.define(:version => 20110814230915) do
   create_table "recitation_section_times", :force => true do |t|
     t.integer "recitation_id"
     t.string  "day"
-    t.string  "begin"
-    t.string  "end"
+    t.integer "begin"
+    t.integer "end"
     t.string  "location"
   end
 
@@ -64,31 +64,24 @@ ActiveRecord::Schema.define(:version => 20110814230915) do
   end
 
   create_table "scheduled_courses", :force => true do |t|
-    t.integer   "course_id"
-    t.integer   "lecture_id"
-    t.integer   "recitation_id"
-    t.timestamp "created_at"
-    t.timestamp "updated_at"
+    t.integer  "course_id"
+    t.integer  "lecture_id"
+    t.integer  "recitation_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "schedules", :force => true do |t|
-    t.integer   "user_id"
-    t.timestamp "created_at"
-    t.timestamp "updated_at"
-  end
-
-  create_table "students", :force => true do |t|
-    t.string    "name"
-    t.string    "scheduleman_url"
-    t.timestamp "created_at"
-    t.timestamp "updated_at"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|
-    t.string    "uid"
-    t.string    "name"
-    t.timestamp "created_at"
-    t.timestamp "updated_at"
+    t.string   "uid"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end
