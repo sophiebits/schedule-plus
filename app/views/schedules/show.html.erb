@@ -20,7 +20,7 @@
   <% if (current_user && 
     ((friends.exists? (@schedule.user)) || (@schedule.user == current_user))) %>
     <img src="http://graph.facebook.com/<%= @schedule.user.try(:uid) %>/picture"/>
-    <h1><%= @schedule.user.name %></h1>
+    <h1><%= @schedule.user.try(:name) %></h1>
   <% end %>
   </div>
   <ul id="calendar">
