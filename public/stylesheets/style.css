@@ -3,7 +3,15 @@
       margin:0 auto;
         width:960px;
 }
- 
+
+a {
+  color:#1fbbbd;
+  text-decoration:none;
+}
+a:hover {
+  text-decoration:underline
+}
+
  form input {
      padding:0.2em 0.5em;
        font-family:'Nunito';
@@ -152,6 +160,7 @@
 }
 #start-page { 
     position:absolute;
+    background:transparent url('/images/index-bg.png') center top no-repeat;
 }
 
 #static-page h1,
@@ -833,6 +842,6 @@ ul#friends li .status {
 }
 
 #article.friends {
-  background:transparent url('/images/friends-main-bg.png') center 30px no-repeat;
+  /*background:transparent url('/images/friends-main-bg.png') center 30px no-repeat;*/
   min-height:400px;
 }
