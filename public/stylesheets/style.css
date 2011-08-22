@@ -32,6 +32,7 @@
             width:0;
  }
 
+#static-page .tooltip,
 #error-page .tooltip,
 #start-page .tooltip {
   position:absolute;
@@ -42,6 +43,7 @@
 #error-page .tooltip {
   left:6em;
 }
+#static-page .tooltip:after,
 #error-page .tooltip:after {
   top:-10px; right:20px;
   border-width:0 10px 10px 0;
@@ -152,6 +154,7 @@
     position:absolute;
 }
 
+#static-page h1,
 #error-page h1,
 #start-page h1 {
   position:absolute;
@@ -163,6 +166,7 @@
               letter-spacing:-0.05em;
 }
 
+#static-page p,
 #error-page p,
 #start-page p {
   position:relative;
@@ -778,12 +782,22 @@ ul#friends li .status {
 }
 
 #friends-tooltip {
-  margin:20px 130px;
-  padding:10px;
-  background-color:#1fbbbd;
+  margin:160px 0 0;
+  padding:35px;
+  background-color:#fff;
+  text-align:center;
+}
+
+#friends-tooltip a {
+  color:#1fbbbd;
+  text-decoration:none;
+}
+#friends-tooltip a:hover {
+  text-decoration:underline;
 }
 
 #friends-tooltip:after {
+  display:none;
   border-color:#1fbbbd transparent;
   border-width:20px 20px 0 0;
   bottom:-20px; right:50px;
@@ -816,4 +830,9 @@ ul#friends li .status {
 #add-schedule-main input[type=text] {
   font-size:10px;
   width:200px;
+}
+
+#article.friends {
+  background:transparent url('/images/friends-main-bg.png') center 30px no-repeat;
+  min-height:400px;
 }

@@ -57,4 +57,6 @@ AcmSchedule::Application.routes.draw do
   match "/auth/:provider/callback" => "sessions#show"
   match "/main" => "home#main"
 
+  match "/tos" => "static#tos"
+  match "/privacy" => "static#privacy"
 end
