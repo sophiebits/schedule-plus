@@ -139,6 +139,20 @@ end
 (hour.to_i*60 + min.to_i)
 end
 
+def reformatunits(units)
+  units.gsub!(',', '-')
+  split = units.split('-')
+  if split[0] == split[-1]
+    units = split[0].to_f.to_s
+  else
+    first = split[0].to_f
+    second = split[-1].to_f
+    units = first.to_s + '-' + second.to_s
+  end
+
+  units
+end
+
 
 
 ######################
@@ -194,7 +208,7 @@ catch(:done) do
     # Create Course
 		db_course = Course.create(:number => number,
 															:name		=> cells[1].inner_text,
-															:units	=> cells[2].inner_text)
+															:units	=> reformatunits(cells[2].inner_text))
 
 		# Loop through Course info, creating lectures/recitations, etc.
 		begin
