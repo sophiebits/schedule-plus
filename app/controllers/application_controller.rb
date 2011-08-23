@@ -26,8 +26,7 @@ class ApplicationController < ActionController::Base
       fb_friends.each do |f|
         fb_friends_uids.push(f.identifier)
       end
-      @friends = User.where(:uid => fb_friends_uids)
-                     .where("id IN (SELECT user_id FROM active_schedules)")
+      @friends = User.where("users.id IN (SELECT user_id FROM active_schedules) AND users.uid IN (?)", fb_friends_uids)
       @friends.sort!{ |f1, f2| f1.name <=> f2.name }
     end
     @friends
