@@ -861,7 +861,7 @@ ul#friends li .status {
 
 .friends .error {
   display:block;
-  background-color:#fff;
+  background-color:#fff5bb;
   border:1px solid rgb(250,62,84);
   color:#333;
   padding:2px 5px;

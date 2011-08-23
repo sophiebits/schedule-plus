@@ -27,7 +27,7 @@ class SessionsController < ApplicationController
 
       session[:imported] = nil
 		end
-	   
+
     render :text => '<script type="text/javascript">if(window.opener){window.opener.location.reload(true);window.close();}</script>', :layout => false
     #redirect_to schedules_url
   end

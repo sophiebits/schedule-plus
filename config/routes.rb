@@ -59,4 +59,6 @@ AcmSchedule::Application.routes.draw do
 
   match "/tos" => "static#tos"
   match "/privacy" => "static#privacy"
+
+  match "/beta" => "home#index"
 end
