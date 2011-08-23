@@ -5,4 +5,13 @@ class ScheduledCourse < ActiveRecord::Base
   belongs_to :course
   belongs_to :lecture
   belongs_to :recitation
+
+  def as_json(options={})
+    {
+      :id => self.id,
+      :course => self.course,
+      :lecture => self.lecture,
+      :recitation => self.recitation
+    }
+  end
 end

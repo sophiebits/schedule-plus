@@ -1,18 +1,15 @@
 class SchedulesController < ApplicationController
+  def new
+    
+  end
+  
   def import
-    @schedule = Parser.parse(params[:url])
+    parsed = Parser.parse(params[:url])
+    @schedule = parsed[:schedule]
     # store imported schedule id in session var to retrieve after oauth
     session[:imported] = @schedule.id
     if request.xhr?
-      render :json => @schedule.to_json(:include =>
-        {:scheduled_courses => {:include =>
-            {
-              :course => {}, 
-              :lecture => {:include => :lecture_section_times}, 
-              :recitation => {:include => :recitation_section_times}
-            }
-        }
-      })
+      render :json => parsed
     else
       redirect_to schedules_path
     end
@@ -52,13 +49,20 @@ class SchedulesController < ApplicationController
 			scheduled_course_id = params[:scheduled_course_id]
 			course_id = params[:course_id]
 
-			friends_includes = friends.includes(:main_schedule => {:scheduled_courses => [:course]})
-			if scheduled_course_id
-				
-        friends = friends_includes.where('scheduled_courses.id = ?', scheduled_course_id)
+			friends_includes = friends.includes(:main_schedule => {:scheduled_courses => 
+        [:course, :lecture, :recitation]})
+			
+      if scheduled_course_id
+        sc = ScheduledCourse.find(scheduled_course_id)
         response = Hash.new
+        #response[:lecture] = friends.in_lecture(sc.lecture)
+        #friends_includes.where('scheduled_courses.lecture.id = ?', sc.lecture_id)
 
-        response[:data] = friends
+        if sc.recitation
+          # response[:recitation] = friends_includes.where('scheduled_courses.recitation.id = ?', sc.recitation_id)
+        end
+
+        response[:data] = friends_includes.where('scheduled_courses.id = ?', scheduled_course_id)
         if current_user.main_schedule.scheduled_courses.exists? scheduled_course_id
           response[:me] = current_user.uid 
         else
@@ -69,9 +73,11 @@ class SchedulesController < ApplicationController
 		  elsif course_id
 				render :json => friends_includes.where('courses.id = ?', course_id).to_json
 			end
+
 		else
 			redirect_to schedules_path
 		end
+
 	end
 
   def add_course

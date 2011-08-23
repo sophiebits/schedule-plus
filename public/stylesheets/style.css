@@ -856,3 +856,28 @@ ul#friends li .status {
   margin:3px 0;
   line-height:1.1em;
 }
+
+.warning {
+  background-color:#fff5bb;
+  border:1px solid rgb(250,62,84);
+  border-radius:5px;
+}
+
+#import-warning {
+  margin:20px;
+  padding:20px;
+  font-size:0.8em
+}
+
+#import-warning p {
+  color:#333
+}
+
+#import-warning ul {
+  padding:10px 20px 0;
+}
+
+#import-warning ul li {
+  margin-bottom:10px;
+  font-weight:700;
+}

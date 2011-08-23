@@ -53,11 +53,11 @@
   }
 
   function addCourse(scheduleId,data,i) {
-      
       var course = data.course;
       var lecture = data.lecture;
       var recitation = data.recitation;
       course.has_recitation = recitation != null;
+      
       /* add to schedule list */
       $('.schedule').append('<li class="course' + course.number
         + ' course" course-number="' + course.number 
@@ -74,7 +74,7 @@
         .slideDown()
         .height('auto');
       if (course.has_recitation) {
-        recitation.times = recitation.recitation_section_times;
+       recitation.times = recitation.recitation_section_times;
         for (var j = 0; j < recitation.times.length; ++j)
           if (recitation.times[j].begin != -1)
             addToCalendar(scheduleId, course.number, 
@@ -149,10 +149,18 @@ function loadFriends() {
         data:     'scheduled_course_id='+sched_id,
         complete: function() {},
         success: function(resp,textStatus,jqXHR) {
-          html = '<ul>';
+          alert(JSON.stringify(resp));
+          html = '<span class="friends-header">lecture</span><ul class="lecture">';
           if (resp.me)
             html += '<li class="me"><a href="/schedules"><img src="http://graph.facebook.com/'
                   + resp.me + '/picture" /></a></li>';
+          for (var j = 0; j < resp.data.length; ++j) {
+            var friend = resp.data[j].user
+            html += '<li><a href="/friends/' + friend.id + '">'
+                  + '<img src="http://graph.facebook.com/' + friend.uid 
+                  + '/picture" /></a></li>';
+          }
+          html += '</ul><span class="friends-header">recitation</span><ul class="recitation">';
           for (var j = 0; j < resp.data.length; ++j) {
             var friend = resp.data[j].user
             html += '<li><a href="/friends/' + friend.id + '">'

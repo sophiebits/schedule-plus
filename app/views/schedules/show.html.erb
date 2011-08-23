@@ -15,6 +15,7 @@
   </ul>
 </div>
 <div id="article">
+  
   <div id="calendar-header">
     <input id="schedule-permalink" type="text" value="http://<%= request.host %><%= ':3000' if request.host == 'localhost' %>/schedules/<%= @schedule.id %>"></input>
   <% if (current_user && 
@@ -30,19 +31,8 @@
 <%# if controller.action_name == 'show' %>
 <script type="text/javascript">
 $(document).ready(function() {
-  var data = <%=
-      @schedule.to_json(:include => 
-        {:scheduled_courses => 
-          {:include => 
-            {
-              :course => {},
-              :lecture => { :include => :lecture_section_times },
-              :recitation => { :include => :recitation_section_times }
-            }
-          }
-        }).html_safe
- %>;
- addSchedule(data.schedule.scheduled_courses);
+  var schedule = <%= @schedule.to_json.html_safe %>;
+ addSchedule(schedule.scheduled_courses);
 });
 </script>
 <%# end %>

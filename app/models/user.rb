@@ -15,7 +15,19 @@ class User < ActiveRecord::Base
     end
   end
 
-	def status
+  def self.in_lecture(lecture)
+    #find(:all, :include => {:main_schedule => :lectures}).where(main_schedule.lecture => lecture)
+  end
+
+	def as_json(options={})
+    {
+      :id => self.id,
+      :uid => self.uid,
+      :name => self.name
+    }
+  end
+  
+  def status
 		current_time = Time.now.in_time_zone
 		current_time_in_min = current_time.hour*60 + current_time.min
 		current_day = DAY_NAME[current_time.wday]

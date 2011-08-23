@@ -56,7 +56,16 @@ $(document).ready(function() {
             })
             .appendTo('#pages');
           $(window).resize();
-          $('<div id="courses-after-tooltip" style="text-align:center"><span class="tooltip">Now that your schedule has been imported, connect to Facebook to see your friends\' schedules!</span></div>').appendTo('.main-aside').hide();
+          if (data.warnings) {
+            var html = '<div id="import-warning" class="warning"><p>The following course(s) failed to import:</p><ul>';
+            for (var i=0; i<data.warnings.length; ++i) 
+              html += '<li>' + data.warnings[i] + '</li>';
+            
+            html += '</ul><p>We keep our database of courses as up-to-date as possible, according to the official Schedule of Classes. Either the courses on your ScheduleMan do not exist anymore, or the lecture/section information is inconsistent. Please leave some feedback by clicking the feedback button to the left and we will follow up on this issue. Thanks!</p></div>';
+            
+            $('#main-page #article').prepend(html);
+          }
+          $('<div id="courses-after-tooltip" style="text-align:center"><span class="tooltip">Now that your schedule has been imported, connect to Facebook to see your friends\' schedules!</span></div>').appendTo('.main-aside');//.hide();
           $('#page-footer').fadeOut();
           $('#page-content').animate({height:$('#main-content').height()},800);
           $('#start-page').animate({left:'-100%'},800)
@@ -69,14 +78,13 @@ $(document).ready(function() {
               $('#page-content').height('auto');
               $('#page-footer')
                 .removeClass('start')
-                .show();
-              //addSchedule(data.schedule.scheduled_courses);
+                .show(); 
               $('.main-aside #courses-after-tooltip')
                 .delay(data.schedule.scheduled_courses.length*200)
                 .fadeIn(800);
               $('#fb-login')
                 .delay(data.schedule.scheduled_courses.length*200)
-                .fadeIn();
+                .fadeIn(); 
             });
         });
       },

@@ -74,25 +74,42 @@ class Parser < ActiveRecord::Base
 			end
     end   
 	  
+    response = Hash.new
+    response[:warnings] = []
     schedule = Schedule.create(:user_id => current_user_id)
 
 		# Create scheduled courses
 		scheduled_courses.each do |number,sections|
 			course = Course.find_by_number(number)
 			
-			abort "Course #{number} is not in the db!" if !course
-			
+		  if !course
+        Logger.new(STDOUT).info(number + ' does not exist in db!')
+        response[:warnings].push(number)
+        next
+      end
+
 			lec_id = nil
 			rec_id = nil
 			
 			# Get the lec and rec ids
 			if sections[:lecture_section]
-				lec_id = course.lectures.find_by_section(sections[:lecture_section]).id
-				rec_id = course.lectures.find(lec_id).recitations.find_by_section(sections[:recitation_section]).id
+				lecture = course.lectures.find_by_section(sections[:lecture_section])
+				if lecture
+          recitation = lecture.recitations.find_by_section(sections[:recitation_section])
+        end
 			else
-				lec_id = course.lectures.find_by_section(sections[:recitation_section]).id
+				lecture = course.lectures.find_by_section(sections[:recitation_section])
 			end
+
+      if !lecture || (sections[:lecture_section] && !recitation)
+        Logger.new(STDOUT).info(number + ' is inconsistent with ScheduleMan.')
+        response[:warnings].push(number)
+        next
+      end
 			
+      lec_id = lecture.try(:id)
+      rec_id = recitation.try(:id)
+
 			# Get the scheduled course if it already exists
 			sc = nil
 			if lec_id && rec_id
@@ -108,7 +125,8 @@ class Parser < ActiveRecord::Base
       CourseSelection.create(:schedule_id => schedule.id, :scheduled_course_id => sc.id)
 		end
 
-    schedule
+    response[:schedule] = schedule
+    response
   end
 
 end
