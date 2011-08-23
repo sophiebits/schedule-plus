@@ -701,6 +701,14 @@ a:hover {
   top:5px; right:5px
 }
 
+.schedule .friends-header {
+  display:block;
+  border-top:1px solid #ddd;
+  padding:1px 0 2px;
+  color:#999;
+  font-style:italic;
+}
+
 .schedule .friends {
   margin-top:5px;
 }

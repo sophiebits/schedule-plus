@@ -50,17 +50,17 @@ class SchedulesController < ApplicationController
 			course_id = params[:course_id]
 
 			friends_includes = friends.includes(:main_schedule => {:scheduled_courses => 
-        [:course, :lecture, :recitation]})
+        [:course]})
 			
       if scheduled_course_id
-        sc = ScheduledCourse.find(scheduled_course_id)
+        #sc = ScheduledCourse.find(scheduled_course_id)
         response = Hash.new
         #response[:lecture] = friends.in_lecture(sc.lecture)
         #friends_includes.where('scheduled_courses.lecture.id = ?', sc.lecture_id)
 
-        if sc.recitation
+        #if sc.recitation
           # response[:recitation] = friends_includes.where('scheduled_courses.recitation.id = ?', sc.recitation_id)
-        end
+        #end
 
         response[:data] = friends_includes.where('scheduled_courses.id = ?', scheduled_course_id)
         if current_user.main_schedule.scheduled_courses.exists? scheduled_course_id

@@ -61,6 +61,7 @@
       /* add to schedule list */
       $('.schedule').append('<li class="course' + course.number
         + ' course" course-number="' + course.number 
+        + '" course-section="' + (course.has_recitation ? recitation.section : lecture.section)
         + '" course-id="' + course.id 
         + '" sched-id="' + data.id
         + '"><span class="number">' + course.number + ' '
@@ -124,6 +125,7 @@ $('#main-content').delegate('.course, .section, .lecture','hover',function(e) {
 function loadFriends() {
       
   var number = $(this).attr('course-number');
+  var section = $(this).attr('course-section');
   var course_id = $('.schedule .course'+number).attr('course-id');
   var sched_id = $('.schedule .course'+number).attr('sched-id');
 
@@ -149,25 +151,27 @@ function loadFriends() {
         data:     'scheduled_course_id='+sched_id,
         complete: function() {},
         success: function(resp,textStatus,jqXHR) {
-          alert(JSON.stringify(resp));
-          html = '<span class="friends-header">lecture</span><ul class="lecture">';
+          html = '<span class="friends-header">Section '+ section 
+                +'</span><ul class="lecture">';
           if (resp.me)
             html += '<li class="me"><a href="/schedules"><img src="http://graph.facebook.com/'
                   + resp.me + '/picture" /></a></li>';
           for (var j = 0; j < resp.data.length; ++j) {
-            var friend = resp.data[j].user
-            html += '<li><a href="/friends/' + friend.id + '">'
-                  + '<img src="http://graph.facebook.com/' + friend.uid 
-                  + '/picture" /></a></li>';
-          }
-          html += '</ul><span class="friends-header">recitation</span><ul class="recitation">';
-          for (var j = 0; j < resp.data.length; ++j) {
-            var friend = resp.data[j].user
+            var friend = resp.data[j]
             html += '<li><a href="/friends/' + friend.id + '">'
                   + '<img src="http://graph.facebook.com/' + friend.uid 
                   + '/picture" /></a></li>';
           }
           html += '</ul>';
+          /*
+          html += '<span class="friends-header">recitation</span><ul class="recitation">';
+          for (var j = 0; j < resp.data.length; ++j) {
+            var friend = resp.data[j]
+            html += '<li><a href="/friends/' + friend.id + '">'
+                  + '<img src="http://graph.facebook.com/' + friend.uid 
+                  + '/picture" /></a></li>';
+          }
+          html += '</ul>';*/
           $('.schedule .course'+ number + ' .friends')
             .html(html).addClass('loaded');
         },
