@@ -400,6 +400,11 @@ a:hover {
   color:#1fbbbd
 }
 
+#total-units {
+  display:block;
+  padding:3px 5px 8px;
+}
+
 .schedule li {
   clear:both;
   position:relative;
@@ -824,7 +829,7 @@ ul#friends li .status {
   font-size:0.7em;
   color:#aaa;
   padding:3px;
-  width:240px;
+  width:200px;
   border:1px solid #ddd;
   border-radius:5px;
   position:absolute;
