@@ -16,7 +16,7 @@
 </div>
 <div id="article">
   <div id="calendar-header">
-    <input id="schedule-permalink" type="text" value="http://acm-schedule.heroku.com/schedules/<%= @schedule.id %>"></input>
+    <input id="schedule-permalink" type="text" value="http://<%= request.host %><%= ':3000' if request.host == 'localhost' %>/schedules/<%= @schedule.id %>"></input>
   <% if (current_user && 
     ((friends.exists? (@schedule.user)) || (@schedule.user == current_user))) %>
     <img src="http://graph.facebook.com/<%= @schedule.user.try(:uid) %>/picture"/>
