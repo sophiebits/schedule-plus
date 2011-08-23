@@ -56,7 +56,7 @@ $(document).ready(function() {
             })
             .appendTo('#pages');
           $(window).resize();
-          if (data.warnings) {
+          if (data.warnings.length) {
             var html = '<div id="import-warning" class="warning"><p>The following course(s) failed to import:</p><ul>';
             for (var i=0; i<data.warnings.length; ++i) 
               html += '<li>' + data.warnings[i] + '</li>';
