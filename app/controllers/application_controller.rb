@@ -27,6 +27,7 @@ class ApplicationController < ActionController::Base
         fb_friends_uids.push(f.identifier)
       end
       @friends = User.where(:uid => fb_friends_uids)
+                     .where("id NOT IN (SELECT user_id FROM active_schedules)")
       @friends.sort!{ |f1, f2| f1.name <=> f2.name }
     end
     @friends
