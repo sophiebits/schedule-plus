@@ -121,7 +121,14 @@ $('#main-content').delegate('.course, .section, .lecture','hover',function(e) {
 // Event listener to load friends in a course
 /////////////////////////////////////////////////////////
 // $('#main-content').delegate('.course, .section, .lecture','click',loadFriends);
-
+$('.schedule').delegate('.friends li a','hover',function(e) {
+  if (e.type === 'mouseenter')
+    $('<span class="friends-name tooltip">'+$(this).attr('link-name')+'</span>')
+      .insertAfter($(this));
+  else
+    $('.friends-name.tooltip').remove();
+  //else
+});
 function loadFriends() {
       
   var number = $(this).attr('course-number');
@@ -154,11 +161,13 @@ function loadFriends() {
           html = '<span class="friends-header">Section '+ section 
                 +'</span><ul class="lecture">';
           if (resp.me)
-            html += '<li class="me"><a href="/schedules"><img src="http://graph.facebook.com/'
-                  + resp.me + '/picture" /></a></li>';
+            html += '<li class="me"><a href="/schedules" link-name="'
+                  + resp.me.name + '"><img src="http://graph.facebook.com/'
+                  + resp.me.uid + '/picture" /></a></li>';
           for (var j = 0; j < resp.data.length; ++j) {
             var friend = resp.data[j]
-            html += '<li><a href="/friends/' + friend.id + '">'
+            html += '<li><a href="/friends/' + friend.id 
+                  + '" link-name="' + friend.name + '">'
                   + '<img src="http://graph.facebook.com/' + friend.uid 
                   + '/picture" /></a></li>';
           }

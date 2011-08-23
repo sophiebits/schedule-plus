@@ -718,14 +718,39 @@ a:hover {
   margin-top:5px;
 }
 
+.friends-name.tooltip {
+  background-color:#fbb03b;
+  color:#333;
+  z-index:30;
+  position:absolute;
+  top:-33px;
+  font-size:10px;
+  left:0;
+  white-space:nowrap;
+  border-radius:2px;
+  padding:2px 4px;
+}
+
+.friends-name.tooltip:after {
+  top:auto;
+  bottom:-5px;
+  left:5px;
+  border-color:transparent #fbb03b;
+  border-width:0 0 5px 5px
+}
+
 .schedule .friends li {
   display:inline-block;
   margin-right:2px;
   padding:0
 }
 
+.schedule .friends li a {
+  position:relative;
+}
+
 .schedule .friends li a:hover img {
-  border-color:#1fbbbd;
+  border-color:#fbb03b;
 }
 
 .schedule .friends li img {
@@ -736,7 +761,7 @@ a:hover {
 }
 
 .schedule .friends .me img {
-  border-color:#fbb03b;
+  border-color:#1fbbbd;
 }
 
 #calendar-header {

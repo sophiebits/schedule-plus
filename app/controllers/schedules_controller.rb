@@ -64,7 +64,7 @@ class SchedulesController < ApplicationController
 
         response[:data] = friends_includes.where('scheduled_courses.id = ?', scheduled_course_id)
         if current_user.main_schedule.scheduled_courses.exists? scheduled_course_id
-          response[:me] = current_user.uid 
+          response[:me] = current_user
         else
           response[:me] = nil
         end
