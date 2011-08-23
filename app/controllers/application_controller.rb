@@ -3,6 +3,12 @@ require 'fb_graph'
 class ApplicationController < ActionController::Base
   protect_from_forgery
   
+  # Always redirect users to scheduleplus.org if they try to access thourgh the heroku site
+  before_filter :check_uri
+  def check_uri
+	  redirect_to 'http://scheduleplus.org' if /heroku/.match(request.host)
+  end
+  
   helper_method :current_user, :fb_user, :friends
 
 	@current_user = nil
