@@ -15,9 +15,39 @@ def getsection(sec)
 end
 
 class Parser < ActiveRecord::Base
-
-  def self.parse(url, current_user_id = -1)
+  
+  # Parse method for SIO calendar file
+  def self.parseSIO(file_path, current_user_id = -1)
+    File.open(file_path, 'r') do |file|
+      @components = RiCal.parse(file)
+    end
     
+    scheduled_courses = Hash.new
+    
+    @components.first.events.each do |course| 
+      summary = course.summary.split('::')[1].strip.split(' ')
+      
+      number = summary[0].insert(2,'-')
+      section = summary[1]
+      
+      if !(scheduled_courses[number])
+				scheduled_courses[number] = Hash.new
+			end
+      
+      # If course section is a number, assume lecture section; otherwise
+      # assume recitation section
+      if section.to_i != 0
+				scheduled_courses[number][:lecture_section] = section
+      else
+        scheduled_courses[number][:recitation_section] = section
+      end
+    end
+    
+    self.generate_schedule_response(scheduled_courses, current_user_id)
+  end
+
+  # Parse method for scheduleman url
+  def self.parse(url, current_user_id = -1)
     #if the link has a trailing '/' remove it
     if (url[url.length-1] == '/')
        url[url.length-1] = ''
@@ -50,30 +80,30 @@ class Parser < ActiveRecord::Base
     @components.first.events.each do |course| 
       summary = course.summary.delete('"')
 
+      if !(scheduled_courses[number])
+				scheduled_courses[number] = Hash.new
+			end
       if summary.include? "Lec"
-	
-				number = summary.split(" ")[-2]
+        summary = summary.split(' ')
+				number = summary[-2]
 				if number == "Lec"
-					number = summary.split(" ")[-3]
+					number = summary[-3]
 				end
 				
-				section = getsection(summary.split(" ")[-1])
-				
-				if !(scheduled_courses[number])
-					scheduled_courses[number] = Hash.new
-				end
-				
+				section = getsection(summary[-1])
 				scheduled_courses[number][:lecture_section] = section
 			else
-				number = summary.split(" ")[-2]
-				section = getsection(summary.split(" ")[-1])
-				if !(scheduled_courses[number])
-					scheduled_courses[number] = Hash.new
-				end
+				number = summary[-2]
+				section = getsection(summary[-1])
+
 				scheduled_courses[number][:recitation_section] = section
 			end
     end   
-	  
+    
+    self.generate_schedule_response(scheduled_courses, current_user_id)
+	end
+	
+	def self.generate_schedule_response(scheduled_courses, current_user_id)
     response = Hash.new
     response[:warnings] = []
     schedule = Schedule.create(:user_id => current_user_id)
