@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
 	@fb_user = nil
 	@friends = nil
 
-  private
+  protected
 
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
@@ -33,12 +33,12 @@ class ApplicationController < ActionController::Base
 
   def friends
     if @friends.nil?
-      fb_friends = fb_user.friends if fb_user
+      fb_friends = fb_user.friends.collect{|f|f.identifier} if fb_user
       fb_friends_uids = []
-      fb_friends.each do |f|
-        fb_friends_uids.push(f.identifier)
+      User.all.each do |u|
+        fb_friends_uids.push(u.uid) if fb_friends.include? u.uid
       end
-      @friends = User.where("users.id IN (SELECT user_id FROM active_schedules) AND users.uid IN (?)", fb_friends_uids)
+      @friends = User.where("users.uid IN (?) AND users.id IN (SELECT user_id FROM active_schedules)", fb_friends_uids)
       @friends.sort!{ |f1, f2| f1.name <=> f2.name }
     end
     @friends
