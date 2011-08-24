@@ -78,26 +78,33 @@ class Parser < ActiveRecord::Base
     end 
       
     @components.first.events.each do |course| 
-      summary = course.summary.delete('"')
+      summary = course.summary.delete('"').split(' ')
 
-      if !(scheduled_courses[number])
-				scheduled_courses[number] = Hash.new
-			end
+      
       if summary.include? "Lec"
-        summary = summary.split(' ')
 				number = summary[-2]
 				if number == "Lec"
 					number = summary[-3]
 				end
-				
+			
+			  if !(scheduled_courses[number])
+  				scheduled_courses[number] = Hash.new
+  			end
+  			
 				section = getsection(summary[-1])
 				scheduled_courses[number][:lecture_section] = section
 			else
 				number = summary[-2]
 				section = getsection(summary[-1])
-
+        
+        if !(scheduled_courses[number])
+  				scheduled_courses[number] = Hash.new
+  			end
+  			
 				scheduled_courses[number][:recitation_section] = section
 			end
+			
+			p scheduled_courses
     end   
     
     self.generate_schedule_response(scheduled_courses, current_user_id)
@@ -107,6 +114,8 @@ class Parser < ActiveRecord::Base
     response = Hash.new
     response[:warnings] = []
     schedule = Schedule.create(:user_id => current_user_id)
+
+    p scheduled_courses
 
 		# Create scheduled courses
 		scheduled_courses.each do |number,sections|
