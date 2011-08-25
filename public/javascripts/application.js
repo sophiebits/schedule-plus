@@ -31,6 +31,10 @@ jQuery.fn.selText = function() {
     }
     return this;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6bab3eeaab960c3bfc21aa4bd99b310b79466251
 
 $(document).ready(function() {
 
@@ -40,12 +44,16 @@ $(document).ready(function() {
     return false;
   });
 
+<<<<<<< HEAD
 	$('#schedule-permalink').mousedown(function() {
 		$(this).selText();
 	});
 	$('#schedule-permalink').mouseup(function() {
 		$(this).selText();
 	});
+=======
+
+>>>>>>> 6bab3eeaab960c3bfc21aa4bd99b310b79466251
 	$('#schedule-permalink').click(function() {
 		$(this).selText();
 	});
