@@ -3,6 +3,7 @@ require 'ri_cal'
 require 'net/http'
 require 'open-uri'
 require 'openssl'
+require 'hpricot'
 
 def getsection(sec)
 	if sec.include? 'Lec'
@@ -69,17 +70,16 @@ class Parser < ActiveRecord::Base
     end
 
     #append .ics to get the file from scheduleman server, not the html code
-    url = url + ".ics"
+    file_url = url + ".ics"
 	
 		scheduled_courses = Hash.new
 		
-    open(url) do |file|
+    open(file_url) do |file|
       @components = RiCal.parse(file)
     end 
       
     @components.first.events.each do |course| 
       summary = course.summary.delete('"').split(' ')
-
       
       if summary.include? "Lec"
 				number = summary[-2]
@@ -103,19 +103,52 @@ class Parser < ActiveRecord::Base
   			
 				scheduled_courses[number][:recitation_section] = section
 			end
-			
-			p scheduled_courses
     end   
     
-    self.generate_schedule_response(scheduled_courses, current_user_id)
+    response = self.generate_schedule_response(scheduled_courses, current_user_id)
+    
+    # Need to check for TBA courses in scheduleman
+    doc = open(url) { |f| Hpricot(f) }
+    total_units = (doc/"#total-units").first.inner_text
+    
+    if total_units
+      total_units = total_units[/.*total:(.*?)units/,1].strip
+      if response[:schedule].units != total_units
+        # Units are different; need to parse TBA courses on the scheduleman
+        courses = (doc/".course")
+        scheduled_course_numbers = response[:schedule].scheduled_courses.collect{|sc| sc.course.number}
+
+        # Check each course in tehe html to find which one's aren't included in the user's schedule
+        courses.each do |c|
+          number = (c/".number").inner_text.strip[0,6]
+          if !scheduled_course_numbers.include? number
+            section = (c/".selected_section").inner_text.strip
+            
+            tba_course = Course.find_by_number(number)
+            recitation = Recitation.where(:lecture_id => tba_course.lectures, :section => section)
+            lecture = nil
+            if recitation && recitation.first
+              lecture = recitation.first.lecture
+              recitation = recitation.first
+            else
+              lecture = Lecture.where(:course_id => tba_course, :section => section).first
+              recitation = nil
+            end
+            
+            # Manually add TBA course to schedule
+            self.add_to_schedule(tba_course, response[:schedule], lecture, recitation)
+          end
+        end
+      end
+    end
+    
+    response
 	end
 	
 	def self.generate_schedule_response(scheduled_courses, current_user_id)
     response = Hash.new
     response[:warnings] = []
     schedule = Schedule.create(:user_id => current_user_id)
-
-    p scheduled_courses
 
 		# Create scheduled courses
 		scheduled_courses.each do |number,sections|
@@ -146,26 +179,30 @@ class Parser < ActiveRecord::Base
         next
       end
 			
-      lec_id = lecture.try(:id)
-      rec_id = recitation.try(:id)
-
-			# Get the scheduled course if it already exists
-			sc = nil
-			if lec_id && rec_id
-				sc = course.scheduled_courses.find_by_lecture_id_and_recitation_id(lec_id,rec_id)
-			else
-				sc = course.scheduled_courses.find_by_lecture_id(lec_id)
-			end
-			
-			if !sc
-				sc = ScheduledCourse.create(:course_id => course.id, :lecture_id => lec_id, :recitation_id => rec_id)
-			end
-		  
-      CourseSelection.create(:schedule_id => schedule.id, :scheduled_course_id => sc.id)
+      self.add_to_schedule(course, schedule, lecture, recitation)
 		end
 
     response[:schedule] = schedule
     response
+  end
+  
+  def self.add_to_schedule(course, schedule, lecture, recitation)
+    lec_id = lecture.try(:id)
+    rec_id = recitation.try(:id)
+
+		# Get the scheduled course if it already exists
+		sc = nil
+		if lec_id && rec_id
+			sc = course.scheduled_courses.find_by_lecture_id_and_recitation_id(lec_id,rec_id)
+		else
+			sc = course.scheduled_courses.find_by_lecture_id(lec_id)
+		end
+		
+		if !sc
+			sc = ScheduledCourse.create(:course_id => course.id, :lecture_id => lec_id, :recitation_id => rec_id)
+		end
+	  
+    CourseSelection.create(:schedule_id => schedule.id, :scheduled_course_id => sc.id)
   end
 
 end
