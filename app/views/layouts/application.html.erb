@@ -34,6 +34,7 @@
 			oauth: true
     });
   </script>
+	<% if current_user %>
 	<script type="text/javascript">
     var uvOptions = {};
     (function() {
@@ -43,6 +44,7 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
     })();
   </script>
+	<% end %>
   <%= render :partial => 'partials/header' %>
 	<!--
 	<% flash.each do |name, msg| %>
