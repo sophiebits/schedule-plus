@@ -852,12 +852,6 @@ h1.friends {
   border-bottom:1px solid #1fbbbd
 }
 
-#friends .common-classes {
-  position:absolute;
-  top:20px;
-  right:10px;
-}
-
 #friends a .name {
   display:block;
   margin-top:5px;
@@ -884,6 +878,13 @@ h1.friends {
   font-size:0.8em;
   color:#999;
   margin:2px 3px 3px 8px;
+}
+
+#friends .common-courses {
+  position:absolute;
+  top:20px;
+  right:10px;
+  font-size:0.8em;
 }
 
 #friends-tooltip {

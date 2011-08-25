@@ -34,7 +34,7 @@
       <img src="http://graph.facebook.com/<%= friend.uid %>/picture" />
       <a href="/friends/<%= friend.id %>"><span class="name"><%= friend.name %></span></a>
       <span class="status"><%= friend.status %></span>
-      <span class="common-classes">? courses in common</span>
+      <span class="common-courses"><%= friend.courses_in_common(current_user).length %> courses in common</span>
     </li>
 <% 
 end 
