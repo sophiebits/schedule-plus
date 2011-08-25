@@ -1,0 +1,56 @@
+<% content_for :content do %>
+<div class="main-aside">
+  <!--
+  <form>
+    <input type="text" placeholder="Search Friends"></input>
+    <input type="submit" value="Search"></input>
+  </form>
+  <ul id="friends-sort-options">
+    <li>Sort by Name</li>
+    <li>Sort by Courses in Common</li>
+  </ul>
+  -->
+  <a href="#">"I am a working invite link"</a>
+  <span class="tooltip">
+    Invite your facebook friends to schedule+ to see more schedules!
+  </span>
+</div>
+<div id="article">
+  <h1 class="friends">Friends</h1>
+  <div id="friends">
+  <ul id="friends-container">
+    <li class="friends-page"><ul>
+<% 
+###########################################
+@friends.each_with_index do |friend, index| 
+  if index > 0 && (index % 10) == 0
+%>
+    </ul></li>
+    <li class="friends-page"><ul>
+<%   
+  end 
+%>
+    <li class="friend">
+      <img src="http://graph.facebook.com/<%= friend.uid %>/picture" />
+      <a href="/friends/<%= friend.id %>"><span class="name"><%= friend.name %></span></a>
+      <span class="status"><%= friend.status %></span>
+      <span class="common-courses"><%= friend.courses_in_common(current_user).length %> courses in common</span>
+    </li>
+<% 
+end 
+###########################################
+%>
+    </ul></li>
+  </ul>
+  <span class="nav-previous">previous page</span>
+  <span class="nav-next">next page</span>
+  </div>
+  <script type="text/javascript" src="/javascripts/slider.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    initSlider('#friends','#friends-container','.friends-page',0);
+  });
+  </script>
+</div>
+<% end %>
+<%= render :partial => 'partials/mainpage' %>
