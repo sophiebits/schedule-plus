@@ -177,7 +177,7 @@ $('.schedule').delegate('.friends li a','hover',function(e) {
 });
 function loadFriends() {
   var number = $(this).attr('course-number');
-  var section = $(this).attr('course-section');
+  var section = $('.schedule .course'+number).attr('course-section');
   var course_id = $('.schedule .course'+number).attr('course-id');
   var sched_id = $('.schedule .course'+number).attr('sched-id');
 
