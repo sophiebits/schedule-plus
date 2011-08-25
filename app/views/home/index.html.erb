@@ -6,7 +6,7 @@
         })</script>
         <div class="container">
 					<h1>Get Started</h1>
-					<%= form_tag 'schedules/import', :id => 'add-schedule', 
+					<%= form_tag '/schedules/import', :id => 'add-schedule', 
             :method => :get do %>
             <%= text_field_tag :schedulemanurl, nil, :placeholder => 'https://scheduleman.org/schedules/cTUJ2tAnlw' %>
             <%= submit_tag "Add" %>

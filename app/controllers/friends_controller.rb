@@ -1,4 +1,11 @@
 class FriendsController < ApplicationController
+  def index
+    if !current_user
+      redirect_to root_path
+    end
+    @friends = friends
+  end
+  
   def show
     if !current_user 
       redirect_to root_path

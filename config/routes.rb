@@ -42,8 +42,9 @@ AcmSchedule::Application.routes.draw do
   #     resources :products
   #   end
   
-  resource :friends, :courses, :sessions
   match "/friends/:id" => "friends#show"
+  match "/friends" => "friends#index"
+  resource :friends, :courses, :sessions
 
   resource :schedules do
     get 'import', :on => :member

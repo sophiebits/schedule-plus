@@ -464,6 +464,7 @@ a:hover {
   }
 
 #article {
+  padding-bottom:35px;
   width:612px;
   float:left;
   position:relative;
@@ -575,11 +576,14 @@ a:hover {
 .begin1350 { top:96.875% }
 .begin1380 { top:100% }
 
+.duration30 { height:3.125% }
 .duration60 { height:6.25% }
 .duration90 { height:9.375% }
 .duration120 { height:12.5% }
 .duration150 { height:15.625% }
 .duration180 { height:18.75% }
+.duration210 { height:21.875% }
+.duration240 { height:25% }
 
 .monday,.tuesday,.wednesday,.thursday,.friday {
     position:absolute;
@@ -785,46 +789,100 @@ a:hover {
   bottom:0; left:70px
 }
 
-ul#friends li {
-  clear:both;
-  margin-bottom:2px;
+h1.friends {
+  position:absolute;
+  margin:20px 40px 0;
+  font-size:1.3em;
 }
 
-ul#friends li a {
-  text-decoration:none;
-  display:block;
-  padding:5px;
-  background-color:#ddd;
-  border-radius:5px 0;
-  border-right:5px solid #666;
-  border-bottom:1px solid #aaa;
-  background:-webkit-gradient(linear,left top,left bottom,from(#ddd),to(#d6d6d6));
-  background:-moz-linear-gradient(top,#ddd,#d6d6d6);
-  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ddd',endColorstr='#d6d6d6');
-}
-
-ul#friends li a:hover {
-  background:#f6f6f6 none;
-}
-
-ul#friends img {
-  float:left;
-  width:25px;
-  height:25px;
-  margin-right:5px;
-}
-
-ul#friends li .name {
-  color:#333;
-  font-size:1.1em;
+#friends {
   position:relative;
-  top:2px;
+  overflow:hidden;
+  width:556px;
+  height:610px;
+  margin:20px 30px 0;
+  padding-top:35px;
 }
 
-ul#friends li .status { 
+#friends #friends-container {
+  position:absolute;
+}
+
+#friends .nav-previous,
+#friends .nav-next {
+  position:absolute;
+  top:0; right:20px;
   display:block;
-  font-style:italic;
-  color:#aaa;
+  margin-right:2px;
+  width:40px;
+  height:0;
+  padding-top:20px;
+  background-color:#1fbbbd;
+  cursor:pointer;
+  overflow:hidden;
+  background-image:url('/images/friends-nav.gif');
+}
+#friends .disabled {
+  cursor:auto;
+}
+#friends .nav-previous {
+  right:60px;
+}
+#friends .nav-next {
+  background-position:-40px 0;
+}
+#friends .nav-previous:hover { background-position:0 -20px; }
+#friends .nav-next:hover { background-position:-40px -20px; }
+#friends .nav-previous.disabled { background-position:0 -40px; }
+#friends .nav-next.disabled { background-position:-40px -40px; }
+
+#friends .friends-page {
+  float:left;
+  width:552px
+}
+
+#friends li.friend {
+  position:relative;
+  clear:both;
+  padding:10px;
+  border-top:1px solid #1fbbbd;
+  height:39px;
+}
+#friends li.friend:last-child {
+  border-bottom:1px solid #1fbbbd
+}
+
+#friends .common-classes {
+  position:absolute;
+  top:20px;
+  right:10px;
+}
+
+#friends a .name {
+  display:block;
+  margin-top:5px;
+}
+
+#friends a:hover .name {
+  color:#fbb03b;
+}
+
+#friends a:hover {
+  text-decoration:none;
+}
+
+#friends img {
+  float:left;
+  width:40px;
+  height:40px;
+  margin-right:10px;
+  border-radius:5px 0;
+}
+
+#friends .status { 
+  display:block;
+  font-size:0.8em;
+  color:#999;
   margin:2px 3px 3px 8px;
 }
 
