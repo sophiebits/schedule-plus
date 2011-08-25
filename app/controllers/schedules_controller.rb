@@ -53,16 +53,9 @@ class SchedulesController < ApplicationController
         [:course]})
 			
       if scheduled_course_id
-        #sc = ScheduledCourse.find(scheduled_course_id)
         response = Hash.new
-        #response[:lecture] = friends.in_lecture(sc.lecture)
-        #friends_includes.where('scheduled_courses.lecture.id = ?', sc.lecture_id)
 
-        #if sc.recitation
-          # response[:recitation] = friends_includes.where('scheduled_courses.recitation.id = ?', sc.recitation_id)
-        #end
-
-        response[:data] = friends_includes.where('scheduled_courses.id = ?', scheduled_course_id)
+        response[:data] = friends_includes.where('scheduled_courses.id = ?', scheduled_course_id).order('users.name')
         if current_user.main_schedule.scheduled_courses.exists? scheduled_course_id
           response[:me] = current_user
         else
@@ -71,7 +64,7 @@ class SchedulesController < ApplicationController
 
         render :json => response.to_json
 		  elsif course_id
-				render :json => friends_includes.where('courses.id = ?', course_id).to_json
+				render :json => friends_includes.where('courses.id = ?', course_id).order('users.name').to_json
 			end
 
 		else
@@ -88,8 +81,6 @@ class SchedulesController < ApplicationController
       
       course = Course.find_by_number(number)
       section = course.find_by_section(letter)
-p "COURSE " + course.number
-p "SECTION " + section.section
 
       if course.lectures.find_by_section(letter)
         @course = ScheduledCourse.find_or_create_by_course_id_and_lecture_id(
