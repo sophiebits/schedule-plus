@@ -40,8 +40,18 @@ $(document).ready(function() {
     return false;
   });
 
-	$('#schedule-permalink').click(function() {
+	$('body').delegate('#schedule-permalink','click',function() {
 		$(this).selText();
+		$('.schedule-permalink.tooltip').remove();
+	});
+	
+	$('body').delegate('#schedule-permalink','hover',function(e) {
+		if (e.type === 'mouseenter') {
+			$('<span class="schedule-permalink tooltip">Click to highlight</span>')
+    		.insertAfter($(this));
+		} else {
+			$('.schedule-permalink.tooltip').remove();
+		}
 	});
 
   (new Image()).src = "/images/ajax-small.gif";

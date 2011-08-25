@@ -18,8 +18,10 @@
 <div id="article">
   
   <div id="calendar-header">
+		<div id="schedule-permalink-box">
     <div id="schedule-permalink">http://<%= request.host %><%= ':3000' if request.host == 'localhost' %>/schedules/<%= @schedule.id %></div>
-  <% if (current_user && 
+		</div>
+		<% if (current_user && 
     ((friends.exists? (@schedule.user)) || (@schedule.user == current_user))) %>
     <img src="http://graph.facebook.com/<%= @schedule.user.try(:uid) %>/picture"/>
     <h1><%= @schedule.user.try(:name) %></h1>
