@@ -27,6 +27,13 @@ class User < ActiveRecord::Base
     }
   end
   
+  def courses_in_common(friend)
+    user_courses = self.main_schedule.scheduled_courses.collect{|sc| sc.course}
+    friend_courses = friend.main_schedule.scheduled_courses.collect{|sc| sc.course}
+    
+    user_courses & friend_courses
+  end
+  
   def status
 		current_time = Time.now.in_time_zone
 		current_time_in_min = current_time.hour*60 + current_time.min

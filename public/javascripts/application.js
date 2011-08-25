@@ -13,6 +13,24 @@ function popupCenter(url,width,height,name) {
     +',height='+height+',toolbar=no,left='+left+',top='+top);
 }
 
+jQuery.fn.selText = function() {
+    var obj = this[0];
+    if ($.browser.msie) {
+        var range = obj.offsetParent.createTextRange();
+        range.moveToElementText(obj);
+        range.select();
+    } else if ($.browser.mozilla || $.browser.opera) {
+        var selection = obj.ownerDocument.defaultView.getSelection();
+        var range = obj.ownerDocument.createRange();
+        range.selectNodeContents(obj);
+        selection.removeAllRanges();
+        selection.addRange(range);
+    } else if ($.browser.safari) {
+        var selection = obj.ownerDocument.defaultView.getSelection();
+        selection.setBaseAndExtent(obj, 0, obj, 1);
+    }
+    return this;
+}
 
 $(document).ready(function() {
 
@@ -21,6 +39,10 @@ $(document).ready(function() {
     e.stopPropagation();
     return false;
   });
+
+	$('#schedule-permalink').click(function() {
+		$(this).selText();
+	});
 
   (new Image()).src = "/images/ajax-small.gif";
 

@@ -911,12 +911,14 @@ h1.friends {
 #schedule-permalink {
   font-size:0.7em;
   color:#aaa;
-  padding:3px;
-  width:200px;
+  padding:4px;
+  padding-left:6px;
+  padding-right:6px;
   border:1px solid #ddd;
   border-radius:5px;
   position:absolute;
-  right:30px; bottom:0
+  right:30px;
+  bottom:0;
 }
 
 #info {
