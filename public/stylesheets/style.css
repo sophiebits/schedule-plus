@@ -195,21 +195,36 @@ a:hover {
   padding:2em;
 }
 
-#add-schedule {
+#switch-form {
+  position:absolute;
+  font-size:0.8em;
+  cursor:pointer;
+  color:#fbb03b;
+  top:270px;
+  right:20px;
+}
+#switch-form:hover {
+  text-decoration:underline
+}
+
+#import-scheduleman,
+#import-sio {
   position:absolute;
     top:225px;
       left:50%;
         width:50%;
 }
 
-#add-schedule input[type=text] {
+#import-sio input[type=file],
+#import-scheduleman input[type=text] {
   float:left;
     margin-right:0.5em;
       font-size:1.0em;
         width:90%
 }
 
-#add-schedule input[type=submit] {
+#import-scheduleman input[type=submit],
+#import-sio input[type=submit] {
   width:20px;
     height:0;
       margin-top:0.3em;

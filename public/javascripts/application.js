@@ -57,9 +57,19 @@ $(document).ready(function() {
   (new Image()).src = "/images/ajax-small.gif";
 
   var speed = 600;
-  
+  var sio = false;
   $(window).resize();
-
+  
+  $('#sio-form').hide();
+  $('#switch-form').click(function() {
+    sio = !sio;
+    $('#scheduleman-form').fadeToggle();
+    $('#sio-form').fadeToggle();
+    if (sio)
+      $('#switch-form').html('Nevermind, use Scheduleman instead.');
+    else
+      $('#switch-form').html('Use SIO instead of Scheduleman?');
+  });
   $('#start-page .error.tooltip').hide();
   $('#start-page #add-schedule').submit(function(e) {
     e.preventDefault();

@@ -5,26 +5,30 @@
           $('#page-footer').addClass('start');
         })</script>
         <div class="container">
-					<h1>Get Started</h1>
-					<%= form_tag '/schedules/import', :id => 'add-schedule', :method => :get do %>
-            <%= text_field_tag :schedulemanurl, nil, :placeholder => 'https://scheduleman.org/schedules/cTUJ2tAnlw' %>
-            <%= submit_tag "Add" %>
-					<% end %>
-					<span class="tooltip">
-						Paste the URL of your ScheduleMan schedule here and begin sharing with your friends on Facebook!
-					</span>
+          <h1>Get Started</h1>
+					<div id="scheduleman-form">
+					  <%= form_tag '/schedules/import', :id => 'import-scheduleman', :method => :get do %>
+              <%= text_field_tag :schedulemanurl, nil, :placeholder => 'https://scheduleman.org/schedules/cTUJ2tAnlw' %>
+              <%= submit_tag "Add" %>
+					  <% end %>
+					  <span class="tooltip">
+						  Paste the URL of your ScheduleMan schedule here and begin sharing with your friends on Facebook!
+					  </span>
+          </div>
+				  <div id="sio-form">
+					  <%= form_for(:upload, :url => {:action=>'import', :controller => 'schedules'}, :html=> {:id => 'import-sio', :multipart=>true}) do |f| %>
+						  <%= f.file_field :uploaded_file %>
+						  <%= f.submit "upload" %>
+					  <% end %>
+					  <span class="tooltip">
+						  Upload your iCalendar file from SIO and begin sharing schedules with your friends on Facebook!
+					  </span>
+				  </div>
+          <span id="switch-form">Use SIO instead of ScheduleMan?</span>
           <span class="error tooltip">
             
           </span>
-
-					
 					<p>schedule+ connects you to your Carnegie Mellon friends on Facebook by matching your planned course schedules. See which courses are most common among your friends, or find out which of your friends is free for a lunchtime get-together.</p>
-				</div>
-				<div>
-					<%= form_for(:upload, :url => {:action=>'import', :controller => 'schedules'}, :html=> {:multipart=>true}) do |f| %>
-						<%= f.file_field :uploaded_file %>
-						<%= f.submit "upload" %>
-					<% end %>
 				</div>
 
 			</li>
