@@ -71,7 +71,7 @@ $(document).ready(function() {
       $('#switch-form').html('Use SIO instead of Scheduleman?');
   });
   $('#start-page .error.tooltip').hide();
-  $('#start-page #add-schedule').submit(function(e) {
+  $('#start-page #import-scheduleman').submit(function(e) {
     e.preventDefault();
     var f = $(this);
     $('#start-page .error.tooltip').fadeOut();
