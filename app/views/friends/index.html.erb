@@ -10,10 +10,21 @@
     <li>Sort by Courses in Common</li>
   </ul>
   -->
-  <a href="#">"I am a working invite link"</a>
+  <a href="#" id="fb-invite">I am a working invite link</a>
   <span class="tooltip">
     Invite your facebook friends to schedule+ to see more schedules!
   </span>
+  <script type="text/javascript">
+    $('#fb-invite').click(function(e) {
+      e.preventDefault();
+      FB.ui({ method:'apprequests',
+        filters:['app_non_users'],
+        title:'Invite Friends to use schedule+!',
+        message:'Import your ScheduleMan using schedule+ and share your schedule with me!'
+      });
+      return false;
+    });
+  </script>
 </div>
 <div id="article">
   <h1 class="friends">Friends</h1>
