@@ -1,5 +1,8 @@
 class HomeController < ApplicationController
   def index
+    # Clear any schedules that may have been imported earlier
+    session[:imported] = nil
+    
     if current_user
       redirect_to schedules_path
     end
