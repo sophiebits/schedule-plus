@@ -34,11 +34,8 @@ class ApplicationController < ActionController::Base
   def friends
     if @friends.nil?
       fb_friends = fb_user.friends.collect{|f|f.identifier} if fb_user
-      fb_friends_uids = []
-      User.all.each do |u|
-        fb_friends_uids.push(u.uid) if fb_friends.include? u.uid
-      end
-      @friends = User.where("users.uid IN (?) AND users.id IN (SELECT user_id FROM active_schedules)", fb_friends_uids)
+      fb_friends_uids = User.all.collect{|u| u.uid if fb_friends.include? u.uid and u.main_schedule}.compact
+      @friends = User.where(:uid => fb_friends_uids)
     end
     @friends
   end
