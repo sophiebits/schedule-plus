@@ -53,15 +53,6 @@ $(document).ready(function() {
 			$('.schedule-permalink.tooltip').remove();
 		}
 	});
-	
-	$('#fb-invite').click(function(e) {
-    e.preventDefault();
-    FB.ui({ method:'apprequests',
-      filters:['app_non_users'],
-      title:'Invite Friends to use schedule+!',
-      message:'Import your ScheduleMan using schedule+ and share your schedule with me!'
-    });
-  });
 
   (new Image()).src = "/images/ajax-small.gif";
 
