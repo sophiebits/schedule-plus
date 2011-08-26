@@ -49,6 +49,8 @@ AcmSchedule::Application.routes.draw do
   resource :schedules do
     get 'import', :on => :member
   end
+  
+  match "/schedules/import" => "schedules#import"
 	match "/schedules/get_friends_in_course" => "schedules#get_friends_in_course"
   match "/schedules/add-course" => "schedules#add_course"
   match "/schedules/:id" => "schedules#show"

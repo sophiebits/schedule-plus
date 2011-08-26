@@ -79,46 +79,50 @@ $(document).ready(function() {
          .css('background-image',"url(/images/form-add.png)")
       },
       success: function(data,textStatus,jqXHR) {
-        $.get('/main?schedule='+data.schedule.id,function(mainPage) {
-          $('#fb-login').fadeOut();
-          $(mainPage).css({
-              position:'absolute',
-              left:'100%',
-              width:$(window).width()
-            })
-            .appendTo('#pages');
-          $(window).resize();
-          if (data.warnings.length) {
-            var html = '<div id="import-warning" class="warning"><p>The following course(s) failed to import:</p><ul>';
-            for (var i=0; i<data.warnings.length; ++i) 
-              html += '<li>' + data.warnings[i] + '</li>';
+				if (data.error) {
+					$('#start-page .error.tooltip').html(data.error).fadeIn();
+				} else {
+	        $.get('/main?schedule='+data.schedule.id,function(mainPage) {
+	          $('#fb-login').fadeOut();
+	          $(mainPage).css({
+	              position:'absolute',
+	              left:'100%',
+	              width:$(window).width()
+	            })
+	            .appendTo('#pages');
+	          $(window).resize();
+	          if (data.warnings.length) {
+	            var html = '<div id="import-warning" class="warning"><p>The following course(s) failed to import:</p><ul>';
+	            for (var i=0; i<data.warnings.length; ++i) 
+	              html += '<li>' + data.warnings[i] + '</li>';
             
-            html += '</ul><p>We keep our database of courses as up-to-date as possible, according to the official Schedule of Classes. Either the courses on your ScheduleMan do not exist anymore, or the lecture/section information is inconsistent. Please leave some feedback by clicking the feedback button to the left and we will follow up on this issue. Thanks!</p></div>';
+	            html += '</ul><p>We keep our database of courses as up-to-date as possible, according to the official Schedule of Classes. Either the courses on your ScheduleMan do not exist anymore, or the lecture/section information is inconsistent. Please leave some feedback by clicking the feedback button to the left and we will follow up on this issue. Thanks!</p></div>';
             
-            $('#main-page #article').prepend(html);
-          }
-          $('<div id="courses-after-tooltip" style="text-align:center"><span class="tooltip">Now that your schedule has been imported, connect to Facebook to see your friends\' schedules!</span></div>').appendTo('.main-aside');//.hide();
-          $('#page-footer').fadeOut();
-          $('#page-content').animate({height:$('#main-content').height()},800);
-          $('#start-page').animate({left:'-100%'},800)
-            .queue(function() { $(this).remove() });
-          $('#main-bg').animate({ left:'0%' },800);
-          $('#main-page')
-            .animate({ left:'0%' },800)
-            .queue(function() {
-              $(this).css('position','relative');
-              $('#page-content').height('auto');
-              $('#page-footer')
-                .removeClass('start')
-                .show(); 
-              $('.main-aside #courses-after-tooltip')
-                .delay(data.schedule.scheduled_courses.length*200)
-                .fadeIn(800);
-              $('#fb-login')
-                .delay(data.schedule.scheduled_courses.length*200)
-                .fadeIn(); 
-            });
-        });
+	            $('#main-page #article').prepend(html);
+	          }
+	          $('<div id="courses-after-tooltip" style="text-align:center"><span class="tooltip">Now that your schedule has been imported, connect to Facebook to see your friends\' schedules!</span></div>').appendTo('.main-aside');//.hide();
+	          $('#page-footer').fadeOut();
+	          $('#page-content').animate({height:$('#main-content').height()},800);
+	          $('#start-page').animate({left:'-100%'},800)
+	            .queue(function() { $(this).remove() });
+	          $('#main-bg').animate({ left:'0%' },800);
+	          $('#main-page')
+	            .animate({ left:'0%' },800)
+	            .queue(function() {
+	              $(this).css('position','relative');
+	              $('#page-content').height('auto');
+	              $('#page-footer')
+	                .removeClass('start')
+	                .show(); 
+	              $('.main-aside #courses-after-tooltip')
+	                .delay(data.schedule.scheduled_courses.length*200)
+	                .fadeIn(800);
+	              $('#fb-login')
+	                .delay(data.schedule.scheduled_courses.length*200)
+	                .fadeIn(); 
+	            });
+	        });
+				}
       },
       error: function(jqXHR,textStatus,errorThrown) {
         $('#start-page .error.tooltip').html(//errorThrown

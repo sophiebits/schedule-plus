@@ -6,18 +6,25 @@
         })</script>
         <div class="container">
 					<h1>Get Started</h1>
-					<%= form_tag '/schedules/import', :id => 'add-schedule', 
-            :method => :get do %>
+					<%= form_tag '/schedules/import', :id => 'add-schedule', :method => :get do %>
             <%= text_field_tag :schedulemanurl, nil, :placeholder => 'https://scheduleman.org/schedules/cTUJ2tAnlw' %>
             <%= submit_tag "Add" %>
-          <% end %>
+					<% end %>
 					<span class="tooltip">
 						Paste the URL of your ScheduleMan schedule here and begin sharing with your friends on Facebook!
 					</span>
           <span class="error tooltip">
             
           </span>
+
+					
 					<p>schedule+ connects you to your Carnegie Mellon friends on Facebook by matching your planned course schedules. See which courses are most common among your friends, or find out which of your friends is free for a lunchtime get-together.</p>
+				</div>
+				<div>
+					<%= form_for(:upload, :url => {:action=>'import', :controller => 'schedules'}, :html=> {:multipart=>true}) do |f| %>
+						<%= f.file_field :uploaded_file %>
+						<%= f.submit "upload" %>
+					<% end %>
 				</div>
 
 			</li>

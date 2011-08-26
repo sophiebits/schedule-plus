@@ -4,14 +4,31 @@ class SchedulesController < ApplicationController
   end
   
   def import
-    parsed = Parser.parse(params[:url])
-    @schedule = parsed[:schedule]
-    # store imported schedule id in session var to retrieve after oauth
-    session[:imported] = @schedule.id
-    if request.xhr?
-      render :json => parsed
+    if params[:upload]
+      # Parse uploaded .ics file
+      file = params[:upload][:uploaded_file].tempfile
+      parsed = Parser.parseSIO(file)   
+
+      # store imported schedule id in session var to retrieve after oauth
+      session[:imported] = parsed[:schedule].id
+
+      redirect_to '/schedules/' + session[:imported].to_s
     else
-      redirect_to schedules_path
+      # Parse scheduleman url
+      parsed = Parser.parse(params[:url])
+      schedule = parsed[:schedule]
+  
+      # store imported schedule id in session var to retrieve after oauth
+      session[:imported] = schedule.id
+  
+      p "@JM parsed units! ::::: " + schedule.units
+      p "@JM : schedule " + schedule.as_json.to_s
+  
+      if request.xhr?
+        render :json => parsed
+      else
+        redirect_to schedules_path
+      end
     end
   end
   

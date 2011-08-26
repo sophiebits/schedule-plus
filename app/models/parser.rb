@@ -18,33 +18,33 @@ end
 class Parser < ActiveRecord::Base
   
   # Parse method for SIO calendar file
-  def self.parseSIO(file_path, current_user_id = -1)
-    File.open(file_path, 'r') do |file|
-      @components = RiCal.parse(file)
-    end
+  def self.parseSIO(file, current_user_id = -1)
+    @components = RiCal.parse(file)
     
     scheduled_courses = Hash.new
     
     @components.first.events.each do |course| 
       summary = course.summary.split('::')[1].strip.split(' ')
       
-      number = summary[0].insert(2,'-')
-      section = summary[1]
+      if summary.count > 0
+        number = summary[0].insert(2,'-')
+        section = summary[1]
       
-      if !(scheduled_courses[number])
-				scheduled_courses[number] = Hash.new
-			end
+        if !(scheduled_courses[number])
+  				scheduled_courses[number] = Hash.new
+  			end
       
-      # If course section is a number, assume lecture section; otherwise
-      # assume recitation section
-      if section.to_i != 0
-				scheduled_courses[number][:lecture_section] = section
-      else
-        scheduled_courses[number][:recitation_section] = section
+        # If course section is a number, assume lecture section; otherwise
+        # assume recitation section
+        if section.to_i != 0
+  				scheduled_courses[number][:lecture_section] = section
+        else
+          scheduled_courses[number][:recitation_section] = section
+        end
       end
     end
     
-    self.generate_schedule_response(scheduled_courses, current_user_id)
+    self.check_errors(self.generate_schedule_response(scheduled_courses, current_user_id))
   end
 
   # Parse method for scheduleman url
@@ -142,8 +142,18 @@ class Parser < ActiveRecord::Base
       end
     end
     
-    response
+    self.check_errors(response)
 	end
+	
+	def self.check_errors(response)
+		p response[:schedule].units.split('-')[0].to_s
+		# Check that schedule doesn't have over 100 units
+		if response[:schedule].units.split('-')[0].to_f > 100.0
+		  response[:error] = "Schedule is too large (total units are over 100)"
+		end
+		
+		response
+  end
 	
 	def self.generate_schedule_response(scheduled_courses, current_user_id)
     response = Hash.new
@@ -201,7 +211,7 @@ class Parser < ActiveRecord::Base
 		if !sc
 			sc = ScheduledCourse.create(:course_id => course.id, :lecture_id => lec_id, :recitation_id => rec_id)
 		end
-	  
+
     CourseSelection.create(:schedule_id => schedule.id, :scheduled_course_id => sc.id)
   end
 
