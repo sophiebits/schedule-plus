@@ -4,26 +4,10 @@ require 'net/https'
 class SessionsController < ApplicationController
   def show
     auth = request.env['omniauth.auth']
-    session[:token] = auth['credentials']['token']
-    
-    # Check that user is a CMU student
-    is_cmu_student = false
-    fb_user.education.each do |edu|
-      if edu.school.name == "Carnegie Mellon University"
-        is_cmu_student = true
-        break
-      end
-    end
-    
-    # User is not a CMU student
-    if !is_cmu_student
-      reset_session
-      redirect_to invalid_user_url
-      return
-    end
-    
     user = User.find_by_uid(auth['uid']) || User.create_with_omniauth(auth)
+    
     session[:user_id] = user.id
+    session[:token] = auth['credentials']['token']
 
 		# Updated the imported schedule with the correct user id, and make it active
 		if session[:imported]
