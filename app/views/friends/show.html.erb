@@ -15,17 +15,6 @@
     Share this app on facebook and invite your friends to see more schedules!
     <!--<a href="#" id="fb-invite">Invite your friends</a> on facebook to see more schedules!-->
   </div>
-  <script type="text/javascript">
-    $('#fb-invite').click(function(e) {
-      e.preventDefault();
-      FB.ui({ method:'apprequests',
-        filters:['app_non_users'],
-        title:'Invite Friends to use schedule+!',
-        message:'Import your ScheduleMan using schedule+ and share your schedule with me!'
-      });
-      return false;
-    });
-  </script>
 </div>
 <% end %>
 <%= render :partial => 'partials/mainpage' %>
