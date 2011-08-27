@@ -9,7 +9,7 @@
               </li>
 							<li id="main-nav-friends"<% if !current_user %> class="locked"<% end %>>
                 <a class="<% if controller.controller_name == 'friends' %>selected <% end %>nav-link"<% if current_user %> href="/friends"<% end %>>friends</a>
-								<% if !current_user && (!@schedule || @schedule.valid_units) %>
+								<% if !current_user %>
                 <span class="tooltip">
 									<script type="text/javascript">
                   
