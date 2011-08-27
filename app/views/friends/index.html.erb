@@ -15,6 +15,9 @@
     Invite your facebook friends to schedule+ to see more schedules!
   </span>
   <script type="text/javascript">
+
+	$(document).ready(function() {
+
     $('#fb-invite').click(function(e) {
       e.preventDefault();
       FB.ui({ method:'apprequests',
@@ -24,6 +27,15 @@
       });
       return false;
     });
+
+		$('.common-courses .tooltip').hide();
+		$('.common-courses .tooltip > ul > li').textOverflow();
+		
+		$('.common-courses .count').hover(
+			function() { $(this).prev('.tooltip').show(); }, 
+		  function() { $(this).prev('.tooltip').hide(); }
+		);
+	});
   </script>
 </div>
 <div id="article">
@@ -45,7 +57,21 @@
       <img src="http://graph.facebook.com/<%= friend.uid %>/picture" />
       <a href="/friends/<%= friend.id %>"><span class="name"><%= friend.name %></span></a>
       <span class="status"><%= friend.status %></span>
-      <span class="common-courses"><%= friend.courses_in_common(current_user).length %> courses in common</span>
+      <span class="common-courses">
+				<%
+					courses_in_common = friend.courses_in_common(current_user)
+					if courses_in_common.length > 0
+				%>
+      	<span class="tooltip">
+					<ul>
+						<% courses_in_common.each do |course|	%>
+						<li><%= course.number + ': ' + course.name %></li>
+					<% end %>
+					</ul>
+				</span>
+				<% end %>
+				<span class="count"><%= courses_in_common.length %> courses in common</span>
+      </span>
     </li>
 <% 
 end 

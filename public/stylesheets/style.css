@@ -902,6 +902,42 @@ h1.friends {
   font-size:0.8em;
 }
 
+#friends .common-courses .tooltip {
+  white-space:nowrap;
+  width: 120px;
+  background-color:#fbb03b;
+  color:#333;
+  z-index:30;
+  position:absolute;
+  bottom:15px;
+  top:auto;
+  font-size:10px;
+  left:0;
+  border-radius:2px;
+  padding:2px 4px;
+}
+
+#friends .common-courses .tooltip li {
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+#friends .common-courses .tooltip:after {
+  top:auto;
+  bottom:-5px;
+  left:5px;
+  border-color:transparent #fbb03b;
+  border-width:0 0 5px 5px
+}
+
+#friends .common-courses .count {
+  cursor:default;
+}
+
+#friends .common-courses .count:hover {
+  color:#fbb03b;
+}
+
 #friends-tooltip {
   margin:160px 0 0;
   padding:35px;
