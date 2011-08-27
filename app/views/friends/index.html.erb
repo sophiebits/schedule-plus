@@ -2,7 +2,7 @@
 <div class="main-aside">
   <!--
   <form>
-    <input type="text" placeholder="Search Friends"></input>
+    <input type="text" placeholder="Search Friends" id="search-friends-input"></input>
     <input type="submit" value="Search"></input>
   </form>
   <ul id="friends-sort-options">
@@ -10,17 +10,19 @@
     <li>Sort by Courses in Common</li>
   </ul>
   -->
-  <a href="#" id="fb-invite">I am a working invite link</a>
-  <span class="tooltip">
-    Invite your facebook friends to schedule+ to see more schedules!
+  <span class="tooltip" id="share-prompt">
+    Share schedule+ with your friends on facebook to see more schedules!
   </span>
+  <a href="#" class="fb-share">Share</a>
   <script type="text/javascript">
-    $('#fb-invite').click(function(e) {
+    $('.fb-share').click(function(e) {
       e.preventDefault();
-      FB.ui({ method:'apprequests',
-        filters:['app_non_users'],
-        title:'Invite Friends to use schedule+!',
-        message:'Import your ScheduleMan using schedule+ and share your schedule with me!'
+      FB.ui({ method:'feed',
+        name:'schedule+',
+        link:'http://localhost:3000/',
+        picture:'http://fbrell.com/f8.jpg',
+        description:'schedule+ connects you to your Carnegie Mellon friends on Facebook by matching your planned course schedules. See which courses are most common among your friends, or find out which of your friends is free for a lunchtime get-together.',
+        message:"I'm now using schedule+ to share my CMU schedule with friends. Check it out!"
       });
       return false;
     });
@@ -42,10 +44,12 @@
   end 
 %>
     <li class="friend">
-      <img src="http://graph.facebook.com/<%= friend.uid %>/picture" />
-      <a href="/friends/<%= friend.id %>"><span class="name"><%= friend.name %></span></a>
-      <span class="status"><%= friend.status %></span>
-      <span class="common-courses"><%= friend.courses_in_common(current_user).length %> courses in common</span>
+      <a href="/friends/<%= friend.id %>">
+        <img src="http://graph.facebook.com/<%= friend.uid %>/picture" />
+        <span class="name"><%= friend.name %></span>
+        <span class="status"><%= friend.status %></span>
+        <span class="common-courses"><%# friend.courses_in_common(current_user).length %> courses in common</span>
+      </a>
     </li>
 <% 
 end 
@@ -58,7 +62,12 @@ end
   </div>
   <script type="text/javascript" src="/javascripts/slider.js"></script>
   <script type="text/javascript">
+  var friends = <%= @friends.to_json.html_safe %>;
   $(function() {
+    var friends = ['adam','jason','vincent'];
+    $('#search-friends-input').autocomplete({
+      source: friends
+    });
     initSlider('#friends','#friends-container','.friends-page',0);
   });
   </script>

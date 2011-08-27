@@ -12,19 +12,8 @@ class SessionsController < ApplicationController
 		# Updated the imported schedule with the correct user id, and make it active
 		if session[:imported]
 			imported_schedule = Schedule.find(session[:imported])
-			imported_schedule.update_attribute(:user_id, user.id)
-			imported_schedule.save
-			
-			# Find the current user's active schedule and update it to be the imported
-			# schedule, or create a new active schedule
-			active_schedule = ActiveSchedule.find_by_user_id(user.id)
-			if active_schedule
-				active_schedule.update_attribute(:schedule_id, imported_schedule.id)
-				active_schedule.save
-			else
-				ActiveSchedule.create(:user_id => user.id, :schedule_id => imported_schedule.id)
-			end
-
+      user.update_active_schedule(imported_schedule)
+      
       session[:imported] = nil
 		end
 
@@ -35,5 +24,10 @@ class SessionsController < ApplicationController
   def destroy
     reset_session
     redirect_to root_url
+  end
+
+  # user cancelled facebook authentication. we do nothing.
+  def bounce
+    render :text => '<script type="text/javascript">if(window.opener){window.close();}</script>', :layout => false
   end
 end

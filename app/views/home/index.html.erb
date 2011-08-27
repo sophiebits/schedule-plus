@@ -5,6 +5,10 @@
           $('#page-footer').addClass('start');
         })</script>
         <div class="container">
+    <span id="login-prompt">Already Connected?</span>
+    <div id="auth">
+      <a href="/auth/facebook" class="fb-login">Login with Facebook</a>
+    </div>
           <h1>Get Started</h1>
 					<div id="scheduleman-form">
 					  <%= form_tag '/schedules/import', :id => 'import-scheduleman', :method => :get do %>
@@ -21,7 +25,7 @@
 						  <%= f.submit "upload" %>
 					  <% end %>
 					  <span class="tooltip">
-						  Upload your iCalendar file from SIO and begin sharing schedules with your friends on Facebook!
+						  Upload your iCalendar file (.ics) from SIO and begin sharing schedules with your friends on Facebook!
 					  </span>
 				  </div>
           <span id="switch-form">Use SIO instead of ScheduleMan?</span>

@@ -6,6 +6,8 @@ function initSlider(div,ul,li,pos) {
     width:slides.length + '00%',
     left:-pos * 100 + '%'
   });
+  if (slides.length <= 1)
+    $(div + ' .nav-next').addClass('disabled');
   $(div + ' .nav-previous').addClass('disabled');
   $(div + ' .nav-previous,' + div + ' .nav-next').click(function() {
     if ($(this).hasClass('disabled')) exit();

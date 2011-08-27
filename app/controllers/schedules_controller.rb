@@ -8,27 +8,23 @@ class SchedulesController < ApplicationController
       # Parse uploaded .ics file
       file = params[:upload][:uploaded_file].tempfile
       parsed = Parser.parseSIO(file)   
-
-      # store imported schedule id in session var to retrieve after oauth
-      session[:imported] = parsed[:schedule].id
-
-      redirect_to '/schedules/' + session[:imported].to_s
     else
       # Parse scheduleman url
       parsed = Parser.parse(params[:url])
-      schedule = parsed[:schedule]
-  
+    end
+    
+    if current_user
+      # authenticated, update active_schedule
+      current_user.update_active_schedule(parsed[:schedule])
+    else
       # store imported schedule id in session var to retrieve after oauth
-      session[:imported] = schedule.id
-  
-      p "@JM parsed units! ::::: " + schedule.units
-      p "@JM : schedule " + schedule.as_json.to_s
-  
-      if request.xhr?
-        render :json => parsed
-      else
-        redirect_to schedules_path
-      end
+      session[:imported] = parsed[:schedule].id
+    end
+
+    if request.xhr?
+      render :json => parsed
+    else
+      redirect_to '/schedules/' + session[:imported].to_s
     end
   end
   
@@ -37,6 +33,9 @@ class SchedulesController < ApplicationController
   end
 
   def show
+    if current_user && !current_user.main_schedule
+      redirect_to new_schedules_path if request.env['PATH_INFO'] != new_schedules_path
+    end
     if (!params[:id]) 
       if current_user
         @schedule = current_user.main_schedule

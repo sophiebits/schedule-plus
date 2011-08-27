@@ -34,7 +34,7 @@ jQuery.fn.selText = function() {
 
 $(document).ready(function() {
 
-  $('body').delegate('#fb-login,#fb-connect','click',function(e) {
+  $('body').delegate('.fb-login,.fb-connect','click',function(e) {
     popupCenter($(this).attr('href'),600,400,'fbPopup');
     e.stopPropagation();
     return false;
@@ -63,12 +63,12 @@ $(document).ready(function() {
   $('#sio-form').hide();
   $('#switch-form').click(function() {
     sio = !sio;
-    $('#scheduleman-form').fadeToggle();
-    $('#sio-form').fadeToggle();
+    $('#scheduleman-form').stop(true,true).fadeToggle();
+    $('#sio-form').stop(true,true).fadeToggle();
     if (sio)
-      $('#switch-form').html('Nevermind, use Scheduleman instead.');
+      $('#switch-form').html('Nevermind, use ScheduleMan instead.');
     else
-      $('#switch-form').html('Use SIO instead of Scheduleman?');
+      $('#switch-form').html('Use SIO instead of ScheduleMan?');
   });
   $('#start-page .error.tooltip').hide();
   $('#start-page #import-scheduleman').submit(function(e) {
@@ -93,7 +93,8 @@ $(document).ready(function() {
 					$('#start-page .error.tooltip').html(data.error).fadeIn();
 				} else {
 	        $.get('/main?schedule='+data.schedule.id,function(mainPage) {
-	          $('#fb-login').fadeOut();
+	          $('#login-prompt').fadeOut();
+            $('#auth').fadeOut();
 	          $(mainPage).css({
 	              position:'absolute',
 	              left:'100%',
@@ -110,7 +111,7 @@ $(document).ready(function() {
             
 	            $('#main-page #article').prepend(html);
 	          }
-	          $('<div id="courses-after-tooltip" style="text-align:center"><span class="tooltip">Now that your schedule has been imported, connect to Facebook to see your friends\' schedules!</span></div>').appendTo('.main-aside');//.hide();
+	          $('<div id="courses-after-tooltip" style="text-align:center"><span class="tooltip">Now that your schedule has been imported, connect to Facebook to see your friends\' schedules!</span><br /><a class="fb-connect" href="/auth/facebook">Connect</a></div>').appendTo('.main-aside').hide();
 	          $('#page-footer').fadeOut();
 	          $('#page-content').animate({height:$('#main-content').height()},800);
 	          $('#start-page').animate({left:'-100%'},800)

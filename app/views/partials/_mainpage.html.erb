@@ -14,7 +14,7 @@
 									<script type="text/javascript">
                   
                   </script>
-								  <%= link_to "Connect", "/auth/facebook", :id => 'fb-connect' %>	
+								  <%= link_to "Connect", "/auth/facebook", :class => 'fb-connect' %>	
 							  </span><% end %>
               </li>
 						  <% if current_user %>
@@ -29,7 +29,11 @@
 <label for="url">Import a new schedule</label>
 <input type="text" name="url" placeholder="https://scheduleman.org/cTUJ2tAnlw"></input>
 </form>-->
-&nbsp;<%= "Logged in as " + current_user.name if current_user %>
+<% if !current_user %>
+<a href="/auth/facebook" class="fb-login">Login with Facebook</a>
+<% else %>
+Logged in as <%= current_user.name %>
+<% end %>
 </div>
           <%= yield :content %>
 					</div>

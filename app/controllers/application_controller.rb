@@ -4,17 +4,11 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   
   # Always redirect users to scheduleplus.org if they try to access thourgh the heroku site
-  before_filter :check_uri, :check_schedule
+  before_filter :check_uri
   def check_uri
 	  redirect_to 'http://scheduleplus.org' if /heroku/.match(request.host)
   end
-
-  def check_schedule
-    if current_user && !current_user.main_schedule
-      redirect_to new_schedules_path if request.env['PATH_INFO'] != new_schedules_path
-    end
-  end
-  
+ 
   helper_method :current_user, :fb_user, :friends
 
 	@current_user = nil

@@ -20,11 +20,13 @@ class User < ActiveRecord::Base
   end
 
 	def as_json(options={})
-    {
+    hash = {
       :id => self.id,
       :uid => self.uid,
-      :name => self.name
+      :name => self.name,
+      :status => self.status
     }
+    hash
   end
   
   def courses_in_common(friend)
@@ -71,4 +73,29 @@ class User < ActiveRecord::Base
 			return 'in ' + number + ' ' + section
 		end
 	end
+
+  ###################
+  # Schedule Methods
+  ###################
+
+  def update_active_schedule(schedule)
+    if schedule.user_id == -1
+      schedule.update_attribute(:user_id, self.id)
+      schedule.save
+    elsif schedule.user != self
+      return nil
+    end 
+			
+    # Find the user's active schedule and update it to be the imported
+	  # schedule, or create a new active schedule
+		active_schedule = ActiveSchedule.find_by_user_id(self.id)
+		if active_schedule
+			active_schedule.update_attribute(:schedule_id, schedule.id)
+			active_schedule.save
+		else
+			ActiveSchedule.create(:user_id => self.id, :schedule_id => schedule.id)
+		end
+    
+    schedule
+  end
 end

@@ -58,6 +58,7 @@ AcmSchedule::Application.routes.draw do
   root :to => "home#index"
 
   match "/auth/:provider/callback" => "sessions#show"
+  match "/auth/failure" => "sessions#bounce"
   match "/main" => "home#main"
 
   match "/tos" => "static#tos"

@@ -90,17 +90,16 @@ a:hover {
     margin:1em;
 }
 
-#fb-login {
-  position:absolute;
-  top:14px; right:25px;
-  display:block;
+.fb-login {
+  vertical-align:middle;
+  display:inline-block;
   width:65px; height:0;
   padding-top:22px;
   overflow:hidden;
   background-image:url('/images/fb-buttons.gif');
 }
 
-#fb-login:hover {
+.fb-login:hover {
   background-position:0 -22px;
 }
 
@@ -199,7 +198,7 @@ a:hover {
   position:absolute;
   font-size:0.8em;
   cursor:pointer;
-  color:#fbb03b;
+  color:#1fbbbd;
   top:270px;
   right:20px;
 }
@@ -258,7 +257,7 @@ a:hover {
         height:240px;
 }
 
-#fb-connect {
+.fb-connect {
   margin:0 auto;
   display:block;
   width:85px; height:0;
@@ -266,7 +265,7 @@ a:hover {
   overflow:hidden;
   background:url('/images/fb-buttons.gif') -65px 0;
 }
-#fb-connect:hover {
+.fb-connect:hover {
   background-position:-65px -22px;
 }
 
@@ -480,10 +479,11 @@ a:hover {
 
 #article {
   padding-bottom:35px;
-  width:612px;
+  /*width:612px;*/
   float:left;
   position:relative;
   background-color:#fff;
+  min-height:620px;
 }
 
 #course-detail {
@@ -805,6 +805,7 @@ a:hover {
 }
 
 h1.friends {
+  color:#1fbbbd;
   position:absolute;
   margin:20px 40px 0;
   font-size:1.3em;
@@ -813,7 +814,7 @@ h1.friends {
 #friends {
   position:relative;
   overflow:hidden;
-  width:556px;
+  width:552px;
   height:610px;
   margin:20px 30px 0;
   padding-top:35px;
@@ -859,12 +860,17 @@ h1.friends {
 #friends li.friend {
   position:relative;
   clear:both;
-  padding:10px;
   border-top:1px solid #1fbbbd;
-  height:39px;
+  height:59px;
 }
 #friends li.friend:last-child {
   border-bottom:1px solid #1fbbbd
+}
+
+#friends a {
+  display:block;
+  padding:10px;
+  height:39px;
 }
 
 #friends a .name {
@@ -878,6 +884,7 @@ h1.friends {
 
 #friends a:hover {
   text-decoration:none;
+  background-color:#f6f6f6;
 }
 
 #friends img {
@@ -1020,4 +1027,40 @@ h1.friends {
 #import-warning ul li {
   margin-bottom:10px;
   font-weight:700;
+}
+
+#auth {
+  position:absolute;
+  right:10px; top:0;
+  padding:8px 10px;
+  background-color:#fbb03b;
+  border-radius:0 0 5px 5px;
+}
+
+#login-prompt {
+  position:absolute;
+  top:15px; right:110px;
+  font-size:0.8em;
+  color:#fbb03b;
+  font-weight:700;
+}
+
+#share-prompt {
+  margin:10px 0 20px;
+}
+#share-prompt:after {
+  top:auto;
+  right:50px; left:auto;
+  bottom:-15px;
+  border-color:transparent #666;
+}
+
+.fb-share {
+  display:block;
+  margin:0 auto;
+  width:65px;
+  height:0;
+  padding-top:22px;
+  overflow:hidden;
+  background-image:url('/images/fb-buttons.gif');
 }
