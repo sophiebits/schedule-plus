@@ -4,7 +4,7 @@
   <div class="container">
     <a href="/"><img id="schedule-plus-logo" src="/images/schedule-plus-logo-sm.png" alt="schedule+" /></a>
     <!--login-->
-    <% if !current_user %>
+    <% if !current_user && (!@schedule || @schedule.valid_units) %>
       <a href="/auth/facebook" id="fb-login">Login with Facebook</a>
     <% end %>
     <!--end-->

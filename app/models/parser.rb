@@ -146,9 +146,8 @@ class Parser < ActiveRecord::Base
 	end
 	
 	def self.check_errors(response)
-		p response[:schedule].units.split('-')[0].to_s
 		# Check that schedule doesn't have over 100 units
-		if response[:schedule].units.split('-')[0].to_f > 100.0
+		if !response[:schedule].valid_units
 		  response[:error] = "Schedule is too large (total units are over 100)"
 		end
 		

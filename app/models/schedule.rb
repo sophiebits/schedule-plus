@@ -31,4 +31,8 @@ class Schedule < ActiveRecord::Base
       return units_lower.to_s + '-' + units_upper.to_s
     end
   end
+  
+  def valid_units
+    return self.units.split('-')[0].to_f <= 100.0
+  end
 end

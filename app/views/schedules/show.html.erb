@@ -21,8 +21,7 @@
 		<div id="schedule-permalink-box">
     <div id="schedule-permalink">http://<%= request.host %><%= ':3000' if request.host == 'localhost' %>/schedules/<%= @schedule.id %></div>
 		</div>
-		<% if (current_user && 
-    ((friends.exists? (@schedule.user)) || (@schedule.user == current_user))) %>
+		<% if (@schedule.user && current_user && ((friends.exists? (@schedule.user)) || (@schedule.user == current_user))) %>
     <img src="http://graph.facebook.com/<%= @schedule.user.try(:uid) %>/picture"/>
     <h1><%= @schedule.user.try(:name) %></h1>
   <% end %>
@@ -38,6 +37,10 @@ $(document).ready(function() {
   var schedule = <%= @schedule.to_json.html_safe %>;
  addSchedule(schedule.scheduled_courses);
 });
+<% if !@schedule.valid_units %>
+  var html = '<div id="import-warning" class="warning"><p>The following schedule cannot be imported because it has too many total units (over 100)</p>';
+  $('#main-page #article').prepend(html);
+<% end %>
 </script>
 <%# end %>
 <% if current_user %>
