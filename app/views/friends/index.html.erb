@@ -45,7 +45,7 @@
     <li class="friends-page"><ul>
 <% 
 ###########################################
-@friends.each_with_index do |friend, index| 
+@friends.order('users.name').each_with_index do |friend, index| 
   if index > 0 && (index % 10) == 0
 %>
     </ul></li>
