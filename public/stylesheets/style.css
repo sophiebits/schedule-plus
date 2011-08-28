@@ -1047,9 +1047,11 @@ h1.friends {
 }
 
 #import-warning {
+  float:left;
   margin:20px;
   padding:20px;
-  font-size:0.8em
+  font-size:0.8em;
+  width:530px
 }
 
 #import-warning p {
@@ -1099,4 +1101,78 @@ h1.friends {
   padding-top:22px;
   overflow:hidden;
   background-image:url('/images/fb-buttons.gif');
+}
+
+.new-schedule h1 {
+  color:#1fbbbd;
+  font-size:1.3em;
+  margin:20px 30px 50px;
+}
+
+.new-schedule .tooltip {
+  top:-35px; left:30px;
+  background-color:#1fbbbd;
+  color:#eee;
+  padding:5px 8px;
+}
+.new-schedule .tooltip:after {
+  border-color:#1fbbbd transparent;
+  border-width:0 10px 10px 0;
+  top:-10px; left:20px;
+}
+
+.new-schedule form {
+  background-color:#f6f6f6;
+  padding:20px;
+  height:100px;
+  position:relative
+}
+
+.new-schedule dl dt, .new-schedule dl dd {
+  height:20px; margin-bottom:40px
+}
+
+.new-schedule dl dt {
+  width:240px; float:left;
+  text-align:right;
+  color:#666;
+  margin-right:20px;
+  padding-top:5px;
+  height:15px
+}
+
+.new-schedule dl dd {
+  width:450px; float:left;
+}
+
+.new-schedule #or {
+  position:absolute;
+  top:55px;
+  left:180px;
+  font-weight:700;
+  color:#fbb03b;
+}
+
+.new-schedule dl dd input {
+  width:100%;
+}
+
+.new-schedule input[type=submit] {
+  position:absolute;
+  bottom:-40px;
+  left:300px;
+  border:0;
+  color:#1fbbbd;
+  cursor:pointer
+}
+
+.new-schedule input[type=submit]:after {
+  content:"";
+  position:absolute;
+  display:block;
+  width:20px;
+  height:20px;
+  background:transparent url('/images/form-add.png') no-repeat center;
+  left:-25px;
+  top:-2px;
 }

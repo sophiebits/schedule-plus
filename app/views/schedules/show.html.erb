@@ -18,8 +18,10 @@
 <div id="article">
   
   <div id="calendar-header">
+  <% if current_user && @schedule = current_user.main_schedule %><a href="/schedules/new" style="margin-bottom:10px;font-size:0.7em;position:absolute;right:30px;bottom:15px;display:block">Import a New Schedule</a><% end %>
 		<div id="schedule-permalink-box">
-    <div id="schedule-permalink">http://<%= request.host %><%= ':3000' if request.host == 'localhost' %>/schedules/<%= @schedule.id %></div>
+    <div id="schedule-permalink">http://<%= request.host %><%= ':3000' if request.host == 'localhost' %>/schedules/<%= @schedule.id %>
+    </div>
 		</div>
 		<% if (current_user && 
     ((friends.exists? (@schedule.user)) || (@schedule.user == current_user))) %>

@@ -1,15 +1,16 @@
 <% content_for :content do %>
-<div id="article">
+<div id="article" class="new-schedule">
   <h1>Import a New Schedule</h1>
   <span class="tooltip">Import a schedule from either ScheduleMan or SIO to begin sharing with your friends.</span>
   <%= form_for :import, :url => '/schedules/import', :html => { :multipart => true, :id => 'new-schedule'} do |f| %>
-    <label for="url">Import from ScheduleMan</label>
-    <%= text_field_tag :url, nil, :placeholder => 'https://scheduleman.org/schedules/cTUJ2tAnlw' %>
-    OR
-    <label for="import[uploaded_file]">Import from SIO</label>
-    <%= f.file_field :uploaded_file %> 
-    <%= submit_tag "Add" %>
+    <dl>
+    <dt><label for="url">Import from ScheduleMan</label></dt>
+    <dd><%= text_field_tag :url, nil, :placeholder => 'https://scheduleman.org/schedules/cTUJ2tAnlw' %></dd>
+    <dt class="sio"><label for="import[uploaded_file]">Import from SIO</label></dt>
+    <dd class="sio"><%= f.file_field :uploaded_file %> </dd>
+    </dl>
+    <span id="or">OR</span>
+    <%= submit_tag "Import!" %>
   <% end %>
 </div>
-<% end %>
-<%= render :partial => 'partials/mainpage' %>
+<% end %><%= render :partial => 'partials/mainpage' %>
