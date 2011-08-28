@@ -99,24 +99,40 @@ function queueLoadFriends(number, section, course_id, sched_id, queue) {
 	  url:      '/schedules/get_friends_in_course',
 	  type:     'GET',
 	  dataType: 'json',
-	  data:     'scheduled_course_id='+sched_id,
+	  data:     'scheduled_course_id='+sched_id+'&course_id='+course_id,
 	  complete: function() {},
 	  success: function(resp,textStatus,jqXHR) {
 			if (!$('.schedule .course' + number + ' .friends').hasClass('loaded')) {
+				// Adds pictures of friends in the same scheduled course
 		    html = '<span class="friends-header">Section '+ section 
 		          +'</span><ul class="lecture">';
-		    if (resp.me)
-		    	      html += '<li class="me"><a href="/schedules" link-name="'
-		    	            + resp.me.name + '"><img src="http://graph.facebook.com/'
-		    	            + resp.me.uid + '/picture" /></a></li>';
-		    for (var j = 0; j < resp.data.length; ++j) {
-		    	      var friend = resp.data[j]
-		    	      html += '<li><a href="/friends/' + friend.id 
-		    	            + '" link-name="' + friend.name + '">'
-		    	            + '<img src="http://graph.facebook.com/' + friend.uid 
-		    	            + '/picture" /></a></li>';
-		    	    }
+		    if (resp.me) {
+   	      html += '<li class="me"><a href="/schedules" link-name="'
+   	            + resp.me.name + '"><img src="http://graph.facebook.com/'
+   	            + resp.me.uid + '/picture" /></a></li>';
+				}
+		    for (var j = 0; j < resp.data.same_section.length; ++j) {
+   	      var friend = resp.data.same_section[j]
+   	      html += '<li><a href="/friends/' + friend.id 
+   	            + '" link-name="' + friend.name + '">'
+   	            + '<img src="http://graph.facebook.com/' + friend.uid 
+   	            + '/picture" /></a></li>';
+		    }
 		    html += '</ul>';
+		
+				// Adds pictures of friends in same course, but different section
+				if (resp.data.other_section.length > 0) {
+					html += '<span class="friends-header">Other Sections</span><ul class="lecture">';
+					for (var j = 0; j < resp.data.other_section.length; ++j) {
+	   	      var friend = resp.data.other_section[j]
+	   	      html += '<li><a href="/friends/' + friend.id 
+	   	            + '" link-name="' + friend.name + '">'
+	   	            + '<img src="http://graph.facebook.com/' + friend.uid 
+	   	            + '/picture" /></a></li>';
+			    }
+					html += '</ul>';
+				}
+				
 		    /*
 		    html += '<span class="friends-header">recitation</span><ul class="recitation">';
 		    for (var j = 0; j < resp.data.length; ++j) {
