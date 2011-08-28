@@ -15,6 +15,9 @@
   </span>
   <a href="#" class="fb-share">Share</a>
   <script type="text/javascript">
+
+	$(document).ready(function() {
+
     $('.fb-share').click(function(e) {
       e.preventDefault();
       FB.ui({ method:'feed',
@@ -26,6 +29,15 @@
       });
       return false;
     });
+
+		$('.common-courses .tooltip').hide();
+		$('.common-courses .tooltip > ul > li').textOverflow();
+		
+		$('.common-courses .count').hover(
+			function() { $(this).prev('.tooltip').show(); }, 
+		  function() { $(this).prev('.tooltip').hide(); }
+		);
+	});
   </script>
 </div>
 <div id="article">
@@ -35,7 +47,7 @@
     <li class="friends-page"><ul>
 <% 
 ###########################################
-@friends.each_with_index do |friend, index| 
+@friends.order('users.name').each_with_index do |friend, index| 
   if index > 0 && (index % 10) == 0
 %>
     </ul></li>
@@ -48,7 +60,21 @@
         <img src="http://graph.facebook.com/<%= friend.uid %>/picture" />
         <span class="name"><%= friend.name %></span>
         <span class="status"><%= friend.status %></span>
-        <span class="common-courses"><%# friend.courses_in_common(current_user).length %> courses in common</span>
+        <span class="common-courses">
+				  <%
+					  courses_in_common = friend.courses_in_common(current_user)
+					  if courses_in_common.length > 0
+				  %>
+      	  <span class="tooltip">
+					  <ul>
+						  <% courses_in_common.each do |course|	%>
+						  <li><%= course.number + ': ' + course.name %></li>
+					    <% end %>
+					  </ul>
+				  </span>
+				<% end %>
+				  <span class="count"><%= courses_in_common.length %> courses in common</span>
+        </span>
       </a>
     </li>
 <% 
@@ -62,12 +88,7 @@ end
   </div>
   <script type="text/javascript" src="/javascripts/slider.js"></script>
   <script type="text/javascript">
-  var friends = <%= @friends.to_json.html_safe %>;
   $(function() {
-    var friends = ['adam','jason','vincent'];
-    $('#search-friends-input').autocomplete({
-      source: friends
-    });
     initSlider('#friends','#friends-container','.friends-page',0);
   });
   </script>
