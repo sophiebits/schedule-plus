@@ -153,7 +153,18 @@ def reformatunits(units)
   units
 end
 
-
+# If begin_time > end_time, SoC fucked up, so we fix it for them
+def validatetimes(begin_time, end_time)
+  if (begin_time > end_time)
+    if (begin_time >= 720 && end_time >= 720)
+      begin_time -= 720
+    else
+      end_time += 720
+    end
+  end
+  
+  return [begin_time, end_time]
+end
 
 ######################
 file = 'https://enr-apps.as.cmu.edu/assets/SOC/sched_layout_fall.htm'
@@ -228,11 +239,12 @@ catch(:done) do
 			# Create all the Lecture Section Times, attaching them to Lecture
 			db_lec_sec_time = nil
 			begin
+			  times = validatetimes(timetominutes(cells[5].inner_text), timetominutes(cells[6].inner_text))
 				getdays(cells[4].inner_text).each do |day|
 					db_lec_sec_time = LectureSectionTime.create(:lecture_id => db_lecture.id,
 																											:day 				=> day,
-																											:begin 			=> timetominutes(cells[5].inner_text),
-																											:end 				=> timetominutes(cells[6].inner_text),
+																											:begin 			=> times[0],
+																											:end 				=> times[1],
 																											:location 	=> cells[7].inner_text)
 				end
 				i += 1
@@ -266,11 +278,12 @@ catch(:done) do
 					db_rec_sec_time = nil
 					# Create all Recitation Section Times, attatching them to Recitation
 					begin
+					  times = validatetimes(timetominutes(cells[5].inner_text), timetominutes(cells[6].inner_text))
 						getdays(cells[4].inner_text).each do |day|
 							db_rec_sec_time = RecitationSectionTime.create(	:recitation_id => db_recitation.id,
 																															:day 				=> day,
-																															:begin 			=> timetominutes(cells[5].inner_text),
-																															:end 				=> timetominutes(cells[6].inner_text),
+																															:begin 			=> times[0],
+        																											:end 				=> times[1],
 																															:location 	=> cells[7].inner_text)
 						end
 						i += 1
