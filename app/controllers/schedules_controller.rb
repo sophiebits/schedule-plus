@@ -62,8 +62,8 @@ class SchedulesController < ApplicationController
 
 	def get_friends_in_course
 		if request.xhr?
-			scheduled_course_id = params[:scheduled_course_id]
-			course_id = params[:course_id]
+			scheduled_course_id = params[:scheduled_course_id].to_i
+			course_id = params[:course_id].to_i
 
 			friends_includes = friends.includes(:main_schedule => {:scheduled_courses => 
         [:course]})
@@ -75,12 +75,12 @@ class SchedulesController < ApplicationController
         response[:data][:same_section] = friends_includes.where('scheduled_courses.id = ?', scheduled_course_id).order('users.name')
         response[:data][:other_section] = friends_includes.where('courses.id = ? AND scheduled_courses.id <> ?', course_id, scheduled_course_id).order('users.name')
         
+        response[:me] = Hash.new
         if current_user.main_schedule.scheduled_courses.exists? scheduled_course_id
-          response[:me] = current_user
-        else
-          response[:me] = nil
+          response[:me][:same_section] = current_user
+        elsif current_user.main_schedule.scheduled_courses.collect{|sc| sc.course_id}.include? course_id
+          response[:me][:other_section] = current_user
         end
-        
 
         render :json => response.to_json
       #       elsif course_id

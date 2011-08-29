@@ -106,10 +106,10 @@ function queueLoadFriends(number, section, course_id, sched_id, queue) {
 				// Adds pictures of friends in the same scheduled course
 		    html = '<span class="friends-header">Section '+ section 
 		          +'</span><ul class="lecture">';
-		    if (resp.me) {
+		    if (resp.me.same_section) {
    	      html += '<li class="me"><a href="/schedules" link-name="'
-   	            + resp.me.name + '"><img src="http://graph.facebook.com/'
-   	            + resp.me.uid + '/picture" /></a></li>';
+   	            + resp.me.same_section.name + '"><img src="http://graph.facebook.com/'
+   	            + resp.me.same_section.uid + '/picture" /></a></li>';
 				}
 		    for (var j = 0; j < resp.data.same_section.length; ++j) {
    	      var friend = resp.data.same_section[j]
@@ -123,6 +123,11 @@ function queueLoadFriends(number, section, course_id, sched_id, queue) {
 				// Adds pictures of friends in same course, but different section
 				if (resp.data.other_section.length > 0) {
 					html += '<span class="friends-header">Other Sections</span><ul class="lecture">';
+					 if (resp.me.other_section) {
+		   	     html += '<li class="me"><a href="/schedules" link-name="'
+	   	            + resp.me.other_section.name + '"><img src="http://graph.facebook.com/'
+	   	            + resp.me.other_section.uid + '/picture" /></a></li>';
+					}
 					for (var j = 0; j < resp.data.other_section.length; ++j) {
 	   	      var friend = resp.data.other_section[j]
 	   	      html += '<li><a href="/friends/' + friend.id 
