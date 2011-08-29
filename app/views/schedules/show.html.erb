@@ -38,7 +38,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
   var schedule = <%= @schedule.to_json.html_safe %>;
- addSchedule(schedule.scheduled_courses);
+  addSchedule(schedule.scheduled_courses);
 });
 </script>
 <%# end %>

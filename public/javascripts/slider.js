@@ -8,6 +8,8 @@ function initSlider(div,ul,li,pos) {
   });
   if (slides.length <= 1)
     $(div + ' .nav-next').addClass('disabled');
+  else
+    $(div + ' .nav-next').removeClass('disabled');
   $(div + ' .nav-previous').addClass('disabled');
   $(div + ' .nav-previous,' + div + ' .nav-next').click(function() {
     if ($(this).hasClass('disabled')) exit();

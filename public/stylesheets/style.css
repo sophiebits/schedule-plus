@@ -1181,3 +1181,14 @@ h1.friends {
   left:-25px;
   top:-2px;
 }
+
+#search-friends {
+  z-index:30;
+  position:absolute;
+  top:15px; left: 200px;
+}
+
+#search-input {
+  font-size:0.8em;
+  width:167px;
+}

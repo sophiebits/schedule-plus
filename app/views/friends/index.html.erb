@@ -1,10 +1,6 @@
 <% content_for :content do %>
 <div class="main-aside">
   <!--
-  <form>
-    <input type="text" placeholder="Search Friends" id="search-friends-input"></input>
-    <input type="submit" value="Search"></input>
-  </form>
   <ul id="friends-sort-options">
     <li>Sort by Name</li>
     <li>Sort by Courses in Common</li>
@@ -42,18 +38,12 @@
 </div>
 <div id="article">
   <h1 class="friends">Friends</h1>
+  <form id="search-friends"><input type="text" placeholder="Search Friends" id="search-input"></input></form>
   <div id="friends">
   <ul id="friends-container">
-    <li class="friends-page"><ul>
 <% 
 ###########################################
 @friends.order('users.name').each_with_index do |friend, index| 
-  if index > 0 && (index % 10) == 0
-%>
-    </ul></li>
-    <li class="friends-page"><ul>
-<%   
-  end 
 %>
     <li class="friend">
       <a href="/friends/<%= friend.id %>">
@@ -81,7 +71,6 @@
 end 
 ###########################################
 %>
-    </ul></li>
   </ul>
   <span class="nav-previous">previous page</span>
   <span class="nav-next">next page</span>
@@ -89,7 +78,44 @@ end
   <script type="text/javascript" src="/javascripts/slider.js"></script>
   <script type="text/javascript">
   $(function() {
-    initSlider('#friends','#friends-container','.friends-page',0);
+    
+    var friends = <%= @friends.order('users.name').to_json.html_safe %>;
+    var friendsHtml = $('#friends-container .friend');
+
+    function refreshPages(friends) {
+      if (!friends) {
+        friends = [];
+        for (var i = 0; i < friendsHtml.length; ++i)
+          friends.push(i);
+      }
+      html = '<li class="friends-page"><ul>';
+      for(var i=0;i<friends.length;++i) {
+        if(i && !(i%10)) html += '</ul></li><li class="friends-page"><ul>';
+        html += '<li class="friend">' + friendsHtml.eq(friends[i]).html() + '</li>';
+      }
+      html += '</ul></li>';
+      $('#friends-container').html(html);
+      initSlider('#friends','#friends-container','.friends-page',0);
+    }
+
+    refreshPages();
+
+    $('#search-friends').submit(function(e) {
+      e.preventDefault();
+    });
+    $('#search-input').keyup(function() {
+
+      var input = $(this).val().toLowerCase();
+      var results = [];
+      var regex = new RegExp(input,"gi");
+      
+      for(var i = 0; i < friends.length; ++i) {
+        if(friends[i].name.search(regex) != -1)
+          results.push(i);
+      }
+
+      refreshPages(results);
+    });
   });
   </script>
 </div>

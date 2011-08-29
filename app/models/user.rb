@@ -15,10 +15,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def self.in_lecture(lecture)
-    #find(:all, :include => {:main_schedule => :lectures}).where(main_schedule.lecture => lecture)
-  end
-
 	def as_json(options={})
     hash = {
       :id => self.id,
@@ -27,6 +23,17 @@ class User < ActiveRecord::Base
       :status => self.status
     }
     hash
+  end
+  
+  ##########################
+  # Course + Status Queries
+  ##########################
+  
+  def in_course(course)
+    main_schedule.scheduled_courses.map(&:course).each do |my_course|   
+      return true if my_course == course
+    end
+    false
   end
   
   def courses_in_common(friend)
