@@ -1,3 +1,5 @@
+
+
 var colors = ["blue","steel","shamrock","yellow",
               "orange","red","magenta","purple"];
 var randomColors = 
@@ -224,7 +226,6 @@ $(document).ready(function() {
 	$.manageAjax.create('preloadQueue', {queue: true, maxRequests: 1});
 	$.manageAjax.create('loadQueue', {queue: false, maxRequests: 1});
 	
-	console.log("ready!");
   initCalendar();
   //addSchedule(schedules[0]);
   
