@@ -29,10 +29,12 @@
 		$('.common-courses .tooltip').hide();
 		$('.common-courses .tooltip > ul > li').textOverflow();
 		
-		$('.common-courses .count').hover(
-			function() { $(this).prev('.tooltip').show(); }, 
-		  function() { $(this).prev('.tooltip').hide(); }
-		);
+		$('#friends-container').delegate('.count','hover',function(e) {
+      if (e.type === 'mouseenter')
+        $(this).prev('.tooltip').show();
+      else
+		    $(this).prev('.tooltip').hide();
+		});
 	});
   </script>
 </div>
