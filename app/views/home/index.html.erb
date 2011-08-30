@@ -20,7 +20,7 @@
 					  </span>
           </div>
 				  <div id="sio-form">
-					  <%= form_for(:upload, :url => {:action=>'import', :controller => 'schedules'}, :html=> {:id => 'import-sio', :multipart=>true}) do |f| %>
+					  <%= form_for(:import, :url => {:action=>'import', :controller => 'schedules'}, :html=> {:id => 'import-sio', :multipart=>true}) do |f| %>
 						  <%= f.file_field :uploaded_file %>
 						  <%= f.submit "upload" %>
 					  <% end %>

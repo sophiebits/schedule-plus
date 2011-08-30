@@ -4,9 +4,9 @@ class SchedulesController < ApplicationController
   end
   
   def import
-    if params[:upload]
+    if params[:import]
       # Parse uploaded .ics file
-      file = params[:upload][:uploaded_file].tempfile
+      file = params[:import][:uploaded_file].tempfile
       parsed = Parser.parseSIO(file)   
     else
       # Parse scheduleman url
@@ -26,10 +26,6 @@ class SchedulesController < ApplicationController
     else
       redirect_to '/schedules/' + session[:imported].to_s
     end
-  end
-  
-  def new
-    # release 2
   end
 
   def show
