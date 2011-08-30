@@ -29,9 +29,7 @@
 <label for="url">Import a new schedule</label>
 <input type="text" name="url" placeholder="https://scheduleman.org/cTUJ2tAnlw"></input>
 </form>-->
-<% if !current_user %>
-<a href="/auth/facebook" class="fb-login">Login with Facebook</a>
-<% else %>
+<% if current_user %>
 Logged in as <%= current_user.name %>
 <% end %>
 </div>

@@ -111,7 +111,7 @@ $(document).ready(function() {
             
 	            $('#main-page #article').prepend(html);
 	          }
-	          $('<div id="courses-after-tooltip" style="text-align:center"><span class="tooltip">Now that your schedule has been imported, connect to Facebook to see your friends\' schedules!</span><br /><a class="fb-connect" href="/auth/facebook">Connect</a></div>').appendTo('.main-aside').hide();
+	          $('<div id="courses-after-tooltip" style="text-align:center"><span class="tooltip">Now that your schedule has been imported, connect to Facebook to see your friends\' schedules!</span></div>').appendTo('.main-aside').hide();
 	          $('#page-footer').fadeOut();
 	          $('#page-content').animate({height:$('#main-content').height()},800);
 	          $('#start-page').animate({left:'-100%'},800)
