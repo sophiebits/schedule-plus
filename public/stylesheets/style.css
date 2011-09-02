@@ -1188,7 +1188,37 @@ h1.friends {
   top:15px; left: 200px;
 }
 
+#search-friends-cancel {
+  position:relative;
+  left:-20px;
+  top:3px;
+  cursor:pointer;
+}
+
 #search-input {
   font-size:0.8em;
   width:167px;
+}
+
+#sort-friends {
+  font-size:0.8em;
+  margin-left:10px;
+  color:#AAAAAA;
+  margin-bottom:10px;
+}
+
+#sort-friends > span {
+  background-color:#EEEEEE;
+  margin-right:10px;
+  padding-bottom:3px;
+  padding-top:3px;
+  padding-left:8px;
+  padding-right:8px;
+  border-radius:5px 5px 5px 5px;
+  cursor:pointer;
+}
+
+#sort-friends .active {
+  background-color:#666666;
+  color:#DDDDDD;
 }

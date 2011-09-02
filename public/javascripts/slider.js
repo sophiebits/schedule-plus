@@ -16,12 +16,13 @@ function initSlider(div,ul,li,pos) {
 
 $(document).ready(function() {
 	$('div .nav-previous, div .nav-next').click(function() {
+		
 		if ($(this).hasClass('disabled')) {
 			return;
 		}
 		
-		sliderDiv = $(this).closest('div');
-		slideContainer = sliderDiv.children().eq(0);
+		sliderDiv = $('#friends');
+		slideContainer = $('#friends-container');
 		navPrev = $('#' + sliderDiv.attr('id') + ' .nav-previous');
 		navNext = $('#' + sliderDiv.attr('id') + ' .nav-next');
 		
@@ -44,7 +45,7 @@ $(document).ready(function() {
 			navNext.addClass('disabled');
 		}
 		
-		sliderDiv.children().eq(0).animate({ 
+		$('#friends-container').animate({ 
 			left: -currentSlide * 100 + '%'
 		}, 300);
 	});
