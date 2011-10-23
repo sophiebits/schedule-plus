@@ -3,7 +3,16 @@ class Schedule < ActiveRecord::Base
   has_many :courses, :class_name => 'CourseSelection'
   scope :active, :conditions => { :active => true }
  
-  # Adds a course by course_id and section_id
+  def as_json(options={})
+    {
+      :id      => self.id,
+      :user    => self.user,
+      :courses => self.courses,
+      :active  => self.active
+    }
+  end
+
+  # Adds a course by course_id and section_id.
   # Assumes course_id and section_id are valid
   # Uses section A by default.
   def add_course(course_id, section_id)
@@ -12,7 +21,7 @@ class Schedule < ActiveRecord::Base
                         :section_id => section_id)
   end
 
-  # Changes section for some course on the schedule
+  # Changes section for some course on the schedule.
   def switch_section(course_id, section_id)
     self.courses.find_by_course_id(course_id)
                 .update_attribute(:section_id, section_id)
