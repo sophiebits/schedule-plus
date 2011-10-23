@@ -44,8 +44,11 @@ class User < ActiveRecord::Base
   end
   
   def status
+    return '' if !self.main_schedule
+    
 		current_time = Time.now.in_time_zone
 		current_time_in_min = current_time.hour*60 + current_time.min
+		current_time_in_min = 750
 		current_day = DAY_NAME[current_time.wday]
 	
 		scheduled_courses = self.main_schedule.scheduled_courses.includes(
@@ -79,6 +82,10 @@ class User < ActiveRecord::Base
 		else
 			return 'in ' + number + ' ' + section
 		end
+	end
+	
+	def free?
+	  self.status == 'free'
 	end
 
   ###################
