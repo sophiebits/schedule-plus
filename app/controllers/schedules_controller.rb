@@ -1,4 +1,9 @@
 class SchedulesController < ApplicationController
+  
+  def index
+    @schedules = Schedule.all.group_by { |s| s.semester }
+  end
+  
   def new
     
   end
