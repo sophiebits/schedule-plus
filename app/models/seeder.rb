@@ -220,7 +220,7 @@ class Seeder < ActiveRecord::Base
     end
     
     # @jm: use real SoC data later
-    file = 'scheduleman_small.html'
+    file = 'CSD.html'
     #file = "https://enr-apps.as.cmu.edu/assets/SOC/sched_layout_%s.htm" % semester.name.split(' ')[0].downcase
 
     if Rails.env.production?
