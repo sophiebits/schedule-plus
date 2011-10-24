@@ -1,1 +1,36 @@
-
+<div id="page-content" class="course">
+  <div id="content-header">
+    <div class="container">
+      <h1 id="course-index-title">
+        Browse Courses
+      </h1>
+      <%= form_tag courses_path, :method => 'get' do %>
+        <%= hidden_field_tag :direction, params[:direction] %>
+        <%= hidden_field_tag :sort, params[:sort] %>
+        <%= text_field_tag :search, params[:search] %>
+        <%= submit_tag "Search", :name => nil %>
+      <% end %>
+    </div>
+  </div>
+  <div class="container">
+    <table>
+      <thead><tr>
+        <th><%= sortable "number" %></th>
+        <th><%= sortable "name" %></th>
+        <th><%= sortable "units" %></th>
+        <th><%= sortable "instructor" %></th>
+      </tr></thead>
+      <tbody>
+<% @courses.each do |course| %>
+      <tr>
+        <td><%= course.number %></td>
+        <td><%= course.name %></td>
+        <td><%= course.units %></td>
+        <td><%= course.instructor %></td>
+      </tr>
+<% end %>
+      </tbody>
+    </table>
+    <%= will_paginate @courses %>
+  </div>
+</div>

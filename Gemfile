@@ -34,8 +34,15 @@ gem 'sqlite3'
 gem 'nifty-generators'
 gem 'mocha', :group => :test
 gem 'nokogiri', '~> 1.5.0'
+
+# Authentication Gems
 gem 'fb_graph'
 gem 'omniauth', :git => 'git://github.com/intridea/omniauth.git'
-gem 'jquery-rails'
+
+# Parsing Gems
 gem 'hpricot'
 gem 'ri_cal', :git => "git://github.com/ctide/ri_cal.git"
+
+# UI Gems
+gem 'jquery-rails'
+gem 'will_paginate' # pagination for course index

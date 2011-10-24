@@ -10,18 +10,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110814230915) do
-
-  create_table "active_schedules", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "schedule_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+ActiveRecord::Schema.define(:version => 20110830053454) do
 
   create_table "course_selections", :force => true do |t|
     t.integer  "schedule_id"
-    t.integer  "scheduled_course_id"
+    t.integer  "section_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -30,56 +23,54 @@ ActiveRecord::Schema.define(:version => 20110814230915) do
     t.string   "number"
     t.string   "name"
     t.string   "units"
-    t.boolean  "has_recitation"
+    t.string   "instructor"
+    t.string   "semester"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "lecture_section_times", :force => true do |t|
-    t.integer "lecture_id"
-    t.string  "day"
-    t.integer "begin"
-    t.integer "end"
-    t.string  "location"
-  end
-
   create_table "lectures", :force => true do |t|
-    t.integer "course_id"
-    t.string  "section"
-    t.string  "instructor"
-  end
-
-  create_table "recitation_section_times", :force => true do |t|
-    t.integer "recitation_id"
-    t.string  "day"
-    t.integer "begin"
-    t.integer "end"
-    t.string  "location"
-  end
-
-  create_table "recitations", :force => true do |t|
-    t.integer "lecture_id"
-    t.string  "section"
-    t.string  "instructor"
-  end
-
-  create_table "scheduled_courses", :force => true do |t|
     t.integer  "course_id"
-    t.integer  "lecture_id"
-    t.integer  "recitation_id"
+    t.integer  "number"
+    t.string   "instructor"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "scheduled_times", :force => true do |t|
+    t.integer  "schedulable_id"
+    t.string   "schedulable_type"
+    t.string   "day"
+    t.integer  "begin"
+    t.integer  "end"
+    t.string   "location"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "schedules", :force => true do |t|
     t.integer  "user_id"
+    t.string   "name"
+    t.string   "semester"
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "sections", :force => true do |t|
+    t.integer  "course_id"
+    t.integer  "lecture_id"
+    t.string   "letter"
+    t.string   "instructor"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|
-    t.string   "uid"
     t.string   "name"
+    t.integer  "uid"
+    t.string   "andrew"
+    t.boolean  "private"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
