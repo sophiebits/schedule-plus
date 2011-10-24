@@ -27,42 +27,28 @@
   <% if !lecture.nil? %>
         <tr>
           <td>Lec <%= lecture.number %></td>
-          <td><%= lecture.times.first.days %></td>
-          <td><%= lecture.times.first.to_str %></td>
-          <td>??</td>
+          <td class="days"><% lecture.times.each do |time| %>
+            <%= time.days %><br />
+          <% end %></td>
+          <td><% lecture.times.each do |time| %>
+            <%= time.to_str %><br />
+          <% end %></td>
+          <td><%= lecture.instructor %></td>
           <td>&nbsp;</td>
         </tr>
-    <% if lecture.times.length > 1 %>
-      <% lecture.times.drop(1).each do |time| %>
-        <tr>
-          <td>&nbsp;</td>
-          <td><%= time.days %></td>
-          <td><%= time.to_str %></td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-        </tr>
-      <% end %>
-    <% end %>
   <% end %>
   <% sections.each do |section| %>
         <tr>
-          <td><%= section.letter %></td>
-          <td><%= section.times.first.days %></td>
-          <td><%= section.times.first.to_str %></td>
-          <td>??</td>
+          <td class="section"><%= section.letter %></td>
+          <td class="days"><% section.times.each do |time| %>
+            <%= time.days %><br />
+          <% end %></td>
+          <td><% section.times.each do |time| %>
+            <%= time.to_str %><br />
+          <% end %></td>
+          <td><%= section.instructor %></td>
           <td>Add</td>
         </tr>
-    <% if section.times.length > 1 %>
-      <% section.times.drop(1).each do |time| %>
-        <tr>
-          <td>&nbsp;</td>
-          <td><%= time.days %></td>
-          <td><%= time.to_str %></td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-        </tr>
-      <% end %>
-    <% end %>
   <% end %>
 <% end %>
       </tbody>
@@ -70,7 +56,7 @@
     <h2>Course Details</h2>
     <dl id="course-info">
       <dt>Instructor(s):</dt>
-      <dd>???</dd>
+      <dd><%= @course.instructors %></dd>
       <dt>Prerequisites:</dt>
       <dd>21-127</dd>
       <dt>Corequisites:</dt>

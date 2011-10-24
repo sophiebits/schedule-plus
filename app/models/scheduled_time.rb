@@ -3,7 +3,7 @@ class ScheduledTime < ActiveRecord::Base
 
   def to_str
     if self.begin == -1 || self.end == -1
-      return "TBA"
+      return ""
     end
     begin_time = Time.mktime(0) + self.begin * 60
     end_time = Time.mktime(0) + self.end * 60

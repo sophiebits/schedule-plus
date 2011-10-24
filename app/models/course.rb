@@ -10,9 +10,7 @@ class Course < ActiveRecord::Base
     if search
       # sphinx?
       where('number LIKE ? or
-             name LIKE ? or 
-             instructor LIKE ?', 
-              "%#{search}%",
+             name LIKE ?', 
               "%#{search}%",
               "%#{search}%")
     else
@@ -26,6 +24,15 @@ class Course < ActiveRecord::Base
   
   def find_by_section(name)
     self.sections.find_by_name(name)
+  end
+
+  def instructors
+    if lectures.empty?
+      instructors = sections.map(&:instructor)
+    else
+      instructors = lectures.map(&:instructor)
+    end
+    instructors.uniq.compact.join(", ")
   end
 
   def students

@@ -21,7 +21,7 @@
         <th><%= sortable "number" %></th>
         <th><%= sortable "name" %></th>
         <th><%= sortable "units" %></th>
-        <th><%= sortable "instructor" %></th>
+        <th><%= sortable "instructor", "Instructor(s)" %></th>
       </tr></thead>
       <tbody>
 <% @courses.each do |course| %>
@@ -29,7 +29,7 @@
         <td><%= course.number %></td>
         <td><a href="/courses/<%= course.id %>"><%= course.name %></a></td>
         <td><%= course.units %></td>
-        <td><%= course.instructor %></td>
+        <td><%= course.instructors %></td>
       </tr>
 <% end %>
       </tbody>

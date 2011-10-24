@@ -53,12 +53,20 @@ table#section-info {
   display:block; 
   float:right; clear:right;
   width:320px;
+  font-size:12px;
+  line-height:18px;
 }
-table#section-info { font-size:12px; }
 table#section-info th,
 table#section-info td {
   padding:2px 5px;
   text-align:left;
+}
+table#section-info td.days {
+  font-size:10px;
+}
+table#section-info td.section {
+  text-align:right;
+  font-weight:700
 }
 dl#course-info {
   width:615px; height:60px;
