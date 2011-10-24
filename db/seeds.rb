@@ -214,9 +214,7 @@ catch(:done) do
 		
 		db_course = Course.find_by_semester_id_and_number(Semester.current.id, number)
 		if db_course
-		  db_course.update_attributes([:name => name, :units => units])
-		  # if we found the course, mark it now as offered in case it was previously marked not offered
-	    db_course.update_attribute(:offered, true)
+		  db_course.update_attributes(Hash[:name => name, :units => units, :offered => true])
 		  db_course.save!
 		else
       # Create Course
@@ -258,11 +256,13 @@ catch(:done) do
   			  ScheduledTime.find_all_by_schedulable_id_and_schedulable_type(db_lecture.id, "Lecture").each do |s|
   				  s.delete
   				end
-    		  # nothing to update for now
+    		  db_lecture.update_attribute(:instructor, cells[8].inner_text)
+    		  db_lecture.save!
     		else
           # Create Lecture
       		db_lecture = Lecture.create(:course_id => db_course.id,
-  			                              :number => getsection(section))
+  			                              :number => getsection(section),
+  			                              :instructor => cells[8].inner_text)
     		end
     		
 
@@ -318,14 +318,15 @@ catch(:done) do
   				ScheduledTime.find_all_by_schedulable_id_and_schedulable_type(db_section.id, "Section").each do |s|
   				  s.delete
   				end
-  				
+  				puts "updaitng to = " + cells[8].inner_text
 			    # if we found the section, mark it now as offered in case it was previously marked not offered
-			    db_section.update_attribute(:offered, true)
+			    db_section.update_attributes(Hash[:offered => true, :instructor => cells[8].inner_text])
 			    db_section.save!
     		else
           # Create Section
       		db_section = Section.create(:course_id => db_course.id,
   			                              :letter => letter,
+  			                              :instructor => cells[8].inner_text,
   			                              :offered => true)
     		end
 				
