@@ -5,6 +5,9 @@ class CreateCourses < ActiveRecord::Migration
       t.string :name
       t.string :units
       t.string :instructor
+      t.string :description
+      t.string :prereqs
+      t.string :coreqs
       t.integer :semester_id
       t.boolean :offered
 

@@ -156,6 +156,36 @@ def check_sections_offered(offered_sections, db_sections)
 	end
 end
 
+def populate_course_data(course)
+  course_url = "https://enr-apps.as.cmu.edu/open/SOC/SOCServlet?CourseNo=%s&SEMESTER=%s&Formname=Course_Detail" % [course.number.sub('-',''), Semester.current_name_short]
+  doc = open(course_url) { |f| Hpricot(f) }
+  if doc
+    info = doc.search("//font")
+    i = 0
+    while info[i]
+      s = info[i].inner_text.strip
+
+      case s
+      when "Description:"
+
+        i = i + 1
+        desc = info[i].inner_text.strip
+        course.update_attribute(:description, desc)
+      when "Prerequisites:"
+        i = i + 1
+        pre = info[i].inner_text.strip
+        course.update_attribute(:prereqs, pre)
+        i = i + 2
+        co = info[i].inner_text.strip
+        course.update_attribute(:coreqs, co)
+      end
+
+      i = i + 1
+    end
+  end
+  course.save!
+end
+
 ######################
 #file = 'https://enr-apps.as.cmu.edu/assets/SOC/sched_layout_fall.htm'
 file = 'scheduleman_small.html'
@@ -225,6 +255,7 @@ catch(:done) do
   															:offered => true)
 		end
 		
+		populate_course_data(db_course)
 		offered_courses.push(db_course.number)
 
     # keep track of the sections parsed for the current course
@@ -318,7 +349,6 @@ catch(:done) do
   				ScheduledTime.find_all_by_schedulable_id_and_schedulable_type(db_section.id, "Section").each do |s|
   				  s.delete
   				end
-  				puts "updaitng to = " + cells[8].inner_text
 			    # if we found the section, mark it now as offered in case it was previously marked not offered
 			    db_section.update_attributes(Hash[:offered => true, :instructor => cells[8].inner_text])
 			    db_section.save!
