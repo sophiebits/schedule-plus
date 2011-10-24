@@ -156,7 +156,7 @@ def reformatunits(units)
 end
 
 # If begin_time > end_time, SoC fucked up, so we fix it for them
-def offeredatetimes(begin_time, end_time)
+def validatetimes(begin_time, end_time)
   if (begin_time > end_time)
     if (begin_time >= 720 && end_time >= 720)
       begin_time -= 720
@@ -269,7 +269,6 @@ catch(:done) do
 		
 			section = cells[3].inner_text
 			has_lecture = false
-			
 			if (islecture(section))
 			  has_lecture = true
 			  
@@ -295,7 +294,7 @@ catch(:done) do
   			# Create all the Lecture Section Times, attaching them to Lecture
   			db_lec_sec_time = nil
   			begin
-  			  times = offeredatetimes(timetominutes(cells[5].inner_text), timetominutes(cells[6].inner_text))
+  			  times = validatetimes(timetominutes(cells[5].inner_text), timetominutes(cells[6].inner_text))
   				getdays(cells[4].inner_text).each do |day|
   					db_lec_sec_time = ScheduledTime.create(:schedulable_id => db_lecture.id,
   					                                       :schedulable_type => "Lecture",
@@ -320,7 +319,7 @@ catch(:done) do
 			while i < rows.length
 				cells = (rows[i]/"td")
 				# end of the current course, so break
-				if !isempty(cells[0]) && (cells[0].inner_text.insert(2, '-') != number)
+				if (!isempty(cells[0]) && (cells[0].inner_text.insert(2, '-') != number)) || islecture(cells[3].inner_text)
 					break
 				end
 		
@@ -365,9 +364,9 @@ catch(:done) do
 				# TODO: add instructor data
 	
 				db_sec_time = nil
-				# Create all Recitation Section Times, attatching them to Recitation
+				# Create all Section times
 				begin
-				  times = offeredatetimes(timetominutes(cells[5].inner_text), timetominutes(cells[6].inner_text))
+				  times = validatetimes(timetominutes(cells[5].inner_text), timetominutes(cells[6].inner_text))
 					getdays(cells[4].inner_text).each do |day|
 					db_sec_time = ScheduledTime.create(:schedulable_id => db_section.id,
 						                                 :schedulable_type => "Section",
@@ -375,7 +374,7 @@ catch(:done) do
 																						 :begin 	 => times[0],
       																			 :end 		 => times[1],
 																						 :location => cells[7].inner_text)
-					end                                 
+					end                  
 					i += 1
 					if i >= rows.length
 					  check_sections_offered(offered_sections, db_course.sections)
