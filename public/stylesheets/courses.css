@@ -1,13 +1,42 @@
 
-/*************************************************************************
- * CoursePage Styles
- *************************************************************************
- */
+h1#course-index-title, 
 h1#course-page-title {
   font-size:18px;
   color:#188d8e;
   font-weight:400;
 }
+/*************************************************************************
+ * CourseIndex Styles
+ *************************************************************************
+ */
+form#courses-search-form {
+  position:absolute;
+  top:-5px; left:170px;
+}
+table#courses-table { 
+  margin:30px 0 20px;
+  width:100%;
+  border-bottom:1px solid #ddd;
+}
+table#courses-table tr {
+  border-top:1px solid #ddd;
+}
+table#courses-table tr.even {
+  background-color:#f3f3f3;
+}
+table#courses-table thead tr { background-image:url('/images/eee-bg.gif'); }
+table#courses-table th,
+table#courses-table td {
+  padding:5px 10px;
+  text-align:left;
+}
+table#courses-table th a {
+  color:#188d8e;
+}
+/*************************************************************************
+ * CoursePage Styles
+ *************************************************************************
+ */
 h1#course-page-title .course-number {
   font-weight:700;
 }
@@ -89,3 +118,4 @@ dl#course-info dd {
   width:610px;
   font-size:12px;
 }
+

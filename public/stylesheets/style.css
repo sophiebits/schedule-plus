@@ -16,6 +16,7 @@
   position:relative;
   margin:0 auto;
   width:960px;
+  font-size:14px;
 }
 a {
   color:#1fbbbd;
@@ -125,3 +126,20 @@ a#current-user-schedule-link {
   border-bottom:1px solid #ddd;
   padding:20px;
 }
+#content-header #env-semester {
+  position:absolute;
+  top:0; right:30px;
+  padding:5px 10px;
+  color:#666;
+  font-size:14px;
+  background-color:#eee;
+  border:1px solid #ddd;
+  border-radius:5px;
+}
+/*
+#content-header #env-semester:hover {
+  background-color:#1fbbbd;
+  color:#fff;
+  border-color:#1fbbbd
+}
+*/
