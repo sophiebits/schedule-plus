@@ -9,7 +9,12 @@ class Course < ActiveRecord::Base
   def self.search(search)
     if search
       # sphinx?
-      where('name LIKE ?', "%#{search}%")
+      where('number LIKE ? or
+             name LIKE ? or 
+             instructor LIKE ?', 
+              "%#{search}%",
+              "%#{search}%",
+              "%#{search}%")
     else
       scoped
     end

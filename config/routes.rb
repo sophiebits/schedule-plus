@@ -47,7 +47,9 @@ AcmSchedule::Application.routes.draw do
   
   match "/courses/:id" => "courses#show"
   match "/courses" => "courses#index"
-  
+
+  match "/schedules" => "schedules#index"
+
   resource :friends, :courses, :sessions
 
   resource :schedules do
