@@ -10,8 +10,8 @@ OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 #############
 
 if Semester.all.count == 0
-  Semester.create(:name => "Fall 2010", :current => true)
-  Semester.create(:name => "Spring 2011", :current => false)
+  Semester.create(:name => "Fall 2011", :current => true)
+  Semester.create(:name => "Spring 2012", :current => false)
 end
 #############
 
