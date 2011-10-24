@@ -34,7 +34,7 @@ class SchedulesController < ApplicationController
   end
 
   def show
-    if current_user && !current_user.main_schedule
+    if current_user && !current_user.main_schedule(session[:semester])
       redirect_to new_schedules_path if request.env['PATH_INFO'] != new_schedules_path
     end
     if (!params[:id]) 

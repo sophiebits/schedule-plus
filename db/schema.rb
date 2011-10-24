@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110830053454) do
+ActiveRecord::Schema.define(:version => 20111024045155) do
 
   create_table "course_selections", :force => true do |t|
     t.integer  "schedule_id"
@@ -24,7 +24,8 @@ ActiveRecord::Schema.define(:version => 20110830053454) do
     t.string   "name"
     t.string   "units"
     t.string   "instructor"
-    t.string   "semester"
+    t.integer  "semester_id"
+    t.boolean  "offered"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -40,7 +41,7 @@ ActiveRecord::Schema.define(:version => 20110830053454) do
   create_table "scheduled_times", :force => true do |t|
     t.integer  "schedulable_id"
     t.string   "schedulable_type"
-    t.string   "day"
+    t.string   "days"
     t.integer  "begin"
     t.integer  "end"
     t.string   "location"
@@ -62,6 +63,14 @@ ActiveRecord::Schema.define(:version => 20110830053454) do
     t.integer  "lecture_id"
     t.string   "letter"
     t.string   "instructor"
+    t.boolean  "offered"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "semesters", :force => true do |t|
+    t.string   "name"
+    t.boolean  "current"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

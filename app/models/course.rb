@@ -20,6 +20,10 @@ class Course < ActiveRecord::Base
     end
   end
 
+  def sections_by_lecture
+    sections.group_by{ |s| s.lecture }
+  end
+  
   def find_by_section(name)
     self.sections.find_by_name(name)
   end

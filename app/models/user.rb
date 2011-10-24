@@ -3,8 +3,8 @@ class User < ActiveRecord::Base
 
   DAY_NAME = %w(Sunday Monday Tuesday Wednesday Thursday Friday Saturday)
 
-  def main_schedule
-    schedules.where(:active => true, :semester => current_semester)
+  def main_schedule(semester)
+    schedules.where(:active => true, :semester => semester)
   end
 
   def self.create_with_omniauth(auth)
@@ -15,13 +15,12 @@ class User < ActiveRecord::Base
   end
 
   def as_json(options={})
-    hash = {
+    {
       :id => self.id,
       :uid => self.uid,
       :name => self.name,
       :status => self.status
     }
-    hash
   end
 
   # true if user is in the course
@@ -76,7 +75,6 @@ class User < ActiveRecord::Base
   def free?
     self.status == 'free'
   end
-
 
   def update_active_schedule(schedule)
     if (schedule.user == self)

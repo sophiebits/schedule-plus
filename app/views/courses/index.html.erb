@@ -27,7 +27,7 @@
 <% @courses.each do |course| %>
       <tr class="<%= cycle('odd', 'even') %>">
         <td><%= course.number %></td>
-        <td><a href="/courses/1"><%= course.name %></a></td>
+        <td><a href="/courses/<%= course.id %>"><%= course.name %></a></td>
         <td><%= course.units %></td>
         <td><%= course.instructor %></td>
       </tr>

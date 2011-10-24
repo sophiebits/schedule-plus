@@ -2,8 +2,6 @@ class FriendsController < ApplicationController
   def index   
     if !current_user
       redirect_to root_path
-    elsif !current_user.main_schedule
-      redirect_to new_schedules_path
     end
     @friends = friends
   end
