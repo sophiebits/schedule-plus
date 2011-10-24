@@ -48,11 +48,13 @@ h1#course-page-title .course-number {
   color:#188d8e;
   border-bottom:1px dotted #1fbbbd;
 }
-.course#page-content h2#section-info-header,
-table#section-info {
+table#section-info,
+.course#page-content h2#section-info-header {
   display:block; 
   float:right; clear:right;
   width:320px;
+}
+table#section-info { 
   font-size:12px;
   line-height:18px;
 }
