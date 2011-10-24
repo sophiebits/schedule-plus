@@ -3,7 +3,7 @@ class CreateScheduledTimes < ActiveRecord::Migration
     create_table :scheduled_times do |t|
       t.integer :schedulable_id
       t.string :schedulable_type
-      t.string :day
+      t.string :days
       t.integer :begin
       t.integer :end
       t.string :location

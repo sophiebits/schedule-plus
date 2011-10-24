@@ -55,36 +55,6 @@ def islecture(sec)
 	sec.include? 'Lec'
 end
 
-def getday(c)
-	case c
-	when 'M'
-		return 'Monday'
-	when 'T'
-		return 'Tuesday'
-	when 'W'
-		return 'Wednesday'
-	when 'R'
-		return 'Thursday'
-	when 'F'
-		return 'Friday'
-	when 'U'
-		return 'Sunday'
-	when 'S'
-		return 'Saturday'
-	end
-end
-
-def getdays(days)
-	abort "Days was nil or empty" if !days || (days == '') || (isemptystr(days))
-	return ['TBA'] if (days == 'TBA')
-	
-	days_arr = []
-	days.each_char do |c|
-		days_arr.push getday(c)
-	end
-	days_arr
-end
-
 ########################################################
 # Debugging ############################################
 ########################################################
@@ -121,6 +91,13 @@ end
 ##########################################################
 ##########################################################
 ##########################################################
+
+def validatedays(days)
+  if days == "TBA" || (days == "&nbsp;")
+    return ""
+  end
+  days
+end
 
 def timetominutes(time)     
 return -1 if !time || time == ''
@@ -295,14 +272,12 @@ catch(:done) do
   			db_lec_sec_time = nil
   			begin
   			  times = validatetimes(timetominutes(cells[5].inner_text), timetominutes(cells[6].inner_text))
-  				getdays(cells[4].inner_text).each do |day|
-  					db_lec_sec_time = ScheduledTime.create(:schedulable_id => db_lecture.id,
-  					                                       :schedulable_type => "Lecture",
-  																								 :day 				=> day,
-  																								 :begin 			=> times[0],
-  																								 :end 				=> times[1],
-  																								 :location 	  => cells[7].inner_text)
-  				end
+  				db_lec_sec_time = ScheduledTime.create(:schedulable_id => db_lecture.id,
+  				                                       :schedulable_type => "Lecture",
+  																							 :days 				=> validatedays(cells[4].inner_text),
+  																							 :begin 			=> times[0],
+  																							 :end 				=> times[1],
+  																							 :location 	  => cells[7].inner_text)
   				i += 1
   				if i >= rows.length
 					  check_sections_offered(offered_sections, db_course.sections)
@@ -367,14 +342,12 @@ catch(:done) do
 				# Create all Section times
 				begin
 				  times = validatetimes(timetominutes(cells[5].inner_text), timetominutes(cells[6].inner_text))
-					getdays(cells[4].inner_text).each do |day|
 					db_sec_time = ScheduledTime.create(:schedulable_id => db_section.id,
 						                                 :schedulable_type => "Section",
-																						 :day 		 => day,
+																						 :days 		 => validatedays(cells[4].inner_text),
 																						 :begin 	 => times[0],
       																			 :end 		 => times[1],
-																						 :location => cells[7].inner_text)
-					end                  
+																						 :location => cells[7].inner_text)              
 					i += 1
 					if i >= rows.length
 					  check_sections_offered(offered_sections, db_course.sections)
