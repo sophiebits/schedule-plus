@@ -5,6 +5,16 @@ require 'open-uri'
 
 OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 
+#############
+# Semesters #
+#############
+
+if Semester.all.count == 0
+  Semester.create(:name => "Fall 2010", :current => true)
+  Semester.create(:name => "Spring 2011", :current => false)
+end
+#############
+
 def isempty(cell)
 	str = cell.inner_text.strip
 	return true if !str

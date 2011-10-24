@@ -9,10 +9,6 @@ class ApplicationController < ActionController::Base
 	  redirect_to 'http://scheduleplus.org' if /heroku/.match(request.host)
   end
  
-  def current_semeseter
-    "F11"
-  end
- 
   helper_method :current_user, :fb_user, :friends
 
 	@current_user = nil
