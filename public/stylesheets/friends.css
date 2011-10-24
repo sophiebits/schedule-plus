@@ -1,0 +1,47 @@
+
+/*************************************************************************
+ * FriendsPage Styles
+ *************************************************************************
+ */
+.friends#page-content h1 {
+  color:#188d8e;
+  font-size:18px;
+}
+#friends-list {
+  margin-top:10px;
+  font-size:11px;
+}
+#friends-list li {
+  float:left;
+}
+a.friend-link {
+  display:block;
+  height:50px; width:170px;
+  padding:10px;
+  border:1px solid transparent;
+  border-radius:5px 0;
+}
+a.friend-link:hover {
+  background-color:#f3f3f3;
+  text-decoration:none;
+  border-color:#ddd;
+}
+.friend-pic {
+  float:left;
+  height:50px; width:50px;
+  margin-right:10px;
+  vertical-align:text-bottom;
+  border-radius:5px 0;
+}
+#friends-list span { display:block; }
+.friend-name {
+  color:#188d8e;
+  font-size:13px;
+}
+.friend-mutual-courses {
+  color:#1fbbbd;
+  margin-top:2px;
+}
+.friend-status {
+  color:#999;
+}
