@@ -88,44 +88,36 @@ end
 ########################################################
 # Debugging ############################################
 ########################################################
-def Coursecreate(map)
+def Course_create(map)
 	puts "+============================= COURSE =======================================+"
-	puts 'num:   ' + map[:number]
+	puts 'num:   ' + map[:number].to_s
 	puts 'name:  ' + map[:name]
 	puts 'units: ' + map[:units]
 	1
 end
 
-def Lecturecreate(map)
+def Lecture_create(map)
 	puts "    -------- LECTURE --------"
-	puts '    section:   ' + map[:section]
-	puts '    instrctr:  ' + map[:instructor]
+	puts '    section:   ' + map[:number].to_s
+#	puts '    instrctr:  ' + map[:instructor]
 	1
 end
 
-def LectureSectionTimecreate(map)
-		puts "        ___ LEC SEC TIME ___"
+def ScheduledTime_create(map)
+		puts "        ___ SCHED SEC TIME ___"
 		puts '        day:   ' + map[:day]
-		puts '        begin: ' + map[:begin]
-		puts '        end:   ' + map[:end]
+		puts '        begin: ' + map[:begin].to_s
+		puts '        end:   ' + map[:end].to_s
 		puts '        loc:   ' + map[:location]
 		1
 end
 
-def Recitationcreate(map)
-		puts "        ---- RECITATION ----"
-		puts '        section:   ' + map[:section]
+def Section_create(map)
+		puts "        ---- SECTION ----"
+		puts '        section:   ' + map[:letter]
 		1
 end
 
-def RecitationSectionTimecreate(map)
-		puts "            ___ REC SEC TIME ___"
-		puts '            day:   ' + map[:day]
-		puts '            begin: ' + map[:begin]
-		puts '            end:   ' + map[:end]
-		puts '            loc:   ' + map[:location]
-		1
-end
 ##########################################################
 ##########################################################
 ##########################################################
@@ -164,7 +156,7 @@ def reformatunits(units)
 end
 
 # If begin_time > end_time, SoC fucked up, so we fix it for them
-def validatetimes(begin_time, end_time)
+def offeredatetimes(begin_time, end_time)
   if (begin_time > end_time)
     if (begin_time >= 720 && end_time >= 720)
       begin_time -= 720
@@ -176,9 +168,20 @@ def validatetimes(begin_time, end_time)
   return [begin_time, end_time]
 end
 
+def check_sections_offered(offered_sections, db_sections)
+	# check if any sections are not in offered_sections, i.e. they are no longer offered
+	db_sections.each do |sec|
+	  if !offered_sections.include?(sec.letter)
+	    # section not found anymore, mark it not offered!
+	    sec.update_attribute(:offered, false)
+	    sec.save!
+	  end
+	end
+end
+
 ######################
-file = 'https://enr-apps.as.cmu.edu/assets/SOC/sched_layout_fall.htm'
-#file = 'scheduleman_small.html'
+#file = 'https://enr-apps.as.cmu.edu/assets/SOC/sched_layout_fall.htm'
+file = 'scheduleman_small.html'
 
 if Rails.env.production?
 	parse_file = File.new("#{RAILS_ROOT}/tmp/parse_file_#{Process.pid}.html", "w")
@@ -204,6 +207,8 @@ rows = (table/"tr")
 
 ######################
 
+offered_courses = []
+
 catch(:done) do
 	i = 0
 	while i < rows.length
@@ -226,87 +231,175 @@ catch(:done) do
 		
 		number = cells[0].inner_text
 		number.insert(2, '-')
-    # Create Course
-		db_course = Course.create(:number => number,
-															:name		=> cells[1].inner_text,
-															:units	=> reformatunits(cells[2].inner_text))
+		
+		name = cells[1].inner_text
+		units = reformatunits(cells[2].inner_text)
+		
+		db_course = Course.find_by_semester_id_and_number(Semester.current.id, number)
+		if db_course
+		  db_course.update_attributes([:name => name, :units => units])
+		  # if we found the course, mark it now as offered in case it was previously marked not offered
+	    db_course.update_attribute(:offered, true)
+		  db_course.save!
+		else
+      # Create Course
+  		db_course = Course.create(:number => number,
+  															:name		=> name,
+  															:units	=> units,
+  															:semester_id => Semester.current.id,
+  															:offered => true)
+		end
+		
+		offered_courses.push(db_course.number)
 
+    # keep track of the sections parsed for the current course
+    offered_sections = []
+    
 		# Loop through Course info, creating lectures/recitations, etc.
 		begin
 			# If course name is long and takes two vertical rows, move on to next row
 			if isempty(cells[3]) && isempty(cells[4])
 				i += 1
-				throw :done if i >= rows.length
+				if i >= rows.length
+				  check_sections_offered(offered_sections, db_course.sections)
+				  throw :done
+				end
 				cells = (rows[i]/"td")
 			end
 		
-			# Create Lecture	
 			section = cells[3].inner_text
-			db_lecture = Lecture.create(:course_id	=> db_course.id,
-																	:section		=> getsection(section),
-																	:instructor => cells[8].inner_text)
-	
-			# Create all the Lecture Section Times, attaching them to Lecture
-			db_lec_sec_time = nil
-			begin
-			  times = validatetimes(timetominutes(cells[5].inner_text), timetominutes(cells[6].inner_text))
-				getdays(cells[4].inner_text).each do |day|
-					db_lec_sec_time = LectureSectionTime.create(:lecture_id => db_lecture.id,
-																											:day 				=> day,
-																											:begin 			=> times[0],
-																											:end 				=> times[1],
-																											:location 	=> cells[7].inner_text)
-				end
-				i += 1
-				throw :done if i >= rows.length
-				cells = (rows[i]/"td")
-			end while isempty(cells[3]) && isempty(cells[0]) && isempty(cells[1])
-	
-			abort 'Lecture section time was nil!' if !db_lec_sec_time
-	
-			# Check if lecture section is 'Lec' and contains recitations under it
-			if islecture(section)
-				# Loop through course sections that take multiple rows
-				while i < rows.length
-					cells = (rows[i]/"td")
-					if !isempty(cells[0]) || islecture(cells[3].inner_text)
-						break
-					end
+			has_lecture = false
 			
-					# If course name is long and takes two vertical rows, move on to next row
-					if isempty(cells[3]) && isempty(cells[4])
-						i += 1
-						throw :done if i >= rows.length
-						cells = (rows[i]/"td")
+			if (islecture(section))
+			  has_lecture = true
+			  
+			  number = getsection(section)
+			  db_lecture = Lecture.includes(:course).where("courses.semester_id = ? AND courses.id = ? AND lectures.number = ?",
+			                                               Semester.current.id, db_course.id, number)
+			  if db_lecture.length > 0
+			    db_lecture = db_lecture[0]
+			    # delete current times for db_lecture
+  			  ScheduledTime.find_all_by_schedulable_id_and_schedulable_type(db_lecture.id, "Lecture").each do |s|
+  				  s.delete
+  				end
+    		  # nothing to update for now
+    		else
+          # Create Lecture
+      		db_lecture = Lecture.create(:course_id => db_course.id,
+  			                              :number => getsection(section))
+    		end
+    		
+
+        # TODO: populate lecture with instructor data
+	
+  			# Create all the Lecture Section Times, attaching them to Lecture
+  			db_lec_sec_time = nil
+  			begin
+  			  times = offeredatetimes(timetominutes(cells[5].inner_text), timetominutes(cells[6].inner_text))
+  				getdays(cells[4].inner_text).each do |day|
+  					db_lec_sec_time = ScheduledTime.create(:schedulable_id => db_lecture.id,
+  					                                       :schedulable_type => "Lecture",
+  																								 :day 				=> day,
+  																								 :begin 			=> times[0],
+  																								 :end 				=> times[1],
+  																								 :location 	  => cells[7].inner_text)
+  				end
+  				i += 1
+  				if i >= rows.length
+					  check_sections_offered(offered_sections, db_course.sections)
+					  throw :done
 					end
-			
-					# Create Recitation
-					db_recitation = Recitation.create(:lecture_id	=> db_lecture.id,
-																						:section 		=> getsection(cells[3].inner_text),
-																						:instructor => cells[8].inner_text)
-		
-					db_rec_sec_time = nil
-					# Create all Recitation Section Times, attatching them to Recitation
-					begin
-					  times = validatetimes(timetominutes(cells[5].inner_text), timetominutes(cells[6].inner_text))
-						getdays(cells[4].inner_text).each do |day|
-							db_rec_sec_time = RecitationSectionTime.create(	:recitation_id => db_recitation.id,
-																															:day 				=> day,
-																															:begin 			=> times[0],
-        																											:end 				=> times[1],
-																															:location 	=> cells[7].inner_text)
-						end
-						i += 1
-						throw :done if i >= rows.length
-						cells = (rows[i]/"td")
-					end while isempty(cells[3]) && isempty(cells[0]) && isempty(cells[1])
-				
-					abort 'Recitation section time was nil!' if !db_rec_sec_time
-				
-				end
+  				cells = (rows[i]/"td")
+  			end while isempty(cells[3]) && isempty(cells[0]) && isempty(cells[1])
+	
+  			abort 'Lecture section time was nil!' if !db_lec_sec_time
 			end
+
+      
+			# Loop through course sections that take multiple rows
+			while i < rows.length
+				cells = (rows[i]/"td")
+				# end of the current course, so break
+				if !isempty(cells[0]) && (cells[0].inner_text.insert(2, '-') != number)
+					break
+				end
+		
+				# If course name is long and takes two vertical rows, move on to next row
+				if isempty(cells[3]) && isempty(cells[4])
+					i += 1
+					if i >= rows.length
+					  check_sections_offered(offered_sections, db_course.sections)
+					  throw :done
+					end
+					cells = (rows[i]/"td")
+				end
+				
+				
+				letter = getsection(cells[3].inner_text)
+				db_section = Section.includes(:course).where("courses.semester_id = ? AND courses.id = ? AND sections.letter = ?",
+			                                               Semester.current.id, db_course.id, letter)
+			  if db_section.length > 0
+			    db_section = db_section[0]
+			    # delete all times for db_section
+  				ScheduledTime.find_all_by_schedulable_id_and_schedulable_type(db_section.id, "Section").each do |s|
+  				  s.delete
+  				end
+  				
+			    # if we found the section, mark it now as offered in case it was previously marked not offered
+			    db_section.update_attribute(:offered, true)
+			    db_section.save!
+    		else
+          # Create Section
+      		db_section = Section.create(:course_id => db_course.id,
+  			                              :letter => letter,
+  			                              :offered => true)
+    		end
+				
+				offered_sections.push(db_section.letter)
+				
+				if has_lecture
+				  db_section.update_attribute(:lecture_id, db_lecture.id)
+				  db_section.save!
+				end
+
+				# TODO: add instructor data
+	
+				db_sec_time = nil
+				# Create all Recitation Section Times, attatching them to Recitation
+				begin
+				  times = offeredatetimes(timetominutes(cells[5].inner_text), timetominutes(cells[6].inner_text))
+					getdays(cells[4].inner_text).each do |day|
+					db_sec_time = ScheduledTime.create(:schedulable_id => db_section.id,
+						                                 :schedulable_type => "Section",
+																						 :day 		 => day,
+																						 :begin 	 => times[0],
+      																			 :end 		 => times[1],
+																						 :location => cells[7].inner_text)
+					end                                 
+					i += 1
+					if i >= rows.length
+					  check_sections_offered(offered_sections, db_course.sections)
+					  throw :done
+					end
+					cells = (rows[i]/"td")
+				end while isempty(cells[3]) && isempty(cells[0]) && isempty(cells[1])
+			
+				abort 'Recitation section time was nil!' if !db_sec_time
+			
+			end
+
 		end while isempty(cells[0])
+		
+		check_sections_offered(offered_sections, db_course.sections)
 	
 	end
 end
 
+# check if any courses are not in offered_courses, i.e. they are no longer offered
+Course.all.each do |c|
+  if !offered_courses.include?(c.number)
+    # course not found anymore, mark it not offered!
+    c.update_attribute(:offered, false)
+    c.save!
+  end
+end
