@@ -9,175 +9,12 @@
   <link href="/stylesheets/application.css"
         rel="stylesheet"
         type="text/css" />
-  <style type="text/css">
-/*************************************************************************
- * schedule++ Color Guide
- *
- * Teal: #188d8e, #1fbbbd, #40cccc, #d8ffff
- * Orange: #fbb03b
- *
- *************************************************************************
- */
-
-/*************************************************************************
- * Top-Level Styles
- *************************************************************************
- */
-.container {
-  position:relative;
-  margin:0 auto;
-  width:960px;
-}
-a {
-  color:#1fbbbd;
-  text-decoration:none
-}
-a:hover {
-  text-decoration:underline
-}
-.tooltip {
-  font-size:0.8em;
-  padding:0.7em;
-  border-radius:5px;
-  position:relative
-}
-.tooltip:after {
-  display:block; 
-  content:"";
-  position:absolute;
-  border-style:solid;
-  width:0
-}
-form input {
-  padding:0.2em 0.5em;
-  font-family:'Nunito';
-  font-weight:300;
-  background-color:#fff;
-  border:1px solid #ddd;
-  border-radius:5px;
-}
-form input:focus {
-  border:1px solid #1fbbbd;
-}
-/*************************************************************************
- * Header Styles
- *************************************************************************
- */
-#page-header {
-  background:#1fbbbd url('/images/topbar.png') top repeat-x;
-  height:30px;
-}
-#page-header a:hover {
-  text-decoration:none;
-  background-color:#40cccc;
-}
-a#logo-link { 
-  position:absolute; left:0;
-  display:block;
-  width:100px; height:29px;
-  background-color:transparent;
-}
-ul#main-nav {
-  position:absolute; left:100px;
-  height:29px; 
-}
-ul#main-nav li {
-  float:left;
-  width:30px; height:29px;
-}
-ul#main-nav li a {
-  display:block;
-  width:30px; height:0;
-  padding-top:29px;
-  overflow:hidden;
-  background-image:url('/images/main-nav.png');
-}
-#main-nav-friends a { background-position:0 0; }
-#main-nav-schedules a { background-position:-30px 0; }
-#main-nav-courses a { background-position:-60px 0; }
-#main-nav-friends a:hover { background-position:0 -30px; }
-#main-nav-schedules a:hover { background-position:-30px -30px; }
-#main-nav-courses a:hover { background-position:-60px -30px; }
-
-#current-user {
-  position:absolute; right:0;
-  height:29px;
-  font-size:13px;
-  line-height:30px;
-}
-#current-user a#logout {
-  float:right; display:block;
-  height:29px;
-  padding:0 10px;
-  color:#188d8e;
-}
-a#current-user-schedule-link {
-  float:right;
-  height:29px;
-}
-#current-user-name {
-  float:right;
-  padding:0 10px;
-  color:#fff;
-}
-#current-user-pic {
-  float:right;
-  width:22px; height:22px;
-  margin:4px 0 0 9px;
-  border-radius:3px 0;
-}
-
-/*************************************************************************
- * Content Styles
- *************************************************************************
- */
-#content-header {
-  background:transparent url('/images/eee-bg.gif');
-  border-bottom:1px solid #ddd;
-}
-/*************************************************************************
- * FriendsPage Styles
- *************************************************************************
- */
-#friends-list {
-  margin-top:10px;
-  font-size:11px;
-}
-#friends-list li {
-  float:left;
-}
-a.friend-link {
-  display:block;
-  height:50px; width:170px;
-  padding:10px;
-  border:1px solid transparent;
-  border-radius:5px 0;
-}
-a.friend-link:hover {
-  background-color:#f3f3f3;
-  text-decoration:none;
-  border-color:#ddd;
-}
-.friend-pic {
-  float:left;
-  height:50px; width:50px;
-  margin-right:10px;
-  vertical-align:text-bottom;
-  border-radius:5px 0;
-}
-#friends-list span { display:block; }
-.friend-name {
-  color:#188d8e;
-  font-size:13px;
-}
-.friend-mutual-courses {
-  color:#1fbbbd;
-  margin-top:2px;
-}
-.friend-status {
-  color:#999;
-}
-  </style>
+  <link href="/stylesheets/style.css"
+        rel="stylesheet"
+        type="text/css" />
+  <link href="/stylesheets/friends.css"
+        rel="stylesheet"
+        type="text/css" />
 </head>
 <body>
 <div id="page-header">
@@ -190,7 +27,6 @@ a.friend-link:hover {
     <ul id="main-nav" class="nav">
       <li id="main-nav-friends"><a href="/s2friends.html">Friends</a></li>
       <li id="main-nav-courses"><a href="/s2courses.html">Courses</a></li>
-      <li id="main-nav-schedules"><a href="/s2schedules.html">Schedules</a></li>
     </ul>
     <div id="current-user">
       <a href="#" id="logout">Logout</a>
@@ -203,10 +39,10 @@ a.friend-link:hover {
     </div>
   </div>
 </div>
-<div id="page-content">
+<div id="page-content" class="friends">
   <div id="content-header">
     <div class="container">
-      <br /><br /><br /><br />
+      <h1>Friends (8)</h1>
     </div>
   </div>
   <div class="container">
