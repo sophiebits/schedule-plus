@@ -44,6 +44,10 @@ AcmSchedule::Application.routes.draw do
   
   match "/friends/:id" => "friends#show"
   match "/friends" => "friends#index"
+  
+  match "/courses/:id" => "courses#show"
+  match "/courses" => "courses#index"
+  
   resource :friends, :courses, :sessions
 
   resource :schedules do
@@ -55,7 +59,7 @@ AcmSchedule::Application.routes.draw do
   match "/schedules/add-course" => "schedules#add_course"
   match "/schedules/:id" => "schedules#show"
 
-  root :to => "home#index"
+  root :to => "static#home"
 
   match "/auth/:provider/callback" => "sessions#show"
   match "/auth/failure" => "sessions#bounce"
@@ -64,5 +68,4 @@ AcmSchedule::Application.routes.draw do
   match "/tos" => "static#tos"
   match "/privacy" => "static#privacy"
 
-  match "/beta" => "home#index"
 end
