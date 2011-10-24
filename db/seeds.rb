@@ -156,9 +156,29 @@ def check_sections_offered(offered_sections, db_sections)
 	end
 end
 
+def shorten_semester_name(sem_name)
+  if sem_name
+    # "Spring 2012" ==> "S" + "12" ==> "S12"
+    begin
+      return sem_name[0]+sem_name[-2,2]
+    rescue
+      ""
+    end
+  end
+  ""
+end
+
 def populate_course_data(course)
-  course_url = "https://enr-apps.as.cmu.edu/open/SOC/SOCServlet?CourseNo=%s&SEMESTER=%s&Formname=Course_Detail" % [course.number.sub('-',''), Semester.current_name_short]
-  doc = open(course_url) { |f| Hpricot(f) }
+  course_url = "https://enr-apps.as.cmu.edu/open/SOC/SOCServlet?CourseNo=%s&SEMESTER=%s&Formname=Course_Detail" % [course.number.sub('-',''), shorten_semester_name(Semester.current.name)]
+  begin
+    doc = open(course_url) { |f| Hpricot(f) }
+  rescue
+    return
+  end
+  if doc.inner_text.include?("technical difficulty")
+    return
+  end
+  
   if doc
     info = doc.search("//font")
     i = 0
