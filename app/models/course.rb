@@ -3,6 +3,7 @@ class Course < ActiveRecord::Base
   has_many :lectures
   has_many :course_selections
   has_many :schedules, :through => :course_selections
+  belongs_to :semester
   
   # RailsCast 240
   def self.search(search)

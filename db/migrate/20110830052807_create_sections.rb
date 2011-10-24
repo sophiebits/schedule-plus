@@ -5,6 +5,7 @@ class CreateSections < ActiveRecord::Migration
       t.integer :lecture_id
       t.string :letter
       t.string :instructor
+      t.boolean :offered
 
       t.timestamps
     end
