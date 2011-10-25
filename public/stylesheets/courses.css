@@ -45,30 +45,66 @@ h1#course-page-title .course-number {
   width:615px;
   font-weight:400;
   margin:20px 0 10px;
+  padding:5px 0;
   color:#188d8e;
   border-bottom:1px dotted #1fbbbd;
 }
-table#section-info,
+#section-info {
+  float:right; clear:right;
+  width:330px;
+}
+#section-info-table,
 .course#page-content h2#section-info-header {
   display:block; 
-  float:right; clear:right;
-  width:320px;
+  width:100%;
 }
-table#section-info { 
+#section-info-table { 
   font-size:12px;
   line-height:18px;
 }
-table#section-info th,
-table#section-info td {
+#section-info-table tbody,
+#section-info-table thead,
+#section-info-table tr {
+  display:block;
+  width:100%;
+}
+#section-info-table th,
+#section-info-table td {
   padding:2px 5px;
   text-align:left;
+  overflow:hidden;
 }
-table#section-info td.days {
+#section-info-table tr.even {
+  background-color:#f3f3f3;
+}
+#section-info-table tr.lecture {
+  background-image:url('/images/eee-bg.gif');
+  border:1px solid #ddd;
+  border-width:1px 0;
+}
+#section-info-table td.add-course { width:10px }
+#section-info-table td.lecture-num,
+#section-info-table td.section-ltr { width:25px }
+#section-info-table td.days { 
+  width:30px;
+  text-align:center;
+}
+#section-info-table td.time { width:90px }
+#section-info-table td.days,
+#section-info-table td.time {
   font-size:10px;
 }
-table#section-info td.section {
-  text-align:right;
+#section-info-table td.section-ltr {
+  width:25px;
   font-weight:700
+}
+a.add-course-link {
+  font-weight:700;
+  font-size:18px;
+}
+a.add-course-link:hover {
+  text-decoration:none;
+  color:#fbb03b;
 }
 dl#course-info {
   width:615px; height:60px;
@@ -127,5 +163,6 @@ dl#course-info dd {
 #course-description {
   width:610px;
   font-size:12px;
+  line-height:15px;
 }
 

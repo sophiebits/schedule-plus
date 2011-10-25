@@ -7,6 +7,6 @@ class ScheduledTime < ActiveRecord::Base
     end
     begin_time = Time.mktime(0) + self.begin * 60
     end_time = Time.mktime(0) + self.end * 60
-    begin_time.strftime("%l:%M%P") + "-" + end_time.strftime("%l:%M%P")
+    begin_time.strftime("%l:%M%P") + "-" + end_time.strftime("%l:%M%P").strip
   end
 end

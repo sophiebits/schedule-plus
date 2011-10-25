@@ -19,11 +19,24 @@ class Course < ActiveRecord::Base
   end
 
   def sections_by_lecture
+    # FIXME: does not include lectures with no sections
     sections.group_by{ |s| s.lecture }
   end
   
   def find_by_section(name)
     self.sections.find_by_name(name)
+  end
+
+  def prereqs_str
+    prereqs || "Not Available"
+  end
+
+  def coreqs_str
+    coreqs || "Not Available"
+  end
+
+  def description_str
+    description || "Not Available"
   end
 
   def instructors
