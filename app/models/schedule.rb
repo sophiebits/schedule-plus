@@ -12,25 +12,30 @@ class Schedule < ActiveRecord::Base
     }
   end
 
+  def units
+    # TODO
+    "0.0"
+  end
+
   # Adds a course by course_id and section_id.
   # Assumes course_id and section_id are valid
   # Uses section A by default.
-  def add_course(course_id, section_id)
-    section_id ||= Course.find(course_id).find_by_section('A')
-    self.courses.create(:course_id => course_id,
-                        :section_id => section_id)
+  def add_course(section_id)
+    self.courses.create(:section_id => section_id)
   end
 
   # Changes section for some course on the schedule.
   def switch_section(course_id, section_id)
-    self.courses.find_by_course_id(course_id)
-                .update_attribute(:section_id, section_id)
-                .save
+    # FIXME
+    # self.courses.find_by_course_id(course_id)
+    #            .update_attribute(:section_id, section_id)
+    #            .save
   end
 
   # Deletes a course from the schedule.
   def delete_course(course_id)
-    self.courses.find_by_course_id(course_id).destroy!
+    # FIXME
+    # self.courses.find_by_course_id(course_id).destroy!
   end
 
 end
