@@ -11,8 +11,9 @@
     </div>
   </div>
   <div class="container">
+  <div id="section-info">
     <h2 id="section-info-header">Sections</h2>
-    <table id="section-info" caption="Course Sections">
+    <table id="section-info-table" caption="Course Sections">
       <!--
       <thead>
         <tr>
@@ -25,43 +26,46 @@
       <tbody>
 <% @course.sections_by_lecture.each do |lecture, sections| %>
   <% if !lecture.nil? %>
-        <tr>
-          <td>Lec <%= lecture.number %></td>
+        <tr class="lecture">
+          <td class="add-course">&nbsp;</td>
+          <td class="lecture-num">Lec<%= lecture.number %></td>
           <td class="days"><% lecture.times.each do |time| %>
             <%= time.days %><br />
           <% end %></td>
-          <td><% lecture.times.each do |time| %>
+          <td class="time"><% lecture.times.each do |time| %>
             <%= time.to_str %><br />
           <% end %></td>
           <td><%= lecture.instructor %></td>
-          <td>&nbsp;</td>
         </tr>
   <% end %>
   <% sections.each do |section| %>
-        <tr>
-          <td class="section"><%= section.letter %></td>
+        <tr class="section <%= cycle('odd', 'even', :name => 'parity') %>">
+          <td class="add-course"><a href="#" class="add-course-link">+</a></td>
+          <td class="section-ltr"><%= section.letter %></td>
           <td class="days"><% section.times.each do |time| %>
             <%= time.days %><br />
           <% end %></td>
-          <td><% section.times.each do |time| %>
+          <td class="time"><% section.times.each do |time| %>
             <%= time.to_str %><br />
           <% end %></td>
           <td><%= section.instructor %></td>
-          <td>Add</td>
         </tr>
   <% end %>
+  <% reset_cycle('parity') %>
 <% end %>
       </tbody>
     </table>
+  </div>
     <h2>Course Details</h2>
     <dl id="course-info">
       <dt>Instructor(s):</dt>
       <dd><%= @course.instructors %></dd>
       <dt>Prerequisites:</dt>
-      <dd>21-127</dd>
+      <dd><%= @course.prereqs_str %></dd>
       <dt>Corequisites:</dt>
-      <dd>None</dd>
+      <dd><%= @course.coreqs_str %></dd>
     </dl>
+    <!--
     <h2 class="facebox-header">Adam Weis, Jason Macdonald, Ian McKellen,
     and 30 others took <%= @course.number %> this semester.</h2>
     <div class="facebox">
@@ -140,7 +144,7 @@
       <span class="expand">see all</span>
     </div>
     <h2 class="facebox-header">Kevin Bao, Avesh Singh, Vibha Rao, and
-    95 others have taken <%= @course.number %>.</h2>
+    95 others have taken <%= @course.number %> previously.</h2>
     <div class="facebox">
       <ul id="course-prev-list">
         <li>
@@ -215,18 +219,10 @@
         </li>
       </ul>
       <span class="expand">see all</span>
-    </div>
+    </div>-->
     <h2 id="course-description-header">Description</h2>
     <p id="course-description">
-      This course is about how to use theoretical ideas to formulate and
-      solve problems in computer science. It integrates mathematical material
-      with general problem solving techniques and computer science
-      applications. Examples are drawn from Algorithms, Complexity Theory,
-      Game Theory, Probability Theory, Graph Theory, Automata Theory,
-      Algebra, Cryptography, and Combinatorics. Assignments involve both
-      mathematical proofs and programming. NOTE: students must achieve a C
-      or better in order to use this course to satisfy the pre-requisite for
-      and subsequent Computer Science course.
+      <%= @course.description.blank? ? "Not Available" : @course.description_str %>
     </p>
   </div>
 </div>
