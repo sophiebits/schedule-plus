@@ -32,5 +32,30 @@ class Schedule < ActiveRecord::Base
   def delete_course(course_id)
     self.courses.find_by_course_id(course_id).destroy!
   end
+  
+  # returns true is st1 and st2 overlap in time
+  def has_overlap?(st1, st2)
+    (st1.begin <= st2.end) && (st2.begin <= st1.end)
+  end
+  
+  # returns true if schedule has time conflicts
+  def has_conflicts?
+    # get list of all scheduled times in this schedule
+    scheduled_times = self.courses.collect{
+      |s| s.section.lecture ? [s.section.times, s.section.lecture.times] : s.section.times}.flatten
+    "UMTWRFS".split('').each do |day|
+      day_scheduled_times = scheduled_times.find_all{|st| st.days.include? day}
+      # generate all unique pairs of scheduled times
+      st_pairs = day_scheduled_times.combination(2).to_a
+      st_pairs.each do |p|
+        return true if has_overlap?(p[0], p[1])
+      end
+    end
+    false
+  end
+  
+  def create_permutations
+    
+  end
 
 end
