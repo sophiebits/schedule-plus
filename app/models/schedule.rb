@@ -3,15 +3,7 @@ class Schedule < ActiveRecord::Base
   has_many :courses, :class_name => 'CourseSelection'
   scope :active, :conditions => { :active => true }
   
-  def after_initialize
-    hash_len = 4
-    charset = ('a'..'z').to_a + ('A'..'Z').to_a + (0..9).to_a
-    begin
-      hash = (0...hash_len).map{charset.to_a[rand(charset.size)]}.join
-      hash_len += 1
-    end while !Schedule.find_by_hash(hash).blank?
-    self.hash = hash
-  end
+  before_create :generate_hash
  
   def as_json(options={})
     {
@@ -63,6 +55,20 @@ class Schedule < ActiveRecord::Base
   
   def create_permutations
     
+  end
+  
+  private
+  
+  def generate_hash
+    if new_record?
+      hash_len = 4
+      charset = ('a'..'z').to_a + ('A'..'Z').to_a + (0..9).to_a
+      begin
+        hash = (0...hash_len).map{charset.to_a[rand(charset.size)]}.join
+        hash_len += 1
+      end while !Schedule.find_by_hash(hash).blank?
+      self.hash = hash
+    end
   end
 
 end
