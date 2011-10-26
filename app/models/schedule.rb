@@ -4,13 +4,15 @@ class Schedule < ActiveRecord::Base
   scope :active, :conditions => { :active => true }
   
   def after_initialize
-    hash_len = 4
-    charset = ('a'..'z').to_a + ('A'..'Z').to_a + (0..9).to_a
-    begin
-      hash = (0...hash_len).map{charset.to_a[rand(charset.size)]}.join
-      hash_len += 1
-    end while !Schedule.find_by_hash(hash).blank?
-    self.hash = hash
+    if new_record?
+      hash_len = 4
+      charset = ('a'..'z').to_a + ('A'..'Z').to_a + (0..9).to_a
+      begin
+        hash = (0...hash_len).map{charset.to_a[rand(charset.size)]}.join
+        hash_len += 1
+      end while !Schedule.find_by_hash(hash).blank?
+      self.hash = hash
+    end
   end
  
   def as_json(options={})
