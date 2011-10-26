@@ -9,6 +9,7 @@ class CreateCourses < ActiveRecord::Migration
       t.string :prereqs
       t.string :coreqs
       t.integer :semester_id
+      t.integer :department_id
       t.boolean :offered
 
       t.timestamps

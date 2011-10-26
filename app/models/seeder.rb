@@ -211,6 +211,32 @@ class Seeder < ActiveRecord::Base
     end
   end
   
+  # seeds db with departments
+  def self.seed_departments
+    departments_url = "https://enr-apps.as.cmu.edu/open/SOC/SOCServlet?Formname=ByDept"
+    begin
+      doc = open(departments_url) { |f| Hpricot(f) }
+    rescue
+      return
+    end
+    
+    departments = doc.search("//select/option")
+    if departments
+      departments.each do |d|
+        # check that text has '(dd)' in it where d is any number
+        m = /^(.*?)\((\d\d)\)/.match(d.inner_text)
+        if m
+          name = m[1]
+          prefix = m[2]
+          dep = Department.find_by_prefix(prefix)
+          if !dep
+            Department.create(:name => name.strip, :prefix => prefix)
+          end
+        end
+      end
+    end
+  end
+  
   # seeds db with SoC data, and updates courses/lectures/sections to the newest information
   # Note: uses the current semester if the semester variable is nil
   def self.seed_soc(semester)
@@ -228,7 +254,11 @@ class Seeder < ActiveRecord::Base
     else
     	parse_file = File.new("parse_file.html", "w")
     end
-    file = open(file)
+    begin
+      file = open(file)
+    rescue
+      return
+    end
 
     File.readlines(file).each do |line|
     	if line.include? 'Lec/Sec'

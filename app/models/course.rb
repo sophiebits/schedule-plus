@@ -4,6 +4,9 @@ class Course < ActiveRecord::Base
   has_many :course_selections
   has_many :schedules, :through => :course_selections
   belongs_to :semester
+  belongs_to :department
+  
+  before_create :add_department
   
   # RailsCast 240
   def self.search(search)
@@ -50,5 +53,14 @@ class Course < ActiveRecord::Base
 
   def students
     schedules.active.map(&:user) 
+  end
+  
+  private
+  
+  def add_department
+    dep = Department.find_by_prefix(self.number[0,2])
+    if dep
+      self.department_id = dep.id
+    end
   end
 end
