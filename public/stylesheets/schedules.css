@@ -42,6 +42,10 @@ h1#schedule-user {
  * ScheduleList Styles
  *************************************************************************
  */
+#schedule .course {
+  border:1px solid #ddd;
+  padding:5px;
+}
 #schedule .sections .selected {
   background-color:#1fbbbd;
 }

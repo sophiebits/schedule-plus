@@ -41,10 +41,9 @@
   <% sections.each do |section| %>
         <tr class="section <%= cycle('odd', 'even', :name => 'parity') %>">
           <td class="add-course">
-                  <%= link_to "+", schedule_selection_path(:schedule_id => 1, # FIXME
-                                                           :id => cs.id,
-                                                           :section_id => section.id),
-                                   :method => :put %>
+                  <%= link_to "+", schedule_selections_path(:schedule_id => 1, # FIXME
+                                                           :id => section.id),
+                                   :method => :post %>
           </td>
           <td class="section-ltr"><%= section.letter %></td>
           <td class="days"><% section.times.each do |time| %>
