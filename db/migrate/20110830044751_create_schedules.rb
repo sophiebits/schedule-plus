@@ -3,7 +3,7 @@ class CreateSchedules < ActiveRecord::Migration
     create_table :schedules do |t|
       t.integer :user_id
       t.string :name
-      t.string :semester
+      t.integer :semester_id
       t.boolean :active
       t.string :hash
 

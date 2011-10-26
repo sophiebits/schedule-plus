@@ -15,8 +15,21 @@ class Schedule < ActiveRecord::Base
   end
 
   def units
-    # TODO
-    "0.0"
+    units_lower = 0
+    units_upper = 0
+    self.courses.each do |cs|
+      units = cs.course.units.split('-')
+      lower = units[0].to_f
+      upper = units[-1].to_f
+      units_lower += lower
+      units_upper += upper
+    end
+
+    if units_lower == units_upper
+      return units_lower.to_s
+    else
+      return units_lower.to_s + '-' + units_upper.to_s
+    end
   end
 
   # Adds a course by course_id and section_id.
