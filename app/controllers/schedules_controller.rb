@@ -1,7 +1,19 @@
 class SchedulesController < ApplicationController
   
   def index
+    redirect_to root_path if !current_user
     @schedules = Schedule.all.group_by { |s| s.semester }
+  end
+
+  def show
+    if (params[:id]) 
+      @schedule = Schedule.find(params[:id])
+    elsif current_user
+      @schedule = current_user.main_schedule || Schedule.new
+      p "CUL8R"
+    else
+      redirect_to root_path
+    end
   end
   
   def new
@@ -30,34 +42,6 @@ class SchedulesController < ApplicationController
       render :json => parsed
     else
       redirect_to '/schedules/' + session[:imported].to_s
-    end
-  end
-
-  def show
-    if current_user && !current_user.main_schedule(session[:semester])
-      redirect_to new_schedules_path if request.env['PATH_INFO'] != new_schedules_path
-    end
-    if (!params[:id]) 
-      if current_user
-        @schedule = current_user.main_schedule
-      else
-        redirect_to root_path
-      end
-    else
-      @schedule = Schedule.find(params[:id])
-      if request.xhr?
-        render :json => @schedule.to_json(:include =>
-          {:scheduled_courses => {:include =>
-             {
-               :course => {}, 
-               :lecture => {:include => :lecture_section_times}, 
-               :recitation => {:include => :recitation_section_times}
-             }
-          }
-        })
-      else
-        
-      end
     end
   end
 

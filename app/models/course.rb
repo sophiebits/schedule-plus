@@ -24,7 +24,7 @@ class Course < ActiveRecord::Base
   end
   
   def find_by_section(name)
-    self.sections.find_by_name(name)
+    sections.find_by_letter(name)
   end
 
   def prereqs_str

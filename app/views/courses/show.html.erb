@@ -40,7 +40,12 @@
   <% end %>
   <% sections.each do |section| %>
         <tr class="section <%= cycle('odd', 'even', :name => 'parity') %>">
-          <td class="add-course"><a href="#" class="add-course-link">+</a></td>
+          <td class="add-course">
+                  <%= link_to "+", schedule_selection_path(:schedule_id => 1, # FIXME
+                                                           :id => cs.id,
+                                                           :section_id => section.id),
+                                   :method => :put %>
+          </td>
           <td class="section-ltr"><%= section.letter %></td>
           <td class="days"><% section.times.each do |time| %>
             <%= time.days %><br />

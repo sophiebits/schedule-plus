@@ -21,23 +21,15 @@ class Schedule < ActiveRecord::Base
   # Assumes course_id and section_id are valid
   # Uses section A by default.
   def add_course(section_id)
-    self.courses.create(:section_id => section_id)
+    course_id = Section.find(section_id).course_id
+    i = courses.map{|cs| cs.course.id}.index(course_id)
+    if i.nil? 
+      courses.create(:section_id => section_id)
+    else
+      courses[i].update_attribute(:section_id, section_id)
+    end
   end
 
-  # Changes section for some course on the schedule.
-  def switch_section(course_id, section_id)
-    # FIXME
-    # self.courses.find_by_course_id(course_id)
-    #            .update_attribute(:section_id, section_id)
-    #            .save
-  end
-
-  # Deletes a course from the schedule.
-  def delete_course(course_id)
-    # FIXME
-    # self.courses.find_by_course_id(course_id).destroy!
-  end
-  
   # returns true is st1 and st2 overlap in time
   def has_overlap?(st1, st2)
     (st1.begin <= st2.end) && (st2.begin <= st1.end)
