@@ -42,24 +42,17 @@ AcmSchedule::Application.routes.draw do
   #     resources :products
   #   end
   
-  match "/friends/:id" => "friends#show"
-  match "/friends" => "friends#index"
-  
-  match "/courses/:id" => "courses#show"
-  match "/courses" => "courses#index"
-
   match "/schedules" => "schedules#index"
 
-  resource :friends, :courses, :sessions
+  resources :courses, :only => [:index, :show]
+  resources :sessions
 
-  resource :schedules do
-    get 'import', :on => :member
+  resources :schedules do
+    resources :selections, {:controller => "CourseSelections",
+                            :only => [:create, :update, :destroy]}
   end
   
   match "/schedules/import" => "schedules#import"
-	match "/schedules/get_friends_in_course" => "schedules#get_friends_in_course"
-  match "/schedules/add-course" => "schedules#add_course"
-  match "/schedules/:id" => "schedules#show"
 
   root :to => "static#home"
 

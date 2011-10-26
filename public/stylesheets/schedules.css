@@ -1,0 +1,49 @@
+
+/*************************************************************************
+ * SchedulePage Styles
+ *************************************************************************
+ */
+.schedule#page-content #content-header {
+  height:50px;
+}
+#schedule-user-pic-frame {
+  float:left;
+  position:relative;
+  margin-right:20px;
+  width:60px; height:60px;
+  overflow:hidden
+}
+#schedule-user-pic {
+  float:left;
+  display:block;
+  margin-right:20px;
+  width:50px; height:50px;
+  background-color:#666;
+}
+h1#schedule-user {
+  padding-top:8px;
+  color:#1fbbbd;
+  font-size:20px;
+  font-weight:300;
+}
+#schedule-user-captions {
+  margin-top:2px;
+  color:#188d8e;
+  font-size:12px;
+}
+#schedule-container {
+  float:left;
+  width:240px
+}
+#calendar-container {
+  float:left;
+}
+/*************************************************************************
+ * ScheduleList Styles
+ *************************************************************************
+ */
+#schedule .sections .selected {
+  background-color:#1fbbbd;
+}
+
+
