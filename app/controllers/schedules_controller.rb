@@ -7,10 +7,9 @@ class SchedulesController < ApplicationController
 
   def show
     if (params[:id]) 
-      @schedule = Schedule.find(params[:id])
+      @schedule = Schedule.find_by_hash(params[:id])
     elsif current_user
       @schedule = current_user.main_schedule || Schedule.new
-      p "CUL8R"
     else
       redirect_to root_path
     end
@@ -78,31 +77,4 @@ class SchedulesController < ApplicationController
 
 	end
 
-  def add_course
-    if request.xhr?
-      input = params[:course]
-      letter = input[5..-1]
-      number = input[0,5]
-      
-      course = Course.find_by_number(number)
-      section = course.find_by_section(letter)
-
-      if course.lectures.find_by_section(letter)
-        @course = ScheduledCourse.find_or_create_by_course_id_and_lecture_id(
-          :course_id => course.id, :lecture_id => section.id)
-      else
-        @course = ScheduledCourse.find_or_create_by_course_id_and_lecture_id_and_recitation_id(
-          :course_id => course.id, :lecture_id => section.lecture.id, :recitation_id => section.id)
-      end
-
-      CourseSelection.create(:schedule_id => current_user.main_schedule.id, :scheduled_course_id => @course.id)
-      render :json => @course.to_json(:include => {
-        :course => {},
-        :lecture => { :include => :lecture_section_times },
-        :recitation => { :include => :recitation_section_times }
-      })
-    else
-
-    end
-  end
 end

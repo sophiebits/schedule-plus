@@ -14,6 +14,10 @@ class Schedule < ActiveRecord::Base
     }
   end
 
+  def to_param
+    hash
+  end
+
   def units
     units_lower = 0
     units_upper = 0
@@ -74,7 +78,7 @@ class Schedule < ActiveRecord::Base
   
   def generate_hash
     if new_record?
-      hash_len = 4
+      hash_len = 5
       charset = ('a'..'z').to_a + ('A'..'Z').to_a + (0..9).to_a
       begin
         hash = (0...hash_len).map{charset.to_a[rand(charset.size)]}.join
