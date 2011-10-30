@@ -30,10 +30,24 @@ class User < ActiveRecord::Base
                           :token => (omniauth['credentials']['token'] rescue nil))
   end
 
+  def fb_uid
+    self.authentications.find_by_provider('facebook').token rescue nil
+  end
+  
   # fb_graph for a user
   def fb
-    @fb_user ||= FbGraph::User.me(self.authentications.find_by_provider('facebook').token)
-                              .fetch
+    @fb_user ||= FbGraph::User.me(fb_uid).fetch
+  end
+
+  def friends
+    if fb
+      fb_friends = fb.friends.collect{|f|f.identifier}
+      # uids = User.all.collect{|u|u.uid if friends.include? u.uid}.compact
+      # FIXME FIXME FIXME PLEASE
+      @friends = []
+    else
+      nil
+    end
   end
 
   def password_required?

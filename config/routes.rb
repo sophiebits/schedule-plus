@@ -15,13 +15,14 @@ AcmSchedule::Application.routes.draw do
   #######################################################
 
   resources :courses, :only => [:index, :show]
-  resources :users, :only => :show
   resources :schedules do
     resources :selections, {:controller => "CourseSelections",
                             :only => [:create, :update, :destroy]}
   end
-  
   match "/schedules/import" => "schedules#import"
-  match "/settings" => "users#edit"
 
+  resources :users, :only => :show
+  match "/settings" => "users#edit"
+  match "/friends" => "friends#index"
+  
 end
