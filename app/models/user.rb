@@ -1,17 +1,40 @@
 class User < ActiveRecord::Base
+  # Include default devise modules. Others available are:
+  # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable 
+  devise :database_authenticatable, :registerable, #:omniauthable,
+         :recoverable, :rememberable, :trackable#, :validatable
+
+  # Setup accessible (or protected) attributes for your model
+  attr_accessible :email, :password, :password_confirmation, :remember_me
+  
+  # omniauth
+  has_many :authentications
   has_many :schedules
 
   DAY_NAME = %w(Sunday Monday Tuesday Wednesday Thursday Friday Saturday)
 
   def main_schedule(semester)
-    schedules.where(:active => true, :semester => semester)
+    schedules.active.find_by_semester(semester)
   end
 
-  def self.create_with_omniauth(auth)
-    create! do |user|
-      user.uid = auth["uid"]
-      user.name = auth["user_info"]["name"]
+  def apply_omniauth(omniauth)
+    #self.email = omniauth['user_info']['email'] if email.blank?
+    case omniauth['provider']
+    when 'facebook'
+      self.apply_facebook(omniauth)
     end
+    authentications.build(:provider => omniauth['provider'], 
+                          :uid => omniauth['uid'],
+                          :token => (omniauth['credentials']['token'] rescue nil))
+  end
+
+  # fb_graph for a user
+  def fb
+    @fb_user ||= FbGraph::User.me(self.authentications.find_by_provider('facebook').token).fetch
+  end
+
+  def password_required?
+    (authentications.empty? || !password.blank?) && super
   end
 
   def as_json(options={})
@@ -82,6 +105,14 @@ class User < ActiveRecord::Base
                       .update_attribute(:active,false)
                       .save
       schedule.update_attribute(:active,true).save
+    end
+  end
+
+  protected
+
+  def apply_facebook(omniauth)
+    if (extra = omniauth['extra']['user_hash'] rescue false)
+      self.email = (extra['email'] rescue '')
     end
   end
 end

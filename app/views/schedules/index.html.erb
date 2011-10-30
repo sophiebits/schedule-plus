@@ -1,0 +1,15 @@
+<div id="page-content" class="schedule">
+  <div id="content-header">
+    <div class="container">
+      <a href="/schedules"><h1 id="schedule-index-title">Schedules</h1></a>
+      <%= link_to "Add a Schedule", new_schedule_path %>
+    </div>
+  </div>
+  <div class="container">
+    <ul id="schedules-list">
+      <% @schedules.each do |schedule| %>
+      <li>Schedule <%= schedule.id %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>

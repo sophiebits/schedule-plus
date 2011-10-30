@@ -1,51 +1,20 @@
 AcmSchedule::Application.routes.draw do
+  devise_for :users, :path_names => { :sign_in => 'login', 
+                                      :sign_out => 'logout', 
+                                      :registration => 'register' },
+                     :controllers => { :registrations => 'registrations' }
+  
+  # http://stackoverflow.com/questions/5531263/
+  #   omniauth-doesnt-work-with-route-globbing-in-rails3
+  #match '/auth/:provider' => 'omniauth#passthru'
+  
+  match '/auth/:provider/callback' => 'authentications#create'
+  delete '/logout' => 'authentications#destroy'
+
   get "home/index"
 
-  # Sample of regular route:
-  #   match 'products/:id' => 'catalog#view'
-  # Keep in mind you can assign values other than :controller and :action
-
-  # Sample of named route:
-  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
-  # This route can be invoked with purchase_url(:id => product.id)
-
-  # Sample resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Sample resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Sample resource route with more complex sub-resources
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', :on => :collection
-  #     end
-  #   end
-
-  # Sample resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
-  
-  match "/schedules" => "schedules#index"
-
   resources :courses, :only => [:index, :show]
-  resources :sessions
+  #resource :sessions
 
   resources :schedules do
     resources :selections, {:controller => "CourseSelections",
@@ -56,8 +25,8 @@ AcmSchedule::Application.routes.draw do
 
   root :to => "static#home"
 
-  match "/auth/:provider/callback" => "sessions#show"
-  match "/auth/failure" => "sessions#bounce"
+  #match "/auth/:provider/callback" => "sessions#show"
+  #match "/auth/failure" => "sessions#bounce"
   match "/main" => "home#main"
 
   match "/tos" => "static#tos"
