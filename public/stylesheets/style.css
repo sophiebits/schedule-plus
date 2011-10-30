@@ -129,7 +129,7 @@ a#settings-link {
 #content-header {
   background:transparent url('/images/eee-bg.gif');
   border-bottom:1px solid #ddd;
-  padding:20px;
+  padding:15px 0;
 }
 #content-header #env-semester {
   position:absolute;
