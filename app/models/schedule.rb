@@ -60,7 +60,7 @@ class Schedule < ActiveRecord::Base
   def has_conflicts?
     # get list of all scheduled times in this schedule
     scheduled_times = self.course_selections.collect{
-      |s| s.section.lecture ? [s.section.times, s.section.lecture.times] : s.section.times}.flatten
+      |s| s.section.lecture ? [s.section.scheduled_times, s.section.lecture.scheduled_times] : s.section.scheduled_times}.flatten
     "UMTWRFS".split('').each do |day|
       day_scheduled_times = scheduled_times.find_all{|st| st.days.include? day}
       # generate all unique pairs of scheduled times

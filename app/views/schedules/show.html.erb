@@ -46,10 +46,10 @@
               <li class="lecture">
                 <!-- class="add-course">&nbsp;</-->
                 <span class="lecture-num">Lec<%= lecture.number %></span>
-                <span class="days"><% lecture.times.each do |time| %>
+                <span class="days"><% lecture.scheduled_times.each do |time| %>
                   <%= time.days %><br />
                 <% end %></span>
-                <span class="time"><% lecture.times.each do |time| %>
+                <span class="time"><% lecture.scheduled_times.each do |time| %>
                   <%= time.to_str %><br />
                 <% end %></span>
               </li>
@@ -62,10 +62,10 @@
                 <!-- class="add-course">
                 </-->
                 <span class="section-ltr"><%= section.letter %></span>
-                <span class="days"><% section.times.each do |time| %>
+                <span class="days"><% section.scheduled_times.each do |time| %>
                   <%= time.days %><br />
                 <% end %></span>
-                <span class="time"><% section.times.each do |time| %>
+                <span class="time"><% section.scheduled_times.each do |time| %>
                   <%= time.to_str %><br />
                 <% end %></span>
                 <% if cs.section != section %>
