@@ -3,8 +3,8 @@ class User < ActiveRecord::Base
 
   DAY_NAME = %w(Sunday Monday Tuesday Wednesday Thursday Friday Saturday)
 
-  def main_schedule(semester)
-    schedules.where(:active => true, :semester => semester)
+  def main_schedule(semester=Semester.current)
+    schedules.where(:active => true, :semester_id => semester.id).first
   end
 
   def self.create_with_omniauth(auth)
@@ -54,15 +54,15 @@ class User < ActiveRecord::Base
       :recitation => :scheduled_times,
       :course => [])
 
-    current_course_selections = course_selections.where('scheduled_times.begin <= ? AND scheduled_times.end >= ? AND scheduled_times.day = ?',
-      current_time_in_min, current_time_in_min, current_day)
+    current_course_selection = course_selections.where('scheduled_times.begin <= ? AND scheduled_times.end >= ? AND scheduled_times.day = ?',
+      current_time_in_min, current_time_in_min, current_day).first
 
     number = ''
     section = ''
 
-    if current_course_selections.length > 0
-      number = current_course_selections[0].section.course.number
-      section = current_course_selections[0].section.letter
+    if current_course_selection
+      number = current_course_selection.section.course.number
+      section = current_course_selection.section.letter
     end
 
     if number == ''
