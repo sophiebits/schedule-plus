@@ -26,10 +26,12 @@ class AuthenticationsController < ApplicationController
                                                    omniauth['uid'])
     if auth
       flash[:notice] = "Signed in successfully."
+      auth.update_attribute(:token, (omniauth['credentials']['token'] rescue nil))
       sign_in_and_redirect(:user, auth.user)
     elsif user_signed_in?
       current_user.authentications.create!(:provider => omniauth['provider'], 
-                                           :uid      => omniauth['uid'])
+                                           :uid      => omniauth['uid'],
+                                           :token => (omniauth['credentials']['token'] rescue nil))
       flash[:notice] = "Authentication successful."
       redirect_to authentications_url
     else
