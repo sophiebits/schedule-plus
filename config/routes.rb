@@ -14,8 +14,7 @@ AcmSchedule::Application.routes.draw do
   get "home/index"
 
   resources :courses, :only => [:index, :show]
-  #resource :sessions
-
+  resources :users, :only => :show
   resources :schedules do
     resources :selections, {:controller => "CourseSelections",
                             :only => [:create, :update, :destroy]}

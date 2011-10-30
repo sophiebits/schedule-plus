@@ -21,7 +21,9 @@ class SchedulesController < ApplicationController
   end
  
   def create
-    @schedule = current_user.schedules.create(:semester_id => current_semester.id)
+    @schedule = current_user.schedules.create(:semester_id => current_semester)
+    @schedule.update_attribute(:active, true) if 
+      current_user.schedules.by_semester(current_semester).length == 1
     render "show"
   end
 
