@@ -7,16 +7,27 @@
     </a>
     <ul id="main-nav" class="nav">
       <li id="main-nav-friends"><a href="/friends">Friends</a></li>
-      <li id="main-nav-courses"><a href="/courses">Schedules</a></li>
+      <li id="main-nav-schedules"><a href="/schedules">Schedules</a></li>
+      <li id="main-nav-courses"><a href="/courses">Courses</a></li>
     </ul>
+    <% if user_signed_in? %>
     <div id="current-user">
-      <a href="sessions" data-method="delete" id="logout">Logout</a>
-      <a href="#" id="current-user-schedule-link">
-        <span id="current-user-name">Vincent Siao</span>
+      <a href="/users/logout" data-method="delete" id="logout">Logout</a>
+      <a href="<%= if current_user.main_schedule(current_semester)
+          schedule_path(current_user.main_schedule(current_semester))
+        else
+          schedules_path
+        end %>" id="current-user-schedule-link">
+        <span id="current-user-name"><%= current_user.fb.name %></span>
         <img id="current-user-pic" 
-             alt="Vincent Siao"
-             src="http://graph.facebook.com/vincentsiao/picture" />
+             alt="<%= current_user.fb.name %>"
+             src="<%= current_user.fb.picture %>" />
       </a>
+      <a href="/settings" id="settings-link">Settings</a>
     </div>
+    <% else %>
+    <%= link_to "Login with Facebook", '/auth/facebook',
+        :style => 'position:absolute;right:0;color:#fff' %>
+    <% end %>
   </div>
 </div>

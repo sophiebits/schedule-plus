@@ -1,3 +1,6 @@
+<%= content_for :javascript_includes do %>
+  <%= javascript_include_tag "schedule.js" %>
+<% end %>
 <div id="page-content" class="schedule">
   <div id="content-header">
     <div class="container">
@@ -6,9 +9,9 @@
              alt="Vincent Siao"
              src="http://graph.facebok.com/vincentsiao/picture?type=square" />
       <!--</div>-->
-      <h1 id="schedule-user">Vincent Siao</h1>
+      <h1 id="schedule-user"><%= @schedule.user.name %></h1>
       <div id="schedule-user-captions">
-        <span id="schedule-user-major">Computer Science 2014</span>
+        <span id="schedule-user-major">has no friends QQ</span>
       </div>
     </div>
   </div>
@@ -17,70 +20,76 @@
       <% # TODO better authentication. cancan? %>
       <% # FIXME temporarily commented out for design %>
       <% # if current_user && current_user == @schedule.user %>
+        <!--
         <%= form_tag '/schedules/1/add?str=1234', :id => 'add-course', :method => :get do %>
           <%= text_field_tag :course, nil, :placeholder => '99101A' %>
           <%= submit_tag "Add" %>
         <% end %>
+        -->
       <% # end %>
       <ul id="schedule">
         <% @schedule.courses.each do |cs| %>
         <li class="course <%= cs.number %>">
-          <span class="number"><%= cs.number %></span><span class="section"><%= cs.selected_section %></span>
+          <span class="number"><%= cs.number %></span><span class="selected_section"><%= cs.selected_section %></span>
           <span class="name"><%= cs.name %></span>
           <div class="options">
-            <%= link_to "X", schedule_selection_path(:schedule_id => @schedule.id,
+            <%= link_to "info", course_path(cs.course), :class => "course-info-link" %>
+            <%= link_to "times", course_path(cs.course), :class =>"course-times-link" %>
+            <%= link_to "delete", schedule_selection_path(:schedule_id => @schedule,
                                                      :id => cs.id),
-                             :method => :delete %>
+                             :method => :delete,
+                             :class => "course-delete-link" %>
           </div>
-          <table class="sections">
-            <tbody>
+          <ul class="sections">
       <% cs.course.sections_by_lecture.each do |lecture, sections| %>
         <% if lecture %>
-              <tr class="lecture">
-                <td class="add-course">&nbsp;</td>
-                <td class="lecture-num">Lec<%= lecture.number %></td>
-                <td class="days"><% lecture.times.each do |time| %>
+              <li class="lecture">
+                <!-- class="add-course">&nbsp;</-->
+                <span class="lecture-num">Lec<%= lecture.number %></span>
+                <span class="days"><% lecture.times.each do |time| %>
                   <%= time.days %><br />
-                <% end %></td>
-                <td class="time"><% lecture.times.each do |time| %>
+                <% end %></span>
+                <span class="time"><% lecture.times.each do |time| %>
                   <%= time.to_str %><br />
-                <% end %></td>
-              </tr>
+                <% end %></span>
+              </li>
         <% end %>
         <% sections.each do |section| %>
-              <tr class="section <%= cycle('odd', 'even', :name => 'parity') %><%= " selected" if cs.section == section %>">
-                <td class="add-course">
-                  <%= link_to "+", schedule_selection_path(:schedule_id => @schedule.id,
-                                                           :id => cs.id,
-                                                           :section_id => section.id),
-                                   :method => :put %>
-                </td>
-                <td class="section-ltr"><%= section.letter %></td>
-                <td class="days"><% section.times.each do |time| %>
+              <li class="section <%= cycle('odd', 'even', :name => 'parity') %><%= " selected" if cs.section == section %>">
+                <% if cs.section != section %>
+                <a href="<%= schedule_selections_path(:schedule_id => @schedule, :id => section.id)%>" data-method="post">
+                <% end %>
+                <!-- class="add-course">
+                </-->
+                <span class="section-ltr"><%= section.letter %></span>
+                <span class="days"><% section.times.each do |time| %>
                   <%= time.days %><br />
-                <% end %></td>
-                <td class="time"><% section.times.each do |time| %>
+                <% end %></span>
+                <span class="time"><% section.times.each do |time| %>
                   <%= time.to_str %><br />
-                <% end %></td>
-              </tr>
+                <% end %></span>
+                <% if cs.section != section %>
+                </a>
+                <% end %>
+              </li>
         <% end %>
         <% reset_cycle('parity') %>
       <% end %>
-            </tbody>
-          </table>
+          </ul>
         </li>
         <% end %>
       </ul>
       <span id="total-units">Total: <%= @schedule.units %> units</span>
     </div>
     <div id="calendar-container">
+      <!--
       <div id="schedule-permalink-box">
         <div id="schedule-permalink">
           PERMALINK HERE
         </div>
       </div>
+      -->
       <ul id="calendar">
-
       </ul>
     </div>
   </div>

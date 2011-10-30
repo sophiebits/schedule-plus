@@ -1,6 +1,9 @@
 AcmSchedule::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
+  # devise fix for heroku (github devise wiki)
+  config.assets.initialize_on_precompile = false
+
   # The production environment is meant for finished, "live" apps.
   # Code is not reloaded between requests
   config.cache_classes = true
@@ -35,6 +38,7 @@ AcmSchedule::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Disable delivery errors, bad email addresses will be ignored
+  config.action_mailer.default_url_options = { :host => 'scheduleplus.org' }
   # config.action_mailer.raise_delivery_errors = false
 
   # Enable threaded mode

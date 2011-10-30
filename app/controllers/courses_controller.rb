@@ -2,7 +2,8 @@ class CoursesController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   def index
-    @courses = Course.search(params[:search])
+    @courses = Course.by_semester(current_semester)
+                     .search(params[:search])
                      .order(sort_column + " " + sort_direction)
                      .paginate(:per_page => 20, :page => params[:page])
   end

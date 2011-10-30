@@ -1,11 +1,4 @@
 
-  $(window).resize(function() {
-    $('#main-bg').height($(window).height());
-    $('#main-bg').css({ marginLeft:Math.max(132,($(window).width()-960)/2+132) });
-    $('.page').css({ width:$(window).width() });
-    $('#main-page #bg-mask').css({ width:$(window).width()/2 });
-  });
-
 function popupCenter(url,width,height,name) {
   var left = (screen.width/2)-(width/2);
   var top = (screen.height/2)-(height/2);
@@ -13,7 +6,7 @@ function popupCenter(url,width,height,name) {
     +',height='+height+',toolbar=no,left='+left+',top='+top);
 }
 
-jQuery.fn.selText = function() {
+$.fn.selText = function() {
     var obj = this[0];
     if ($.browser.msie) {
         var range = obj.offsetParent.createTextRange();

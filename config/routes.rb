@@ -1,66 +1,27 @@
 AcmSchedule::Application.routes.draw do
-  get "home/index"
-
-  # Sample of regular route:
-  #   match 'products/:id' => 'catalog#view'
-  # Keep in mind you can assign values other than :controller and :action
-
-  # Sample of named route:
-  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
-  # This route can be invoked with purchase_url(:id => product.id)
-
-  # Sample resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Sample resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Sample resource route with more complex sub-resources
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', :on => :collection
-  #     end
-  #   end
-
-  # Sample resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
   
-  match "/schedules" => "schedules#index"
+  root :to => "static#home"
+  match "/tos" => "static#tos"
+  match "/privacy" => "static#privacy"
+  
+  ################ Devise + Omniauth ####################
+  devise_for :users, :path_names => { :sign_in => 'login', 
+                                      :sign_out => 'logout', 
+                                      :registration => 'register' },
+                     :controllers => { :registrations => 'registrations' }
+  
+  match '/auth/:provider/callback' => 'authentications#create'
+  delete '/logout' => 'authentications#destroy'
+  #######################################################
 
   resources :courses, :only => [:index, :show]
-  resources :sessions
-
+  resources :users, :only => :show
   resources :schedules do
     resources :selections, {:controller => "CourseSelections",
                             :only => [:create, :update, :destroy]}
   end
   
   match "/schedules/import" => "schedules#import"
-
-  root :to => "static#home"
-
-  match "/auth/:provider/callback" => "sessions#show"
-  match "/auth/failure" => "sessions#bounce"
-  match "/main" => "home#main"
-
-  match "/tos" => "static#tos"
-  match "/privacy" => "static#privacy"
+  match "/settings" => "users#edit"
 
 end
