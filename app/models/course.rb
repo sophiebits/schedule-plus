@@ -11,11 +11,8 @@ class Course < ActiveRecord::Base
   # RailsCast 240
   def self.search(search)
     if search
-      # sphinx?
-      where('number LIKE ? or
-             name LIKE ?', 
-              "%#{search}%",
-              "%#{search}%")
+      search = search.gsub('-', '')
+      where("REPLACE(number, '-', '') LIKE ? or name LIKE ?", "%#{search}%", "%#{search}%")
     else
       scoped
     end
