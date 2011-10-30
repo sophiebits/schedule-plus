@@ -1,4 +1,41 @@
 
+h1#schedule-index-title {
+  font-size:18px;
+  color:#188d8e;
+  font-weight:300;
+}
+/*************************************************************************
+ * ScheduleIndex Styles
+ *************************************************************************
+ */
+h2.semester-header {
+  padding:10px;
+  font-size:16px;
+  color:#188d8e;
+  font-weight:700;
+  background-image:url('/images/eee-bg.gif');
+  border:1px solid #188d8e;
+  border-width:1px 0;
+}
+ul#schedules-list {
+  margin-top:20px;
+}
+ul#schedules-list li.semester {
+  float:left;
+  width:320px;
+}
+ul#schedules-list ul.semester-schedules li {
+  padding:10px;
+  border-bottom:1px solid #ddd;
+  background-color:#fff;
+}
+ul#schedules-list ul.semester-schedules li.even {
+  background-color:#f3f3f3;
+}
+ul#schedules-list .schedule-options {
+  float:right;
+}
+
 /*************************************************************************
  * SchedulePage Styles
  *************************************************************************

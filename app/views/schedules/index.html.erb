@@ -8,11 +8,12 @@
   <div class="container">
     <ul id="schedules-list">
       <% @schedules.each do |semester,sgroup| %>
-        <li><%= semester.name %>
-          <ul>
+        <li class="semester"><h2 class="semester-header"><%= semester.name %></h2>
+          <ul class="semester-schedules">
             <% sgroup.each do |schedule| %>
-              <li>Schedule <%= link_to schedule.url, schedule_path(schedule) %>
-                (<%= link_to "delete", schedule_path(schedule), :method => :delete %>)
+              <li class="<%= cycle('odd', 'even') %>">
+                <%= link_to schedule.url, schedule_path(schedule) %>
+                <div class="schedule-options">
                 <% if schedule.active %>
                   (active)
                 <% else %>
@@ -21,6 +22,8 @@
                                              :schedule => {:active => true}), 
                                :method => :put %>)
                 <% end %>
+                <%= link_to "X", schedule_path(schedule), :method => :delete %>
+                </div>
               </li>
             <% end %>
           </ul>

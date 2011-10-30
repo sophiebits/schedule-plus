@@ -24,7 +24,11 @@ table#courses-table tr {
 table#courses-table tr.even {
   background-color:#f3f3f3;
 }
-table#courses-table thead tr { background-image:url('/images/eee-bg.gif'); }
+table#courses-table thead tr { 
+  background-image:url('/images/eee-bg.gif'); 
+  border:1px solid #188d8e;
+  border-width:1px 0;
+}
 table#courses-table th,
 table#courses-table td {
   padding:5px 10px;
