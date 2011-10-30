@@ -23,6 +23,7 @@
              alt="<%= current_user.fb.name %>"
              src="<%= current_user.fb.picture %>" />
       </a>
+      <a href="/settings" id="settings-link">Settings</a>
     </div>
     <% else %>
     <%= link_to "Login with Facebook", '/auth/facebook',

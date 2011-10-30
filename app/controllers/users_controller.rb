@@ -10,4 +10,13 @@ class UsersController < ApplicationController
     # FIXME include schedules.css
     render "/schedules/show"
   end
+
+  def edit
+    if user_signed_in?
+      @user = current_user
+    else
+      # TODO redirect to devise
+      redirect_to root_url
+    end
+  end
 end

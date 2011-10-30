@@ -116,6 +116,11 @@ a#current-user-schedule-link {
   margin:4px 0 0 9px;
   border-radius:3px 0;
 }
+a#settings-link {
+  float:right; display:block;
+  height:29px;
+  padding:0 10px;
+}
 
 /*************************************************************************
  * Content Styles

@@ -17,18 +17,22 @@
       <% # TODO better authentication. cancan? %>
       <% # FIXME temporarily commented out for design %>
       <% # if current_user && current_user == @schedule.user %>
+        <!--
         <%= form_tag '/schedules/1/add?str=1234', :id => 'add-course', :method => :get do %>
           <%= text_field_tag :course, nil, :placeholder => '99101A' %>
           <%= submit_tag "Add" %>
         <% end %>
+        -->
       <% # end %>
       <ul id="schedule">
         <% @schedule.courses.each do |cs| %>
         <li class="course <%= cs.number %>">
-          <span class="number"><%= cs.number %></span><span class="section"><%= cs.selected_section %></span>
+          <span class="number"><%= cs.number %></span><span class="selected_section"><%= cs.selected_section %></span>
           <span class="name"><%= cs.name %></span>
           <div class="options">
-            <%= link_to "X", schedule_selection_path(:schedule_id => @schedule,
+            <%= link_to "info", course_path(cs.course) %>
+            <%= link_to "times", course_path(cs.course) %>
+            <%= link_to "delete", schedule_selection_path(:schedule_id => @schedule,
                                                      :id => cs.id),
                              :method => :delete %>
           </div>
@@ -75,11 +79,13 @@
       <span id="total-units">Total: <%= @schedule.units %> units</span>
     </div>
     <div id="calendar-container">
+      <!--
       <div id="schedule-permalink-box">
         <div id="schedule-permalink">
           PERMALINK HERE
         </div>
       </div>
+      -->
       <ul id="calendar">
 
       </ul>

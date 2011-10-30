@@ -79,9 +79,36 @@ h1#schedule-user {
  * ScheduleList Styles
  *************************************************************************
  */
+#schedule {
+  margin:20px 0;
+  font-size:12px;
+  border-bottom:1px solid #188d8e;
+}
 #schedule .course {
-  border:1px solid #ddd;
-  padding:5px;
+  padding:8px 6px;
+  position:relative;
+  color:#333;
+  background-color:#ddd;
+  border-top:1px solid #188d8e;
+  background-image:url('/images/eee-bg.gif');
+  /*background:-webkit-gradient(linear,left top,left bottom,from(#ddd),to(#d6d6d6));
+  background:-moz-linear-gradient(top,#ddd,#d6d6d6);
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ddd',endColorstr='#d6d6d6');*/
+}
+#schedule .course .number,
+#schedule .course .selected_section {
+  font-weight:700;
+}
+#schedule .course .name {
+  color:#000;
+  display:block;
+  margin-top:0.2em;
+  line-height:1.3em
+}
+#schedule .course .options {
+  position:absolute;
+  top:0; right:0;
+  padding:3px 5px;
 }
 #schedule .sections .selected {
   background-color:#1fbbbd;

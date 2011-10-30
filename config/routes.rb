@@ -1,17 +1,18 @@
 AcmSchedule::Application.routes.draw do
+  
+  root :to => "static#home"
+  match "/tos" => "static#tos"
+  match "/privacy" => "static#privacy"
+  
+  ################ Devise + Omniauth ####################
   devise_for :users, :path_names => { :sign_in => 'login', 
                                       :sign_out => 'logout', 
                                       :registration => 'register' },
                      :controllers => { :registrations => 'registrations' }
   
-  # http://stackoverflow.com/questions/5531263/
-  #   omniauth-doesnt-work-with-route-globbing-in-rails3
-  #match '/auth/:provider' => 'omniauth#passthru'
-  
   match '/auth/:provider/callback' => 'authentications#create'
   delete '/logout' => 'authentications#destroy'
-
-  get "home/index"
+  #######################################################
 
   resources :courses, :only => [:index, :show]
   resources :users, :only => :show
@@ -21,14 +22,6 @@ AcmSchedule::Application.routes.draw do
   end
   
   match "/schedules/import" => "schedules#import"
-
-  root :to => "static#home"
-
-  #match "/auth/:provider/callback" => "sessions#show"
-  #match "/auth/failure" => "sessions#bounce"
-  match "/main" => "home#main"
-
-  match "/tos" => "static#tos"
-  match "/privacy" => "static#privacy"
+  match "/settings" => "users#edit"
 
 end
