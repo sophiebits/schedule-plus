@@ -14,8 +14,10 @@ class User < ActiveRecord::Base
   DAY_NAME = %w(Sunday Monday Tuesday Wednesday Thursday Friday Saturday)
 
   def main_schedule(semester)
-    schedules.active.find_by_semester(semester)
+    schedules.active.by_semester(semester).first
   end
+
+############################# AUTHENTICATION ####################################
 
   def apply_omniauth(omniauth)
     #self.email = omniauth['user_info']['email'] if email.blank?
@@ -30,12 +32,15 @@ class User < ActiveRecord::Base
 
   # fb_graph for a user
   def fb
-    @fb_user ||= FbGraph::User.me(self.authentications.find_by_provider('facebook').token).fetch
+    @fb_user ||= FbGraph::User.me(self.authentications.find_by_provider('facebook').token)
+                              .fetch
   end
 
   def password_required?
     (authentications.empty? || !password.blank?) && super
   end
+
+###############################################################################
 
   def as_json(options={})
     {

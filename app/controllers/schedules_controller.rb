@@ -1,13 +1,14 @@
 class SchedulesController < ApplicationController
-  
+  before_filter :authenticate_user!
+
   def index
     redirect_to root_path if !current_user
-    @schedules = Schedule.all.group_by { |s| s.semester }
+    @schedules = current_user.schedules.group_by { |s| s.semester }
   end
 
   def show
     if (params[:id]) 
-      @schedule = Schedule.find_by_hash(params[:id])
+      @schedule = Schedule.find_by_url(params[:id])
     elsif current_user
       @schedule = current_user.main_schedule || Schedule.new
     else
@@ -18,7 +19,31 @@ class SchedulesController < ApplicationController
   def new
     
   end
-  
+ 
+  def create
+    @schedule = current_user.schedules.create(:semester_id => current_semester.id)
+    render "show"
+  end
+
+  def destroy
+    @schedule = Schedule.find_by_url(params[:id])
+    @schedule.destroy
+    redirect_to schedules_path
+  end
+
+  def update
+    @schedule = Schedule.find_by_url(params[:id])
+    if params[:schedule][:active]
+      # make all other semester schedules inactive
+      current_user.schedules.by_semester(@schedule.semester).each do |s|
+        s.update_attribute(:active, false)
+      end
+    end
+    @schedule.update_attributes(params[:schedule])
+    flash[:notice] = "Updated successfully."
+    redirect_to schedules_path
+  end
+
   def import
     if params[:import]
       # Parse uploaded .ics file

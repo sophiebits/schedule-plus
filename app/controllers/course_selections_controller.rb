@@ -4,13 +4,13 @@ class CourseSelectionsController < ApplicationController
 
   # POST
   def create
-    Schedule.find(params[:schedule_id]).add_course(params[:id])
+    Schedule.find_by_url(params[:schedule_id]).add_course(params[:id])
     redirect_to schedule_path(params[:schedule_id])
   end
 
   # PUT
   def update
-    Schedule.find(params[:schedule_id]).add_course(params[:section_id])
+    Schedule.find_by_url(params[:schedule_id]).add_course(params[:section_id])
     redirect_to schedule_path(params[:schedule_id])
   end
 

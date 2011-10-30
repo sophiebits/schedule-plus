@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(:version => 20111030023657) do
     t.string   "name"
     t.integer  "semester_id"
     t.boolean  "active"
-    t.string   "hash"
+    t.string   "url"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

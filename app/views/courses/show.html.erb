@@ -6,7 +6,7 @@
         <%= @course.name %>
       </h1>
       <span id="env-semester">
-        Spring 2012
+        <%= current_semester.name %>
       </span>
     </div>
   </div>
@@ -41,9 +41,13 @@
   <% sections.each do |section| %>
         <tr class="section <%= cycle('odd', 'even', :name => 'parity') %>">
           <td class="add-course">
-                  <%= link_to "+", schedule_selections_path(:schedule_id => 1, # FIXME
-                                                           :id => section.id),
-                                   :method => :post %>
+          <% if user_signed_in? %>
+          <%= link_to "+", schedule_selections_path(
+                              :schedule_id => current_user.main_schedule(current_semester),
+                              :id => section.id
+                           ),
+                           :method => :post %>
+          <% end %>
           </td>
           <td class="section-ltr"><%= section.letter %></td>
           <td class="days"><% section.times.each do |time| %>

@@ -8,12 +8,19 @@ class ApplicationController < ActionController::Base
   def check_uri
 	  redirect_to 'http://scheduleplus.org' if /heroku/.match(request.host)
   end
- 
+
   #helper_method :friends
 	#@friends = nil
 
+  helper_method :current_semester 
+  
   private
   
+  # Set Default Semester
+  def current_semester
+    @current_semester ||= Semester.current
+  end
+
   #def friends
   #  if @friends.nil?
   #    fb_friends = fb_user.friends.collect{|f|f.identifier} if fb_user

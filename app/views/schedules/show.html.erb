@@ -6,9 +6,9 @@
              alt="Vincent Siao"
              src="http://graph.facebok.com/vincentsiao/picture?type=square" />
       <!--</div>-->
-      <h1 id="schedule-user">Vincent Siao</h1>
+      <h1 id="schedule-user"><%= @schedule.user.name %></h1>
       <div id="schedule-user-captions">
-        <span id="schedule-user-major">Computer Science 2014</span>
+        <span id="schedule-user-major">has no friends QQ</span>
       </div>
     </div>
   </div>
@@ -28,7 +28,7 @@
           <span class="number"><%= cs.number %></span><span class="section"><%= cs.selected_section %></span>
           <span class="name"><%= cs.name %></span>
           <div class="options">
-            <%= link_to "X", schedule_selection_path(:schedule_id => @schedule.id,
+            <%= link_to "X", schedule_selection_path(:schedule_id => @schedule,
                                                      :id => cs.id),
                              :method => :delete %>
           </div>
@@ -50,10 +50,11 @@
         <% sections.each do |section| %>
               <tr class="section <%= cycle('odd', 'even', :name => 'parity') %><%= " selected" if cs.section == section %>">
                 <td class="add-course">
-                  <%= link_to "+", schedule_selection_path(:schedule_id => @schedule.id,
-                                                           :id => cs.id,
-                                                           :section_id => section.id),
-                                   :method => :put %>
+                <%= link_to "+", schedule_selections_path(
+                                    :schedule_id => @schedule,
+                                    :id => section.id
+                                 ),
+                                 :method => :post %>
                 </td>
                 <td class="section-ltr"><%= section.letter %></td>
                 <td class="days"><% section.times.each do |time| %>

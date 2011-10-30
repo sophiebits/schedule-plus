@@ -5,6 +5,7 @@ class Course < ActiveRecord::Base
   has_many :schedules, :through => :course_selections
   belongs_to :semester
   belongs_to :department
+  scope :by_semester, lambda {|sem| where(:semester_id => sem.id)}
   
   before_create :add_department
   

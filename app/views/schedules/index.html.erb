@@ -1,14 +1,30 @@
-<div id="page-content" class="schedule">
+<div id="page-content" class="schedules">
   <div id="content-header">
     <div class="container">
       <a href="/schedules"><h1 id="schedule-index-title">Schedules</h1></a>
-      <%= link_to "Add a Schedule", new_schedule_path %>
+      <%= link_to "Create a New Schedule", schedules_path, :method => :post %>
     </div>
   </div>
   <div class="container">
     <ul id="schedules-list">
-      <% @schedules.each do |schedule| %>
-      <li>Schedule <%= schedule.id %></li>
+      <% @schedules.each do |semester,sgroup| %>
+        <li><%= semester.name %>
+          <ul>
+            <% sgroup.each do |schedule| %>
+              <li>Schedule <%= link_to schedule.url, schedule_path(schedule) %>
+                (<%= link_to "delete", schedule_path(schedule), :method => :delete %>)
+                <% if schedule.active %>
+                  (active)
+                <% else %>
+                  (<%= link_to "make active", 
+                               schedule_path(schedule,
+                                             :schedule => {:active => true}), 
+                               :method => :put %>)
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </li>
       <% end %>
     </ul>
   </div>

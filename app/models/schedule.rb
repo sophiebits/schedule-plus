@@ -1,9 +1,11 @@
 class Schedule < ActiveRecord::Base
   belongs_to :user
+  belongs_to :semester
   has_many :courses, :class_name => 'CourseSelection'
   scope :active, :conditions => { :active => true }
+  scope :by_semester, lambda {|sem| where(:semester_id => sem.id)}
 
-  before_create :generate_hash
+  before_create :generate_url
  
   def as_json(options={})
     {
@@ -15,7 +17,7 @@ class Schedule < ActiveRecord::Base
   end
 
   def to_param
-    hash
+    url
   end
 
   def units
@@ -76,15 +78,15 @@ class Schedule < ActiveRecord::Base
   
   private
   
-  def generate_hash
+  def generate_url
     if new_record?
-      hash_len = 5
+      url_len = 5
       charset = ('a'..'z').to_a + ('A'..'Z').to_a + (0..9).to_a
       begin
-        hash = (0...hash_len).map{charset.to_a[rand(charset.size)]}.join
-        hash_len += 1
-      end while !Schedule.find_by_hash(hash).blank?
-      self.hash = hash
+        url = (0...url_len).map{charset.to_a[rand(charset.size)]}.join
+        url_len += 1
+      end while !Schedule.find_by_url(url).blank?
+      self.url = url
     end
   end
 

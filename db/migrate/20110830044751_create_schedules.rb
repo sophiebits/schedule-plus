@@ -5,7 +5,7 @@ class CreateSchedules < ActiveRecord::Migration
       t.string :name
       t.integer :semester_id
       t.boolean :active
-      t.string :hash
+      t.string :url
 
       t.timestamps
     end
