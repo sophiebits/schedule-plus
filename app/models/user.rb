@@ -11,8 +11,6 @@ class User < ActiveRecord::Base
   has_many :authentications
   has_many :schedules
 
-  DAY_NAME = %w(Sunday Monday Tuesday Wednesday Thursday Friday Saturday)
-
   def main_schedule(semester=Semester.current)
     schedules.active.by_semester(semester).first
   end
@@ -74,16 +72,15 @@ class User < ActiveRecord::Base
 
     current_time = Time.now.in_time_zone
     current_time_in_min = current_time.hour*60 + current_time.min
-    current_time_in_min = 750
-    current_day = DAY_NAME[current_time.wday]
+    current_day = %w(U M T W R F S)[current_time.wday]
 
     course_selections = self.main_schedule.course_selections.includes(
-      :lecture => :scheduled_times,
-      :recitation => :scheduled_times,
-      :course => [])
+      :section => [[:lecture => :scheduled_times], 
+      :scheduled_times])
 
-    current_course_selection = course_selections.where('scheduled_times.begin <= ? AND scheduled_times.end >= ? AND scheduled_times.day = ?',
-      current_time_in_min, current_time_in_min, current_day).first
+    current_course_selection = course_selections.where(
+      'scheduled_times.begin <= ? AND scheduled_times.end >= ? AND scheduled_times.days LIKE ?',
+      current_time_in_min, current_time_in_min, "%#{current_day}%").first
 
     number = ''
     section = ''
