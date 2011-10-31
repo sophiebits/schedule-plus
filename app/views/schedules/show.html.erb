@@ -20,12 +20,11 @@
       <% # TODO better authentication. cancan? %>
       <% # FIXME temporarily commented out for design %>
       <% # if current_user && current_user == @schedule.user %>
-        <!--
-        <%= form_tag '/schedules/1/add?str=1234', :id => 'add-course', :method => :get do %>
-          <%= text_field_tag :course, nil, :placeholder => '99101A' %>
+        <%= form_tag schedule_selections_path(@schedule),
+                     :id => 'add-course', :method => :post do %>
+          <%= text_field_tag :search, nil, :placeholder => '15251A' %>
           <%= submit_tag "Add" %>
         <% end %>
-        -->
       <% # end %>
       <ul id="schedule">
         <% @schedule.courses.each do |cs| %>

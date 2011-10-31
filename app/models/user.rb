@@ -2,10 +2,12 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable 
   devise :database_authenticatable, :registerable, #:omniauthable,
-         :recoverable, :rememberable, :trackable#, :validatable
+         :recoverable, :rememberable, :trackable, :validatable
+
+  validates_presence_of :name
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
+  attr_accessible :name, :email, :password, :password_confirmation, :remember_me
   
   # omniauth
   has_many :authentications
@@ -41,10 +43,10 @@ class User < ActiveRecord::Base
 
   def friends
     if fb
-      fb_friends = fb.friends.collect{|f|f.identifier}
+      fb_friends = fb.friends
       # uids = User.all.collect{|u|u.uid if friends.include? u.uid}.compact
       # FIXME FIXME FIXME PLEASE
-      @friends = []
+      @friends = fb_friends
     else
       nil
     end

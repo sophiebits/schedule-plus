@@ -7,6 +7,8 @@ class StaticController < ApplicationController
       else
         redirect_to schedules_path
       end 
+    else
+      render :layout => false
     end
   end
 

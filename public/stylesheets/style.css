@@ -39,7 +39,7 @@ a:hover {
   width:0
 }
 form input {
-  padding:0.2em 0.5em;
+  padding:2px 5px;
   font-family:'Nunito';
   font-weight:300;
   background-color:#fff;
@@ -75,7 +75,8 @@ ul#main-nav li {
   float:left;
   width:30px; height:29px;
 }
-ul#main-nav li a {
+ul#main-nav li a,
+a#settings-link {
   display:block;
   width:30px; height:0;
   padding-top:29px;
@@ -88,6 +89,9 @@ ul#main-nav li a {
 #main-nav-friends a:hover { background-position:0 -30px; }
 #main-nav-schedules a:hover { background-position:-30px -30px; } 
 #main-nav-courses a:hover { background-position:-60px -30px; }
+
+a#settings-link { float:right; background-position:-90px 0; }
+a#settings-link:hover { background-position:-90px -30px; }
 
 #current-user {
   position:absolute; right:0;
@@ -116,10 +120,13 @@ a#current-user-schedule-link {
   margin:4px 0 0 9px;
   border-radius:3px 0;
 }
-a#settings-link {
+
+#login-link { 
   float:right; display:block;
   height:29px;
   padding:0 10px;
+  color:#fff;
+  line-height:30px;
 }
 
 /*************************************************************************

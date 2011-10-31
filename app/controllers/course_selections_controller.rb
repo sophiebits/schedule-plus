@@ -1,11 +1,16 @@
 class CourseSelectionsController < ApplicationController
-  
-  # TODO authorize and sanitize
+  before_filter :authenticate_user!
 
   # POST
   def create
-    Schedule.find_by_url(params[:schedule_id]).add_course(params[:id])
-    redirect_to schedule_path(params[:schedule_id])
+    schedule = Schedule.find_by_url(params[:schedule_id])
+    if params[:search]
+      # TODO text input parsing  
+        redirect_to courses_path(:search => params[:search])
+    else
+      Schedule.find_by_url(params[:schedule_id]).add_course(params[:id])
+      redirect_to schedule_path(params[:schedule_id])
+    end
   end
 
   # PUT

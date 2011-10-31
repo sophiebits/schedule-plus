@@ -26,8 +26,8 @@
       <a href="/settings" id="settings-link">Settings</a>
     </div>
     <% else %>
-    <%= link_to "Login with Facebook", '/auth/facebook',
-        :style => 'position:absolute;right:0;color:#fff' %>
+    <%= link_to "Login", '/users/login',
+        :id => 'login-link' %>
     <% end %>
   </div>
 </div>

@@ -31,10 +31,10 @@
       <a href="#" class="friend-link">
         <img class="friend-pic"
              alt="<%= friend.name %>"
-             src="http://graph.facebook.com/<%= friend.uid %>/picture" />
+             src="http://graph.facebook.com/<%= friend.identifier %>/picture" />
         <span class="friend-name"><%= friend.name %></span>
         <span class="friend-mutual-courses"></span>
-        <span class="friend-status"><%= friend.status %></span>
+        <span class="friend-status"><!-- friend.status --></span>
       </a>
     </li>
 <% end %>

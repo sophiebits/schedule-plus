@@ -1,14 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>schedule+</title>
+  <link rel="icon" type="image/ico" href="/favico.ico" />
+  <link href='/stylesheets/nunito.css' rel='stylesheet' type='text/css' />
+  <link href="/stylesheets/application.css?1313273634" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/stylesheets/home.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
 <div id="page-content" class="home">
-  <div id="content-header">
-    <div class="container">
-    <span id="login-prompt">Already Connected?</span>
-    <div id="auth">
-      <a href="/auth/facebook">Login with Facebook</a>
-    </div>
+<div class="container">
+  <h1 id="home-logo"><img src="/images/schedule-plus-home.png" alt="schedule+" /></h1>
+  <h2 id="home-tagline">Create. Share. Learn.</h2>
+  <p id="home-blurb">
+    Plan your schedule with popular courses and see what other
+    Carnegie Mellon students are taking.
+  </p>
 
-    </div>
-  </div>
-  <div class="container">
-
+  <div id="home-register">
+    <h3>Sign up or <a href="/auth/facebook">Login with Facebook</a></h3>
+    <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+      <%= devise_error_messages! %>
+      <%= f.text_field :name, :placeholder => "Full Name" %>
+      <%= f.email_field :email, :placeholder => "Your Andrew Email" %>
+      <%= f.password_field :password, :placeholder => "New Password" %>
+      <%= f.password_field :password_confirmation, :placeholder => "Re-enter Password" %>
+      <%= f.submit "Sign up" %>
+    <% end %>
   </div>
 </div>
+</div>
+<div id="page-footer" class="home container">
+  <a href="http://ACMatCMU.org"><img src="/images/acm-cmu.png" alt="acm@cmu" id="acm-logo" /></a>
+  <a href="http://cmu.edu">
+    <img src="/images/cmu-logo.png" alt="Carnegie Mellon University" id="cmu-logo" />
+  </a>
+
+  <span id="copyright">&copy;2011 acm@cmu</span>
+  <a href="/privacy" id="privacy-link">Privacy of Policy</a>
+  <a href="/tos" id="tos-link">Terms of Service</a>
+</div>
+</body>
+</html>
+

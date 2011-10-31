@@ -79,29 +79,34 @@ h1#schedule-user {
  * ScheduleList Styles
  *************************************************************************
  */
+#add-course {
+  display:block;
+  width:100%;
+  height:20px;
+  padding:20px 0 15px;
+}
+#add-course input {
+  font-size:12px;
+}
 #schedule {
-  margin:20px 0;
   font-size:12px;
 }
 #schedule .course {
   clear:both;
   position:relative;
-  padding-top:6px;
+  padding:6px;
   color:#333;
-  background-image:url('/images/eee-bg.gif');
-  border-bottom:1px solid #fff;
+  background-image:url('/images/e6e6e6-bg.gif');
+  border-bottom:1px solid #ddd;
+  border-top:2px solid #fff;
 }
 #schedule .course .number,
 #schedule .course .selected_section {
   font-weight:700;
 }
-#schedule .course .number {
-  margin:6px 0 0 8px;
-}
 #schedule .course .name {
   display:block;
   margin-top:0.2em;
-  padding:0 8px 6px;
   line-height:1.3em;
 }
 #schedule .course .options {
@@ -125,6 +130,7 @@ h1#schedule-user {
 #schedule .course-delete-link:hover { background-position:-20px -10px; }
 #schedule .sections {
   display:block;
+  margin-top:6px;
   width:100%;
   color:#000;
   background:#fff none;
@@ -134,7 +140,7 @@ h1#schedule-user {
 }
 #schedule .sections .lecture {
   background-image:url('/images/eee-bg.gif');
-  border:1px solid #188d8e;
+  border:1px solid #ddd;
   border-width:1px 0;
 }
 #schedule .sections a {
@@ -166,6 +172,8 @@ h1#schedule-user {
   background-color:#1fbbbd;
 }
 #total-units {
+  display:block;
+  margin-top:10px;
   font-size:12px;
 }
 /*************************************************************************

@@ -1,5 +1,5 @@
 class SchedulesController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :except => :show
 
   def index
     redirect_to root_path if !current_user
@@ -11,9 +11,8 @@ class SchedulesController < ApplicationController
       @schedule = Schedule.find_by_url(params[:id])
     elsif current_user
       @schedule = current_user.main_schedule || Schedule.new
-    else
-      redirect_to root_path
     end
+    redirect_to root_path if @schedule.nil?
   end
   
   def new
