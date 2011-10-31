@@ -29,10 +29,10 @@
         <tr class="lecture">
           <td class="add-course">&nbsp;</td>
           <td class="lecture-num">Lec<%= lecture.number %></td>
-          <td class="days"><% lecture.times.each do |time| %>
+          <td class="days"><% lecture.scheduled_times.each do |time| %>
             <%= time.days %><br />
           <% end %></td>
-          <td class="time"><% lecture.times.each do |time| %>
+          <td class="time"><% lecture.scheduled_times.each do |time| %>
             <%= time.to_str %><br />
           <% end %></td>
           <td><%= lecture.instructor %></td>
@@ -50,10 +50,10 @@
           <% end %>
           </td>
           <td class="section-ltr"><%= section.letter %></td>
-          <td class="days"><% section.times.each do |time| %>
+          <td class="days"><% section.scheduled_times.each do |time| %>
             <%= time.days %><br />
           <% end %></td>
-          <td class="time"><% section.times.each do |time| %>
+          <td class="time"><% section.scheduled_times.each do |time| %>
             <%= time.to_str %><br />
           <% end %></td>
           <td><%= section.instructor %></td>

@@ -1,7 +1,7 @@
 class Schedule < ActiveRecord::Base
   belongs_to :user
   belongs_to :semester
-  has_many :courses, :class_name => 'CourseSelection'
+  has_many :course_selections, :class_name => 'CourseSelection'
   scope :active, :conditions => { :active => true }
   scope :by_semester, lambda {|sem| where(:semester_id => sem.id)}
 
@@ -11,7 +11,7 @@ class Schedule < ActiveRecord::Base
     {
       :id      => self.id,
       :user    => self.user,
-      :courses => self.courses,
+      :course_selections => self.course_selections,
       :active  => self.active
     }
   end
@@ -23,7 +23,7 @@ class Schedule < ActiveRecord::Base
   def units
     units_lower = 0
     units_upper = 0
-    self.courses.each do |cs|
+    self.course_selections.each do |cs|
       units = cs.course.units.split('-')
       lower = units[0].to_f
       upper = units[-1].to_f
@@ -43,11 +43,11 @@ class Schedule < ActiveRecord::Base
   # Uses section A by default.
   def add_course(section_id)
     course_id = Section.find(section_id).course_id
-    i = courses.map{|cs| cs.course.id}.index(course_id)
+    i = course_selections.map{|cs| cs.course.id}.index(course_id)
     if i.nil? 
-      courses.create(:section_id => section_id)
+      course_selections.create(:section_id => section_id)
     else
-      courses[i].update_attribute(:section_id, section_id)
+      course_selections[i].update_attribute(:section_id, section_id)
     end
   end
 
@@ -59,8 +59,8 @@ class Schedule < ActiveRecord::Base
   # returns true if schedule has time conflicts
   def has_conflicts?
     # get list of all scheduled times in this schedule
-    scheduled_times = self.courses.collect{
-      |s| s.section.lecture ? [s.section.times, s.section.lecture.times] : s.section.times}.flatten
+    scheduled_times = self.course_selections.collect{
+      |s| s.section.lecture ? [s.section.scheduled_times, s.section.lecture.scheduled_times] : s.section.scheduled_times}.flatten
     "UMTWRFS".split('').each do |day|
       day_scheduled_times = scheduled_times.find_all{|st| st.days.include? day}
       # generate all unique pairs of scheduled times
