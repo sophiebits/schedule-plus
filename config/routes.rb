@@ -5,11 +5,6 @@ AcmSchedule::Application.routes.draw do
   match "/privacy" => "static#privacy"
   
   ################ Devise + Omniauth ####################
-  devise_for :users, :path_names => { :sign_in => 'login', 
-                                      :sign_out => 'logout', 
-                                      :registration => 'register' },
-                     :controllers => { :registrations => 'registrations' }
-  
   match '/auth/:provider/callback' => 'authentications#create'
   delete '/logout' => 'authentications#destroy'
   #######################################################

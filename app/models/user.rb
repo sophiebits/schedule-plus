@@ -1,11 +1,4 @@
 class User < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable 
-  devise :database_authenticatable, :registerable, #:omniauthable,
-         :recoverable, :rememberable, :trackable, :validatable
-
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :name, :email, :password, :password_confirmation, :remember_me
   
   # omniauth
   has_many :authentications
@@ -18,11 +11,7 @@ class User < ActiveRecord::Base
 ############################# AUTHENTICATION ####################################
 
   def apply_omniauth(omniauth)
-    #self.email = omniauth['user_info']['email'] if email.blank?
-    case omniauth['provider']
-    when 'facebook'
-      self.apply_facebook(omniauth)
-    end
+    self.name = omniauth['user_info']['name'] if name.blank?
     authentications.build(:provider => omniauth['provider'], 
                           :uid => omniauth['uid'],
                           :token => (omniauth['credentials']['token'] rescue nil))
@@ -46,10 +35,6 @@ class User < ActiveRecord::Base
     else
       nil
     end
-  end
-
-  def password_required?
-    (authentications.empty? || !password.blank?) && super
   end
 
 ###############################################################################
@@ -124,11 +109,4 @@ class User < ActiveRecord::Base
     end
   end
 
-  protected
-
-  def apply_facebook(omniauth)
-    if (extra = omniauth['extra']['user_hash'] rescue false)
-      self.email = (extra['email'] rescue '')
-    end
-  end
 end

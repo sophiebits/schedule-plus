@@ -12,50 +12,23 @@ class ApplicationController < ActionController::Base
   #helper_method :friends
 	#@friends = nil
 
-  helper_method :current_semester, :resource_name, :resource, :devise_mapping, :devise_error_messages! 
+  helper_method :current_semester, :current_user, :user_signed_in?
   
   private
   
+  def user_signed_in?
+    !current_user.nil?
+  end
+
+  def current_user
+    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+  end
+
   # Set Default Semester
   def current_semester
     @current_semester ||= Semester.current
   end
   
-  ##############################################################
-  # Devise helper methods
-  ##############################################################
-  def resource_name
-    :user
-  end
-
-  def resource
-    @resource ||= User.new
-  end
-
-  def devise_mapping
-    @devise_mapping ||= Devise.mappings[:user]
-  end
-  
-  def devise_error_messages!
-    return "" if resource.errors.empty?
-
-    messages = resource.errors.full_messages.map { |msg| content_tag(:li, msg) }.join
-    sentence = I18n.t("errors.messages.not_saved",
-                      :count => resource.errors.count,
-                      :resource => resource_name)
-
-    html = <<-HTML
-    <div id="error_explanation">
-    <h2>#{sentence}</h2>
-    <ul>#{messages}</ul>
-    </div>
-    HTML
-
-    html.html_safe
-  end
- 
-  ##############################################################
-
   #def friends
   #  if @friends.nil?
   #    fb_friends = fb_user.friends.collect{|f|f.identifier} if fb_user
@@ -64,6 +37,11 @@ class ApplicationController < ActionController::Base
   #  end
   #  @friends
   #end
+  
+  rescue_from FbGraph::InvalidRequest do |e|
+    reset_session
+    redirect_to root_path
+  end
   
   rescue_from FbGraph::Unauthorized do |exception|
     reset_session

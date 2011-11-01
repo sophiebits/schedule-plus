@@ -27,7 +27,8 @@ class AuthenticationsController < ApplicationController
     if auth
       flash[:notice] = "Signed in successfully."
       auth.update_attribute(:token, (omniauth['credentials']['token'] rescue nil))
-      sign_in_and_redirect(:user, auth.user)
+      session[:user_id] = auth.user.id
+      redirect_to root_url
     elsif user_signed_in?
       current_user.authentications.create!(:provider => omniauth['provider'], 
                                            :uid      => omniauth['uid'],
@@ -37,13 +38,11 @@ class AuthenticationsController < ApplicationController
     else
       user = User.new
       user.apply_omniauth(omniauth)
-      if user.save
-        flash[:notice] = "Signed in successfully."
-        sign_in_and_redirect(:user, user)
-      else
-        session[:omniauth] = omniauth
-        redirect_to new_user_registration_url
-      end
+      user.save
+      
+      flash[:notice] = "Signed in successfully."
+      session[:user_id] = user.id
+      redirect_to root_url
     end
   end
 

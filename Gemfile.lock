@@ -39,12 +39,7 @@ GEM
     addressable (2.2.6)
     arel (2.0.10)
     attr_required (0.0.3)
-    bcrypt-ruby (3.0.1)
     builder (2.1.2)
-    devise (1.4.9)
-      bcrypt-ruby (~> 3.0)
-      orm_adapter (~> 0.0.3)
-      warden (~> 1.0.3)
     erubis (2.6.6)
       abstract (>= 1.0.0)
     faraday (0.7.5)
@@ -118,7 +113,6 @@ GEM
       oa-more (= 0.3.2)
       oa-oauth (= 0.3.2)
       oa-openid (= 0.3.2)
-    orm_adapter (0.0.5)
     polyglot (0.3.2)
     pyu-ruby-sasl (0.0.3.3)
     rack (1.2.4)
@@ -165,15 +159,12 @@ GEM
     tzinfo (0.3.30)
     uuid (2.3.4)
       macaddr (~> 1.0)
-    warden (1.0.6)
-      rack (>= 1.0)
     will_paginate (3.0.2)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  devise
   fb_graph
   hpricot
   jquery-rails
