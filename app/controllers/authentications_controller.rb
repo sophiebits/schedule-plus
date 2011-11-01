@@ -53,7 +53,7 @@ class AuthenticationsController < ApplicationController
       @authentication.destroy
     else
       @authentications = current_user.authentications
-      @authentications.map(&:destroy)
+      @authentications.map{|a| a.update_attribute(:token, nil) }
     end
     redirect_to root_url
   end

@@ -38,7 +38,7 @@ gem 'nokogiri', '~> 1.5.0'
 # Authentication Gems
 gem 'devise'
 gem 'fb_graph'
-gem 'omniauth', :git => 'git://github.com/intridea/omniauth.git'
+gem 'omniauth', '~> 0.3.2'
 # gem 'oa-pubcookie'
 
 # Parsing Gems

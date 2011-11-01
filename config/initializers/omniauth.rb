@@ -8,7 +8,6 @@ end
 
 if Rails.env.development?
   Rails.application.config.middleware.use OmniAuth::Builder do
-    provider :cmu, 
     provider :facebook, '119881658106353', '4adba05bdb0854316f6f48f07eff4e9f', 
       :scope => 'email', :display => "popup"
   end
@@ -19,4 +18,3 @@ else
   end
 end
 
- 
