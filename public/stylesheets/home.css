@@ -13,7 +13,7 @@
   padding:10px 0;
 }
 #home-tagline {
-  font-size:54px;
+  font-size:56px;
   margin-top:120px;
   color:#1fbbbd;
   letter-spacing:-2px;
@@ -31,8 +31,8 @@
 }
 #home-blurb {
   margin-top:10px;
-  width:510px;
-  font-size:18px;
+  width:570px;
+  font-size:20px;
   color:#666;
   line-height:22px;
   text-shadow:0 1px 0 #fff;
@@ -49,7 +49,7 @@
 }
 #fb-login {
   display:block;
-  margin:0 auto 20px;
+  margin:0 auto 15px;
   width:156px; height:0;
   padding-top:22px;
   background-image:url('/images/fb-buttons.gif');
@@ -65,14 +65,16 @@
   text-align:left;
   font-size:12px;
   line-height:15px;
-  background-color:#eee;
-  border:1px solid #999;
+  background-color:#fff;
+  border:3px solid #3b5998;
   border-radius:5px;
 }
 h4 {
+  color:#3b5998;
+  text-align:center;
   font-size:14px;
-  margin-bottom:8px;
-  letter-spacing:-0.1px;
+  font-weight:300;
+  margin-bottom:3px;
 }
 #home-register {
   display:none;
@@ -124,7 +126,7 @@ h3 {
  *************************************************************************
  */
 .home#page-footer {
-  font-size:14px;
+  font-size:12px;
 }
 #acm-logo,
 #cmu-logo {
@@ -132,8 +134,6 @@ h3 {
   margin:20px 30px 0 0;
   width:auto;
 }
-#acm-logo { height:15px; }
-#cmu-logo { height:17px; }
 
 #privacy-link,
 #tos-link,
