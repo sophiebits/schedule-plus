@@ -14,10 +14,20 @@
 }
 #home-tagline {
   font-size:54px;
-  margin-top:100px;
+  margin-top:120px;
   color:#1fbbbd;
   letter-spacing:-2px;
   text-shadow:0 2px 0 #fff;
+}
+#tagline-create, #tagline-share, #tagline-learn {
+  position:relative;
+}
+#tagline-create img, #tagline-share img, #tagline-learn img {
+  width:72px; height:72px;
+  position:absolute;
+  top:-60px;
+  margin-left:50%;
+  left:-40px;
 }
 #home-blurb {
   margin-top:10px;
@@ -34,12 +44,12 @@
   width:272px;
 }
 #home-facebook { 
-  top:160px; 
+  top:150px; 
   text-align:center;
 }
 #fb-login {
   display:block;
-  margin:0 auto 10px;
+  margin:0 auto 20px;
   width:156px; height:0;
   padding-top:22px;
   background-image:url('/images/fb-buttons.gif');
