@@ -48,9 +48,14 @@ class AuthenticationsController < ApplicationController
   end
 
   def destroy
-    @authentication = current_user.authentications.find(params[:id])
-    @authentication.destroy
-    redirect_to authentications_url
+    if params[:id]
+      @authentication = current_user.authentications.find(params[:id])
+      @authentication.destroy
+    else
+      @authentications = current_user.authentications
+      @authentications.map(&:destroy)
+    end
+    redirect_to root_url
   end
   
   # user cancelled facebook authentication. we do nothing.

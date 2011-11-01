@@ -12,7 +12,7 @@
     </ul>
     <% if user_signed_in? %>
     <div id="current-user">
-      <a href="/users/logout" data-method="delete" id="logout">Logout</a>
+      <a href="/logout" data-method="delete" id="logout">Logout</a>
       <a href="<%= if current_user.main_schedule(current_semester)
           schedule_path(current_user.main_schedule(current_semester))
         else
