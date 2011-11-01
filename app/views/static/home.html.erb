@@ -14,11 +14,22 @@
   <h2 id="home-tagline">Create. Share. Learn.</h2>
   <p id="home-blurb">
     Plan your schedule with popular courses and see what other
-    Carnegie Mellon students are taking.
+    Carnegie Mellon students are learning.
   </p>
-
+  <div id="home-facebook">
+    <a href="/auth/facebook" id="fb-login">Login</a>
+    <div id="facebook-rationale">
+      <h4>Why Facebook?</h4>
+      <p>
+        We use facebook to show you your friends' schedules and to suggest
+        courses for you to take<!-- which are popular amongst your friends-->. We
+        won't make posts to your wall without your permission -- we promise!
+      </p>
+    </div>
+  </div>
   <div id="home-register">
-    <h3>Sign up or <a href="/auth/facebook">Login with Facebook</a></h3>
+    <h3>Sign Up or <a href="/auth/facebook">Login with Facebook</a></h3>
+    <!--
     <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
       <%= devise_error_messages! %>
       <%= f.text_field :name, :placeholder => "Full Name" %>
@@ -27,6 +38,7 @@
       <%= f.password_field :password_confirmation, :placeholder => "Re-enter Password" %>
       <%= f.submit "Sign up" %>
     <% end %>
+    -->
   </div>
 </div>
 </div>
