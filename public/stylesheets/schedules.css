@@ -8,32 +8,90 @@ h1#schedule-index-title {
  * ScheduleIndex Styles
  *************************************************************************
  */
+#no-schedules-notify {
+  padding:20px 0;
+  color:#999;
+}
 h2.semester-header {
-  padding:10px;
-  font-size:16px;
-  color:#188d8e;
+  padding-left:17px;
+  margin-bottom:0px;
+  font-size:12px;
+  color:#ddd;
   font-weight:700;
-  background-image:url('/images/eee-bg.gif');
-  border:1px solid #188d8e;
-  border-width:1px 0;
+}
+#create-schedules-link {
+  display:block; position:absolute;
+  left:170px; top:2px;
+  margin-right:5px; padding-top:15px;
+  width:100px; height:0;
+  background-image:url('/images/sprites.png');
+  background-position:-80px 0;
+  overflow:hidden;
 }
 ul#schedules-list {
   margin-top:20px;
 }
-ul#schedules-list li.semester {
+ul#schedules-list li.schedule {
   float:left;
-  width:320px;
-}
-ul#schedules-list ul.semester-schedules li {
-  padding:10px;
-  border-bottom:1px solid #ddd;
+  margin:5px; padding:12px;
+  width:284px;
+  color:#999;
   background-color:#fff;
+  border:1px solid #eee;
+  border-radius:5px;
 }
-ul#schedules-list ul.semester-schedules li.even {
-  background-color:#f3f3f3;
+ul#schedules-list h3.schedule-title {
+  float:left;
+  font-size:16px;
+  font-weight:300;
+}
+ul#schedules-list li.schedule:hover {
+  color:#666;
+  border-color:#1fbbbd;
+}
+ul#schedules-list li.schedule.m3z {
+  clear:left;
 }
 ul#schedules-list .schedule-options {
   float:right;
+}
+ul#schedules-list .schedule-public,
+ul#schedules-list .schedule-private {
+  display:block; float:right;
+  margin-right:5px; padding-top:15px;
+  width:65px; height:0;
+  background-image:url('/images/sprites.png');
+  overflow:hidden;
+}
+ul#schedules-list .schedule-public {
+  background-position:0 -15px; 
+  cursor:default;
+}
+ul#schedules-list .schedule-private:hover {
+  background-position:0 -30px;
+}
+ul#schedules-list .schedule-delete {
+  display:block; float:right;
+  padding-top:15px;
+  width:15px; height:0;
+  background-image:url('/images/sprites.png');
+  background-position:-65px 0;
+  overflow:hidden;
+}
+ul#schedules-list .schedule-delete:hover {
+  background-position:-65px -15px;
+}
+ul#schedules-list .course-selections {
+  position:relative;
+  margin-left:55px;
+  clear:both;
+  margin-top:30px;
+  font-size:12px;
+  line-height:14px;
+}
+ul#schedules-list .course-selections .number {
+  position:absolute; left:-55px;
+  font-weight:700;
 }
 
 /*************************************************************************
@@ -83,10 +141,25 @@ h1#schedule-user {
   display:block;
   width:100%;
   height:20px;
-  padding:20px 0 15px;
+  padding:20px 0 5px;
 }
 #add-course input {
+  float:left;
+  width:203px; height:14px;
   font-size:12px;
+}
+#add-course input[type=submit] {
+  display:block;
+  margin-left:5px;
+  width:20px; height:0; padding:20px 0 0 0;
+  background-image:url('/images/sprites.png');
+  background-position:-140px -25px;
+  border:none;
+  overflow:hidden;
+  cursor:pointer;
+}
+#add-course input[type=submit]:hover {
+  background-position:-160px -25px;
 }
 #schedule {
   font-size:12px;
@@ -94,11 +167,15 @@ h1#schedule-user {
 #schedule .course {
   clear:both;
   position:relative;
-  padding:6px;
-  color:#333;
-  background-image:url('/images/e6e6e6-bg.gif');
-  border-bottom:1px solid #ddd;
-  border-top:2px solid #fff;
+  padding:8px;
+  margin-top:4px;
+  color:#666;
+  border:1px solid #f3f3f3;
+  border-radius:5px;
+}
+#schedule .course:hover {
+  color:#000;
+  border-color:#fbb03b;
 }
 #schedule .course .number,
 #schedule .course .selected_section {
@@ -111,23 +188,23 @@ h1#schedule-user {
 }
 #schedule .course .options {
   position:absolute;
-  top:0; right:0;
-  padding-top:5px;
+  top:6px; right:6px;
 }
 #schedule .course .options a {
   display:block;
   float:left;
-  margin-right:5px;
+  margin-left:5px;
   padding-top:10px;
   width:10px; height:0;
-  background-image:url('/images/course-opt.png');
+  background-image:url('/images/sprites.png');
   overflow:hidden;
 }
-#schedule .course-times-link { background-position:-10px 0; }
-#schedule .course-delete-link { background-position:-20px 0; }
-#schedule .course-info-link:hover { background-position:0 -10px; }
-#schedule .course-times-link:hover { background-position:-10px -10px; }
-#schedule .course-delete-link:hover { background-position:-20px -10px; }
+#schedule .course-info-link { background-position:-80px -15px; }
+#schedule .course-times-link { background-position:-80px -25px; }
+#schedule .course-delete-link { background-position:-80px -35px; }
+#schedule .course-info-link:hover { background-position:-90px -15px; }
+#schedule .course-times-link:hover { background-position:-90px -25px; }
+#schedule .course-delete-link:hover { background-position:-90px -35px; }
 #schedule .sections {
   display:block;
   margin-top:6px;
@@ -155,7 +232,7 @@ h1#schedule-user {
 #schedule .sections .lecture-num,
 #schedule .sections .section-ltr,
 #schedule .sections .days,
-#schedule .sections .time {
+#schedule .sections .times {
   display:block;
   float:left;
   padding:4px 5px;
@@ -173,7 +250,8 @@ h1#schedule-user {
 }
 #total-units {
   display:block;
-  margin-top:10px;
+  margin-top:15px;
+  color:#999;
   font-size:12px;
 }
 /*************************************************************************
@@ -182,7 +260,7 @@ h1#schedule-user {
  */
 #calendar {
   position:relative;
-  width:526px;
+  width:670px;
   height:601px;
   margin:20px 0 0 50px;
   background-color:#eee;
@@ -191,8 +269,8 @@ h1#schedule-user {
 }
 #calendar #times {
   position:absolute;
-  left:-30px;
-  width:556px;
+  left:-30px; top:-1px;
+  width:700px;
   height:100%;
 }
 #calendar #times li {
@@ -217,6 +295,24 @@ h1#schedule-user {
   bottom:-50%; left:30px;
   width:100%; height:100%;
   border-top:1px dashed #ccc;
+}
+.M { }
+.T { left:134px }
+.W { left:268px }
+.R { left:402px }
+.F { left:536px }
+.M,.T,.W,.R,.F {
+  position:absolute;
+  width:134px;
+  height:100%;
+  border-left:1px solid #999;
+}
+.M li, .T li, .W li, .R li, .F li {
+  display:block;
+  width:100%;
+  text-align:center;
+  background-image:url('/images/eee-bg.gif');
+  border-bottom:1px solid #999;
 }
 .begin420 { }
 .begin450 { top:3.125% }

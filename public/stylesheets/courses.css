@@ -11,7 +11,25 @@ h1#course-page-title {
  */
 form#courses-search-form {
   position:absolute;
-  top:-5px; left:170px;
+  top:0; left:170px;
+}
+#courses-search-form input {
+  float:left;
+  width:203px; height:14px;
+  font-size:12px;
+}
+#courses-search-form input[type=submit] {
+  display:block;
+  margin-left:5px;
+  width:20px; height:0; padding:20px 0 0 0;
+  background-image:url('/images/sprites.png');
+  background-position:-100px -25px;
+  border:none;
+  overflow:hidden;
+  cursor:pointer;
+}
+#courses-search-form input[type=submit]:hover {
+  background-position:-120px -25px;
 }
 table#courses-table { 
   margin:30px 0 20px;

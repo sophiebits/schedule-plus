@@ -1,34 +1,45 @@
 <div id="page-content" class="schedules">
   <div id="content-header">
     <div class="container">
-      <a href="/schedules"><h1 id="schedule-index-title">Schedules</h1></a>
-      <%= link_to "Create a New Schedule", schedules_path, :method => :post %>
+      <a href="/schedules"><h1 id="schedule-index-title">Browse Schedules</h1></a>
+      <%= link_to "Create a New Schedule", 
+                  schedules_path, :method => :post, 
+                  :id => "create-schedules-link" %>
     </div>
   </div>
   <div class="container">
+    <% if @schedules.length == 0 %>
+    <p id="no-schedules-notify">No schedules yet.</p>
+    <% else %>
     <ul id="schedules-list">
       <% @schedules.each do |semester,sgroup| %>
         <li class="semester"><h2 class="semester-header"><%= semester.name %></h2>
           <ul class="semester-schedules">
-            <% sgroup.each do |schedule| %>
-              <li class="<%= cycle('odd', 'even') %>">
-                <%= link_to schedule.url, schedule_path(schedule) %>
+            <% sgroup.each_with_index do |schedule,index| %>
+              <li class="<%= cycle('m3z','m3o','m3t') %> schedule">
+                <h3 class="schedule-title"><%= link_to 'Schedule ' + (index + 1).to_s, schedule_path(schedule) %></h3>
                 <div class="schedule-options">
+                <%= link_to "X", schedule_path(schedule), :method => :delete, :class => 'schedule-delete' %>
                 <% if schedule.active %>
-                  (active)
+                  <a href="#" class="schedule-public">public</a>
                 <% else %>
-                  (<%= link_to "make active", 
-                               schedule_path(schedule,
-                                             :schedule => {:active => true}), 
-                               :method => :put %>)
+                  <a href="<%= schedule_path(schedule,
+                                             :schedule => {:active => true}) %>"
+                     data-method="put" class="schedule-private">private</a>
                 <% end %>
-                <%= link_to "X", schedule_path(schedule), :method => :delete %>
                 </div>
+                <ul class="course-selections">
+                  <% schedule.course_selections.each do |cs| %>
+                  <li><span class="number"><%= cs.course.number %></span> <%= cs.course.name %></li>
+                  <% end %>
+                </ul>
               </li>
             <% end %>
           </ul>
+          <% reset_cycle %>
         </li>
       <% end %>
     </ul>
+    <% end %>
   </div>
 </div>
