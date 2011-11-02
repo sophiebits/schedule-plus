@@ -1,257 +1,74 @@
-
-
-var colors = ["blue","steel","shamrock","yellow",
-              "orange","red","magenta","purple"];
-var randomColors = 
-  //[0,1,2,3,4,5,6];
-  [5,3,1,2,7,4,6,0];
-
-var startTime = 7;
-var endTime = 22;
-var days = ["monday","tuesday","wednesday","thursday","friday"];
-
-/* generates calendar time dividers */
-function initCalendar() { 
-  $('#calendar').append('<li><ul id="times"></ul></li>');
-  for (var i = startTime; i <= endTime; ++i)
-    $('#times').append('<li class="begin'+(i*60)+'">'+((i-1)%12+1)
-      +(parseInt(i/12) ? 'pm' : 'am')
-      +'<span class="half-hour"></span></li>');
-  $('#times li:odd').addClass('alt');
-}
-
-/* assigns display color to a course by adding color class to elements */
-function assignColor(number, colorName) {
+var Calendar = {
   
-  $('.course'+number+', .course'+number+' .color').addClass(colorName);
-}
-
-/* adds a course to calendar and adjusts conflicting courses with the same begin time */
-function addToCalendar(schedule, number, section, data, lec_rec, delay) {
-
-  var begin = data.begin;
-  var end = parseInt(data.end)+10;
-
-  data.day = data.day.toLowerCase();
-
-  $('<li class="course' + number + ' ' + lec_rec + ' begin' + begin
-    + ' duration' + (end - begin) + '" course-number="' 
-    + number + '"><span class="number">' + number
-    + ' ' + (lec_rec=='lecture' ? 'Lec ' : '') + section
-    + '</span><span class="location">' + data.location + '</span></li>')
-   .appendTo('#'+schedule+' .' + data.day + ' .courses').hide().delay(delay);
- 
-  
-  var conflicts = $('#'+schedule+' .' + data.day + ' .courses .begin' + begin);
-    for (var i = 0; i < conflicts.length; ++i)
-      conflicts.eq(i).show().css({ opacity:0 })
-        .animate({ 
-          width: (105/conflicts.length),//-5,
-          left:i*105/conflicts.length,
-          opacity:1
-        },200);
-}
-
-function addCourse(scheduleId,data,i) {
-    var course = data.course;
-    var lecture = data.lecture;
-    var recitation = data.recitation;
-    course.has_recitation = recitation != null;
-		var section = (course.has_recitation ? recitation.section : lecture.section)
+  init: function() {
+    var start_time = 7; /* 5AM */
+    var end_time = 22;  /* 10PM */
+    var courses = $('#schedule .course');
     
-    /* add to schedule list */
-    $('.schedule').append('<li class="course' + course.number
-      + ' course" course-number="' + course.number 
-      + '" course-section="' + (course.has_recitation ? recitation.section : lecture.section)
-      + '" course-id="' + course.id 
-      + '" sched-id="' + data.id
-      + '"><span class="number">' + course.number + ' '
-      + section
-      + '</span><span class="name">'
-      + course.name + '</span><div class="friends" style="display:none"></div></li>');
-    $('.schedule .course' + course.number)
-      .css({ height:$('.schedule .course' + course.number).height() })
-      .hide()
-      .delay(i*200)
-      .slideDown()
-      .height('auto');
-    if (course.has_recitation) {
-     recitation.times = recitation.recitation_section_times;
-      for (var j = 0; j < recitation.times.length; ++j)
-        if (recitation.times[j].begin != -1)
-          addToCalendar(scheduleId, course.number, 
-            recitation.section, recitation.times[j], 'section', i*200);
-    }
-    lecture.times = lecture.lecture_section_times
-    for (var j = 0; j < lecture.times.length; ++j)
-      if (lecture.times[j].begin != -1)
-        addToCalendar(scheduleId, course.number, 
-          lecture.section, lecture.times[j], 
-          course.has_recitation ? 'lecture' : 'section', i*200);
-    
-    assignColor(course.number,colors[randomColors[i%colors.length]]);
-
-		// Preload the friends in this course
-		queueLoadFriends(course.number, section, course.id, data.id, 'preloadQueue');
-}
-
-/* Queue an ajax call to load the friends for a particular course */
-function queueLoadFriends(number, section, course_id, sched_id, queue) {
-	$.manageAjax.add(queue, {
-	  url:      '/schedules/get_friends_in_course',
-	  type:     'GET',
-	  dataType: 'json',
-	  data:     'scheduled_course_id='+sched_id+'&course_id='+course_id,
-	  complete: function() {},
-	  success: function(resp,textStatus,jqXHR) {
-			if (!$('.schedule .course' + number + ' .friends').hasClass('loaded')) {
-				// Adds pictures of friends in the same scheduled course
-		    html = '<span class="friends-header">Section '+ section 
-		          +'</span><ul class="lecture">';
-		    if (resp.me.same_section) {
-   	      html += '<li class="me"><a href="/schedules" link-name="'
-   	            + resp.me.same_section.name + '"><img src="http://graph.facebook.com/'
-   	            + resp.me.same_section.uid + '/picture" /></a></li>';
-				}
-		    for (var j = 0; j < resp.data.same_section.length; ++j) {
-   	      var friend = resp.data.same_section[j]
-   	      html += '<li><a href="/friends/' + friend.id 
-   	            + '" link-name="' + friend.name + '">'
-   	            + '<img src="http://graph.facebook.com/' + friend.uid 
-   	            + '/picture" /></a></li>';
-		    }
-		    html += '</ul>';
-		
-				// Adds pictures of friends in same course, but different section
-				if (resp.data.other_section.length > 0) {
-					html += '<span class="friends-header">Other Sections</span><ul class="lecture">';
-					 if (resp.me.other_section) {
-		   	     html += '<li class="me"><a href="/schedules" link-name="'
-	   	            + resp.me.other_section.name + '"><img src="http://graph.facebook.com/'
-	   	            + resp.me.other_section.uid + '/picture" /></a></li>';
-					}
-					for (var j = 0; j < resp.data.other_section.length; ++j) {
-	   	      var friend = resp.data.other_section[j]
-	   	      html += '<li><a href="/friends/' + friend.id 
-	   	            + '" link-name="' + friend.name + '">'
-	   	            + '<img src="http://graph.facebook.com/' + friend.uid 
-	   	            + '/picture" /></a></li>';
-			    }
-					html += '</ul>';
-				}
-				
-		    /*
-		    html += '<span class="friends-header">recitation</span><ul class="recitation">';
-		    for (var j = 0; j < resp.data.length; ++j) {
-		      var friend = resp.data[j]
-		      html += '<li><a href="/friends/' + friend.id + '">'
-		            + '<img src="http://graph.facebook.com/' + friend.uid 
-		            + '/picture" /></a></li>';
-		    }
-		    html += '</ul>';*/
-		    $('.schedule .course'+ number + ' .friends')
-		      .html(html).addClass('loaded');
-			}
-	  },
-	  error: function(jqXHR,textStatus,errorThrown) {
-	    $('.schedule .course'+ number + ' .friends')
-	      .html('<span class="error">There was an error loading your friends. Please try again later.</span>');
-	  }
-   });
-}
-
-function addSchedule(courses, name) {
-
-  /* create schedule */
-  if (!name) name = "my";
-  scheduleId = name+'-schedule';
-  $('#calendar').append('<li id="'+scheduleId+'"><ol></ol></li>');
-  
-  /* create day containers */
-  for (var i = 0; i < days.length; ++i)
-    $('#'+scheduleId+' ol').append('<li class="'+days[i]
-      +'"><ul class="courses"></ul></li>');
-  
-  for (var i = 0; i < courses.length; ++i) {
-    addCourse(scheduleId,courses[i],i);
-  }
-}
-
-//
-// Event listener to add highlight class to course
-//////////////////////////////////////////////////////////
-$('#main-content').delegate('.course, .section, .lecture','hover',function(e) {
-  if (e.type === 'mouseenter')
-    $('.course' + $(this).attr('course-number')).addClass('highlight');
-  else
-    $('.course' + $(this).attr('course-number')).removeClass('highlight');
-});
-//
-// Event listener to load friends in a course
-/////////////////////////////////////////////////////////
-// $('#main-content').delegate('.course, .section, .lecture','click',loadFriends);
-$('.schedule').delegate('.friends li a','hover',function(e) {
-  if (e.type === 'mouseenter')
-    $('<span class="friends-name tooltip">'+$(this).attr('link-name')+'</span>')
-      .insertAfter($(this));
-  else
-    $('.friends-name.tooltip').remove();
-  //else
-});
-function loadFriends() {
-  var number = $(this).attr('course-number');
-  var section = $('.schedule .course'+number).attr('course-section');
-  var course_id = $('.schedule .course'+number).attr('course-id');
-  var sched_id = $('.schedule .course'+number).attr('sched-id');
-
-  $('.schedule .friends').stop(true,true).slideUp(); 
-      
-  if ($('.course' + number).hasClass('selected')) {
-    $('.course, .lecture, .section').removeClass('selected')
-  } else {
-    $('.course, .lecture, .section').removeClass('selected');
-    $('.course' + number).addClass('selected');
-    $('.schedule .course' + number + ' .friends')
-         .slideDown();
+    courses.find('.sections').hide();       /* Hide section times */
+    courses.find('.options').hide();        /* Hide course options */
    
-    if (!$('.schedule .course' + number + ' .friends').hasClass('loaded')) {
-			queueLoadFriends(number, section, course_id, sched_id, 'loadQueue');
-      $('.schedule .course' + number + ' .friends')
-        .append('<img class="loading" src="/images/ajax-friends.gif" />')
-		}      
-  }
-}
-
-$(document).ready(function() {
-	$.manageAjax.create('preloadQueue', {queue: true, maxRequests: 1});
-	$.manageAjax.create('loadQueue', {queue: false, maxRequests: 1});
-	
-  initCalendar();
-  //addSchedule(schedules[0]);
-  
-  $('#add-course').live('submit',function(e) {
-    e.preventDefault();
-    var f = $(this);
-    f.find('input').attr('disabled',true);
-    f.find('input[type=submit]')
-     .css('background-image',"url(/images/ajax-small.gif)")
-    $.ajax({
-      url:  f.attr('action'),
-      type: f.attr('method'),
-      dataType: 'json',
-      data: 'course='+f.find('input[type=text]').attr('value'),
-      complete: function() {
-        f.find('input').attr('disabled',false);
-        f.find('input[type=submit]')
-         .css('background-image',"url(/images/form-add.png)");
+    /*
+     * Create event listeners
+     */
+    courses.live({
+      click: function() {
+        /* TODO slide other courses up */
+        $(this).find('.sections').slideToggle();
       },
-      success: function(data,textStatus,jqXHR) {
-        //alert(JSON.stringify(data));
-        addCourse('my-schedule',data.scheduled_course,$('.schedule .course').length);
+      mouseenter: function() {
+        $(this).find('.options').stop(true, true).show();
       },
-      error: function(jqXHR, textStatus, errorThrown) {
-        //alert('error: '+errorThrown);
+      mouseleave: function() {
+        $(this).find('.options').fadeOut(200);
       }
     });
-  });
+
+    /*
+     * Generate times
+     */
+    $('#calendar').append('<li><ul id="times"></ul></li>');
+    for (var i = start_time; i <= end_time; ++i)
+      $('#times').append('<li class="begin' + (i * 60) + '"> ' 
+        + ((i - 1) % 12 + 1) + (parseInt(i / 12) ? 'pm' : 'am')
+        + '<span class="half-hour"></span></li>');
+    $('#times li:odd').addClass('alt');
+  
+    var days = ['M', 'T', 'W', 'R', 'F'];
+
+    $('#calendar').append('<li id="main-schedule"><ol></ol></li>');
+    for (var i = 0; i < days.length; ++i)
+      $('#main-schedule ol').append('<li class="'+days[i]
+        +'"><ul class="courses"></ul></li>');
+
+    /*
+     * Add courses
+     */
+    courses.each(function(i,c) { Calendar.addCourse(c); });
+  },
+
+  addCourse: function(course) {
+
+    var number = $(course).find('.number').text();
+
+    var section = $(course).find('.selected');
+    var dayss = $(section).find('.days').html().split('<br>');
+    var times = $(section).find('.times').html().split('<br>');
+   
+    for (var i = 0; i < dayss.length - 1; ++i) {
+      var days = dayss[i].split("");
+      for (var j = 0; j < days.length; ++j) {
+//        alert($(course).find('.number').text() + days[j] + ':' + times[i]);
+        $('<li class="course' + number 
+          + ' begin'
+          + ' duration' + '">'
+          + '<span class="number">' + number + '<span>'
+          + '</li>').appendTo('#calendar .' + days[j] + ' .courses');
+      }
+    }
+  }
+};
+
+$(function() {
+  Calendar.init();
 });
