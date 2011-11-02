@@ -1,8 +1,7 @@
 class SchedulesController < ApplicationController
-  before_filter :authenticate_user!, :except => :show
 
   def index
-    redirect_to root_path if !current_user
+    redirect_to root_path if !user_signed_in?
     @schedules = current_user.schedules.group_by { |s| s.semester }
   end
 
@@ -20,6 +19,7 @@ class SchedulesController < ApplicationController
   end
  
   def create
+    redirect_to root_path if !current_user
     @schedule = current_user.schedules.create(:semester_id => current_semester)
     @schedule.update_attribute(:active, true) if 
       current_user.schedules.by_semester(current_semester).length == 1

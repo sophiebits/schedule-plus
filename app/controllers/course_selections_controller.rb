@@ -1,6 +1,4 @@
 class CourseSelectionsController < ApplicationController
-  before_filter :authenticate_user!
-
   # POST
   def create
     schedule = Schedule.find_by_url(params[:schedule_id])
