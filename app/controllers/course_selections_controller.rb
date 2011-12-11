@@ -12,14 +12,21 @@ class CourseSelectionsController < ApplicationController
       redirect_to schedule_path(params[:schedule_id])
     else
       Schedule.find_by_url(params[:schedule_id]).add_course(params[:id])
-      redirect_to schedule_path(params[:schedule_id])
+      @selection = Schedule.find_by_url(params[:schedule_id]).course_selections.last
+      respond_to do |format|
+        format.html { redirect_to schedule_path(params[:schedule_id]) }
+        format.js
+      end
     end
   end
 
   # PUT
   def update
-    Schedule.find_by_url(params[:schedule_id]).add_course(params[:section_id])
-    redirect_to schedule_path(params[:schedule_id])
+    @selection = Schedule.find_by_url(params[:schedule_id]).add_course(params[:section_id])
+    respond_to do |format|
+      format.html { redirect_to schedule_path(params[:schedule_id]) }
+      format.js
+    end
   end
 
   # DELETE

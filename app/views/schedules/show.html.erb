@@ -58,19 +58,13 @@
               </li>
         <% end %>
         <% sections.each do |section| %>
-          <li class="section <%= cycle('odd', 'even', :name => 'parity') %><%= " selected" if cs.section == section %>">
-            <% if cs.section != section %>
-            <a href="<%= schedule_selections_path(:schedule_id => @schedule, :id => section.id)%>" data-method="post">
-            <% end %>
-            <!-- class="add-course">
-            </-->
+          <li class="section <%= cycle('odd', 'even', :name => 'parity') %><%= " selected" if cs.section == section %>" id="section<%= section.id %>">
+            <a href="<%= schedule_selections_path(:schedule_id => @schedule, :id => section.id)%>" data-method="post" data-remote="true">
             <span class="section-ltr"><%= section.letter %></span>
             <span class="days"><% section.scheduled_times.each do |time| %><%= time.days %><br /><% end %></span>
             <span class="times"><% section.scheduled_times.each do |time| %><%= time.to_str %><br /><% end %></span>
             <span class="locations"><% section.scheduled_times.each do |time| %><%= time.location %><br /><% end %></span>
-            <% if cs.section != section %>
             </a>
-            <% end %>
           </li>
         <% end %>
         <% reset_cycle('parity') %>
