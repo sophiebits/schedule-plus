@@ -21,9 +21,12 @@ var Calendar = {
       },
       mouseenter: function() {
         $(this).find('.options').stop(true, true).show();
+        $('.highlight').removeClass('highlight');
+        $('.course'+$(this).find('.number').html()).addClass('highlight');
       },
       mouseleave: function() {
         $(this).find('.options').fadeOut(200);
+        $('.highlight').removeClass('highlight');
       }
     });
 
@@ -118,7 +121,7 @@ var Calendar = {
         var dur = events[at].end-events[at].start;
         $(events[at]).css({
           top: (Calendar.half_height*(events[at].start-420)/30-1)+"px",
-          height: (Calendar.half_height*dur/30-1)+"px"
+          height: (Calendar.half_height*dur/30-2)+"px"
         });
         $(events[at]).animate({
           width: (134/cols-4)+"px",

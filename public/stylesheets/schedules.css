@@ -178,6 +178,7 @@ h1#schedule-user {
 #schedule .course:hover {
   color:#000;
   border-color:#fbb03b;
+  background-color:#fff;
 }
 #schedule .course .number,
 #schedule .course .selected_section {
@@ -324,10 +325,17 @@ h1#schedule-user {
   border-left-width:3px;
   border-radius:5px;
 }
+#calendar .event.highlight {
+  border-color:#fbb03b;
+  background-color:#fff;
+}
+#calendar .event.highlight .number {
+  color:#000;
+}
 #calendar .event .number {
   display:block;
   margin:4px 6px 0;
-  color:#188d8e;
+  color:#666;
   font-weight:700;
   letter-spacing:0.1px;
 }
