@@ -12,8 +12,15 @@ class Course < ActiveRecord::Base
   # RailsCast 240
   def self.search(search)
     if search
-      search = search.gsub('-', '')
-      where("REPLACE(number, '-', '') LIKE ? or name LIKE ?", "%#{search}%", "%#{search}%")
+      search = search.gsub('-', '').strip
+      result = where("REPLACE(number, '-', '') LIKE ?", "%#{search}%")
+      if result.empty?
+      	terms = search.split
+      	result = terms.inject(scoped) do |combined_scope, term|	
+      		combined_scope.where("name LIKE ?", "%#{term}%")
+      	end
+      end
+      return result
     else
       scoped
     end
