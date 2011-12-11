@@ -1,8 +1,11 @@
 var Calendar = {
-  
+    
+  start_time: 7, /* 5AM */
+  end_time: 22,  /* 10PM */
+  half_height: 20,
+  container_width: 640,
+
   init: function() {
-    var start_time = 7; /* 5AM */
-    var end_time = 22;  /* 10PM */
     var courses = $('#schedule .course');
     
     courses.find('.sections').hide();       /* Hide section times */
@@ -28,8 +31,10 @@ var Calendar = {
      * Generate times
      */
     $('#calendar').append('<li><ul id="times"></ul></li>');
-    for (var i = start_time; i <= end_time; ++i)
-      $('#times').append('<li class="begin' + (i * 60) + '"> ' 
+    for (var i = Calendar.start_time; i <= Calendar.end_time; ++i)
+      $('#times').append('<li class="begin' + (i * 60) + '" style="height:'
+        + (2*Calendar.half_height) + 'px;top:'
+        + ((i-7)*2*Calendar.half_height) + 'px"> ' 
         + ((i - 1) % 12 + 1) + (parseInt(i / 12) ? 'pm' : 'am')
         + '<span class="half-hour"></span></li>');
     $('#times li:odd').addClass('alt');
@@ -68,7 +73,8 @@ var Calendar = {
     function place(e) {
       var dayss = $.trim(e.find('.days').html()).split('<br>');
       var times = $.trim(e.find('.times').html()).split('<br>');
-     
+      var locs = $.trim(e.find('.locations').html()).split('<br>');
+
       for (var i = 0; i < dayss.length - 1; ++i) {
         var days = dayss[i].split("");
         for (var j = 0; j < days.length; ++j) {
@@ -77,7 +83,8 @@ var Calendar = {
           $('<li class="event course' + number 
             + '" event-start="' + start 
             + '" event-end="' + end + '">'
-            + '<span class="number">' + number + '<span>'
+            + '<span class="number">' + number + '</span>'
+            + '<span class="location">' + locs[i] + '</span>'
             + '</li>').appendTo('#calendar .' + days[j] + ' .courses');
         }
       }
@@ -92,6 +99,7 @@ var Calendar = {
     events.each (function(i, e) {
       e.start = parseInt($(e).attr("event-start"));
       e.end = parseInt($(e).attr("event-end"))+10;
+      $(e).css("opacity","0");
     });
 
     var conflicts = new List();
@@ -99,10 +107,16 @@ var Calendar = {
 
     function process(to, cols) {
       for (; at < to; at++) {
-        $(events[at]).css("top", (3.125*(events[at].start-420)/30)+"%");
-        $(events[at]).css("height", (3.125*(events[at].end-events[at].start)/30)+"%");
-        $(events[at]).css("width", (134 / cols - 5)+"px");
-        $(events[at]).css("left", (events[at].left * 134/cols)+"px");
+        var dur = events[at].end-events[at].start;
+        $(events[at]).css({
+          top: (Calendar.half_height*(events[at].start-420)/30-1)+"px",
+          height: (Calendar.half_height*dur/30-1)+"px"
+        });
+        $(events[at]).animate({
+          width: (134/cols-4)+"px",
+          left: (events[at].left * 134/cols-1)+"px",
+          opacity: 1
+        });
       }
     }
 

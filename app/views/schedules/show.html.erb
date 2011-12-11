@@ -51,6 +51,9 @@
                 <span class="times"><% lecture.scheduled_times.each do |time| %>
                   <%= time.to_str %><br />
                 <% end %></span>
+                <span class="locations"><% lecture.scheduled_times.each do |time| %>
+                  <%= time.location %><br />
+                <% end %></span>
               </li>
         <% end %>
         <% sections.each do |section| %>
@@ -63,6 +66,7 @@
             <span class="section-ltr"><%= section.letter %></span>
             <span class="days"><% section.scheduled_times.each do |time| %><%= time.days %><br /><% end %></span>
             <span class="times"><% section.scheduled_times.each do |time| %><%= time.to_str %><br /><% end %></span>
+            <span class="locations"><% section.scheduled_times.each do |time| %><%= time.location %><br /><% end %></span>
             <% if cs.section != section %>
             </a>
             <% end %>

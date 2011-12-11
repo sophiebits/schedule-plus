@@ -168,9 +168,11 @@ h1#schedule-user {
   clear:both;
   position:relative;
   padding:8px;
-  margin-top:4px;
+  margin-top:6px;
   color:#666;
-  border:1px solid #f3f3f3;
+  background-color:#eee;
+  border:1px solid #999;
+  border-left-width:3px;
   border-radius:5px;
 }
 #schedule .course:hover {
@@ -180,6 +182,9 @@ h1#schedule-user {
 #schedule .course .number,
 #schedule .course .selected_section {
   font-weight:700;
+}
+#schedule .course .locations {
+  display:none;
 }
 #schedule .course .name {
   display:block;
@@ -261,9 +266,9 @@ h1#schedule-user {
 #calendar {
   position:relative;
   width:670px;
-  height:601px;
+  height:600px;
   margin:20px 0 0 50px;
-  background-color:#eee;
+  background-image:url('/images/eee-bg.gif');
   list-style-type:none;
   clear:both;
 }
@@ -277,24 +282,24 @@ h1#schedule-user {
   display:block;
   position:absolute;
   width:100%;
-  height:6.25%;
+  /*height:6.25%;*/
   text-align:left;
   font-size:0.6em;
-  border-top:1px solid #bbb;
+  border-top:1px solid #fff;
   overflow:hidden;
 }
 #calendar #times li:last-child {
-  border-bottom:1px solid #bbb;
+  /*border-bottom:1px solid #bbb;*/
 }
 #calendar #times .alt {
-  background-color:#fff;
+  /*background-color:#fff;*/
 }
 #calendar #times .half-hour {
   display:block;
   position:absolute;
   bottom:-50%; left:30px;
   width:100%; height:100%;
-  border-top:1px dashed #ccc;
+  /*border-top:1px dashed #ccc;*/
 }
 .M { }
 .T { left:134px }
@@ -305,52 +310,30 @@ h1#schedule-user {
   position:absolute;
   width:134px;
   height:100%;
-  border-left:1px solid #999;
+  border-left:1px solid #ddd;
 }
 #calendar .event {
   display:block;
   position:absolute;
   width:100%;
+  color:#333;
   font-size:11px;
   text-align:left;
-  background-color:#ccc;
-  border-left:5px solid #fbb03b
+  background-color:#ddd;
+  border:1px solid #999;
+  border-left-width:3px;
+  border-radius:5px;
 }
 #calendar .event .number {
   display:block;
-  margin:4px 8px;
+  margin:4px 6px 0;
+  color:#188d8e;
+  font-weight:700;
+  letter-spacing:0.1px;
 }
-.begin420 { }
-.begin450 { top:3.125% }
-.begin480 { top:6.25% }
-.begin510 { top:9.375% }
-.begin540 { top:12.5% }
-.begin570 { top:15.625% }
-.begin600 { top:18.75% }
-.begin630 { top:21.875% }
-.begin660 { top:25% }
-.begin690 { top:28.125% }
-.begin720 { top:31.25% }
-.begin750 { top:34.375% }
-.begin780 { top:37.5% }
-.begin810 { top:40.625% }
-.begin840 { top:43.75% }
-.begin870 { top:46.875% }
-.begin900 { top:50% }
-.begin930 { top:53.125% }
-.begin960 { top:56.25% }
-.begin990 { top:59.375% }
-.begin1020 { top:62.5% }
-.begin1050 { top:65.625% }
-.begin1080 { top:68.75% }
-.begin1110 { top:71.875% }
-.begin1140 { top:75% }
-.begin1170 { top:78.125% }
-.begin1200 { top:81.25% }
-.begin1230 { top:84.375% }
-.begin1260 { top:87.5% }
-.begin1290 { top:90.625% }
-.begin1320 { top:93.75% }
-.begin1350 { top:96.875% }
-.begin1380 { top:100% }
+#calendar .event .location {
+  display:block;
+  margin:2px 6px;
+  color:#666;
+}
 
