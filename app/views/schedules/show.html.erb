@@ -37,6 +37,7 @@
             <%= link_to "delete", schedule_selection_path(:schedule_id => @schedule,
                                                      :id => cs.id),
                              :method => :delete,
+                             :remote => true,
                              :class => "course-delete-link" %>
           </div>
           <ul class="sections">

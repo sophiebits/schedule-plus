@@ -24,8 +24,11 @@ class CourseSelectionsController < ApplicationController
 
   # DELETE
   def destroy
-    CourseSelection.find(params[:id]).destroy
-    redirect_to schedule_path(params[:schedule_id])
+    @selection = CourseSelection.find(params[:id]).destroy
+    respond_to do |format|
+      format.html { redirect_to schedule_path(params[:schedule_id]) }
+      format.js
+    end
   end
 
 end

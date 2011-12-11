@@ -85,7 +85,8 @@ var Calendar = {
             + '" event-end="' + end + '">'
             + '<span class="number">' + number + '</span>'
             + '<span class="location">' + locs[i] + '</span>'
-            + '</li>').appendTo('#calendar .' + days[j] + ' .courses');
+            + '</li>').css("opacity", "0")
+            .appendTo('#calendar .' + days[j] + ' .courses');
         }
       }
     }
@@ -94,12 +95,19 @@ var Calendar = {
     place(lecture);
   },
 
+  delete: function(d) {
+    $(d).fadeOut().remove();
+    var days = ['M', 'T', 'W', 'R', 'F'];
+    for (var i = 0; i < days.length; ++i) {
+      Calendar.layoutDay($('#main-schedule li.' + days[i] + ' .courses li'));
+    }
+  },
+
   layoutDay: function(events) {
     
     events.each (function(i, e) {
       e.start = parseInt($(e).attr("event-start"));
       e.end = parseInt($(e).attr("event-end"))+10;
-      $(e).css("opacity","0");
     });
 
     var conflicts = new List();
