@@ -307,12 +307,18 @@ h1#schedule-user {
   height:100%;
   border-left:1px solid #999;
 }
-.M li, .T li, .W li, .R li, .F li {
+#calendar .event {
   display:block;
+  position:absolute;
   width:100%;
-  text-align:center;
-  background-image:url('/images/eee-bg.gif');
-  border-bottom:1px solid #999;
+  font-size:11px;
+  text-align:left;
+  background-color:#ccc;
+  border-left:5px solid #fbb03b
+}
+#calendar .event .number {
+  display:block;
+  margin:4px 8px;
 }
 .begin420 { }
 .begin450 { top:3.125% }
