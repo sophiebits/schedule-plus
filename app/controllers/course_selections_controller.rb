@@ -11,8 +11,7 @@ class CourseSelectionsController < ApplicationController
       #redirect_to courses_path(:search => params[:search])
       redirect_to schedule_path(params[:schedule_id])
     else
-      Schedule.find_by_url(params[:schedule_id]).add_course(params[:id])
-      @selection = Schedule.find_by_url(params[:schedule_id]).course_selections.last
+      @selection = Schedule.find_by_url(params[:schedule_id]).add_course(params[:id])
       respond_to do |format|
         format.html { redirect_to schedule_path(params[:schedule_id]) }
         format.js

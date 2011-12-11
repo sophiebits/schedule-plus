@@ -47,7 +47,8 @@ class Schedule < ActiveRecord::Base
     if i.nil? 
       course_selections.create(:section_id => section_id)
     else
-      course_selections[i].update_attribute(:section_id, section_id)
+      course_selections[i].update_attributes(:section_id => section_id)
+      course_selections[i].reload()
     end
   end
 
