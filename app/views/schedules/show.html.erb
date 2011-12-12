@@ -7,7 +7,7 @@
       <!--<div id="schedule-user-pic-frame">-->
         <img id="schedule-user-pic"
              alt="Vincent Siao"
-             src="<%= @schedule.user.fb.picture %>" />
+             src="<%= @schedule.user.fb.try(:picture) %>" />
       <!--</div>-->
       <h1 id="schedule-user"><%= @schedule.user.name %></h1>
       <div id="schedule-user-captions">
@@ -21,7 +21,7 @@
       <% # FIXME temporarily commented out for design %>
       <% # if current_user && current_user == @schedule.user %>
         <%= form_tag schedule_selections_path(@schedule),
-                     :id => 'add-course', :method => :post do %>
+                     :id => 'add-course', :method => :post, :remote => true do %>
           <%= text_field_tag :search, nil, :placeholder => 'Add a Course' %>
           <%= submit_tag "Add" %>
         <% end %>

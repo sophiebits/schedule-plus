@@ -73,7 +73,6 @@
       <dt>Corequisites:</dt>
       <dd><%= @course.coreqs_str %></dd>
     </dl>
-    <!--
     <h2 class="facebox-header">Adam Weis, Jason Macdonald, Ian McKellen,
     and 30 others took <%= @course.number %> this semester.</h2>
     <div class="facebox">
@@ -227,7 +226,7 @@
         </li>
       </ul>
       <span class="expand">see all</span>
-    </div>-->
+    </div>
     <h2 id="course-description-header">Description</h2>
     <p id="course-description">
       <%= @course.description.blank? ? "Not Available" : @course.description_str %>

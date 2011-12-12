@@ -1,6 +1,6 @@
 var Calendar = {
     
-  start_time: 7, /* 5AM */
+  start_time: 8, /* 5AM */
   end_time: 22,  /* 10PM */
   half_height: 20,
   container_width: 640,
@@ -14,10 +14,15 @@ var Calendar = {
     /*
      * Create event listeners
      */
-    courses.live({
+    $('#schedule .course, #calendar .event').live({
       click: function() {
-        /* TODO slide other courses up */
-        $(this).find('.sections').slideToggle();
+        var open = !$(this).hasClass('open');
+        $('#schedule').find('.sections').stop(true,true).slideUp();
+        $('.open').removeClass('open');
+        if (open) {
+          $('.course'+$(this).find('.number').html()).find('.sections').slideDown();
+          $('.course'+$(this).find('.number').html()).addClass('open');
+        }
       },
       mouseenter: function() {
         $(this).find('.options').stop(true, true).show();
@@ -35,9 +40,9 @@ var Calendar = {
      */
     $('#calendar').append('<li><ul id="times"></ul></li>');
     for (var i = Calendar.start_time; i <= Calendar.end_time; ++i)
-      $('#times').append('<li class="begin' + (i * 60) + '" style="height:'
+      $('#times').append('<li style="height:'
         + (2*Calendar.half_height) + 'px;top:'
-        + ((i-7)*2*Calendar.half_height) + 'px"> ' 
+        + ((i-Calendar.start_time)*2*Calendar.half_height) + 'px"> ' 
         + ((i - 1) % 12 + 1) + (parseInt(i / 12) ? 'pm' : 'am')
         + '<span class="half-hour"></span></li>');
     $('#times li:odd').addClass('alt');
@@ -120,7 +125,7 @@ var Calendar = {
       for (; at < to; at++) {
         var dur = events[at].end-events[at].start;
         $(events[at]).css({
-          top: (Calendar.half_height*(events[at].start-420)/30-1)+"px",
+          top: (Calendar.half_height*(events[at].start-Calendar.start_time*60)/30-1)+"px",
           height: (Calendar.half_height*dur/30-2)+"px"
         });
         $(events[at]).animate({
