@@ -18,10 +18,10 @@
         else
           schedules_path
         end %>" id="current-user-schedule-link">
-        <span id="current-user-name"><%= current_user.fb.name %></span>
+        <span id="current-user-name"><%= current_user.fb.try(:name) %></span>
         <img id="current-user-pic" 
-             alt="<%= current_user.fb.name %>"
-             src="<%= current_user.fb.picture %>" />
+             alt="<%= current_user.fb.try(:name) %>"
+             src="<%= current_user.fb.try(:picture) %>" />
       </a>
       <a href="/settings" id="settings-link">Settings</a>
     </div>
