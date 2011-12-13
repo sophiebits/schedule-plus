@@ -1,9 +1,6 @@
 AcmSchedule::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
-  # devise fix for heroku (github devise wiki)
-  config.assets.initialize_on_precompile = false
-
   # The production environment is meant for finished, "live" apps.
   # Code is not reloaded between requests
   config.cache_classes = true

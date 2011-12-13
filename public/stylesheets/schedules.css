@@ -171,24 +171,29 @@ h1#schedule-user {
   margin-top:6px;
   color:#666;
   background-color:#eee;
-  border:1px solid #999;
-  border-left-width:3px;
+  border:1px solid #ccc;
+  border-left-width:4px;
   border-radius:5px;
 }
 #schedule .course.open {
-  border-color:#188d8e;
+  border-color:#ccc;
   background-color:#fff;
 }
 #schedule .course.open:hover,
 #schedule .course.highlight,
 #schedule .course:hover {
   color:#000;
-  border-color:#fbb03b;
+  border-color:#ccc;
   background-color:#fff;
 }
 #schedule .course .number,
 #schedule .course .selected_section {
   font-weight:700;
+}
+#schedule .course .units {
+  position:absolute;
+  top:6px; right:8px;
+  font-size:10px;
 }
 #schedule .course .locations {
   display:none;
@@ -327,16 +332,16 @@ h1#schedule-user {
   font-size:11px;
   text-align:left;
   background-color:#ddd;
-  border:1px solid #999;
-  border-left-width:3px;
+  border:1px solid #bbb;
+  border-left-width:4px;
   border-radius:5px;
 }
 #calendar .event.open {
-  border-color:#188d8e;
+  border-color:#ccc;
   background-color:#fff;
 }
 #calendar .event.highlight {
-  border-color:#fbb03b;
+  border-color:#ccc;
   background-color:#fff;
 }
 #calendar .event.highlight .number {

@@ -5,6 +5,11 @@ var Calendar = {
   half_height: 20,
   container_width: 640,
 
+  colors: ["rgb(250,62,84)", "rgb(255,173,64)", "rgb(56,178,206)",
+           "#00b454", "rgb(179,59,212)", 
+           "rgb(231,58,149)"],
+  used_colors: 0,
+
   init: function() {
     var courses = $('#schedule .course');
     
@@ -25,11 +30,13 @@ var Calendar = {
         }
       },
       mouseenter: function() {
+        $(this).find('.units').stop(true, true).hide();
         $(this).find('.options').stop(true, true).show();
         $('.highlight').removeClass('highlight');
         $('.course'+$(this).find('.number').html()).addClass('highlight');
       },
       mouseleave: function() {
+        $(this).find('.units').fadeIn(200);
         $(this).find('.options').fadeOut(200);
         $('.highlight').removeClass('highlight');
       }
@@ -57,10 +64,22 @@ var Calendar = {
     /*
      * Add courses
      */
-    courses.each(function(i,c) { Calendar.addCourse(c); });
+    courses.each(function(i,c) { 
+      Calendar.color(c);
+      Calendar.addCourse(c); 
+    });
+    $('.open').removeClass('open');
     for (var i = 0; i < days.length; ++i) {
       Calendar.layoutDay($('#main-schedule li.' + days[i] + ' .courses li'));
     }
+  },
+
+  color: function(course) {
+    var i = 0;
+    while (1 & (Calendar.used_colors >> i)) i++;
+    Calendar.used_colors ^= 1 << i;
+    $(course).css("border-left-color", Calendar.colors[i]);
+    $(course).attr("color-index", i);
   },
 
   addCourse: function(course) {
@@ -88,13 +107,15 @@ var Calendar = {
         for (var j = 0; j < days.length; ++j) {
           var start = strToMin(times[i].substr(0, times[i].indexOf("-")));
           var end = strToMin(times[i].substr(times[i].indexOf("-") + 1));
-          $('<li class="event course' + number 
+          $('<li class="event open course' + number 
             + '" event-start="' + start 
             + '" event-end="' + end + '">'
             + '<span class="number">' + number + '</span>'
             + '<span class="location">' + locs[i] + '</span>'
-            + '</li>').css("opacity", "0")
-            .appendTo('#calendar .' + days[j] + ' .courses');
+            + '</li>').css({
+              'opacity': 0,
+              'border-left-color': $(course).css("border-left-color"),
+            }).appendTo('#calendar .' + days[j] + ' .courses');
         }
       }
     }
@@ -104,11 +125,16 @@ var Calendar = {
   },
 
   delete: function(d) {
+    Calendar.used_colors ^= 1 << $('#schedule').find(d).attr('color-index');
     $(d).fadeOut().remove();
     var days = ['M', 'T', 'W', 'R', 'F'];
     for (var i = 0; i < days.length; ++i) {
       Calendar.layoutDay($('#main-schedule li.' + days[i] + ' .courses li'));
     }
+  },
+
+  layoutAll: function() {
+    /* TODO */
   },
 
   layoutDay: function(events) {
@@ -126,10 +152,10 @@ var Calendar = {
         var dur = events[at].end-events[at].start;
         $(events[at]).css({
           top: (Calendar.half_height*(events[at].start-Calendar.start_time*60)/30-1)+"px",
-          height: (Calendar.half_height*dur/30-2)+"px"
+          height: (Calendar.half_height*dur/30-1)+"px"
         });
         $(events[at]).animate({
-          width: (134/cols-4)+"px",
+          width: (134/cols-5)+"px",
           left: (events[at].left * 134/cols-1)+"px",
           opacity: 1
         });
