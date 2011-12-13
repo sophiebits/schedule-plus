@@ -12,6 +12,7 @@ course.find('.selected_section').html('<%= @selection.section.letter %>');
 course.find('.sections .selected').removeClass('selected');
 course.find('.sections #section<%= @selection.section.id %>').addClass('selected');
 Calendar.addCourse(course);
+$('#add-course input').val('');
 $('#total-units').html('Total: <%= @selection.schedule.units %> units');
 var days = ['M', 'T', 'W', 'R', 'F'];
 for (var i = 0; i < days.length; ++i)

@@ -4,6 +4,7 @@
 <div id="page-content" class="schedule">
   <div id="content-header">
     <div class="container">
+    <% if user_signed_in? %>
       <img id="schedule-user-pic"
            alt="Vincent Siao"
            src="<%= @schedule.user.fb.try(:picture) %>" />
@@ -11,6 +12,11 @@
       <div id="schedule-user-captions">
         <span id="schedule-user-major">has no friends QQ</span>
       </div>
+    <% else %>
+      <p style="text-align:center;color:#666">schedule+ connects you to your Carnegie Mellon 
+      friends on Facebook by matching your course schedules. 
+      <a href="/auth/facebook" id="fb-login">Login with Facebook</a></p>
+    <% end %>
     </div>
   </div>
   <div class="container">

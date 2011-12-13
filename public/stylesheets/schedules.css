@@ -99,14 +99,6 @@ ul#schedules-list .course-selections .number {
  *************************************************************************
  */
 .schedule#page-content #content-header {
-  height:50px;
-}
-#schedule-user-pic-frame {
-  float:left;
-  position:relative;
-  margin-right:20px;
-  width:60px; height:60px;
-  overflow:hidden
 }
 #schedule-user-pic {
   float:left;
@@ -125,13 +117,28 @@ h1#schedule-user {
   margin-top:2px;
   color:#188d8e;
   font-size:12px;
+  height:15px;
 }
 #schedule-container {
   float:left;
-  width:240px
+  width:240px;
+  padding-top:15px;
 }
 #calendar-container {
   float:left;
+}
+#fb-login {
+  display:inline-block;
+  margin:0 0 0 5px;
+  position:relative; top:-2px;
+  vertical-align:middle;
+  width:156px; height:0;
+  padding-top:22px;
+  background-image:url('/images/fb-buttons.gif');
+  overflow:hidden;
+}
+#fb-login:hover {
+  background-position:0 -22px;
 }
 /*************************************************************************
  * ScheduleList Styles
@@ -141,7 +148,7 @@ h1#schedule-user {
   display:block;
   width:100%;
   height:20px;
-  padding:20px 0 5px;
+  padding:5px 0 5px;
 }
 #add-course input {
   float:left;
@@ -286,17 +293,17 @@ h1#schedule-user {
 }
 #calendar #times {
   position:absolute;
-  left:-30px; top:-1px;
-  width:700px;
+  left:-35px; top:-1px;
+  width:705px;
   height:100%;
 }
 #calendar #times li {
   display:block;
   position:absolute;
   width:100%;
-  /*height:6.25%;*/
+  color:#999;
   text-align:left;
-  font-size:0.6em;
+  font-size:10px;
   border-top:1px solid #fff;
   overflow:hidden;
 }
@@ -350,13 +357,13 @@ h1#schedule-user {
 #calendar .event .number {
   display:block;
   margin:4px 6px 0;
-  color:#666;
+  color:#333;
   font-weight:700;
   letter-spacing:0.1px;
 }
 #calendar .event .location {
   display:block;
   margin:2px 6px;
-  color:#666;
+  color:#777;
 }
 

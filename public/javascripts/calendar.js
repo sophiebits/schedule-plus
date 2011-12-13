@@ -50,7 +50,7 @@ var Calendar = {
       $('#times').append('<li style="height:'
         + (2*Calendar.half_height) + 'px;top:'
         + ((i-Calendar.start_time)*2*Calendar.half_height) + 'px"> ' 
-        + ((i - 1) % 12 + 1) + (parseInt(i / 12) ? 'pm' : 'am')
+        + ((i - 1) % 12 + 1) + (parseInt(i / 12) ? 'PM' : 'AM')
         + '<span class="half-hour"></span></li>');
     $('#times li:odd').addClass('alt');
   
