@@ -14,6 +14,6 @@ course.find('.sections #section<%= @selection.section.id %>').addClass('selected
 Calendar.addCourse(course);
 $('#add-course input').val('');
 $('#total-units').html('Total: <%= @selection.schedule.units %> units');
-var days = ['M', 'T', 'W', 'R', 'F'];
+var days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
 for (var i = 0; i < days.length; ++i)
   Calendar.layoutDay($('#main-schedule li.' + days[i] + ' .courses li'));

@@ -1,8 +1,9 @@
 var Calendar = {
     
-  start_time: 8, /* 5AM */
-  end_time: 22,  /* 10PM */
+  start_time: 8, 
+  end_time: 22, 
   half_height: 20,
+  day_width: 126,
   container_width: 640,
 
   colors: ["rgb(250,62,84)", "rgb(255,173,64)", "rgb(56,178,206)",
@@ -50,16 +51,21 @@ var Calendar = {
       $('#times').append('<li style="height:'
         + (2*Calendar.half_height) + 'px;top:'
         + ((i-Calendar.start_time)*2*Calendar.half_height) + 'px"> ' 
-        + ((i - 1) % 12 + 1) + (parseInt(i / 12) ? 'PM' : 'AM')
+        + ((i - 1) % 12 + 1) + (parseInt(i / 12) ? ' PM' : ' AM')
         + '<span class="half-hour"></span></li>');
     $('#times li:odd').addClass('alt');
   
-    var days = ['M', 'T', 'W', 'R', 'F'];
+    var days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
 
     $('#calendar').append('<li id="main-schedule"><ol></ol></li>');
     for (var i = 0; i < days.length; ++i)
-      $('#main-schedule ol').append('<li class="'+days[i]
-        +'"><ul class="courses"></ul></li>');
+      $('<li class="'+days[i]
+        +'"><ul class="courses"></ul></li>')
+        .css({
+          "width":(Calendar.day_width-1)+"px",
+          "height":(Calendar.half_height*(Calendar.end_time-Calendar.start_time)*2)+"px"
+        })
+        .appendTo('#main-schedule ol');
 
     /*
      * Add courses
@@ -102,6 +108,8 @@ var Calendar = {
       var times = $.trim(e.find('.times').html()).split('<br>');
       var locs = $.trim(e.find('.locations').html()).split('<br>');
 
+      var day_map = { "M":"monday","T":"tuesday","W":"wednesday","R":"thursday","F":"friday" };
+
       for (var i = 0; i < dayss.length - 1; ++i) {
         var days = dayss[i].split("");
         for (var j = 0; j < days.length; ++j) {
@@ -115,7 +123,7 @@ var Calendar = {
             + '</li>').css({
               'opacity': 0,
               'border-left-color': $(course).css("border-left-color"),
-            }).appendTo('#calendar .' + days[j] + ' .courses');
+            }).appendTo('#calendar .' + day_map[days[j]] + ' .courses');
         }
       }
     }
@@ -127,7 +135,7 @@ var Calendar = {
   delete: function(d) {
     Calendar.used_colors ^= 1 << $('#schedule').find(d).attr('color-index');
     $(d).fadeOut().remove();
-    var days = ['M', 'T', 'W', 'R', 'F'];
+    var days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
     for (var i = 0; i < days.length; ++i) {
       Calendar.layoutDay($('#main-schedule li.' + days[i] + ' .courses li'));
     }
@@ -155,8 +163,8 @@ var Calendar = {
           height: (Calendar.half_height*dur/30-1)+"px"
         });
         $(events[at]).animate({
-          width: (134/cols-5)+"px",
-          left: (events[at].left * 134/cols-1)+"px",
+          width: (Calendar.day_width/cols-5)+"px",
+          left: (events[at].left * Calendar.day_width/cols-1)+"px",
           opacity: 1
         });
       }

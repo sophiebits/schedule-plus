@@ -34,10 +34,11 @@ ul#schedules-list {
 ul#schedules-list li.schedule {
   float:left;
   margin:5px; padding:12px;
-  width:284px;
+  width:281px;
   color:#999;
-  background-color:#fff;
-  border:1px solid #eee;
+  background-color:#eee;
+  border:1px solid #ccc;
+  border-left-width:4px;
   border-radius:5px;
 }
 ul#schedules-list h3.schedule-title {
@@ -153,7 +154,11 @@ h1#schedule-user {
 #add-course input {
   float:left;
   width:203px; height:14px;
+  border-color:#aaa;
   font-size:12px;
+}
+#add-course input:focus {
+  border-color:#1fbbbd;
 }
 #add-course input[type=submit] {
   display:block;
@@ -176,9 +181,9 @@ h1#schedule-user {
   position:relative;
   padding:8px;
   margin-top:6px;
-  color:#666;
+  color:#333;
   background-color:#eee;
-  border:1px solid #ccc;
+  border:1px solid #aaa;
   border-left-width:4px;
   border-radius:5px;
 }
@@ -236,9 +241,6 @@ h1#schedule-user {
   color:#000;
   background:#fff none;
 }
-#schedule .sections li {
-  height:20px;
-}
 #schedule .sections .lecture {
   background-image:url('/images/eee-bg.gif');
   border:1px solid #ddd;
@@ -251,15 +253,25 @@ h1#schedule-user {
   color:#666;
 }
 #schedule .sections a:hover {
-  color:#1fbbbd;
+  text-decoration:none;
+  background-color:#ddd;
+  color:#333;
 }
 #schedule .sections .lecture-num,
 #schedule .sections .section-ltr,
-#schedule .sections .days,
-#schedule .sections .times {
-  display:block;
-  float:left;
+#schedule .sections .days {
+  display:inline-block;
+  width:20px;
   padding:4px 5px;
+}
+#schedule .sections .days {
+  text-align:center;
+  width:30px;
+}
+#schedule .sections .times {
+  display:inline-block;
+  padding:4px 5px;
+  text-align:right;
 }
 #schedule .sections .section-ltr {
   clear:both;
@@ -268,9 +280,13 @@ h1#schedule-user {
 #schedule .sections .even {
   background-color:#f3f3f3;
 }
-#schedule .sections .selected {
+#schedule .sections .selected a {
   color:#fff;
-  background-color:#1fbbbd;
+  background-color:#666;
+}
+#schedule .sections .selected a:hover {
+  text-decoration:none;
+  cursor:default;
 }
 #total-units {
   display:block;
@@ -284,26 +300,26 @@ h1#schedule-user {
  */
 #calendar {
   position:relative;
-  width:670px;
-  height:600px;
-  margin:20px 0 0 50px;
+  width:630px;
+  height:560px;
+  margin:20px 0 0 90px;
   background-image:url('/images/eee-bg.gif');
   list-style-type:none;
   clear:both;
 }
 #calendar #times {
   position:absolute;
-  left:-35px; top:-1px;
-  width:705px;
+  left:-45px; top:-1px;
+  width:715px;
   height:100%;
 }
 #calendar #times li {
   display:block;
   position:absolute;
   width:100%;
-  color:#999;
+  color:#aaa;
   text-align:left;
-  font-size:10px;
+  font-size:11px;
   border-top:1px solid #fff;
   overflow:hidden;
 }
@@ -320,26 +336,20 @@ h1#schedule-user {
   width:100%; height:100%;
   /*border-top:1px dashed #ccc;*/
 }
-.M { }
-.T { left:134px }
-.W { left:268px }
-.R { left:402px }
-.F { left:536px }
-.M,.T,.W,.R,.F {
-  position:absolute;
-  width:134px;
+.monday, .tuesday, .wednesday, .thursday, .friday {
+  float:left;
+  position:relative;
   height:100%;
   border-left:1px solid #ddd;
 }
 #calendar .event {
   display:block;
   position:absolute;
-  width:100%;
   color:#333;
   font-size:11px;
   text-align:left;
   background-color:#ddd;
-  border:1px solid #bbb;
+  border:1px solid #999;
   border-left-width:4px;
   border-radius:5px;
 }
@@ -348,7 +358,6 @@ h1#schedule-user {
   background-color:#fff;
 }
 #calendar .event.highlight {
-  border-color:#ccc;
   background-color:#fff;
 }
 #calendar .event.highlight .number {
@@ -359,7 +368,6 @@ h1#schedule-user {
   margin:4px 6px 0;
   color:#333;
   font-weight:700;
-  letter-spacing:0.1px;
 }
 #calendar .event .location {
   display:block;
