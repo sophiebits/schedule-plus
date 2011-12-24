@@ -74,9 +74,10 @@
       <dd><%= @course.coreqs_str %></dd>
     </dl>
     <h2 class="facebox-header">Adam Weis, Jason Macdonald, Ian McKellen,
-    and 30 others took <%= @course.number %> this semester.</h2>
+    and 30 others are taking <%= @course.number %> this semester.</h2>
     <div class="facebox">
       <ul id="course-now-list">
+        <% for i in 0..9 do %>
         <li>
           <a href="/user/?" class="tooltip-link" tooltip="Facebook User">
             <img class="facebox-pic" 
@@ -84,69 +85,7 @@
                  src="http://graph.facebook.com/1/picture" />
           </a>
         </li>
-        <li>
-          <a href="/user/?" class="tooltip-link" tooltip="Facebook User">
-            <img class="facebox-pic" 
-                 alt="Facebook User" 
-                 src="http://graph.facebook.com/1/picture" />
-          </a>
-        </li>
-        <li>
-          <a href="/user/?" class="tooltip-link" tooltip="Facebook User">
-            <img class="facebox-pic" 
-                 alt="Facebook User" 
-                 src="http://graph.facebook.com/1/picture" />
-          </a>
-        </li>
-        <li>
-          <a href="/user/?" class="tooltip-link" tooltip="Facebook User">
-            <img class="facebox-pic" 
-                 alt="Facebook User" 
-                 src="http://graph.facebook.com/1/picture" />
-          </a>
-        </li>
-        <li>
-          <a href="/user/?" class="tooltip-link" tooltip="Facebook User">
-            <img class="facebox-pic" 
-                 alt="Facebook User" 
-                 src="http://graph.facebook.com/1/picture" />
-          </a>
-        </li>
-        <li>
-          <a href="/user/?" class="tooltip-link" tooltip="Facebook User">
-            <img class="facebox-pic" 
-                 alt="Facebook User" 
-                 src="http://graph.facebook.com/1/picture" />
-          </a>
-        </li>
-        <li>
-          <a href="/user/?" class="tooltip-link" tooltip="Facebook User">
-            <img class="facebox-pic" 
-                 alt="Facebook User" 
-                 src="http://graph.facebook.com/1/picture" />
-          </a>
-        </li>
-        <li>
-          <a href="/user/?" class="tooltip-link" tooltip="Facebook User">
-            <img class="facebox-pic" 
-                 alt="Facebook User" 
-                 src="http://graph.facebook.com/1/picture" />
-          </a>
-        </li>
-        <li>
-          <a href="/user/?" class="tooltip-link" tooltip="Facebook User">
-            <img class="facebox-pic" 
-                 alt="Facebook User" 
-                 src="http://graph.facebook.com/1/picture" />
-          </a>
-        </li>
-        <li>
-          <a href="/user/?" class="tooltip-link" tooltip="Facebook User">
-            <img class="facebox-pic" 
-                 alt="Facebook User" 
-                 src="http://graph.facebook.com/1/picture" />
-          </a>
-        </li>
+        <% end %>
       </ul>
       <span class="expand">see all</span>
     </div>
@@ -154,6 +93,7 @@
     95 others have taken <%= @course.number %> previously.</h2>
     <div class="facebox">
       <ul id="course-prev-list">
+        <% for i in 0..9 do %>
         <li>
           <a href="/user/?" class="tooltip-link" tooltip="Facebook User">
             <img class="facebox-pic" 
@@ -161,69 +101,7 @@
                  src="http://graph.facebook.com/1/picture" />
           </a>
         </li>
-        <li>
-          <a href="/user/?" class="tooltip-link" tooltip="Facebook User">
-            <img class="facebox-pic" 
-                 alt="Facebook User" 
-                 src="http://graph.facebook.com/1/picture" />
-          </a>
-        </li>
-        <li>
-          <a href="/user/?" class="tooltip-link" tooltip="Facebook User">
-            <img class="facebox-pic" 
-                 alt="Facebook User" 
-                 src="http://graph.facebook.com/1/picture" />
-          </a>
-        </li>
-        <li>
-          <a href="/user/?" class="tooltip-link" tooltip="Facebook User">
-            <img class="facebox-pic" 
-                 alt="Facebook User" 
-                 src="http://graph.facebook.com/1/picture" />
-          </a>
-        </li>
-        <li>
-          <a href="/user/?" class="tooltip-link" tooltip="Facebook User">
-            <img class="facebox-pic" 
-                 alt="Facebook User" 
-                 src="http://graph.facebook.com/1/picture" />
-          </a>
-        </li>
-        <li>
-          <a href="/user/?" class="tooltip-link" tooltip="Facebook User">
-            <img class="facebox-pic" 
-                 alt="Facebook User" 
-                 src="http://graph.facebook.com/1/picture" />
-          </a>
-        </li>
-        <li>
-          <a href="/user/?" class="tooltip-link" tooltip="Facebook User">
-            <img class="facebox-pic" 
-                 alt="Facebook User" 
-                 src="http://graph.facebook.com/1/picture" />
-          </a>
-        </li>
-        <li>
-          <a href="/user/?" class="tooltip-link" tooltip="Facebook User">
-            <img class="facebox-pic" 
-                 alt="Facebook User" 
-                 src="http://graph.facebook.com/1/picture" />
-          </a>
-        </li>
-        <li>
-          <a href="/user/?" class="tooltip-link" tooltip="Facebook User">
-            <img class="facebox-pic" 
-                 alt="Facebook User" 
-                 src="http://graph.facebook.com/1/picture" />
-          </a>
-        </li>
-        <li>
-          <a href="/user/?" class="tooltip-link" tooltip="Facebook User">
-            <img class="facebox-pic" 
-                 alt="Facebook User" 
-                 src="http://graph.facebook.com/1/picture" />
-          </a>
-        </li>
+        <% end %>
       </ul>
       <span class="expand">see all</span>
     </div>

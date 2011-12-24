@@ -1,6 +1,6 @@
 var Calendar = {
     
-  start_time: 8, 
+  start_time: 7, 
   end_time: 22, 
   half_height: 20,
   day_width: 126,
@@ -8,7 +8,7 @@ var Calendar = {
 
   colors: ["rgb(250,62,84)", "rgb(255,173,64)", "rgb(56,178,206)",
            "#00b454", "rgb(179,59,212)", 
-           "rgb(231,58,149)"],
+           "rgb(231,58,149)", "#bf4e30",  "#04819e"],
   used_colors: 0,
 
   init: function() {
@@ -24,8 +24,10 @@ var Calendar = {
       click: function() {
         var open = !$(this).hasClass('open');
         $('#schedule').find('.sections').stop(true,true).slideUp();
+        $('#schedule').find('.friends').stop(true,true).slideDown();
         $('.open').removeClass('open');
         if (open) {
+          $('.course'+$(this).find('.number').html()).find('.friends').slideUp();
           $('.course'+$(this).find('.number').html()).find('.sections').slideDown();
           $('.course'+$(this).find('.number').html()).addClass('open');
         }
@@ -60,7 +62,7 @@ var Calendar = {
     $('#calendar').append('<li id="main-schedule"><ol></ol></li>');
     for (var i = 0; i < days.length; ++i)
       $('<li class="'+days[i]
-        +'"><ul class="courses"></ul></li>')
+        +'"><span class="day-label">'+days[i]+'</span><ul class="courses"></ul></li>')
         .css({
           "width":(Calendar.day_width-1)+"px",
           "height":(Calendar.half_height*(Calendar.end_time-Calendar.start_time)*2)+"px"

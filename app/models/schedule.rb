@@ -38,6 +38,15 @@ class Schedule < ActiveRecord::Base
     end
   end
 
+  def make_active!
+    # make all other semester schedules inactive
+    user.schedules.by_semester(semester).each do |s|
+      s.update_attribute(:active, false)
+    end
+    update_attribute(:active, true)
+    true
+  end
+
   # Adds a course by course_id and section_id.
   # Assumes course_id and section_id are valid
   # Uses section A by default.

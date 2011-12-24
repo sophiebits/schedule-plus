@@ -21,28 +21,34 @@ class SchedulesController < ApplicationController
   def create
     redirect_to root_path if !current_user
     @schedule = current_user.schedules.create(:semester_id => current_semester)
+    # set schedule to active if user has no more schedules
     @schedule.update_attribute(:active, true) if 
       current_user.schedules.by_semester(current_semester).length == 1
-    render "show"
+    redirect_to schedule_path(@schedule)
   end
 
+  # TODO set another schedule to active
   def destroy
     @schedule = Schedule.find_by_url(params[:id])
     @schedule.destroy
-    redirect_to schedules_path
+    respond_to do |format|
+      format.html { redirect_to schedules_path }
+      format.js
+    end
   end
 
   def update
     @schedule = Schedule.find_by_url(params[:id])
     if params[:schedule][:active]
-      # make all other semester schedules inactive
-      current_user.schedules.by_semester(@schedule.semester).each do |s|
-        s.update_attribute(:active, false)
-      end
+      @schedule.make_active!
+    else
+      @schedule.update_attributes(params[:schedule])
     end
-    @schedule.update_attributes(params[:schedule])
     flash[:notice] = "Updated successfully."
-    redirect_to schedules_path
+    respond_to do |format|
+      format.html { redirect_to schedules_path }
+      format.js
+    end
   end
 
   def import
@@ -70,7 +76,8 @@ class SchedulesController < ApplicationController
     end
   end
 
-	def get_friends_in_course
+	# FIXME this needs a rewrite. also needs to go in another controller
+  def get_friends_in_course
 		if request.xhr?
 			scheduled_course_id = params[:scheduled_course_id].to_i
 			course_id = params[:course_id].to_i

@@ -156,3 +156,35 @@ a#current-user-schedule-link {
 }
 */
 
+/*************************************************************************
+ * Footer Styles
+ *************************************************************************
+ */
+#page-footer.container {
+  clear:both;
+  font-size:12px;
+  margin-top:20px;
+  border-top:1px solid #ddd;
+}
+#acm-logo,
+#cmu-logo {
+  float:left;
+  margin:20px 30px 0 0;
+  width:auto;
+}
+#privacy-link,
+#tos-link,
+#copyright {
+  color:#1fbbbd;
+  float:right;
+  text-decoration:none;
+  margin:20px 10px 0;
+}
+#privacy-link:hover,
+#tos-link:hover {
+  text-decoration:underline;
+}
+#copyright {
+  color:#666;
+}
+

@@ -8,6 +8,9 @@ h1#schedule-index-title {
  * ScheduleIndex Styles
  *************************************************************************
  */
+#import-scheduleman {
+
+}
 #no-schedules-notify {
   padding:20px 0;
   color:#999;
@@ -33,7 +36,8 @@ ul#schedules-list {
 }
 ul#schedules-list li.schedule {
   float:left;
-  margin:5px; padding:12px;
+  margin:5px 5px 30px; 
+  padding:12px;
   width:281px;
   color:#999;
   background-color:#eee;
@@ -53,25 +57,25 @@ ul#schedules-list li.schedule:hover {
 ul#schedules-list li.schedule.m3z {
   clear:left;
 }
-ul#schedules-list .schedule-options {
+.schedule-options, #schedule-options {
   float:right;
 }
-ul#schedules-list .schedule-public,
-ul#schedules-list .schedule-private {
+.schedule-public,
+.schedule-private {
   display:block; float:right;
   margin-right:5px; padding-top:15px;
   width:65px; height:0;
   background-image:url('/images/sprites.png');
   overflow:hidden;
 }
-ul#schedules-list .schedule-public {
+.schedule-public {
   background-position:0 -15px; 
   cursor:default;
 }
-ul#schedules-list .schedule-private:hover {
+.schedule-private:hover {
   background-position:0 -30px;
 }
-ul#schedules-list .schedule-delete {
+.schedule-delete {
   display:block; float:right;
   padding-top:15px;
   width:15px; height:0;
@@ -79,7 +83,7 @@ ul#schedules-list .schedule-delete {
   background-position:-65px 0;
   overflow:hidden;
 }
-ul#schedules-list .schedule-delete:hover {
+.schedule-delete:hover {
   background-position:-65px -15px;
 }
 ul#schedules-list .course-selections {
@@ -110,13 +114,13 @@ ul#schedules-list .course-selections .number {
 }
 h1#schedule-user {
   padding-top:8px;
-  color:#1fbbbd;
+  color:#188d8e;
   font-size:20px;
   font-weight:300;
 }
 #schedule-user-captions {
   margin-top:2px;
-  color:#188d8e;
+  color:#1fbbbd;
   font-size:12px;
   height:15px;
 }
@@ -154,7 +158,7 @@ h1#schedule-user {
 #add-course input {
   float:left;
   width:203px; height:14px;
-  border-color:#aaa;
+  border-color:#ddd;
   font-size:12px;
 }
 #add-course input:focus {
@@ -234,6 +238,13 @@ h1#schedule-user {
 #schedule .course-info-link:hover { background-position:-90px -15px; }
 #schedule .course-times-link:hover { background-position:-90px -25px; }
 #schedule .course-delete-link:hover { background-position:-90px -35px; }
+#schedule .course .friends {
+  font-size:10px;
+  margin-top:4px;
+  padding-top:4px;
+  border-top:1px solid #ddd;
+  color:#999;
+}
 #schedule .sections {
   display:block;
   margin-top:6px;
@@ -290,7 +301,7 @@ h1#schedule-user {
 }
 #total-units {
   display:block;
-  margin-top:15px;
+  margin:15px 0;
   color:#999;
   font-size:12px;
 }
@@ -301,8 +312,8 @@ h1#schedule-user {
 #calendar {
   position:relative;
   width:630px;
-  height:560px;
-  margin:20px 0 0 90px;
+  height:600px;
+  margin:20px 0 40px 90px;
   background-image:url('/images/eee-bg.gif');
   list-style-type:none;
   clear:both;
@@ -335,6 +346,11 @@ h1#schedule-user {
   bottom:-50%; left:30px;
   width:100%; height:100%;
   /*border-top:1px dashed #ccc;*/
+}
+.day-label {
+  font-size:11px;
+  color:#aaa;
+  padding:5px;
 }
 .monday, .tuesday, .wednesday, .thursday, .friday {
   float:left;
@@ -372,6 +388,7 @@ h1#schedule-user {
 #calendar .event .location {
   display:block;
   margin:2px 6px;
+  font-size:10px;
   color:#777;
 }
 

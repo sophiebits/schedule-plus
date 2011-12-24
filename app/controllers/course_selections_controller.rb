@@ -10,7 +10,6 @@ class CourseSelectionsController < ApplicationController
       
       results = Course.search(search)
       if results.length == 1
-        p "ONE"
 				section = results.first.find_by_section(section_letter)
 				section_id = section ? section.id : nil
         if section_id
@@ -23,9 +22,8 @@ class CourseSelectionsController < ApplicationController
           format.js
         end
       else
-        p "MORE"
+        # FIXME this doesn't work properly for json requests
         redirect_to courses_path(:search => params[:search])
-        # redirect_to schedule_path(params[:schedule_id])
       end
     else
       @selection = Schedule.find_by_url(params[:schedule_id]).add_course(params[:id])
