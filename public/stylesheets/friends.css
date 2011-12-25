@@ -8,30 +8,36 @@
   font-size:18px;
 }
 #friends-list {
-  margin-top:10px;
+  margin-top:30px;
+  position:relative;
+  top:-15px;
   font-size:11px;
 }
 #friends-list li {
   float:left;
+  margin:0 8px 8px 0;
 }
 a.friend-link {
   display:block;
-  height:50px; width:170px;
-  padding:10px;
+  height:50px; width:160px;
+  padding:8px;
+  background-color:#eee;
   border:1px solid transparent;
-  border-radius:5px 0;
+  border-left-width:4px;
+  border-radius:5px;
+  border-color:#ddd;
 }
 a.friend-link:hover {
   background-color:#f3f3f3;
   text-decoration:none;
-  border-color:#ddd;
+  border-color:#1fbbbd;
 }
 .friend-pic {
   float:left;
   height:50px; width:50px;
   margin-right:10px;
   vertical-align:text-bottom;
-  border-radius:5px 0;
+  border-radius:5px;
 }
 #friends-list span { display:block; }
 .friend-name {

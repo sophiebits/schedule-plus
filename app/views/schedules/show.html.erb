@@ -5,13 +5,24 @@
   <div id="content-header">
     <div class="container">
     <% if user_signed_in? %>
+      <% if (current_user.friends.include? @schedule.user) || @schedule.user == current_user %>
       <img id="schedule-user-pic"
            alt="Vincent Siao"
-           src="<%= @schedule.user.fb.try(:picture) %>" />
+           src="http://graph.facebook.com/<%= @schedule.user.uid %>/picture" />
       <h1 id="schedule-user"><%= @schedule.user.name %></h1>
       <div id="schedule-user-captions">
         <span id="schedule-user-major">has no friends QQ</span>
       </div>
+      <% else %>
+      <img id="schedule-user-pic"
+           alt="schedule+ User"
+           src="http://graph.facebook.com/1/picture" />
+      <h1 id="schedule-user">schedule+ user</h1>
+      <div id="schedule-user-captions">
+        <span id="schedule-user-major">You don't know me, and I don't know you.</span>
+      </div>
+      <% end %>
+      <% if current_user && current_user == @schedule.user %>
       <div id="schedule-options">
         <!--<%= link_to "Delete", 
                     schedule_path(@schedule), 
@@ -27,6 +38,7 @@
                       :remote => true %>
         <% end %>-->
       </div>
+    <% end %>
     <% else %>
       <p style="text-align:center;color:#666">schedule+ connects you to your Carnegie Mellon 
       friends on Facebook by matching your course schedules. 

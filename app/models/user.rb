@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
-  
+  scope :public, :conditions => { :private => false }
+
   # omniauth
   has_many :authentications
   has_many :schedules
@@ -12,6 +13,7 @@ class User < ActiveRecord::Base
 
   def apply_omniauth(omniauth)
     self.name = omniauth['user_info']['name'] if name.blank?
+    self.uid = omniauth['uid']
     authentications.build(:provider => omniauth['provider'], 
                           :uid => omniauth['uid'],
                           :token => (omniauth['credentials']['token'] rescue nil))
@@ -28,10 +30,11 @@ class User < ActiveRecord::Base
 
   def friends
     if fb
-      fb_friends = fb.friends
+      fids = fb.friends.map(&:identifier)
+      User.where(:uid => fids)
       # uids = User.all.collect{|u|u.uid if friends.include? u.uid}.compact
       # FIXME FIXME FIXME PLEASE
-      @friends = fb_friends
+      # @friends = fb.friends
     else
       nil
     end

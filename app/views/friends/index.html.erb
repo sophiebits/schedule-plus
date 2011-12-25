@@ -2,11 +2,11 @@
 <div id="page-content" class="friends">
   <div id="content-header">
     <div class="container">
-      <h1>Friends (8)</h1>
-      <span class="tooltip" id="share-prompt">
+      <h1>Friends (<%= @friends.length %>)</h1>
+      <span id="share-prompt">
         Share schedule+ with your friends on facebook to see more schedules!
+        <a href="#" class="fb-share">Share</a>
       </span>
-      <a href="#" class="fb-share">Share</a>
       <script type="text/javascript">
       $(document).ready(function() {
         $('.fb-share').click(function(e) {
@@ -26,18 +26,19 @@
   </div>
   <div class="container">
   <ul id="friends-list">
-<% @friends.each do |friend| %>
+<% @friends.each do |friend| if friend.main_schedule %>
     <li>
-      <a href="#" class="friend-link">
+      <a href="<%= schedule_path(friend.main_schedule) %>" class="friend-link">
         <img class="friend-pic"
              alt="<%= friend.name %>"
-             src="http://graph.facebook.com/<%= friend.identifier %>/picture" />
+             src="http://graph.facebook.com/<%= friend.uid %>/picture" />
         <span class="friend-name"><%= friend.name %></span>
         <span class="friend-mutual-courses"></span>
-        <span class="friend-status"><!-- friend.status --></span>
+        <span class="friend-status"><%= friend.status %></span>
       </a>
     </li>
-<% end %>
+<% end end %>
+    <!--
     <li>
       <a href="#" class="friend-link">
         <img class="friend-pic"
@@ -138,6 +139,7 @@
         <span class="friend-status">free</span>
       </a>
     </li>
+    -->
   </ul>
   </div>
 </div>
