@@ -13,24 +13,25 @@
                  :class => "course-delete-link" %>
   <% end %>
   </div>
-  <% if user_signed_in? %>
+  <% if user_signed_in? && current_user.main_schedule %>
   <div class="friends">
     <% students = cs.course.students 
        you = students.delete(current_user) 
        friends = students & current_user.friends
 
+       # FIXME THIS IS SO UGLY
        if you
          if friends.length == 0
            if students.length == 0
-             %>You are in <%= link_to cs.number, course_path(cs.course) %>.<%
+             %>You are in this course.<%
            else
              %>You and <%= students.length %> <%= 
-             if students.length > 1 then 'others' else 'other' end %> are in <%= link_to cs.number, course_path(cs.course) %>.<%
+             if students.length > 1 then 'others' else 'other' end %> are in this course.<%
            end
          else
            if students.length <= 1
              %>You and <%= link_to friends.first.name, 
-             schedule_path(friends.first.main_schedule) %> are in <%= link_to cs.number, course_path(cs.course) %>.<%
+             schedule_path(friends.first.main_schedule) %> are in this course.<%
            else
              %>You, <%= link_to friends.first.name, 
              schedule_path(friends.first.main_schedule) %>, and 
@@ -43,17 +44,17 @@
            if students.length == 0
              %>Well, this is awkward.<%
            else
-             %><%= students.length %> people are in <%= link_to cs.number, course_path(cs.course) %>.<%
+             %><%= students.length %> people are in this course.<%
            end
          else
            if students.length <= 1
             %><%= link_to friends.first.name, 
-             schedule_path(friends.first.main_schedule) %> is in <%= link_to cs.number, course_path(cs.course) %>.<%
+             schedule_path(friends.first.main_schedule) %> is in this course.<%
            else
              %><%= link_to friends.first.name, 
              schedule_path(friends.first.main_schedule) %> and 
              <%= students.length - 1 %> <%=
-             if students.length - 1 > 1 then 'others' else 'other' end %> are in <%= link_to cs.number, course_path(cs.course) %>.<%
+             if students.length - 1 > 1 then 'others' else 'other' end %> are in this course.<%
            end
          end
        end
@@ -76,8 +77,8 @@
   <% sections.each do |section| %>
     <li class="section <%= cycle('odd', 'even', :name => 'parity') %><%= " selected" if cs.section == section %>" id="section<%= section.id %>">
       <% if current_user && current_user == cs.schedule.user %>
-      <a href="<%= schedule_selections_path(:schedule_id => cs.schedule, :id => section.id)%>" 
-         data-method="post" data-remote="true">
+      <a href="<%= schedule_selection_path(:schedule_id => cs.schedule, :id => cs.id, :section_id => section.id)%>" 
+         data-method="put" data-remote="true">
       <% end %>
         <span class="section-ltr"><%= section.letter %></span>
         <span class="days"><% section.scheduled_times.each do |time|

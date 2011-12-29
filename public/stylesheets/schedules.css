@@ -240,9 +240,8 @@ h1#schedule-user {
   font-size:10px;
   margin-top:4px;
   padding-top:4px;
-  padding-left:14px;
-  background-image:url('/images/sprites.png');
-  background-position:-80px -25px;
+  padding-left:10px;
+  background:transparent url('/images/f-icon.png') left 3px no-repeat;
   border-top:1px solid #ddd;
   color:#666;
 }
