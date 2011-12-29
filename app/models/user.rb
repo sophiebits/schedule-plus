@@ -9,6 +9,10 @@ class User < ActiveRecord::Base
     schedules.active.by_semester(semester).first
   end
 
+  def courses(semester=Semester.current)
+    main_schedule(semester).course_selections.map(&:course)
+  end
+
 ############################# AUTHENTICATION ####################################
 
   def apply_omniauth(omniauth)

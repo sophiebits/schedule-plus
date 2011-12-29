@@ -3,10 +3,10 @@
   <div id="content-header">
     <div class="container">
       <h1>Friends (<%= @friends.length %>)</h1>
-      <span id="share-prompt">
+      <!--<span id="share-prompt">
         Share schedule+ with your friends on facebook to see more schedules!
         <a href="#" class="fb-share">Share</a>
-      </span>
+      </span>-->
       <script type="text/javascript">
       $(document).ready(function() {
         $('.fb-share').click(function(e) {
@@ -33,113 +33,15 @@
              alt="<%= friend.name %>"
              src="http://graph.facebook.com/<%= friend.uid %>/picture" />
         <span class="friend-name"><%= friend.name %></span>
-        <span class="friend-mutual-courses"></span>
+        <span class="friend-mutual-courses"><% 
+        # mutual courses = intersection of two sets
+        mutuals = friend.courses & current_user.courses
+        # TODO on hover show actual courses
+         %><%= mutuals.length %> mutual courses</span>
         <span class="friend-status"><%= friend.status %></span>
       </a>
     </li>
 <% end end %>
-    <!--
-    <li>
-      <a href="#" class="friend-link">
-        <img class="friend-pic"
-             alt="Joe Smith"
-             src="http://graph.facebook.com/yuye.zhang/picture" />
-        <span class="friend-name">Dale Yuye Zhang</span>
-        <span class="friend-mutual-courses">3 mutual courses</span>
-        <span class="friend-status">free</span>
-      </a>
-    </li>
-    <li>
-      <a href="#" class="friend-link">
-        <img class="friend-pic"
-             alt="Joe Smith"
-             src="http://graph.facebook.com/jason.macdonald1/picture" />
-        <span class="friend-name">Jason MacDonald</span>
-        <span class="friend-mutual-courses">3 mutual courses</span>
-        <span class="friend-status">free</span>
-      </a>
-    </li>
-    <li>
-      <a href="#" class="friend-link">
-        <img class="friend-pic"
-             alt="Joe Smith"
-             src="http://graph.facebook.com/dbmikus/picture" />
-        <span class="friend-name">Dylan B.Mikus</span>
-        <span class="friend-mutual-courses">3 mutual courses</span>
-        <span class="friend-status">free</span>
-      </a>
-    </li>
-    <li>
-      <a href="#" class="friend-link">
-        <img class="friend-pic"
-             alt="Joe Smith"
-             src="http://graph.facebook.com/1/picture" />
-        <span class="friend-name">Ricky Ching-Yen Newsfeed Pai</span>
-        <span class="friend-mutual-courses">3 mutual courses</span>
-        <span class="friend-status">free</span>
-      </a>
-    </li>
-    <li>
-      <a href="#" class="friend-link">
-        <img class="friend-pic"
-             alt="Joe Smith"
-             src="http://graph.facebook.com/1/picture" />
-        <span class="friend-name">Joe Smith</span>
-        <span class="friend-mutual-courses">3 mutual courses</span>
-        <span class="friend-status">free</span>
-      </a>
-    </li>
-    <li>
-      <a href="#" class="friend-link">
-        <img class="friend-pic"
-             alt="Joe Smith"
-             src="http://graph.facebook.com/1/picture" />
-        <span class="friend-name">Joe Smith</span>
-        <span class="friend-mutual-courses">3 mutual courses</span>
-        <span class="friend-status">free</span>
-      </a>
-    </li>
-    <li>
-      <a href="#" class="friend-link">
-        <img class="friend-pic"
-             alt="Joe Smith"
-             src="http://graph.facebook.com/1/picture" />
-        <span class="friend-name">Joe Smith</span>
-        <span class="friend-mutual-courses">3 mutual courses</span>
-        <span class="friend-status">free</span>
-      </a>
-    </li>
-    <li>
-      <a href="#" class="friend-link">
-        <img class="friend-pic"
-             alt="Joe Smith"
-             src="http://graph.facebook.com/1/picture" />
-        <span class="friend-name">Joe Smith</span>
-        <span class="friend-mutual-courses">3 mutual courses</span>
-        <span class="friend-status">free</span>
-      </a>
-    </li>
-    <li>
-      <a href="#" class="friend-link">
-        <img class="friend-pic"
-             alt="Joe Smith"
-             src="http://graph.facebook.com/1/picture" />
-        <span class="friend-name">Joe Smith</span>
-        <span class="friend-mutual-courses">3 mutual courses</span>
-        <span class="friend-status">free</span>
-      </a>
-    </li>
-    <li>
-      <a href="#" class="friend-link">
-        <img class="friend-pic"
-             alt="Joe Smith"
-             src="http://graph.facebook.com/1/picture" />
-        <span class="friend-name">Joe Smith</span>
-        <span class="friend-mutual-courses">3 mutual courses</span>
-        <span class="friend-status">free</span>
-      </a>
-    </li>
-    -->
   </ul>
   </div>
 </div>

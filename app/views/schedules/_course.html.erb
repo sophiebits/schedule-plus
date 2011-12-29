@@ -13,11 +13,13 @@
                  :class => "course-delete-link" %>
   <% end %>
   </div>
-  <% if user_signed_in? && current_user.main_schedule %>
+  <% if false #user_signed_in? && current_user.main_schedule %>
   <div class="friends">
     <% students = cs.course.students 
        you = students.delete(current_user) 
        friends = students & current_user.friends
+
+# FIXME SOMETHING AWKWARD
 
        # FIXME THIS IS SO UGLY
        if you

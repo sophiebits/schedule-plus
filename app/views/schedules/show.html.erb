@@ -5,6 +5,29 @@
   <div id="content-header">
     <div class="container">
     <% if user_signed_in? %>
+      <% if current_user && current_user == @schedule.user %>
+      <div id="schedule-options">
+        <h3>Options</h3>
+        <%= link_to "Delete", 
+                    schedule_path(@schedule), 
+                    :id => 'schedule-delete',
+                    :method => :delete %>
+        <!--<% if @schedule.active %>
+          <a href="#" class="schedule-public pub-link">public</a>
+        <% else %>
+          <%= link_to 'private',
+                      schedule_path(@schedule, :schedule => {:active => true}),
+                      :class => "schedule-private pub-link",
+                      :method => 'put',
+                      :remote => true %>
+        <% end %>-->
+        <%= link_to "Clone",
+                    schedules_path(:clone => @schedule),
+                    :id => "schedule-clone",
+                    :method => :post %>
+        <a href="#" id="schedule-share">Share</a>
+      </div>
+    <% end %>
       <% if (current_user.friends.include? @schedule.user) || @schedule.user == current_user %>
       <img id="schedule-user-pic"
            alt="Vincent Siao"
@@ -22,33 +45,16 @@
         <span id="schedule-user-major">You don't know me, and I don't know you.</span>
       </div>
       <% end %>
-      <% if current_user && current_user == @schedule.user %>
-      <div id="schedule-options">
-        <!--<%= link_to "Delete", 
-                    schedule_path(@schedule), 
-                    :class => 'schedule-delete',
-                    :method => :delete %>
-        <% if @schedule.active %>
-          <a href="#" class="schedule-public pub-link">public</a>
-        <% else %>
-          <%= link_to 'private',
-                      schedule_path(@schedule, :schedule => {:active => true}),
-                      :class => "schedule-private pub-link",
-                      :method => 'put',
-                      :remote => true %>
-        <% end %>-->
-      </div>
-    <% end %>
-    <% else %>
+  <% else %>
       <p style="text-align:center;color:#666">schedule+ connects you to your Carnegie Mellon 
       friends on Facebook by matching your course schedules. 
       <a href="/auth/facebook" id="fb-login">Login with Facebook</a></p>
-    <% end %>
+  <% end %>
     </div>
   </div>
   <div class="container">
     <div id="schedule-container">
-      <% if current_user && current_user == @schedule.user %>
+      <% if current_user == @schedule.user %>
         <%= form_tag schedule_selections_path(@schedule),
                      :id => 'add-course', :method => :post, :remote => true do %>
           <%= text_field_tag :search, nil, :placeholder => 'Add a Course' %>
@@ -64,6 +70,22 @@
       <span id="total-units">Total: <%= @schedule.units %> units</span>
     </div>
     <div id="calendar-container">
+      <% if current_user == @schedule.user %>
+      <% if @schedule.active %>
+      <span id="schedule-public-notify">
+      <strong>This is your public schedule</strong>. 
+      Your friends will see this schedule when they visit your page.
+      </span>
+      <% else %>
+      <span id="schedule-private-notify">
+      This is a private schedule - others will not see the
+      contents of this schedule. 
+      <%= link_to 'Make public',
+                  schedule_path(@schedule, :schedule => {:active => true}),
+                  :method => 'put' %>
+      </span>
+      <% end %>
+      <% end %>
       <ul id="calendar"></ul>
     </div>
   </div>

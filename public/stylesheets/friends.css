@@ -37,7 +37,6 @@ a.friend-link:hover {
   height:50px; width:50px;
   margin-right:10px;
   vertical-align:text-bottom;
-  border-radius:5px;
 }
 #friends-list span { display:block; }
 .friend-name {
@@ -45,9 +44,10 @@ a.friend-link:hover {
   font-size:13px;
 }
 .friend-mutual-courses {
-  color:#1fbbbd;
   margin-top:2px;
+  color:#666;
 }
 .friend-status {
+  margin-top:2px;
   color:#999;
 }

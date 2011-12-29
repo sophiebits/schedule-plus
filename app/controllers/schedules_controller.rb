@@ -21,6 +21,9 @@ class SchedulesController < ApplicationController
   def create
     redirect_to root_path if !current_user
     @schedule = current_user.schedules.create(:semester_id => current_semester)
+    if params[:clone]
+      @schedule.copy!(Schedule.find_by_url(params[:clone]))
+    end
     # set schedule to active if user has no more schedules
     @schedule.update_attribute(:active, true) if 
       current_user.schedules.by_semester(current_semester).length == 1
@@ -46,7 +49,7 @@ class SchedulesController < ApplicationController
     end
     flash[:notice] = "Updated successfully."
     respond_to do |format|
-      format.html { redirect_to schedules_path }
+      format.html { redirect_to schedule_path(@schedule) }
       format.js
     end
   end

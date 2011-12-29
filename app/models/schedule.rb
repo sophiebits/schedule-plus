@@ -47,6 +47,13 @@ class Schedule < ActiveRecord::Base
     true
   end
 
+  def copy!(schedule)
+    course_selections.map(&:destroy)
+    schedule.course_selections.each {|selection|
+      course_selections.create(:section => selection.section)
+    }
+  end
+  
   # Adds a course by course_id and section_id.
   # Assumes course_id and section_id are valid
   # Uses section A by default.
