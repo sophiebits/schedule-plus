@@ -163,6 +163,7 @@ a#current-user-schedule-link {
 #page-footer.container {
   clear:both;
   font-size:12px;
+  height:50px;
   margin-top:20px;
   border-top:1px solid #ddd;
 }
