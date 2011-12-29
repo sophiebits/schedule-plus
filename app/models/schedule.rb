@@ -1,7 +1,7 @@
 class Schedule < ActiveRecord::Base
   belongs_to :user
   belongs_to :semester
-  has_many :course_selections, :class_name => 'CourseSelection'
+  has_many :course_selections, :class_name => 'CourseSelection', :dependent => :destroy
   scope :active, :conditions => { :active => true }
   scope :by_semester, lambda {|sem| where(:semester_id => sem.id)}
 

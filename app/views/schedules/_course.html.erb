@@ -1,12 +1,11 @@
-<li class="course<%= cs.number %> course">
-  <span class="number"><%= cs.number %></span>
+<li class="course<%= cs.course.number %> course">
+  <span class="number"><%= cs.course.number %></span>
   <span class="selected_section"><%= cs.selected_section %></span>
   <span class="name"><%= cs.name %></span>
   <span class="units"><%= cs.course.units %> units</span>
   <div class="options">
     <%= link_to "info", course_path(cs.course), :class => "course-info-link" %>
   <% if current_user && current_user == cs.schedule.user %>
-    <%= link_to "times", course_path(cs.course), :class =>"course-times-link" %>
     <%= link_to "delete", 
                  schedule_selection_path(:schedule_id => cs.schedule, :id => cs.id),
                  :method => :delete,
@@ -14,9 +13,53 @@
                  :class => "course-delete-link" %>
   <% end %>
   </div>
+  <% if user_signed_in? %>
   <div class="friends">
-    (?) Jason MacDonald and 4 others.
+    <% students = cs.course.students 
+       you = students.delete(current_user) 
+       friends = students & current_user.friends
+
+       if you
+         if friends.length == 0
+           if students.length == 0
+             %>You are in <%= link_to cs.number, course_path(cs.course) %>.<%
+           else
+             %>You and <%= students.length %> <%= 
+             if students.length > 1 then 'others' else 'other' end %> are in <%= link_to cs.number, course_path(cs.course) %>.<%
+           end
+         else
+           if students.length <= 1
+             %>You and <%= link_to friends.first.name, 
+             schedule_path(friends.first.main_schedule) %> are in <%= link_to cs.number, course_path(cs.course) %>.<%
+           else
+             %>You, <%= link_to friends.first.name, 
+             schedule_path(friends.first.main_schedule) %>, and 
+             <%= students.length - 1 %> <%=
+             if students.length - 1 > 1 then 'others' else 'other' end %>.<%
+           end
+         end
+       else
+         if friends.length == 0
+           if students.length == 0
+             %>Well, this is awkward.<%
+           else
+             %><%= students.length %> people are in <%= link_to cs.number, course_path(cs.course) %>.<%
+           end
+         else
+           if students.length <= 1
+            %><%= link_to friends.first.name, 
+             schedule_path(friends.first.main_schedule) %> is in <%= link_to cs.number, course_path(cs.course) %>.<%
+           else
+             %><%= link_to friends.first.name, 
+             schedule_path(friends.first.main_schedule) %> and 
+             <%= students.length - 1 %> <%=
+             if students.length - 1 > 1 then 'others' else 'other' end %> are in <%= link_to cs.number, course_path(cs.course) %>.<%
+           end
+         end
+       end
+     %>
   </div>
+  <% end %>
   <ul class="sections">
   <% cs.course.sections_by_lecture.each do |lecture, sections| %>
   <% if lecture %>

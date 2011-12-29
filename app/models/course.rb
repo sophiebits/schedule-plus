@@ -1,8 +1,7 @@
 class Course < ActiveRecord::Base
   has_many :sections
   has_many :lectures
-  has_many :course_selections
-  has_many :schedules, :through => :course_selections
+  has_many :course_selections, :through => :sections
   belongs_to :semester
   belongs_to :department
   scope :by_semester, lambda {|sem| where(:semester_id => sem.id)}
@@ -57,7 +56,9 @@ class Course < ActiveRecord::Base
   end
 
   def students
-    schedules.active.map(&:user) 
+    course_selections.map(&:schedule)
+                     .select(&:active)
+                     .map(&:user)
   end
   
   private
