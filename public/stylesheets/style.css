@@ -18,6 +18,9 @@
   width:960px;
   font-size:14px;
 }
+.clear {
+  clear:both;
+}
 a {
   color:#1fbbbd;
   text-decoration:none

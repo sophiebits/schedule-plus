@@ -1,9 +1,7 @@
 class User < ActiveRecord::Base
-  scope :public, :conditions => { :private => false }
-
   # omniauth
-  has_many :authentications
-  has_many :schedules
+  has_many :authentications, :dependent => :destroy
+  has_many :schedules, :order => "id DESC", :dependent => :destroy
 
   def first_name
     if name then

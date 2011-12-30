@@ -48,6 +48,7 @@ class Schedule < ActiveRecord::Base
   end
 
   def copy!(schedule)
+    update_attribute(:semester, schedule.semester)
     course_selections.map(&:destroy)
     schedule.course_selections.each {|selection|
       course_selections.create(:section => selection.section)
