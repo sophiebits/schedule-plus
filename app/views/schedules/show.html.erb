@@ -1,91 +1,106 @@
-<%= content_for :javascript_includes do %>
-  <%= javascript_include_tag "calendar.js" %>
-<% end %>
+<% 
+selections = @schedule.course_selections
+
+# TODO replace with CanCan?
+editable = user_signed_in? && current_user == @schedule.user
+deletable = editable && !@schedule.active
+viewable = user_signed_in? && 
+           ((current_user.friends.include? @schedule.user) ||
+            (current_user == @schedule.user))
+
+# Page title and meta tag
+content_for :title do %><%=
+  @schedule.user.first_name + "'s " if viewable %><%=
+  @schedule.semester.name + " Schedule" %><%
+end
+
+# Description meta tag
+content_for :description do 
+  if selections.length >= 1 then %><%=
+    "Courses: " + selections[0].number %><%
+    for i in (1..selections.length-1) %><%=
+      ', ' + selections[i].number %><%
+    end 
+  else %><%= 
+    "An empty schedule. Not terribly interesting, I assure you." %><%
+  end
+end %><%
+
+content_for :javascript_includes do %><%= 
+  javascript_include_tag "calendar.js" %><% 
+end %>
 <div id="page-content" class="schedule">
   <div id="content-header">
-    <div class="container">
-    <% if user_signed_in? %>
-      <% if current_user && current_user == @schedule.user %>
+    <div class="container"><% 
+    if user_signed_in? %>
       <div id="schedule-options">
+        <%= link_to "Delete", schedule_path(@schedule), 
+                    :id => 'schedule-delete', :method => :delete if deletable %>
+        <%= link_to "Clone", schedules_path(:clone => @schedule),
+                    :id => "schedule-clone", :method => :post %>
+        <%= link_to "Share", "#", # TODO
+                    :id => "schedule-share" %>
         <h3>Options</h3>
-        <%= link_to "Delete", 
-                    schedule_path(@schedule), 
-                    :id => 'schedule-delete',
-                    :method => :delete %>
-        <!--<% if @schedule.active %>
-          <a href="#" class="schedule-public pub-link">public</a>
-        <% else %>
-          <%= link_to 'private',
-                      schedule_path(@schedule, :schedule => {:active => true}),
-                      :class => "schedule-private pub-link",
-                      :method => 'put',
-                      :remote => true %>
-        <% end %>-->
-        <%= link_to "Clone",
-                    schedules_path(:clone => @schedule),
-                    :id => "schedule-clone",
-                    :method => :post %>
-        <a href="#" id="schedule-share">Share</a>
-      </div>
-    <% end %>
-      <% if (current_user.friends.include? @schedule.user) || @schedule.user == current_user %>
+      </div><% 
+      if viewable 
+        uid = @schedule.user.uid
+        name = @schedule.user.name
+        caption = "has no friends QQ" # FIXME
+      else
+        uid = 1
+        name = "schedule+ user"
+        caption = "You don't know me, and I don't know you."
+      end %>
       <img id="schedule-user-pic"
            alt="Vincent Siao"
-           src="http://graph.facebook.com/<%= @schedule.user.uid %>/picture" />
-      <h1 id="schedule-user"><%= @schedule.user.name %></h1>
+           src="http://graph.facebook.com/<%= uid %>/picture" />
+      <h1 id="schedule-user"><%= name %></h1>
       <div id="schedule-user-captions">
-        <span id="schedule-user-major">has no friends QQ</span>
-      </div>
-      <% else %>
-      <img id="schedule-user-pic"
-           alt="schedule+ User"
-           src="http://graph.facebook.com/1/picture" />
-      <h1 id="schedule-user">schedule+ user</h1>
-      <div id="schedule-user-captions">
-        <span id="schedule-user-major">You don't know me, and I don't know you.</span>
-      </div>
-      <% end %>
-  <% else %>
-      <p style="text-align:center;color:#666">schedule+ connects you to your Carnegie Mellon 
-      friends on Facebook by matching your course schedules. 
-      <a href="/auth/facebook" id="fb-login">Login with Facebook</a></p>
-  <% end %>
+        <span id="schedule-user-major"><%= caption %></span>
+      </div><% 
+    else %>
+      <p id="schedule-login-notify">
+        schedule+ connects you to your Carnegie Mellon 
+        friends on Facebook by matching your course schedules. 
+        <a href="/auth/facebook" id="fb-login">Login with Facebook</a>
+      </p><% 
+    end %>
     </div>
   </div>
   <div class="container">
-    <div id="schedule-container">
-      <% if current_user == @schedule.user %>
-        <%= form_tag schedule_selections_path(@schedule),
-                     :id => 'add-course', :method => :post, :remote => true do %>
-          <%= text_field_tag :search, nil, :placeholder => 'Add a Course' %>
-          <%= submit_tag "Add" %>
-        <% end %>
-      <% end %>
-      <ul id="schedule">
-      <% @schedule.course_selections.each do |cs| %>
-        <%= render(:partial => 'course', :locals => {:cs => cs}) %>
-        <% reset_cycle('parity') %>
-      <% end %>
+    <div id="schedule-container"><% 
+      if editable %>
+      <%= form_tag schedule_selections_path(@schedule),
+                   :id => 'add-course', :method => :post, :remote => true do %>
+      <%= text_field_tag :search, nil, :placeholder => 'Add a Course' %>
+      <%= submit_tag "Add" %>
+      <% end 
+      end %>
+      <ul id="schedule"><% 
+      selections.each do |cs| %>
+        <%= render(:partial => 'course', :locals => {:cs => cs}) %><% 
+        reset_cycle('parity') 
+      end %>
       </ul>
       <span id="total-units">Total: <%= @schedule.units %> units</span>
     </div>
-    <div id="calendar-container">
-      <% if current_user == @schedule.user %>
-      <% if @schedule.active %>
+    <div id="calendar-container"><% 
+    if editable 
+      if @schedule.active %>
       <span id="schedule-public-notify">
       <strong>This is your public schedule</strong>. 
       Your friends will see this schedule when they visit your page.
-      </span>
-      <% else %>
+      </span><% 
+      else %>
       <span id="schedule-private-notify">
-      This is a private schedule - others will not see the
+      <strong>This is a private schedule.</strong> Others will not see the
       contents of this schedule. 
       <%= link_to 'Make public',
                   schedule_path(@schedule, :schedule => {:active => true}),
                   :method => 'put' %>
-      </span>
-      <% end %>
-      <% end %>
+      </span><% 
+      end 
+    end %>
       <ul id="calendar"></ul>
     </div>
   </div>

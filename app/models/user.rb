@@ -5,6 +5,14 @@ class User < ActiveRecord::Base
   has_many :authentications
   has_many :schedules
 
+  def first_name
+    if name then
+      name.split(" ").first
+    else
+      ""
+    end
+  end
+
   def main_schedule(semester=Semester.current)
     schedules.active.by_semester(semester).first
   end

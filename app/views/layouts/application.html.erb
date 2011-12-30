@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>schedule+<%= ' - ' + yield(:title) if content_for? :title %></title>
+	<meta name="title" content="schedule+<%= ' - ' + yield(:title) if content_for? :title %>" />
+  <meta name="description" content="<%= yield(:description) if content_for? :description %>" />
+  
+  <title>schedule+<%= ' - ' + yield(:title) if content_for? :title %></title>
 	<link rel="icon" type="image/ico" href="/favico.ico" />
   <link href='/stylesheets/nunito.css' rel='stylesheet' type='text/css' />
 	<%= stylesheet_link_tag "application" %>

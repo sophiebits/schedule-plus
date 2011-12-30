@@ -35,7 +35,11 @@
         <span class="friend-name"><%= friend.name %></span>
         <span class="friend-mutual-courses"><% 
         # mutual courses = intersection of two sets
-        mutuals = friend.courses & current_user.courses
+        if current_user.main_schedule then
+          mutuals = friend.courses & current_user.courses
+        else
+          mutuals = []
+        end
         # TODO on hover show actual courses
          %><%= mutuals.length %> mutual courses</span>
         <span class="friend-status"><%= friend.status %></span>

@@ -36,7 +36,7 @@ ul#schedules-list {
 }
 ul#schedules-list li.schedule {
   float:left;
-  margin:5px 5px 30px; 
+  margin:5px; 
   padding:12px;
   width:281px;
   color:#999;
@@ -103,7 +103,9 @@ ul#schedules-list .course-selections .number {
  * SchedulePage Styles
  *************************************************************************
  */
-.schedule#page-content #content-header {
+#schedule-login-notify {
+  text-align:center;
+  color:#666;
 }
 #schedule-user-pic {
   float:left;
@@ -129,7 +131,7 @@ h1#schedule-user {
   width:260px;
 }
 #schedule-options h3 {
-  float:left;
+  float:right;
   width:70px;
   padding:20px 15px;
   color:#999;
