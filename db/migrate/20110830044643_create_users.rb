@@ -4,7 +4,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string  :name
       t.integer :uid
 #      t.string  :andrew
-      t.boolean :private
+      t.boolean :discoverable
 
       t.timestamps
     end

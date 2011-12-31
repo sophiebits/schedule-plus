@@ -8,7 +8,7 @@ class CourseSelectionsController < ApplicationController
       search = parsed[0]
       section_letter = parsed[1] ? parsed[1].upcase : nil
       
-      results = Course.search(search)
+      results = Course.search(search).select {|c| c.semester == current_semester}
       if results.length == 1
 				section = results.first.find_by_section(section_letter)
 				section_id = section ? section.id : nil
@@ -23,6 +23,7 @@ class CourseSelectionsController < ApplicationController
         end
       else
         # FIXME this doesn't work properly for json requests
+        # p results.map(&:number).join(", ")
         redirect_to courses_path(:search => params[:search])
       end
     else

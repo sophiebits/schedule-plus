@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   # omniauth
   has_many :authentications, :dependent => :destroy
-  has_many :schedules, :order => "id DESC", :dependent => :destroy
+  has_many :schedules, :order => "semester_id desc, id asc", :dependent => :destroy
 
   def first_name
     if name then

@@ -8,6 +8,10 @@ class Course < ActiveRecord::Base
   
   before_create :add_department
   
+  def to_param
+    number
+  end
+
   # RailsCast 240
   def self.search(search)
     if search

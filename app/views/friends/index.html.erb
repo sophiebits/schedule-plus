@@ -1,4 +1,6 @@
-  
+<%
+@friends = @friends.select {|f| !f.main_schedule.nil? }
+%>
 <div id="page-content" class="friends">
   <div id="content-header">
     <div class="container">
@@ -26,7 +28,7 @@
   </div>
   <div class="container">
   <ul id="friends-list">
-<% @friends.each do |friend| if friend.main_schedule %>
+<% @friends.each do |friend| %>
     <li>
       <a href="<%= schedule_path(friend.main_schedule) %>" class="friend-link">
         <img class="friend-pic"
@@ -45,7 +47,7 @@
         <span class="friend-status"><%= friend.status %></span>
       </a>
     </li>
-<% end end %>
+<% end %>
   </ul>
   </div>
 </div>

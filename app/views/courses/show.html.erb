@@ -14,15 +14,6 @@
   <div id="section-info">
     <h2 id="section-info-header">Sections</h2>
     <table id="section-info-table" caption="Course Sections">
-      <!--
-      <thead>
-        <tr>
-          <th></th>
-          <th>Days</th>
-          <th>Time</th>
-        </tr>
-      </thead>
-      -->
       <tbody>
 <% @course.sections_by_lecture.each do |lecture, sections| %>
   <% if !lecture.nil? %>
@@ -41,7 +32,7 @@
   <% sections.each do |section| %>
         <tr class="section <%= cycle('odd', 'even', :name => 'parity') %>">
           <td class="add-course">
-          <% if user_signed_in? %>
+          <% if user_signed_in? && current_user.main_schedule %>
           <%= link_to "+", schedule_selections_path(
                               :schedule_id => current_user.main_schedule(current_semester),
                               :id => section.id

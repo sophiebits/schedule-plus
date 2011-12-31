@@ -9,7 +9,11 @@ class CoursesController < ApplicationController
   end
 
   def show
-    @course = Course.find(params[:id])    
+    @course = Course.by_semester(current_semester)
+                    .find_by_number(params[:id])    
+    
+    # FIXME this should 404
+    redirect_to courses_path if @course.nil?   
   end
 
   private

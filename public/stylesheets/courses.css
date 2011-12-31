@@ -76,7 +76,6 @@ h1#course-page-title .course-number {
   float:right; clear:right;
   width:330px;
 }
-#section-info-table,
 .course#page-content h2#section-info-header {
   display:block; 
   width:100%;
@@ -84,18 +83,16 @@ h1#course-page-title .course-number {
 #section-info-table { 
   font-size:12px;
   line-height:18px;
-}
-#section-info-table tbody,
-#section-info-table thead,
-#section-info-table tr {
-  display:block;
   width:100%;
+  margin-bottom:20px;
 }
-#section-info-table th,
 #section-info-table td {
   padding:2px 5px;
   text-align:left;
   overflow:hidden;
+}
+#section-info-table tr {
+  border-bottom:1px solid #ddd;
 }
 #section-info-table tr:hover {
   color:#188d8e;
@@ -108,18 +105,7 @@ h1#course-page-title .course-number {
   border:1px solid #ddd;
   border-width:1px 0;
 }
-#section-info-table td.add-course { width:10px }
-#section-info-table td.lecture-num,
-#section-info-table td.section-ltr { width:25px }
-#section-info-table td.days { width:30px; }
-#section-info-table td.time { width:100px }
-#section-info-table td.days,
-#section-info-table td.time {
-  text-align:center;
-  font-size:12px;
-}
 #section-info-table td.section-ltr {
-  width:25px;
   font-weight:700
 }
 a.add-course-link {
