@@ -464,7 +464,7 @@ class Seeder < ActiveRecord::Base
     end
 
     # check if any courses are not in offered_courses, i.e. they are no longer offered
-    Course.all.each do |c|
+    Course.by_semester(semester).each do |c|
       if !offered_courses.include?(c.number)
         # course not found anymore, mark it not offered!
         p "X " + c.number
