@@ -1,12 +1,22 @@
 class User < ActiveRecord::Base
-  scope :public, :conditions => { :private => false }
-
   # omniauth
-  has_many :authentications
-  has_many :schedules
+  has_many :authentications, :dependent => :destroy
+  has_many :schedules, :order => "semester_id desc, id asc", :dependent => :destroy
+
+  def first_name
+    if name then
+      name.split(" ").first
+    else
+      ""
+    end
+  end
 
   def main_schedule(semester=Semester.current)
     schedules.active.by_semester(semester).first
+  end
+
+  def courses(semester=Semester.current)
+    main_schedule(semester).course_selections.map(&:course)
   end
 
 ############################# AUTHENTICATION ####################################

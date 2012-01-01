@@ -252,9 +252,7 @@ class Seeder < ActiveRecord::Base
   # Note: uses the current semester if the semester variable is nil
   def self.seed_soc(semester)
     # if semester is nil, use current semester
-    if !semester
-      semester = Semester.current
-    end
+    semester ||= Semester.current
     
     # @jm: use real SoC data later
     #file = 'CSD.html'
@@ -316,7 +314,7 @@ class Seeder < ActiveRecord::Base
     		abort 'Error (1)' if isempty(cells[0]) || isempty(cells[1]) || isempty(cells[2])
 
         # Prints name and number so that I know something's happening
-        puts cells[0].inner_text + ' ' + cells[1].inner_text
+        print cells[0].inner_text + ' ' + cells[1].inner_text
 
     		number = cells[0].inner_text
     		number.insert(2, '-')
@@ -327,7 +325,7 @@ class Seeder < ActiveRecord::Base
     		db_course = Course.find_by_semester_id_and_number(semester.id, number)
     		if db_course
     		  db_course.update_attributes(Hash[:name => name, :units => units, :offered => true])
-    		  db_course.save!
+    		  puts "...updated!" if db_course.save!
     		else
           # Create Course
       		db_course = Course.create(:number => number,
@@ -335,6 +333,7 @@ class Seeder < ActiveRecord::Base
       															:units	=> units,
       															:semester_id => semester.id,
       															:offered => true)
+          puts ""
     		end
 
     		populate_course_data(db_course)
@@ -482,9 +481,12 @@ class Seeder < ActiveRecord::Base
     Course.all.each do |c|
       if !offered_courses.include?(c.number)
         # course not found anymore, mark it not offered!
+        p "X " + c.number
         c.update_attribute(:offered, false)
         c.save!
       end
     end
+
+    true
   end
 end

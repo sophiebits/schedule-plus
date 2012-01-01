@@ -18,6 +18,9 @@
   width:960px;
   font-size:14px;
 }
+.clear {
+  clear:both;
+}
 a {
   color:#1fbbbd;
   text-decoration:none
@@ -48,6 +51,9 @@ form input {
 }
 form input:focus {
   border:1px solid #1fbbbd;
+}
+strong {
+  font-weight:700;
 }
 /*************************************************************************
  * Header Styles
@@ -163,6 +169,7 @@ a#current-user-schedule-link {
 #page-footer.container {
   clear:both;
   font-size:12px;
+  height:70px;
   margin-top:20px;
   border-top:1px solid #ddd;
 }

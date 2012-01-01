@@ -1,7 +1,7 @@
 class Schedule < ActiveRecord::Base
   belongs_to :user
   belongs_to :semester
-  has_many :course_selections, :class_name => 'CourseSelection'
+  has_many :course_selections, :class_name => 'CourseSelection', :dependent => :destroy
   scope :active, :conditions => { :active => true }
   scope :by_semester, lambda {|sem| where(:semester_id => sem.id)}
 
@@ -47,6 +47,14 @@ class Schedule < ActiveRecord::Base
     true
   end
 
+  def copy!(schedule)
+    update_attribute(:semester, schedule.semester)
+    course_selections.map(&:destroy)
+    schedule.course_selections.each {|selection|
+      course_selections.create(:section => selection.section)
+    }
+  end
+  
   # Adds a course by course_id and section_id.
   # Assumes course_id and section_id are valid
   # Uses section A by default.

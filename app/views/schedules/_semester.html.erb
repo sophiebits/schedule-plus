@@ -1,0 +1,42 @@
+      <li class="semester" id="<%= semester.name %>">
+        <h2 class="semester-header"><%= semester.name %></h2><%
+        if sgroup.empty? %>
+        <p id="no-schedules-notify">No schedules yet for <%= semester.name %>.
+        <%= link_to "Create a new schedule", schedules_path(:semester => semester.id), 
+                    :method => :post %>.
+        <!--or import from ScheduleMan.--></p><% 
+        else %>
+        <ul class="semester-schedules"><% 
+        sgroup.each_with_index do |schedule,index| %>
+          <li class="schedule" id="<%= schedule.url %>"><div class="inner">
+            <h3 class="schedule-title"><%= 
+            link_to 'Schedule ' + (index + 1).to_s, schedule_path(schedule) %></h3>
+            <div class="schedule-options">
+              <%= link_to "Delete", 
+                          schedule_path(schedule), 
+                          :class => 'schedule-delete',
+                          :method => :delete, 
+                          :remote => true %><% 
+            if schedule.active %>
+              <a href="#" class="schedule-public pub-link">public</a><% 
+            else %>
+              <%= link_to 'private',
+                          schedule_path(schedule, :schedule => {:active => true}),
+                          :class => "schedule-private pub-link",
+                          :method => 'put',
+                          :remote => true %><% 
+            end %>
+            </div>
+            <ul class="course-selections"><% 
+            schedule.course_selections.each do |cs| %>
+              <li><span class="number"><%= 
+                    cs.course.number %></span> <%= 
+                    cs.course.name %></li><% 
+            end %>
+            </ul>
+          </div></li><% 
+        end %>
+        </ul>
+        <div class="clear"></div><%
+        end %>
+      </li>

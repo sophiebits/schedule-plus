@@ -2,7 +2,7 @@ class SchedulesController < ApplicationController
 
   def index
     redirect_to root_path if !user_signed_in?
-    @schedules = current_user.schedules.group_by { |s| s.semester }
+    @schedules = current_user.schedules
   end
 
   def show
@@ -20,14 +20,18 @@ class SchedulesController < ApplicationController
  
   def create
     redirect_to root_path if !current_user
-    @schedule = current_user.schedules.create(:semester_id => current_semester)
+    @schedule = current_user.schedules.create(
+                  :semester_id => params[:semester] || current_semester.id)
+    if params[:clone]
+      @schedule.copy!(Schedule.find_by_url(params[:clone]))
+    end
     # set schedule to active if user has no more schedules
     @schedule.update_attribute(:active, true) if 
       current_user.schedules.by_semester(current_semester).length == 1
     redirect_to schedule_path(@schedule)
   end
 
-  # TODO set another schedule to active
+  # TODO disable active schedule deletion
   def destroy
     @schedule = Schedule.find_by_url(params[:id])
     @schedule.destroy
@@ -46,7 +50,7 @@ class SchedulesController < ApplicationController
     end
     flash[:notice] = "Updated successfully."
     respond_to do |format|
-      format.html { redirect_to schedules_path }
+      format.html { redirect_to schedule_path(@schedule) }
       format.js
     end
   end

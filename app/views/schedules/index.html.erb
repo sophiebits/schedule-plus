@@ -12,47 +12,16 @@
       <input name="url" type="text" placeholder="http://scheduleman.org/schedules/cTUj2lnAW" />
       <input name="commit" type="submit" value="Import" />
     </form>-->
-    <% if @schedules.length == 0 %>
-    <p id="no-schedules-notify">No schedules yet.
-    <%= link_to "Create a new schedule", schedules_path, :method => :post %>
-    or import from ScheduleMan.</p>
-    <% else %>
-    <ul id="schedules-list">
-      <% @schedules.each do |semester,sgroup| %>
-        <li class="semester" id="<%= semester.name %>">
-          <h2 class="semester-header"><%= semester.name %></h2>
-          <ul class="semester-schedules">
-            <% sgroup.each_with_index do |schedule,index| %>
-              <li class="<%= cycle('m3z','m3o','m3t') %> schedule" id="<%= schedule.url %>">
-                <h3 class="schedule-title"><%= link_to 'Schedule ' + (index + 1).to_s, schedule_path(schedule) %></h3>
-                <div class="schedule-options">
-                <%= link_to "Delete", 
-                            schedule_path(schedule), 
-                            :class => 'schedule-delete',
-                            :method => :delete, 
-                            :remote => true %>
-                <% if schedule.active %>
-                  <a href="#" class="schedule-public pub-link">public</a>
-                <% else %>
-                  <%= link_to 'private',
-                              schedule_path(schedule, :schedule => {:active => true}),
-                              :class => "schedule-private pub-link",
-                              :method => 'put',
-                              :remote => true %>
-                <% end %>
-                </div>
-                <ul class="course-selections">
-                  <% schedule.course_selections.each do |cs| %>
-                  <li><span class="number"><%= cs.course.number %></span> <%= cs.course.name %></li>
-                  <% end %>
-                </ul>
-              </li>
-            <% end %>
-          </ul>
-          <% reset_cycle %>
-        </li>
-      <% end %>
+    <ul id="schedules-list"><% 
+    sgroups = @schedules.group_by(&:semester)
+    if sgroups[Semester.last].nil? %><%=
+      render(:partial => 'semester', :locals => {:semester => Semester.last, 
+                                                 :sgroup => []}) %><%
+    end %><%
+    sgroups.each do |semester, sgroup| %><%= 
+      render(:partial => 'semester', :locals => {:semester => semester,
+                                                 :sgroup => sgroup}) %><%
+    end %>
     </ul>
-    <% end %>
   </div>
 </div>

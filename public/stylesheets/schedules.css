@@ -12,15 +12,25 @@ h1#schedule-index-title {
 
 }
 #no-schedules-notify {
-  padding:20px 0 0;
-  color:#999;
+  margin-bottom:20px;
+  padding:10px;
+  color:#666;
+  background-color:#eee;
+  border:1px solid #aaa;
+  border-left-width:4px;
+  border-radius:5px;
+}
+ul#schedules-list {
+  margin-top:15px;
 }
 h2.semester-header {
   padding-left:17px;
-  margin-bottom:0px;
+  margin:5px 0 10px 0;
   font-size:12px;
   color:#ddd;
   font-weight:700;
+  border-bottom:1px dotted #ddd;
+  clear:both;
 }
 #create-schedules-link {
   display:block; position:absolute;
@@ -31,19 +41,18 @@ h2.semester-header {
   background-position:-80px 0;
   overflow:hidden;
 }
-ul#schedules-list {
-  margin-top:20px;
-}
 ul#schedules-list li.schedule {
   float:left;
-  margin:5px 5px 30px; 
-  padding:12px;
-  width:281px;
+  margin:0 10px 10px 0; 
+  width:305px;
   color:#999;
   background-color:#eee;
   border:1px solid #ccc;
   border-left-width:4px;
   border-radius:5px;
+}
+ul#schedules-list li.schedule .inner {
+  padding:12px;
 }
 ul#schedules-list h3.schedule-title {
   float:left;
@@ -54,10 +63,7 @@ ul#schedules-list li.schedule:hover {
   color:#666;
   border-color:#1fbbbd;
 }
-ul#schedules-list li.schedule.m3z {
-  clear:left;
-}
-.schedule-options, #schedule-options {
+.schedule-options {
   float:right;
 }
 .schedule-public,
@@ -103,7 +109,9 @@ ul#schedules-list .course-selections .number {
  * SchedulePage Styles
  *************************************************************************
  */
-.schedule#page-content #content-header {
+#schedule-login-notify {
+  text-align:center;
+  color:#666;
 }
 #schedule-user-pic {
   float:left;
@@ -124,7 +132,35 @@ h1#schedule-user {
   font-size:12px;
   height:15px;
 }
+#schedule-options {
+  float:right;
+  width:260px;
+}
+#schedule-options h3 {
+  float:right;
+  width:70px;
+  padding:20px 15px;
+  color:#999;
+  text-align:right;
+  border-right:1px solid #ddd;
+}
+#schedule-options a {
+  display:block;
+  float:right;
+  margin-left:10px;
+  padding-top:43px;
+  width:40px; height:0;
+  background:transparent url('/images/sched-opt.png') 0 1px no-repeat;
+  overflow:hidden;
+}
+#schedule-options #schedule-clone { background-position:-50px 1px; }
+#schedule-options #schedule-delete { background-position:-100px 1px; }
+#schedule-options #schedule-share:hover { background-position:0 -42px; }
+#schedule-options #schedule-clone:hover { background-position:-50px -42px; }
+#schedule-options #schedule-delete:hover { background-position:-100px -42px; }
+
 #schedule-container {
+  clear:both;
   float:left;
   width:240px;
   padding-top:15px;
@@ -233,17 +269,20 @@ h1#schedule-user {
   overflow:hidden;
 }
 #schedule .course-info-link { background-position:-80px -15px; }
-#schedule .course-times-link { background-position:-80px -25px; }
 #schedule .course-delete-link { background-position:-80px -35px; }
 #schedule .course-info-link:hover { background-position:-90px -15px; }
-#schedule .course-times-link:hover { background-position:-90px -25px; }
 #schedule .course-delete-link:hover { background-position:-90px -35px; }
 #schedule .course .friends {
   font-size:10px;
   margin-top:4px;
   padding-top:4px;
+  padding-left:10px;
+  background:transparent url('/images/f-icon.png') left 3px no-repeat;
   border-top:1px solid #ddd;
-  color:#999;
+  color:#666;
+}
+#schedule .course .friends a {
+  color:#188d8e;
 }
 #schedule .sections {
   display:block;
@@ -309,6 +348,20 @@ h1#schedule-user {
  * Calendar Styles
  *************************************************************************
  */
+#schedule-public-notify,
+#schedule-private-notify {
+  display:block;
+  float:right;
+  margin:20px 0 5px;
+  padding:6px;
+  width:618px;
+  color:#666;
+  border:1px solid #666;
+  font-size:12px;
+  text-align:center;
+  border-width:1px 0;
+  background-color:#ddd;
+}
 #calendar {
   position:relative;
   width:630px;
