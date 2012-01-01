@@ -205,10 +205,21 @@ end
 class Seeder < ActiveRecord::Base
   # seeds db with semester data
   def self.seed_semesters
-    if Semester.all.count == 0
-      Semester.create(:name => "Fall 2011", :current => true)
-      Semester.create(:name => "Spring 2012", :current => false)
-    end
+    # add new semesters to this list over time
+  	semesters = ["Fall 2011", "Spring 2012"]
+  	# set this variable to the name of the current semester
+  	current_semester_name = semesters[0]
+  	
+  	# scan through all semesters and add or update them accordingly in the database
+  	semesters.each do |name|
+  	  sem = Semester.find_by_name(name)
+  	  if sem.nil?
+  	  	Semester.create(:name => name, :current => (current_semester_name == name))
+  	  else
+  	  	sem.update_attribute(:current, current_semester_name == name)
+        sem.save!
+      end
+  	end
   end
   
   # seeds db with departments
@@ -246,8 +257,8 @@ class Seeder < ActiveRecord::Base
     end
     
     # @jm: use real SoC data later
-    file = 'CSD.html'
-    #file = "https://enr-apps.as.cmu.edu/assets/SOC/sched_layout_%s.htm" % semester.name.split(' ')[0].downcase
+    #file = 'CSD.html'
+    file = "https://enr-apps.as.cmu.edu/assets/SOC/sched_layout_%s.htm" % semester.name.split(' ')[0].downcase
 
     if Rails.env.production?
     	parse_file = File.new("#{RAILS_ROOT}/tmp/parse_file_#{Process.pid}.html", "w")
@@ -259,8 +270,18 @@ class Seeder < ActiveRecord::Base
     rescue
       return
     end
+	
+	lines = File.readlines(file)
+	
+	if !(lines.any? { |s| s.include?(semester.name) })
+	  puts "*** Error: wrong semester data ***"
+      # @jm: uncomment this when using real SoC Data
+      return
+	end
+	
+	puts "> Semester: " + semester.name 
 
-    File.readlines(file).each do |line|
+    lines.each do |line|
     	if line.include? 'Lec/Sec'
     		open(parse_file, 'a') { |f| f.puts '<TABLE>' }
     	elsif line.include? '<B>'
@@ -270,14 +291,7 @@ class Seeder < ActiveRecord::Base
     	end
     end
 
-    doc = open(parse_file) { |f| Hpricot(f) }
-    # check that {semester.name} is in the SoC html page
-    if !doc.inner_text.include?(semester.name)
-      puts "*** Error: wrong semester data ***"
-      # @jm: uncomment this when using real SoC Data
-      # return
-    end
-    
+    doc = open(parse_file) { |f| Hpricot(f) }    
     table = doc.search("//table")
     rows = (table/"tr")
 
