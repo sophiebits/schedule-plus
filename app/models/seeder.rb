@@ -222,32 +222,6 @@ class Seeder < ActiveRecord::Base
   	end
   end
   
-  # seeds db with departments
-  def self.seed_departments
-    departments_url = "https://enr-apps.as.cmu.edu/open/SOC/SOCServlet?Formname=ByDept"
-    begin
-      doc = open(departments_url) { |f| Hpricot(f) }
-    rescue
-      return
-    end
-    
-    departments = doc.search("//select/option")
-    if departments
-      departments.each do |d|
-        # check that text has '(dd)' in it where d is any number
-        m = /^(.*?)\((\d\d)\)/.match(d.inner_text)
-        if m
-          name = m[1]
-          prefix = m[2]
-          dep = Department.find_by_prefix(prefix)
-          if !dep
-            Department.create(:name => name.strip, :prefix => prefix)
-          end
-        end
-      end
-    end
-  end
-  
   # seeds db with SoC data, and updates courses/lectures/sections to the newest information
   # Note: uses the current semester if the semester variable is nil
   def self.seed_soc(semester)
@@ -273,8 +247,8 @@ class Seeder < ActiveRecord::Base
 	
 	if !(lines.any? { |s| s.include?(semester.name) })
 	  puts "*** Error: wrong semester data ***"
-      # @jm: uncomment this when using real SoC Data
-      return
+    # @jm: uncomment this when using real SoC Data
+    #return
 	end
 	
 	puts "> Semester: " + semester.name 
@@ -282,8 +256,6 @@ class Seeder < ActiveRecord::Base
     lines.each do |line|
     	if line.include? 'Lec/Sec'
     		open(parse_file, 'a') { |f| f.puts '<TABLE>' }
-    	elsif line.include? '<B>'
-    		open(parse_file, 'a') { |f| f.puts '<TR>' }
     	else
     		open(parse_file, 'a') { |f| f.puts line }
     	end
@@ -295,6 +267,9 @@ class Seeder < ActiveRecord::Base
 
     # use to build list of all courses seen in the SoC html
     offered_courses = []
+    
+    # the name of the current department being parsed in the html
+    current_department_name = nil
 
     catch(:done) do
     	i = 0
@@ -302,9 +277,16 @@ class Seeder < ActiveRecord::Base
 
     		cells = (rows[i]/"td")
 
-    		# if 'Title' is empty, it is a category, not a course
-    		if (!isempty(cells[0]) && isempty(cells[1])) || (cells[0].inner_text == 'Course') || (isempty(cells[0]))
-    			puts '*** SKIPPING ***' + cells.to_s
+    		# Not a department name or course
+    		if (cells[0].inner_text == 'Course') || isempty(cells[0])
+    			i += 1
+    			next
+    		end
+    		
+    		# Department name
+    		if !isempty(cells[0]) && isempty(cells[1])
+    			current_department_name = cells[0].inner_text.strip
+    			puts "\nDepartment: " + current_department_name
     			i += 1
     			next
     		end
@@ -321,6 +303,14 @@ class Seeder < ActiveRecord::Base
 
     		name = cells[1].inner_text
     		units = reformatunits(cells[2].inner_text)
+    		
+    		current_department = Department.find_by_name(current_department_name)
+    		if current_department.nil?
+    			Department.create(:prefix => number[0..1], :name => current_department_name)
+    		elsif !current_department.prefix.include?(number[0..1])
+    			# add to prefixes if multiple prefixes exist for this department
+    			current_department.update_attribute(:prefix, current_department.prefix + ":" + number[0..1])
+    		end
 
     		db_course = Course.find_by_semester_id_and_number(semester.id, number)
     		if db_course
