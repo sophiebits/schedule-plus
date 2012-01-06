@@ -43,7 +43,7 @@ class User < ActiveRecord::Base
       fids = fb.friends.map(&:identifier)
       @fb_friends = User.where(:uid => fids)
     else
-      nil
+      @fb_friends || []
     end
   end
 

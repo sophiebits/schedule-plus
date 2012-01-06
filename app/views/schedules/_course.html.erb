@@ -15,7 +15,7 @@ editable = user_signed_in? && current_user == cs.schedule.user
                  :remote => true,
                  :class => "course-delete-link" if editable %>
   </div><% 
-if editable %>
+if user_signed_in? %>
   <div class="friends"><% 
   students = cs.course.students 
   you = students.delete(current_user) 
