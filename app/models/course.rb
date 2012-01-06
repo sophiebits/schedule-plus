@@ -67,7 +67,7 @@ class Course < ActiveRecord::Base
   end
   
   def add_department
-    dep = Department.find_by_prefix(self.number[0,2])
+    dep = Department.where("prefix LIKE ?", "%#{self.number[0..1]}%").first
     if dep
       self.department_id = dep.id
       true

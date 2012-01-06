@@ -5,15 +5,14 @@ Seeding the database
 - Seeding logic found in app/models/seeder.rb
 - Use this instead of rake db:seed
 
-rake seed:soc semester="Spring 2012"
-- semester field is optional (will use current semester)
-- Seeds the db with SoC data
-
 rake seed:semesters
 - Seeds the db with semesters
 
-rake seed:departments
-- Seeds the db with department names
+rake seed:soc semester="Spring 2012"
+- requires semesters to be seeded first
+- semester field is optional (will use current semester)
+- Seeds the db with SoC data
+- also seeds db with Department data
 
 rake seed:all
 - Runs all the above tasks
