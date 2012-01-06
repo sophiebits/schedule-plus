@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
   end
 
   def friends
-    if fb && @fb_friends.is_nil?
+    if fb && @fb_friends.nil?
       fids = fb.friends.map(&:identifier)
       @fb_friends = User.where(:uid => fids)
     else
