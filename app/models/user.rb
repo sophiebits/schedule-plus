@@ -39,12 +39,9 @@ class User < ActiveRecord::Base
   end
 
   def friends
-    if fb
+    if fb && @fb_friends.is_nil?
       fids = fb.friends.map(&:identifier)
-      User.where(:uid => fids)
-      # uids = User.all.collect{|u|u.uid if friends.include? u.uid}.compact
-      # FIXME FIXME FIXME PLEASE
-      # @friends = fb.friends
+      @fb_friends = User.where(:uid => fids)
     else
       nil
     end
