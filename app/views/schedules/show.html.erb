@@ -45,7 +45,7 @@ end %>
         uid = @schedule.user.uid
         name = @schedule.user.name
         caption = link_to "facebook profile", 
-          "https://facebook.com/profile.php?uid=" + @schedule.user.uid.to_s
+          "https://facebook.com/profile.php?id=" + @schedule.user.uid.to_s
       else
         uid = 1
         name = "schedule+ user"
