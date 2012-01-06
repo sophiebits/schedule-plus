@@ -5,7 +5,8 @@ class Course < ActiveRecord::Base
   belongs_to :semester
   belongs_to :department
   scope :by_semester, lambda {|sem| where(:semester_id => sem.id)}
-  
+  scope :by_department, lambda {|dep_id| where(:department_id => dep_id) if dep_id }
+
   before_create :add_department
   
   def to_param
@@ -31,7 +32,7 @@ class Course < ActiveRecord::Base
 
   def sections_by_lecture
     # FIXME: does not include lectures with no sections
-    sections.group_by{ |s| s.lecture }
+    sections.group_by(&:lecture)
   end
   
   def find_by_section(name)
@@ -65,12 +66,13 @@ class Course < ActiveRecord::Base
                      .map(&:user)
   end
   
-  private
-  
   def add_department
     dep = Department.find_by_prefix(self.number[0,2])
     if dep
       self.department_id = dep.id
+      true
+    else
+      false
     end
   end
 end

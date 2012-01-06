@@ -4,12 +4,13 @@ AcmSchedule::Application.routes.draw do
   match "/tos" => "static#tos"
   match "/privacy" => "static#privacy"
   
-  ################ Devise + Omniauth ####################
+  #################### Omniauth ########################
   match '/auth/:provider/callback' => 'authentications#create'
   delete '/logout' => 'authentications#destroy'
   #######################################################
 
   resources :courses, :only => [:index, :show]
+  match "/departments/:department_id" => "courses#index"
   resources :schedules do
     resources :selections, {:controller => "CourseSelections",
                             :only => [:create, :update, :destroy]}
