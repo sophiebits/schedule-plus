@@ -14,7 +14,7 @@
     </form>-->
     <ul id="schedules-list"><% 
     sgroups = @schedules.group_by(&:semester)
-    if sgroups[Semester.last].nil? %><%=
+    if sgroups[Semester.current].nil? %><%=
       render(:partial => 'semester', :locals => {:semester => Semester.last, 
                                                  :sgroup => []}) %><%
     end %><%
