@@ -34,7 +34,7 @@ end %>
     if user_signed_in? %>
       <div id="schedule-options">
         <%= link_to "Delete", schedule_path(@schedule), 
-                    :id => 'schedule-delete', :method => :delete %>
+                    :id => 'schedule-delete', :method => :delete if editable %>
         <%= link_to "Clone", schedules_path(:clone => @schedule),
                     :id => "schedule-clone", :method => :post %>
         <%= link_to "Share", "#", # TODO
@@ -86,7 +86,7 @@ end %>
     </div>
     <div id="calendar-container"><% 
     if editable 
-      if @schedule.active %>
+      if @schedule.primary %>
       <span id="schedule-public-notify">
       <strong>This is your public schedule</strong>. 
       Your friends will see this schedule when they visit your page.
@@ -96,7 +96,7 @@ end %>
       <strong>This is a private schedule.</strong> Others will not see the
       contents of this schedule. 
       <%= link_to 'Make public',
-                  schedule_path(@schedule, :schedule => {:active => true}),
+                  schedule_path(@schedule, :schedule => {:primary => true}),
                   :method => 'put' %>
       </span><% 
       end 

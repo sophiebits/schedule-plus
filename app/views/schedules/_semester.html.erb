@@ -17,12 +17,12 @@
                           :class => 'schedule-delete',
                           :method => :delete, 
                           :remote => true %><% 
-            if schedule.active %>
-              <a href="#" class="schedule-public pub-link">public</a><% 
+            if schedule.primary %>
+              <a href="#" class="schedule-primary selected">public</a><% 
             else %>
               <%= link_to 'private',
-                          schedule_path(schedule, :schedule => {:active => true}),
-                          :class => "schedule-private pub-link",
+                          schedule_path(schedule, :schedule => {:primary => true}),
+                          :class => "schedule-primary toggable",
                           :method => 'put',
                           :remote => true %><% 
             end %>

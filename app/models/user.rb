@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   end
 
   def main_schedule(semester=Semester.current)
-    schedules.active.by_semester(semester).first
+    schedules.primary.by_semester(semester).first
   end
 
   def courses(semester=Semester.current)

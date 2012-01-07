@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111030023657) do
+ActiveRecord::Schema.define(:version => 20120107143517) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(:version => 20111030023657) do
     t.integer  "user_id"
     t.string   "name"
     t.integer  "semester_id"
-    t.boolean  "active"
+    t.boolean  "primary"
     t.string   "url"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -91,6 +91,7 @@ ActiveRecord::Schema.define(:version => 20111030023657) do
 
   create_table "semesters", :force => true do |t|
     t.string   "name"
+    t.string   "short_name"
     t.boolean  "current"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -99,7 +100,7 @@ ActiveRecord::Schema.define(:version => 20111030023657) do
   create_table "users", :force => true do |t|
     t.string   "name"
     t.integer  "uid"
-    t.boolean  "private"
+    t.boolean  "discoverable"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

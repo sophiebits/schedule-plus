@@ -229,8 +229,8 @@ class Seeder < ActiveRecord::Base
     semester ||= Semester.current
     
     # @jm: use real SoC data later
-    #file = 'CSD.html'
-    file = "https://enr-apps.as.cmu.edu/assets/SOC/sched_layout_%s.htm" % semester.name.split(' ')[0].downcase
+    file = 'sched_layout_fall.html'
+    #file = "https://enr-apps.as.cmu.edu/assets/SOC/sched_layout_%s.htm" % semester.name.split(' ')[0].downcase
 
     if Rails.env.production?
     	parse_file = File.new("#{RAILS_ROOT}/tmp/parse_file_#{Process.pid}.html", "w")
@@ -240,6 +240,7 @@ class Seeder < ActiveRecord::Base
     begin
       file = open(file)
     rescue
+      p "Couldn't open " + file
       return
     end
 	
@@ -256,7 +257,9 @@ class Seeder < ActiveRecord::Base
     lines.each do |line|
     	if line.include? 'Lec/Sec'
     		open(parse_file, 'a') { |f| f.puts '<TABLE>' }
-    	else
+    	elsif line[0..2] == "<TD"
+    		open(parse_file, 'a') { |f| f.puts "<TR>" + line }
+      else
     		open(parse_file, 'a') { |f| f.puts line }
     	end
     end
@@ -314,6 +317,9 @@ class Seeder < ActiveRecord::Base
 
     		db_course = Course.find_by_semester_id_and_number(semester.id, number)
     		if db_course
+          p "...exists."
+          i += 1
+          next
     		  db_course.update_attributes(Hash[:name => name, :units => units, :offered => true])
     		  puts "...updated!" if db_course.save!
     		else

@@ -37,8 +37,8 @@ class SchedulesController < ApplicationController
 
   def update
     @schedule = Schedule.find_by_url(params[:id])
-    if params[:schedule][:active]
-      @schedule.make_active!
+    if params[:schedule][:primary]
+      @schedule.make_primary!
     else
       @schedule.update_attributes(params[:schedule])
     end

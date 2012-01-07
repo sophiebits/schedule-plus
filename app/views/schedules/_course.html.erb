@@ -57,7 +57,7 @@ if user_signed_in? %>
         %><%= link_to friends.first.name, 
         schedule_path(friends.first.main_schedule) %> and 
         <%= students.length - 1 %> <%=
-        if students.length - 1 > 1 then 'others' else 'other' end %> are in this course.<%
+        if students.length - 1 > 1 then 'others' else 'other' end %>.<%
       end
     end
   end %></div><% 

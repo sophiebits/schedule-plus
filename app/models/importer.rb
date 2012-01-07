@@ -11,6 +11,9 @@ class OldUser < OldBase
   has_many :schedules,
            :class_name => "OldSchedule",
            :foreign_key => "user_id"
+  belongs_to :active_schedule,
+             :class_name => "OldActiveSchedule",
+             :foreign_key => "user_id"
 
   def to_model
     User.new do |u|
@@ -83,8 +86,8 @@ class OldCourseSelection < OldBase
   belongs_to :scheduled_course,
              :class_name => "OldScheduledCourse"
 
-  def to_model
-    course = Course.find_by_number(self.scheduled_course.course.number)
+  def section_id
+    course = Course.find_by_number_and_semester_id(self.scheduled_course.course.number, 1)
     if course.nil?
       p "Error: Course Not Found (" + self.scheduled_course.course.number + ")"
       return nil
@@ -92,11 +95,18 @@ class OldCourseSelection < OldBase
     letter = self.scheduled_course.recitation.try(:section) ||
              self.scheduled_course.lecture.try(:section)
     section = course.find_by_section(letter) if letter
-    CourseSelection.new do |cs|
-      cs.schedule_id = self.schedule_id
-      cs.section_id = section.try(:id) || course.sections.first.try(:id)
-    end
+    
+    section.try(:id) || course.sections.first.try(:id)
   end
+end
+
+class OldActiveSchedule < OldBase
+  set_table_name 'active_schedules'
+
+  belongs_to :schedule,
+             :class_name => 'OldSchedule'
+  belongs_to :user,
+             :class_name => 'OldUser'
 end
 
 class Importer < ActiveRecord::Base
@@ -104,14 +114,22 @@ class Importer < ActiveRecord::Base
   
   def self.import_all
     OldUser.all.each do |u|
-      p u.name
-      u.schedules.each_with_index do |s,i|
-        print " Schedule " + (i+1).to_s + ": "
-        p s.course_selections.map {|cs| 
-            model = cs.to_model if cs.scheduled_course
-            model.course.number.to_s if model
-          }.select {|n| !n.nil? }.join ", "
+      active_id = OldActiveSchedule.find_by_user_id(u.id).try(:schedule).try(:id)
+      if active_id
+        user = User.find_by_uid(u.uid) || User.create(:name => u.name, :uid => u.uid)
+        u.schedules.each_with_index do |s,i|
+          schedule = user.schedules.create(:name => "Schedule " + (i+1).to_s,
+                                           :semester_id => 1,
+                                           :primary => active_id == s.id)
+          s.course_selections.each do |cs| 
+            section_id = cs.section_id if cs.scheduled_course
+            schedule.course_selections.create(:section_id => section_id) if section_id
+          end
+        end
+      else
+        p "Skipped " + u.name
       end
     end
+    true
   end
 end

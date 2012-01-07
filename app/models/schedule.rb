@@ -2,7 +2,7 @@ class Schedule < ActiveRecord::Base
   belongs_to :user
   belongs_to :semester
   has_many :course_selections, :class_name => 'CourseSelection', :dependent => :destroy
-  scope :active, :conditions => { :active => true }
+  scope :primary, :conditions => { :primary => true }
   scope :by_semester, lambda {|sem| where(:semester_id => sem.id)}
 
   before_create :generate_url
@@ -12,7 +12,7 @@ class Schedule < ActiveRecord::Base
       :id      => self.id,
       :user    => self.user,
       :course_selections => self.course_selections,
-      :active  => self.active
+      :primary  => self.primary
     }
   end
 
@@ -38,12 +38,12 @@ class Schedule < ActiveRecord::Base
     end
   end
 
-  def make_active!
-    # make all other semester schedules inactive
+  def make_primary!
+    # make all other semester schedules secondary
     user.schedules.by_semester(semester).each do |s|
-      s.update_attribute(:active, false)
+      s.update_attribute(:primary, false)
     end
-    update_attribute(:active, true)
+    update_attribute(:primary, true)
     true
   end
 

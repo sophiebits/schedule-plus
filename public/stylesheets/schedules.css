@@ -66,19 +66,18 @@ ul#schedules-list li.schedule:hover {
 .schedule-options {
   float:right;
 }
-.schedule-public,
-.schedule-private {
+.schedule-primary {
   display:block; float:right;
   margin-right:5px; padding-top:15px;
   width:65px; height:0;
   background-image:url('/images/sprites.png');
   overflow:hidden;
 }
-.schedule-public {
+.schedule-primary.selected {
   background-position:0 -15px; 
   cursor:default;
 }
-.schedule-private:hover {
+.schedule-primary.toggable:hover {
   background-position:0 -30px;
 }
 .schedule-delete {

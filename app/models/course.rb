@@ -62,7 +62,7 @@ class Course < ActiveRecord::Base
 
   def students
     course_selections.map(&:schedule)
-                     .select(&:active)
+                     .select(&:primary)
                      .map(&:user)
   end
   
