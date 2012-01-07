@@ -10,13 +10,6 @@ namespace :seed do
   	puts "done!"
   end
   
-  desc "Seed the database with CMU department information"
-  task :departments => :environment do
-    print "Seeding departments..."
-  	Seeder.seed_departments
-  	puts "done!"
-  end
-  
   desc "Seed the database with semester information"
   task :semesters => :environment do
     print "Seeding semesters..."
@@ -25,5 +18,5 @@ namespace :seed do
   end
   
   desc "Seed the database with SoC, department, and semester information"
-  task :all => [:departments, :semesters, :soc]
+  task :all => [:semesters, :soc]
 end
