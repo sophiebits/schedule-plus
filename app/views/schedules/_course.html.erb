@@ -28,8 +28,8 @@ if user_signed_in? %>
       if students.length == 0
         %>You are in this course.<%
       else
-        %>You and <%= students.length %> <%= 
-        if students.length > 1 then 'others' else 'other' end %> are in this course.<%
+        %>You and <a href="<%= course_path(cs.course) %>"><%= students.length %> <%= 
+        if students.length > 1 then 'others' else 'other' end %></a> are in this course.<%
       end
     else
       if students.length <= 1
@@ -38,8 +38,8 @@ if user_signed_in? %>
       else
         %>You, <%= link_to friends.first.name, 
         schedule_path(friends.first.main_schedule) %>, and 
-        <%= students.length - 1 %> <%=
-        if students.length - 1 > 1 then 'others' else 'other' end %>.<%
+        <a href="<%= course_path(cs.course) %>"><%= students.length - 1 %> <%=
+        if students.length - 1 > 1 then 'others' else 'other' end %></a>.<%
       end
     end
   else
@@ -57,8 +57,8 @@ if user_signed_in? %>
        else
         %><%= link_to friends.first.name, 
         schedule_path(friends.first.main_schedule) %> and 
-        <%= students.length - 1 %> <%=
-        if students.length - 1 > 1 then 'others' else 'other' end %>.<%
+        <a href="<%= course_path(cs.course) %>"><%= students.length - 1 %> <%=
+        if students.length - 1 > 1 then 'others' else 'other' end %></a>.<%
       end
     end
   end 
@@ -66,9 +66,18 @@ if user_signed_in? %>
   section_students = cs.section.students
   same_section = friends & section_students
   other_section = friends - section_students
+  %>
+    <ul class="facebox"><%
+    friends.take(8).each do |f| %>
+      <li><%= link_to (image_tag "https://graph.facebook.com/"+f.uid.to_s+"/picture", 
+                                 :alt => f.name),
+                      schedule_path(f.main_schedule) %></li><%
+    end %>
+    </ul>
+    <div class="clear"></div><%
   %><%
   if !same_section.empty? %>
-    <span class="section-header">Section <%= cs.section.letter %></span>
+    <!--<span class="section-header">Section <%= cs.section.letter %></span>
     <ul class="facebox"><%
     same_section.each do |f| %>
       <li><%= link_to (image_tag "https://graph.facebook.com/"+f.uid.to_s+"/picture?type=square", 
@@ -76,10 +85,10 @@ if user_signed_in? %>
                       schedule_path(f.main_schedule) %></li><%
     end %>
     </ul>
-    <div class="clear"></div><%
+    <div class="clear"></div>--><%
   end
   if !other_section.empty? %>
-    <span class="section-header">Other Sections</span>
+    <!--<span class="section-header">Other Sections</span>
     <ul class="facebox"><%
     other_section.each do |f| %>
       <li><%= link_to (image_tag "https://graph.facebook.com/"+f.uid.to_s+"/picture", 
@@ -87,7 +96,7 @@ if user_signed_in? %>
                       schedule_path(f.main_schedule) %></li><%
     end %>
     </ul>
-    <div class="clear"></div><%
+    <div class="clear"></div>--><%
   end %>
   </div><% 
 end %>
