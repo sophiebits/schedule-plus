@@ -76,11 +76,8 @@ end %>
       <%= submit_tag "Add" %>
       <% end 
       end %>
-      <ul id="schedule"><% 
-      selections.each do |cs| %><%= 
-        render(:partial => 'course', :locals => {:cs => cs}) %><% 
-        reset_cycle('parity') 
-      end %>
+      <ul id="schedule">
+        <%= render :partial => "course", :collection => selections, :as => :cs %>
       </ul>
       <span id="total-units">Total: <%= @schedule.units %> units</span>
     </div>

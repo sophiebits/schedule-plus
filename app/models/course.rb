@@ -60,9 +60,9 @@ class Course < ActiveRecord::Base
     instructors.uniq.compact.join(", ")
   end
 
-  def students
+  def students(semester=nil)
     course_selections.map(&:schedule)
-                     .select(&:primary)
+                     .select {|s| s.primary && (semester.nil? || s.semester == semester) }
                      .map(&:user)
   end
   

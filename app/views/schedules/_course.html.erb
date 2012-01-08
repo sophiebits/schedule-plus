@@ -71,7 +71,7 @@ if user_signed_in? %>
     <span class="section-header">Section <%= cs.section.letter %></span>
     <ul class="facebox"><%
     same_section.each do |f| %>
-      <li><%= link_to (image_tag "https://graph.facebook.com/"+f.uid.to_s+"/picture", 
+      <li><%= link_to (image_tag "https://graph.facebook.com/"+f.uid.to_s+"/picture?type=square", 
                                  :alt => f.name),
                       schedule_path(f.main_schedule) %></li><%
     end %>
@@ -104,6 +104,7 @@ end %>
         %><%= time.location %><br /><% end %></span>
     </li><% 
   end%><% 
+  reset_cycle 'parity'
   sections.each do |section| %>
     <li class="section <%= 
       cycle('odd', 'even', :name => 'parity') %><%= 

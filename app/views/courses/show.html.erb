@@ -1,3 +1,13 @@
+<%
+#Page title and meta tag
+content_for :title do %><%=
+  @course.number + ' - ' + @course.name %><%
+end %><%
+
+content_for :description do %><%=
+  @course.description %><%
+end
+%>
 <div id="page-content" class="course">
   <div id="content-header">
     <div class="container">
@@ -5,53 +15,55 @@
         <span class="course-number"><%= @course.number %></span>
         <%= @course.name %>
       </h1>
-      <span id="env-semester">
-        <%= current_semester.name %>
-      </span>
+      <span id="env-semester"><%= current_semester.name %></span>
     </div>
   </div>
   <div class="container">
   <div id="section-info">
     <h2 id="section-info-header">Sections</h2>
     <table id="section-info-table" caption="Course Sections">
-      <tbody>
-<% @course.sections_by_lecture.each do |lecture, sections| %>
-  <% if !lecture.nil? %>
+      <tbody><% 
+      @course.sections_by_lecture.each do |lecture, sections| 
+        if !lecture.nil? %>
         <tr class="lecture">
           <td class="add-course">&nbsp;</td>
           <td class="lecture-num">Lec<%= lecture.number %></td>
-          <td class="days"><% lecture.scheduled_times.each do |time| %>
-            <%= time.days %><br />
-          <% end %></td>
-          <td class="time"><% lecture.scheduled_times.each do |time| %>
-            <%= time.to_str %><br />
-          <% end %></td>
+          <td class="days"><% 
+          lecture.scheduled_times.each do |time| %><%= 
+            time.days %><br /><% 
+          end %></td>
+          <td class="time"><% 
+          lecture.scheduled_times.each do |time| %><%=
+            time.to_str %><br /><%
+          end %></td>
           <td><%= lecture.instructor %></td>
-        </tr>
-  <% end %>
-  <% sections.each do |section| %>
+        </tr><% 
+        end %><% 
+        sections.each do |section| %>
         <tr class="section <%= cycle('odd', 'even', :name => 'parity') %>">
-          <td class="add-course">
-          <% if user_signed_in? && current_user.main_schedule %>
-          <%= link_to "+", schedule_selections_path(
-                              :schedule_id => current_user.main_schedule(current_semester),
-                              :id => section.id
-                           ),
-                           :method => :post %>
-          <% end %>
+          <td class="add-course"><% 
+          if user_signed_in? && current_user.main_schedule %>
+            <%= link_to "+", schedule_selections_path(
+                               :schedule_id => current_user.main_schedule(current_semester),
+                               :id => section.id
+                             ),
+                             :method => :post %><%
+          end %>
           </td>
           <td class="section-ltr"><%= section.letter %></td>
-          <td class="days"><% section.scheduled_times.each do |time| %>
-            <%= time.days %><br />
-          <% end %></td>
-          <td class="time"><% section.scheduled_times.each do |time| %>
-            <%= time.to_str %><br />
-          <% end %></td>
+          <td class="days"><% 
+          section.scheduled_times.each do |time| %><%=
+            time.days %><br /><%
+          end %></td>
+          <td class="time"><% 
+          section.scheduled_times.each do |time| %><%=
+            time.to_str %><br /><%
+          end %></td>
           <td><%= section.instructor %></td>
-        </tr>
-  <% end %>
-  <% reset_cycle('parity') %>
-<% end %>
+        </tr><% 
+        end
+        reset_cycle('parity')
+      end %>
       </tbody>
     </table>
   </div>
@@ -63,39 +75,42 @@
       <dd><%= @course.prereqs_str %></dd>
       <dt>Corequisites:</dt>
       <dd><%= @course.coreqs_str %></dd>
-    </dl>
-    <h2 class="facebox-header">Adam Weis, Jason Macdonald, Ian McKellen,
-    and 30 others are taking <%= @course.number %> this semester.</h2>
+    </dl><%
+  if user_signed_in?  
+    students_all = @course.students
+    students_now = @course.students(Semester.current)
+    students_pre = students_all - students_now
+    
+    if !students_now.empty?
+    %>
+    <h2 class="facebox-header"><%=
+    students_now.length %> people are taking <%= @course.number %> this semester.</h2>
     <div class="facebox">
-      <ul id="course-now-list">
-        <% for i in 0..9 do %>
-        <li>
-          <a href="/user/?" class="tooltip-link" tooltip="Facebook User">
-            <img class="facebox-pic" 
-                 alt="Facebook User" 
-                 src="http://graph.facebook.com/1/picture" />
-          </a>
-        </li>
-        <% end %>
+      <ul id="course-now-list"><% 
+      students_now.first(10).each do |s| %>
+        <li><%= link_to (image_tag "https://graph.facebook.com/"+s.uid.to_s+"/picture",
+                                    :alt => s.name),
+                        schedule_path(s.main_schedule) %></li><%
+      end %>
       </ul>
       <span class="expand">see all</span>
-    </div>
-    <h2 class="facebox-header">Kevin Bao, Avesh Singh, Vibha Rao, and
-    95 others have taken <%= @course.number %> previously.</h2>
+    </div><%
+    end
+    if !students_pre.empty? %>
+    <h2 class="facebox-header"><%=
+    students_pre.length %> people have taken <%= @course.number %> previously.</h2>
     <div class="facebox">
-      <ul id="course-prev-list">
-        <% for i in 0..9 do %>
-        <li>
-          <a href="/user/?" class="tooltip-link" tooltip="Facebook User">
-            <img class="facebox-pic" 
-                 alt="Facebook User" 
-                 src="http://graph.facebook.com/1/picture" />
-          </a>
-        </li>
-        <% end %>
+      <ul id="course-prev-list"><% 
+      students_pre.first(10).each do |s| %>
+        <li><%= link_to (image_path "https://graph.facebook.com/"+s.uid.to_s+"/picture",
+                                    :alt => s.name),
+                        schedule_path(s.main_schedule) %></li><%
+      end %>
       </ul>
       <span class="expand">see all</span>
-    </div>
+    </div><%
+    end
+  end %>
     <h2 id="course-description-header">Description</h2>
     <p id="course-description">
       <%= @course.description.blank? ? "Not Available" : @course.description_str %>
