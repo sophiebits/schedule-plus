@@ -4,13 +4,13 @@ if ($('#page-content').hasClass('schedules')) {
 		// find the semester group for @schedule
 		if ($(this).children('li[id="<%= @schedule.url %>"]').length != 0) {
 			$(this).children().each(function() {
-				$(this).find('.pub-link').remove();
+				$(this).find('.schedule-primary').remove();
 				if ($(this).attr('id') == '<%= @schedule.url %>')
-      		$('<a href="#" class="schedule-public pub-link">public</a>')
+      		$('<a href="#" class="schedule-primary selected">public</a>')
         	  .appendTo($(this).find('.schedule-options'));
     		else
-      		$('<a href="/schedules/' + $(this).attr('id') + '?schedule[active]=true"' +
-       		  ' class="schedule-private pub-link"' +
+      		$('<a href="/schedules/' + $(this).attr('id') + '?schedule[primary]=true"' +
+       		  ' class="schedule-primary toggable"' +
        		  ' data-method="put" data-remote="true" rel="nofollow">private</a>')
        		  .appendTo($(this).find('.schedule-options'));
 			});
@@ -18,6 +18,6 @@ if ($('#page-content').hasClass('schedules')) {
 	});
 } else if ($('#page-content').hasClass('schedule')) {
 	// in main schedule calendar view
-	$('<a href="#" class="schedule-public pub-link">public</a>')
+	$('<a href="#" class="schedule-primary">public</a>')
 	  .appendTo($(this).find('#schedule-options'));
 }
