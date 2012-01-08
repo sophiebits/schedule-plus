@@ -283,6 +283,28 @@ h1#schedule-user {
 #schedule .course .friends a {
   color:#188d8e;
 }
+#schedule .course .friends .section-header {
+  display:block;
+  position:relative;
+  margin-top:3px;
+  left:-10px; width:215px;
+  color:#aaa;
+  border-bottom:1px dotted #aaa;
+}
+#schedule .course .friends .facebox {
+  position:relative;
+  margin-top:2px;
+  left:-10px;
+  width:220px;
+}
+#schedule .course .friends .facebox li {
+  float:left;
+  margin:2px 2px 0 0;
+}
+#schedule .course .friends .facebox li img {
+  height:25px; 
+  width:25px;
+}
 #schedule .sections {
   display:block;
   margin-top:6px;

@@ -15,6 +15,6 @@ class Section < ActiveRecord::Base
 
   # finds students in a section
   def students
-    schedules.active.map(&:user)
+    schedules.primary.map(&:user)
   end
 end

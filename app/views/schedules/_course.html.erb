@@ -47,6 +47,7 @@ if user_signed_in? %>
       if students.length == 0
         %>No one is currently in this course.<%
       else
+        # FIXME 1 person IS not ARE
         %><%= students.length %> people are in this course.<%
       end
     else
@@ -60,7 +61,35 @@ if user_signed_in? %>
         if students.length - 1 > 1 then 'others' else 'other' end %>.<%
       end
     end
-  end %></div><% 
+  end 
+ 
+  section_students = cs.section.students
+  same_section = friends & section_students
+  other_section = friends - section_students
+  %><%
+  if !same_section.empty? %>
+    <span class="section-header">Section <%= cs.section.letter %></span>
+    <ul class="facebox"><%
+    same_section.each do |f| %>
+      <li><%= link_to (image_tag "https://graph.facebook.com/"+f.uid.to_s+"/picture", 
+                                 :alt => f.name),
+                      schedule_path(f.main_schedule) %></li><%
+    end %>
+    </ul>
+    <div class="clear"></div><%
+  end
+  if !other_section.empty? %>
+    <span class="section-header">Other Sections</span>
+    <ul class="facebox"><%
+    other_section.each do |f| %>
+      <li><%= link_to (image_tag "https://graph.facebook.com/"+f.uid.to_s+"/picture", 
+                                 :alt => f.name),
+                      schedule_path(f.main_schedule) %></li><%
+    end %>
+    </ul>
+    <div class="clear"></div><%
+  end %>
+  </div><% 
 end %>
   <ul class="sections"><% 
   cs.course.sections_by_lecture.each do |lecture, sections|
