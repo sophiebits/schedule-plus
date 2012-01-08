@@ -84,12 +84,12 @@ class User < ActiveRecord::Base
     current_day = %w(U M T W R F S)[current_time.wday]
 
     course_selections = self.main_schedule.course_selections.includes(
-      :section => [[:lecture => :scheduled_times], 
-      :scheduled_times])
+      :section => [:scheduled_times, :lecture => :scheduled_times]).where('scheduled_times.days LIKE ?',
+      "%#{current_day}%")
 
     current_course_selection = course_selections.where(
-      'scheduled_times.begin <= ? AND scheduled_times.end >= ? AND scheduled_times.days LIKE ?',
-      current_time_in_min, current_time_in_min, "%#{current_day}%").first
+      'scheduled_times.begin <= ? AND scheduled_times.end >= ?',
+      current_time_in_min, current_time_in_min).first
 
     number = ''
     section = ''
