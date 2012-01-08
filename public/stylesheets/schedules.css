@@ -184,6 +184,15 @@ h1#schedule-user {
  * ScheduleList Styles
  *************************************************************************
  */
+#schedule-semester {
+  display:block;
+  padding-left:10px;
+  margin-bottom:5px;
+  font-weight:700;
+  font-size:12px;
+  color:#aaa;
+  border-bottom:1px dotted #ccc;
+}
 #add-course {
   display:block;
   width:100%;
