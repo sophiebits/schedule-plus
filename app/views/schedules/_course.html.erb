@@ -3,18 +3,20 @@
 editable = user_signed_in? && current_user == cs.schedule.user
 %>
 <li class="course<%= cs.course.number %> course">
-  <span class="number"><%= cs.course.number %></span>
-  <span class="selected_section"><%= cs.selected_section %></span>
-  <span class="name"><%= cs.name %></span>
-  <span class="units"><%= cs.course.units %> units</span>
-  <div class="options">
-    <%= link_to "info", course_path(cs.course), :class => "course-info-link" %> 
+  <div class="course-options">
+    <%= link_to "info", "#", :class => "course-info-link" %>
+    <%= link_to "friends", "#", :class => "course-friends-link" %>
     <%= link_to "delete", 
                  schedule_selection_path(:schedule_id => cs.schedule, :id => cs.id),
                  :method => :delete,
                  :remote => true,
                  :class => "course-delete-link" if editable %>
-  </div><% 
+  </div>
+  <div class="course-details">
+  <span class="number"><%= link_to cs.course.number, course_path(cs.course) %></span>
+  <span class="selected_section"><%= cs.selected_section %></span>
+  <span class="units"><%= cs.course.units %> units</span>
+  <span class="name"><%= cs.name %></span><%
 if user_signed_in? %>
   <div class="friends"><% 
   students = cs.course.students 
@@ -26,17 +28,17 @@ if user_signed_in? %>
   if you
     if friends.length == 0
       if students.length == 0
-        %>You are in this course.<%
+        %>you are in this course.<%
       else
-        %>You and <a href="<%= course_path(cs.course) %>"><%= students.length %> <%= 
+        %>you and <a href="<%= course_path(cs.course) %>"><%= students.length %> <%= 
         if students.length > 1 then 'others' else 'other' end %></a> are in this course.<%
       end
     else
       if students.length <= 1
-        %>You and <%= link_to friends.first.name, 
+        %>you and <%= link_to friends.first.name, 
         schedule_path(friends.first.main_schedule) %> are in this course.<%
       else
-        %>You, <%= link_to friends.first.name, 
+        %>you, <%= link_to friends.first.name, 
         schedule_path(friends.first.main_schedule) %>, and 
         <a href="<%= course_path(cs.course) %>"><%= students.length - 1 %> <%=
         if students.length - 1 > 1 then 'others' else 'other' end %></a>.<%
@@ -45,9 +47,9 @@ if user_signed_in? %>
   else
     if friends.length == 0
       if students.length == 0
-        %>No one is currently in this course.<%
+        %>no one is currently in this course.<%
       else
-        # FIXME 1 person IS not ARE
+        # fixme 1 person is not are
         %><%= students.length %> people are in this course.<%
       end
     else
@@ -67,17 +69,17 @@ if user_signed_in? %>
   same_section = friends & section_students
   other_section = friends - section_students
   %>
-    <ul class="facebox"><%
+    <!--<ul class="facebox"><%
     friends.take(8).each do |f| %>
       <li><%= link_to (image_tag "https://graph.facebook.com/"+f.uid.to_s+"/picture", 
                                  :alt => f.name),
                       schedule_path(f.main_schedule) %></li><%
     end %>
     </ul>
-    <div class="clear"></div><%
+    <div class="clear"></div>--><%
   %><%
   if !same_section.empty? %>
-    <!--<span class="section-header">Section <%= cs.section.letter %></span>
+    <span class="section-header">Section <%= cs.section.letter %></span>
     <ul class="facebox"><%
     same_section.each do |f| %>
       <li><%= link_to (image_tag "https://graph.facebook.com/"+f.uid.to_s+"/picture?type=square", 
@@ -85,10 +87,10 @@ if user_signed_in? %>
                       schedule_path(f.main_schedule) %></li><%
     end %>
     </ul>
-    <div class="clear"></div>--><%
+    <div class="clear"></div><%
   end
   if !other_section.empty? %>
-    <!--<span class="section-header">Other Sections</span>
+    <span class="section-header">Other Sections</span>
     <ul class="facebox"><%
     other_section.each do |f| %>
       <li><%= link_to (image_tag "https://graph.facebook.com/"+f.uid.to_s+"/picture", 
@@ -96,7 +98,7 @@ if user_signed_in? %>
                       schedule_path(f.main_schedule) %></li><%
     end %>
     </ul>
-    <div class="clear"></div>--><%
+    <div class="clear"></div><%
   end %>
   </div><% 
 end %>
@@ -134,4 +136,5 @@ end %>
   <% end %>
   <% end %>
   </ul>
+  </div>
 </li>

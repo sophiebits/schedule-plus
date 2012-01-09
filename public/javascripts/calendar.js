@@ -1,8 +1,8 @@
 var Calendar = {
     
   start_time: 7, 
-  end_time: 22, 
-  half_height: 20,
+  end_time: 23, 
+  half_height: 22,
   day_width: 126,
   container_width: 640,
 
@@ -22,26 +22,37 @@ var Calendar = {
      */
     $('#schedule .course, #calendar .event').live({
       click: function() {
+        if ($(event.target).is('a')) return false;
         var open = !$(this).hasClass('open');
         $('#schedule').find('.sections').stop(true,true).slideUp();
-        $('#schedule').find('.friends').stop(true,true).slideDown();
+        $('#schedule').find('.friends').stop(true,true).slideUp();
         $('.open').removeClass('open');
         if (open) {
-          $('.course'+$(this).find('.number').html()).find('.friends').slideUp();
-          $('.course'+$(this).find('.number').html()).find('.sections').slideDown();
-          $('.course'+$(this).find('.number').html()).addClass('open');
+          $('.course'+$(this).find('.number').text()).find('.sections').slideDown();
+          $('.course'+$(this).find('.number').text()).addClass('open');
         }
       },
       mouseenter: function() {
-        $(this).find('.units').stop(true, true).hide();
-        $(this).find('.options').stop(true, true).show();
         $('.highlight').removeClass('highlight');
         $('.course'+$(this).find('.number').html()).addClass('highlight');
       },
       mouseleave: function() {
-        $(this).find('.units').fadeIn(200);
-        $(this).find('.options').fadeOut(200);
         $('.highlight').removeClass('highlight');
+      }
+    });
+
+    $('#schedule .course .course-friends-link').live({
+      click: function() {
+        var open = !$(this).closest('.course').hasClass('open');
+        $('#schedule').find('.sections').stop(true,true).slideUp();
+        $('#schedule').find('.friends').stop(true,true).slideUp();
+        $('.open').removeClass('open');
+        if (open) {
+          $('.course'+$(this).closest('.course')
+              .find('.number').text()).find('.friends').slideDown();
+          $('.course'+$(this).closest('.course')
+              .find('.number').text()).addClass('open');
+        }
       }
     });
 
@@ -110,6 +121,9 @@ var Calendar = {
       var times = $.trim(e.find('.times').html()).split('<br>');
       var locs = $.trim(e.find('.locations').html()).split('<br>');
 
+      var section = $.trim(e.find('.lecture-num').html()) +
+                    $.trim(e.find('.section-ltr').html());
+
       var day_map = { "M":"monday","T":"tuesday","W":"wednesday","R":"thursday","F":"friday" };
 
       for (var i = 0; i < dayss.length - 1; ++i) {
@@ -121,6 +135,7 @@ var Calendar = {
             + '" event-start="' + start 
             + '" event-end="' + end + '">'
             + '<span class="number">' + number + '</span>'
+            + '<span class="section">' + section + '</span>'
             + '<span class="location">' + locs[i] + '</span>'
             + '</li>').css({
               'opacity': 0,
@@ -162,7 +177,7 @@ var Calendar = {
         var dur = events[at].end-events[at].start;
         $(events[at]).css({
           top: (Calendar.half_height*(events[at].start-Calendar.start_time*60)/30-1)+"px",
-          height: (Calendar.half_height*dur/30-1)+"px"
+          height: (Calendar.half_height*dur/30-5)+"px"
         });
         $(events[at]).animate({
           width: (Calendar.day_width/cols-5)+"px",
