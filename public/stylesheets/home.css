@@ -44,6 +44,13 @@
   border:3px solid #3b5998;
   border-radius:5px;
 }
+a {
+  text-decoration:none;
+  color:#1fbbbd;
+}
+a:hover {
+  text-decoration:underline;
+}
 h4 {
   color:#3b5998;
   text-align:center;
@@ -233,3 +240,42 @@ h3 {
   color:#666;
 }
 
+/*************************************************************************
+ * 404/500 Styles
+ *************************************************************************
+ */
+.e404 h2, .e500 h2 {
+  font-size:64px;
+  padding-left:220px;
+  color:#1fbbbd;
+  text-shadow:0 2px 0 #fff;
+  letter-spacing:-2px;
+}
+.e404 h2 {
+  padding-top:27px;
+}
+.e500 h2 {
+  padding-top:56px;
+}
+.e404 .subheader, .e500 .subheader {
+  position:relative;
+  top:-42px; left:200px;
+  font-size:32px;
+  padding-left:220px;
+  color:#188d8e;
+}
+.e404 p, .e500 p {
+  position:relative;
+  top:-10px;
+  margin-bottom:15px;
+  padding-left:220px;
+  color:#999;
+  font-size:14px;
+  line-height:18px;
+}
+.e404 p {
+  width:450px;
+}
+.e500 p {
+  width:530px;
+}

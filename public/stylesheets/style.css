@@ -195,3 +195,29 @@ a#current-user-schedule-link {
   color:#666;
 }
 
+/*************************************************************************
+ * Privacy, TOS Styles
+ *************************************************************************
+ */
+.tos h1, .privacy h1 {
+  font-size:22px;
+  font-weight:700;
+  color:#188d8e;
+  letter-spacing:-1px;
+}
+.tos p, .privacy p {
+  font-size:14px;
+  color:#999;
+  margin-top:20px;
+  line-height:18px;
+}
+.tos ol {
+  margin-top:20px;
+  margin-left:20px;
+  list-style-type: decimal;
+  color:#999;
+  line-height:18px;
+}
+.tos ol li {
+  margin-top:10px;
+}

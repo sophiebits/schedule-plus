@@ -5,15 +5,18 @@
            alt="schedule-plus" 
            src="/images/schedule-plus.png" />
     </a>
-    <ul id="main-nav" class="nav">
+    <ul id="main-nav" class="nav"><%
+    if user_signed_in? %>
       <li id="main-nav-friends"><a href="/friends">Friends</a></li>
-      <li id="main-nav-schedules"><a href="/schedules">Schedules</a></li>
+      <li id="main-nav-schedules"><a href="/schedules">Schedules</a></li><%
+    end %>
       <li id="main-nav-courses"><a href="/courses">Courses</a></li>
-    </ul>
-    <% if user_signed_in? %>
+    </ul><% 
+    if user_signed_in? %>
     <div id="current-user">
       <a href="/logout" data-method="delete" id="logout">Logout</a>
-      <a href="<%= if current_user.main_schedule(current_semester)
+      <a href="<%= 
+        if current_user.main_schedule(current_semester)
           schedule_path(current_user.main_schedule(current_semester))
         else
           schedules_path
@@ -24,10 +27,10 @@
              src="<%= current_user.fb.try(:picture) %>" />
       </a>
       <a href="/settings" id="settings-link">Settings</a>
-    </div>
-    <% else %>
+    </div><% 
+    else %>
     <%= link_to "Login", '/auth/facebook',
-        :id => 'login-link' %>
-    <% end %>
+        :id => 'login-link' %><% 
+    end %>
   </div>
 </div>

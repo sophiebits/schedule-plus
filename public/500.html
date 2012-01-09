@@ -1,49 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>schedule+ - 500'd</title>
-	<link href='http://fonts.googleapis.com/css?family=Nunito:300,700&v2' rel='stylesheet' type='text/css' />
+  <title>404 Not Found</title>
+  <link rel="icon" type="image/ico" href="/favico.ico" />
+  <link href='/stylesheets/nunito.css' rel='stylesheet' type='text/css' />
   <link href="/stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
-  <link href="/stylesheets/style.css" media="screen" rel="stylesheet" type="text/css" />
-	<script type="text/javascript">
-    var uvOptions = {};
-    (function() {
-      var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
-      uv.src = ('https:' == document.location.protocole ? 'https://' : 'http://') +
-        'widget.uservoice.com/I5D8gB6nZoiZqoWPrj2Faw.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
-    })();
-  </script>
+  <link href="/stylesheets/home.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-	<div id="page-header">
-    <div class="container">
-      <a href="/"><img id="schedule-plus-logo" src="/images/schedule-plus-logo-sm.png" alt="schedule+" /></a>
-      <a href="/auth/facebook" id="fb-login">Login with Facebook</a>
-    </div>
-  </div>
-	<div id="page-content">
-    <div id="page-bg"></div>
-		<ul id="pages">
-			<li id="error-page" class="e500 page">
-      <div class="container">
-        <h1>Fail :-(</h1>
-        <span class="tooltip">500 Internal Server Error</span>
-        <p>Rest assured, we're working out the kinks. Like the pros,
-        we've dispatched our own squadron of highly trained code monkeys 
-        to bash the bugs using Model M keyboards for maximum aural feedback.
-        This issue will be fixed soon - guaranteed or your money back!</p>
-      </div>
-      </li>
-	  </ul>
-  </div>
-  <div id="page-footer" class="start">
-  <div class="container">
-    <div id="footer-inner">
-    <a href="http://acm-site.heroku.com/"><img id="acm-cmu-logo" src="/images/acm-cmu-logo.png" alt="acm@cmu" /></a>
-    <a href="/tos">Terms of Use</a> | <a href="/privacy">Privacy Policy</a>
-    </div>
-  </div>
-  </div>
+<div id="page-content" class="home e500">
+<div class="container">
+  <h1 id="home-logo"><img src="/images/schedule-plus-home.png" alt="schedule+" /></h1>
+  <h2>Fail :-(</h2>
+  <span class="subheader">500 Internal Server Error</span>
+  <p>Rest assured, we're working out the kinks. Like the pros,
+  we've dispatched our own squadron of highly trained code monkeys 
+  to bash the bugs using Model M keyboards for maximum aural feedback.
+  </p>
+  <p>If this issue persists, please contact 
+  <a href="http://acmatcmu.org/about">one of us</a>.</p>
+</div>
+</div>
+<div id="page-footer" class="home container">
+  <a href="http://ACMatCMU.org">
+    <img src="/images/acm-cmu-bw.png" alt="acm@cmu" id="acm-logo" />
+  </a>
+  <a href="http://cmu.edu">
+    <img src="/images/cmu-logo-bw.png" alt="Carnegie Mellon University" id="cmu-logo" />
+  </a>
+
+  <span id="copyright">&copy;2011 acm@cmu</span>
+  <a href="/privacy" id="privacy-link">Privacy of Policy</a>
+  <a href="/tos" id="tos-link">Terms of Service</a>
+</div>
 </body>
 </html>
+
