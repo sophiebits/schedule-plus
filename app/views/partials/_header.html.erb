@@ -1,10 +1,7 @@
 <div id="page-header">
   <div class="container">
-    <a href="/" id="logo-link">
-      <img id ="schedule-plus-logo" 
-           alt="schedule-plus" 
-           src="/images/schedule-plus.png" />
-    </a>
+    <%= link_to (image_tag "schedule-plus.png", :id => "schedule-plus-logo"),
+                root_path, :id => "logo-link" %>
     <ul id="main-nav" class="nav"><%
     if user_signed_in? %>
       <li id="main-nav-friends"><a href="/friends">Friends</a></li>
