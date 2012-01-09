@@ -73,6 +73,13 @@ var Slideshow = {
   },
   
   refresh: function(speed) {
+    // Perform slide-specific entrance animations
+    switch (Slideshow.current_slide) {
+      case 0:
+        $('#home-tagline img').css({ top:0, opacity:0 })
+                              .delay(speed/2)
+                              .animate({ top:'-60px', opacity:1 });
+    }
     $('.slideshow .slide-container')
       .stop().animate({left:Slideshow.current_slide * -Slideshow.slide_width}, speed);
     for (var i = 0; i < Slideshow.num_slides; ++i) {
