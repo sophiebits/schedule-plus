@@ -319,8 +319,11 @@ class Seeder < ActiveRecord::Base
     		exists = !db_course.nil?
 
         if db_course
-    		  db_course.update_attributes(Hash[:name => name, :units => units, :offered => true])
-    		  puts "...updated!" if db_course.save!
+          puts ''
+          i += 1
+          next
+          db_course.update_attributes(Hash[:name => name, :units => units, :offered => true])
+    		  puts '...updated!' if db_course.save!
     		else
           # Create Course
       		db_course = Course.create(:number => number,
