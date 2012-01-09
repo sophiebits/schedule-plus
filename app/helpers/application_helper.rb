@@ -3,7 +3,7 @@ module ApplicationHelper
     stylesheet = "#{params[:controller]}.css"
 
     if File.exists?(File.join(Rails.public_path, 'stylesheets', stylesheet))
-      stylesheet_link_tag stylesheet
+      stylesheet_link_tag stylesheet, :media => "all"
     end
   end
 
