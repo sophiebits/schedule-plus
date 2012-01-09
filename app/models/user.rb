@@ -110,13 +110,4 @@ class User < ActiveRecord::Base
     self.status == 'free'
   end
 
-  def update_active_schedule(schedule)
-    if (schedule.user == self)
-      active_schedules.find_by_semester(schedule.semester)
-                      .update_attribute(:active,false)
-                      .save
-      schedule.update_attribute(:active,true).save
-    end
-  end
-
 end
