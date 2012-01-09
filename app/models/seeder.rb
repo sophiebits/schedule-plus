@@ -189,7 +189,7 @@ def populate_course_data(course)
       when "Prerequisites:"
         i = i + 1
         pre = info[i].inner_text.strip
-        course.update_attribute(:prereqs, pre)
+        course.update_attribute(:prereqs, pre.split(' ').join(''))
         i = i + 2
         co = info[i].inner_text.strip
         course.update_attribute(:coreqs, co)
@@ -316,10 +316,9 @@ class Seeder < ActiveRecord::Base
     		end
 
     		db_course = Course.find_by_semester_id_and_number(semester.id, number)
-    		if db_course
-          p "...exists."
-          i += 1
-          next
+    		exists = !db_course.nil?
+
+        if db_course
     		  db_course.update_attributes(Hash[:name => name, :units => units, :offered => true])
     		  puts "...updated!" if db_course.save!
     		else
