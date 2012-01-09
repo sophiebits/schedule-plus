@@ -12,35 +12,10 @@
 #home-logo {
   padding:10px 0;
 }
-#home-tagline {
-  font-size:56px;
-  margin-top:120px;
-  color:#1fbbbd;
-  letter-spacing:-2px;
-  text-shadow:0 2px 0 #fff;
-}
-#tagline-create, #tagline-share, #tagline-learn {
-  position:relative;
-}
-#tagline-create img, #tagline-share img, #tagline-learn img {
-  width:72px; height:72px;
-  position:absolute;
-  top:-60px;
-  margin-left:50%;
-  left:-40px;
-}
-#home-blurb {
-  margin-top:10px;
-  width:570px;
-  font-size:20px;
-  color:#666;
-  line-height:22px;
-  text-shadow:0 1px 0 #fff;
-}
 #home-facebook,
 #home-register {
   position:absolute;
-  top:120px; right:38px;
+  top:120px; right:18px;
   width:272px;
 }
 #home-facebook { 
@@ -121,6 +96,112 @@ h3 {
 #home-register input:focus {
   border:1px solid #1fbbbd;
 }
+/*************************************************************************
+ * Slideshow Styles
+ *************************************************************************
+ */
+.slideshow {
+  position:relative;
+  top:-62px;
+  width:620px;
+  height:400px;
+  overflow:hidden;
+}
+.slideshow .slide-container {
+  position:relative;
+}
+.slideshow .slide-container .slide {
+  position:relative;
+  float:left;
+  width:620px;
+}
+.slideshow .control {
+  position:absolute; top:200px;
+  width:20px;
+  height:0;
+  padding-top:50px;
+  overflow:hidden;
+  cursor:pointer;
+  opacity:0.6;
+}
+.slideshow .control:hover {
+  opacity:1;
+}
+.slideshow .control.next {
+  right:0;
+  background-image:url('/images/slideshow-control-right.png');
+}
+.slideshow .control.last {
+  left:0;
+  background-image:url('/images/slideshow-control-left.png');
+}
+.slideshow .slide-links {
+  position:absolute;
+  bottom:50px;
+  margin:0 auto;
+}
+.slideshow .slide-links .control {
+  position:relative; top:0;
+  float:left;
+  width:10px;
+  height:0;
+  margin-left:10px;
+  padding-top:10px;
+  overflow:hidden;
+  background-color:#1fbbbd;
+  border-radius:5px;
+}
+/*************************************************************************
+ * Slide0 Styles
+ *************************************************************************
+ */
+#home-tagline {
+  font-size:52px;
+  margin-top:182px;
+  padding-left:50px;
+  color:#1fbbbd;
+  letter-spacing:-2px;
+  text-shadow:0 2px 0 #fff;
+}
+#tagline-create, #tagline-share, #tagline-learn {
+  position:relative;
+}
+#tagline-create img, #tagline-share img, #tagline-learn img {
+  width:72px; height:72px;
+  position:absolute;
+  top:-60px;
+  margin-left:50%;
+  left:-40px;
+}
+#home-blurb {
+  margin-top:10px;
+  padding-left:50px;
+  width:540px;
+  font-size:18px;
+  color:#666;
+  line-height:22px;
+  text-shadow:0 1px 0 #fff;
+}
+/*************************************************************************
+ * Slide1 Styles
+ *************************************************************************
+ */
+.slide h1 {
+  font-size:120px;
+  margin-top:150px;
+  color:#1fbbbd;
+  text-align:center;
+  letter-spacing:-2px;
+  text-shadow:0 2px 0 #fff;
+}
+/*************************************************************************
+ * Slide2 Styles
+ *************************************************************************
+ */
+/*************************************************************************
+ * Slide3 Styles
+ *************************************************************************
+ */
 
 /*************************************************************************
  * Footer Styles
