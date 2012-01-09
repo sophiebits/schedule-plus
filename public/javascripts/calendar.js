@@ -21,8 +21,10 @@ var Calendar = {
      * Create event listeners
      */
     $('#schedule .course, #calendar .event').live({
-      click: function() {
-        if ($(event.target).is('a')) return false;
+      click: function(event) {
+        if ($(event.target).is('a')) {
+          return false;
+        }
         var open = !$(this).hasClass('open');
         $('#schedule').find('.sections').stop(true,true).slideUp();
         $('#schedule').find('.friends').stop(true,true).slideUp();

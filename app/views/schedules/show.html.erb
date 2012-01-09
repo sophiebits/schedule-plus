@@ -1,4 +1,6 @@
 <% 
+@current_semester = @schedule.semester
+
 selections = @schedule.course_selections
 
 # TODO replace with CanCan?
@@ -73,9 +75,13 @@ end %>
       if editable %>
       <%= form_tag schedule_selections_path(@schedule),
                    :id => 'add-course', :method => :post, :remote => true do %>
-      <%= text_field_tag :search, nil, :placeholder => 'Add a Course' %>
-      <%= submit_tag "Add" %>
-      <% end 
+        <%= text_field_tag :search, nil, :placeholder => 'Add a Course' %>
+        <input type="hidden" name="semester" value="<%= @schedule.semester.id %>" />
+        <input type="hidden" name="confirm" value="true" />
+        <%= submit_tag "Add" %><% 
+      end %>
+<script type="text/javascript">
+</script><%
       end %>
       <ul id="schedule">
         <%= render :partial => "course", :collection => selections, :as => :cs %>

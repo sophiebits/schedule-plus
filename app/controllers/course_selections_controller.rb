@@ -1,4 +1,5 @@
 class CourseSelectionsController < ApplicationController
+  
   # POST
   def create
     schedule = Schedule.find_by_url(params[:schedule_id])
@@ -8,8 +9,10 @@ class CourseSelectionsController < ApplicationController
       search = parsed[0]
       section_letter = parsed[1] ? parsed[1].upcase : nil
       
-      results = Course.search(search).select {|c| c.semester == current_semester}
-      if results.length == 1
+      results = Course.by_semester(Semester.find(params[:semester]))
+                      .search(search)
+                      .select(&:offered)
+      if results.length == 1 && params[:confirm]
 				section = results.first.find_by_section(section_letter)
 				section_id = section ? section.id : nil
         if section_id
@@ -70,6 +73,8 @@ class CourseSelectionsController < ApplicationController
   	return [search, nil]
   end
   
+  private
+
   def is_letter?(letter)
   	letter[/[a-zA-Z]/] == letter
   end
