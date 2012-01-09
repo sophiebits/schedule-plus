@@ -40,15 +40,15 @@ class Course < ActiveRecord::Base
   end
 
   def prereqs_str
-    prereqs || "Not Available"
+    "Not Available" if prereqs.nil? || prereqs.empty?
   end
 
   def coreqs_str
-    coreqs || "Not Available"
+    "Not Available" if coreqs.nil? || coreqs.empty?
   end
 
   def description_str
-    description || "Not Available"
+    "Not Available" if description.nil? || description.empty?
   end
 
   def instructors

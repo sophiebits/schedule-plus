@@ -189,7 +189,7 @@ def populate_course_data(course)
       when "Prerequisites:"
         i = i + 1
         pre = info[i].inner_text.strip
-        course.update_attribute(:prereqs, pre)
+        course.update_attribute(:prereqs, pre.split(' ').join(''))
         i = i + 2
         co = info[i].inner_text.strip
         course.update_attribute(:coreqs, co)
@@ -229,7 +229,7 @@ class Seeder < ActiveRecord::Base
     semester ||= Semester.current
     
     # @jm: use real SoC data later
-    file = 'sched_layout_fall.html'
+    file = 'sched_layout_spring.html'
     #file = "https://enr-apps.as.cmu.edu/assets/SOC/sched_layout_%s.htm" % semester.name.split(' ')[0].downcase
 
     if Rails.env.production?

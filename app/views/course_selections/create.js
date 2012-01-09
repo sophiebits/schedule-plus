@@ -1,6 +1,6 @@
 var course = $('<%= escape_javascript(render(:partial => 'schedules/course', :locals => {:cs => @selection})) %>');
+course.find('.sections').hide();
 course.appendTo('#schedule');
-course.find('.sections, .options').hide();
 course.trigger('click');
 Calendar.color(course);
 Calendar.addCourse(course);

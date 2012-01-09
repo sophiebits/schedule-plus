@@ -39,11 +39,10 @@ class User < ActiveRecord::Base
   end
 
   def friends
-    if fb && @fb_friends.nil?
+    Rails.cache.fetch('friends' + uid.to_s) do
+      return [] if !fb
       fids = fb.friends.map(&:identifier)
-      @fb_friends = User.where(:uid => fids)
-    else
-      @fb_friends || []
+      User.where(:uid => fids).select {|f| !f.main_schedule.nil? }
     end
   end
 

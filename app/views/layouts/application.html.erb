@@ -17,8 +17,8 @@
     end %></title>
 	<link rel="icon" type="image/ico" href="/favico.ico" />
   <link href='/stylesheets/nunito.css' rel='stylesheet' type='text/css' />
-	<%= stylesheet_link_tag "application" %>
-	<%= stylesheet_link_tag "style" %>
+	<%= stylesheet_link_tag "application", :media => "all" %>
+	<%= stylesheet_link_tag "style", :media => "all" %>
 	<%= controller_stylesheet_link_tag %>
   <%= javascript_include_tag :defaults, 'jquery.text-overflow.js' %>
   <%= yield :javascript_includes %>
