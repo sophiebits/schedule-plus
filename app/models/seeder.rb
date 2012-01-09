@@ -229,7 +229,7 @@ class Seeder < ActiveRecord::Base
     semester ||= Semester.current
     
     # @jm: use real SoC data later
-    file = 'sched_layout_fall.html'
+    file = 'sched_layout_spring.html'
     #file = "https://enr-apps.as.cmu.edu/assets/SOC/sched_layout_%s.htm" % semester.name.split(' ')[0].downcase
 
     if Rails.env.production?
