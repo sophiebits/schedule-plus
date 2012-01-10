@@ -318,14 +318,9 @@ class Seeder < ActiveRecord::Base
     		db_course = Course.find_by_semester_id_and_number(semester.id, number)
     		exists = !db_course.nil?
 
-        if db_course 
-          puts ' (skipped)'
-          i += 1
-          db_course.update_attribute(:offered, true)
-    		offered_courses.push(db_course.number)
-          next
-          db_course.update_attributes(Hash[:name => name, :units => units, :offered => true])
-    		  puts '...updated!' if db_course.save!
+    		if db_course
+    		  db_course.update_attributes(Hash[:name => name, :units => units, :offered => true])
+    		  puts "...updated!" if db_course.save!
     		else
           # Create Course
       		db_course = Course.create(:number => number,
