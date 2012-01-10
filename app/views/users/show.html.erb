@@ -1,1 +1,33 @@
-
+<%
+content_for :title do %><%=
+  @user.name %><%
+end
+%><div id="page-content" class="user">
+  <div id="content-header">
+    <div class="container"><% 
+        uid = @user.uid
+        name = @user.name
+        caption = link_to "facebook profile", 
+          "https://facebook.com/profile.php?id=" + @user.uid.to_s
+      %>
+      <img id="user-pic"
+           alt="Vincent Siao"
+           src="http://graph.facebook.com/<%= uid %>/picture" />
+      <h1 id="user-name"><%= name %></h1>
+      <div id="user-captions">
+        <%= caption %>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <h2>Schedules</h2>
+    <ul id="schedules"><%
+    @user.schedules.select(&:primary).each do |s| %>
+      <li class="schedule">
+        <%= link_to s.semester.name, schedule_path(s) %>
+      </li><%
+    end %>
+    </ul>
+    <%= link_to "Manage Schedules", schedules_path if current_user == @user %>
+  </div>
+</div>

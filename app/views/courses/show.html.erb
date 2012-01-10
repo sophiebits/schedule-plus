@@ -90,7 +90,8 @@ end
       students_now.first(10).each do |s| %>
         <li><%= link_to (image_tag "https://graph.facebook.com/"+s.uid.to_s+"/picture",
                                     :alt => s.name),
-                        schedule_path(s.main_schedule) %></li><%
+                        user_path(s),
+                        'tooltip' => s.name %></li><%
       end %>
       </ul>
       <span class="expand">see all</span>
@@ -102,9 +103,10 @@ end
     <div class="facebox">
       <ul id="course-prev-list"><% 
       students_pre.first(10).each do |s| %>
-        <li><%= link_to (image_path "https://graph.facebook.com/"+s.uid.to_s+"/picture",
+        <li><%= link_to (image_tag "https://graph.facebook.com/"+s.uid.to_s+"/picture",
                                     :alt => s.name),
-                        schedule_path(s.main_schedule) %></li><%
+                        user_path(s),
+                        'tooltip' => s.name %></li><%
       end %>
       </ul>
       <span class="expand">see all</span>

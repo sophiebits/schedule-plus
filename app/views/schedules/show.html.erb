@@ -1,6 +1,4 @@
 <% 
-@current_semester = @schedule.semester
-
 selections = @schedule.course_selections
 
 # TODO replace with CanCan?
@@ -53,10 +51,9 @@ end %>
         name = "schedule+ user"
         caption = "You don't know me, and I don't know you."
       end %>
-      <img id="schedule-user-pic"
-           alt="Vincent Siao"
-           src="http://graph.facebook.com/<%= uid %>/picture" />
-      <h1 id="schedule-user"><%= name %></h1>
+      <%= image_tag 'https://graph.facebook.com/'+uid.to_s+'/picture',
+                    :id => 'schedule-user-pic', :alt => name %>
+      <h1 id="schedule-user"><%= link_to name, user_path(@schedule.user) %></h1>
       <div id="schedule-user-captions">
         <%= caption %>
       </div><% 

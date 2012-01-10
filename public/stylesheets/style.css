@@ -29,9 +29,6 @@ a:hover {
   text-decoration:underline
 }
 .tooltip {
-  font-size:0.8em;
-  padding:0.7em;
-  border-radius:5px;
   position:relative
 }
 .tooltip:after {
@@ -124,7 +121,6 @@ a#current-user-schedule-link {
   float:right;
   width:22px; height:22px;
   margin:4px 0 0 9px;
-  border-radius:3px 0;
 }
 
 #login-link { 

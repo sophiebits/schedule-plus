@@ -12,7 +12,11 @@ class User < ActiveRecord::Base
   end
 
   def main_schedule(semester=Semester.current)
-    schedules.primary.by_semester(semester).first
+    schedules.primary.by_semester(semester).all.first
+  end
+
+  def active?(semester=Semester.current)
+    !main_schedule(semester).nil?
   end
 
   def courses(semester=Semester.current)
@@ -39,23 +43,14 @@ class User < ActiveRecord::Base
   end
 
   def friends
-    Rails.cache.fetch('friends' + uid.to_s) do
+    Rails.cache.fetch('friends' + uid.to_s + 'all') do
       return [] if !fb
       fids = fb.friends.map(&:identifier)
-      User.where(:uid => fids).select {|f| !f.main_schedule.nil? }
+      User.where(:uid => fids).all
     end
   end
 
 ###############################################################################
-
-  def as_json(options={})
-    {
-      :id => self.id,
-      :uid => self.uid,
-      :name => self.name,
-      :status => self.status
-    }
-  end
 
   # true if user is in the course
   def in_course?(course)
@@ -65,16 +60,8 @@ class User < ActiveRecord::Base
     false
   end
 
-  # array of courses in common with friend
-  def courses_in_common(friend)
-    user_courses = self.main_schedule.scheduled_courses.collect{|sc| sc.course}
-    friend_courses = friend.main_schedule.scheduled_courses.collect{|sc| sc.course}
-
-    # intersection of user_courses and friend_courses
-    user_courses & friend_courses
-  end
-
   # the current status of the user, e.g. "free" or "in XX-XXX"
+  # TODO cache this
   def status
     return '' if !self.main_schedule
 

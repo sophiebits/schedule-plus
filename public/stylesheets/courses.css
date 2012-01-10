@@ -159,8 +159,12 @@ dl#course-info dd {
   color:#fff;
 } 
 .facebox ul li {
+  position:relative;
   float:left;
   margin-left:10px;
+}
+.facebox a {
+  text-decoration:none;
 }
 .facebox a .facebox-pic {
   width:48px; height:48px;
@@ -169,6 +173,23 @@ dl#course-info dd {
 }
 .facebox a:hover .facebox-pic {
   border-color:#1fbbbd;
+}
+.facebox a .tooltip {
+  position:absolute;
+  top:-24px; left:0;
+  z-index:10;
+  padding:4px 6px;
+  color:#fff;
+  font-size:12px;
+  text-decoration:none;
+  background-color:#333;
+  white-space:nowrap;
+  border-radius:2px;
+}
+.facebox a .tooltip:after {
+  left:8px; bottom:-8px;
+  border-width:0 0 8px 8px;
+  border-color:transparent #333;
 }
 #course-description {
   width:610px;

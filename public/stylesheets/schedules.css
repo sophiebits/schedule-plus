@@ -125,6 +125,9 @@ h1#schedule-user {
   font-size:20px;
   font-weight:300;
 }
+h1#schedule-user a {
+  color:#188d8e;
+}
 #schedule-user-captions {
   margin-top:2px;
   color:#1fbbbd;
@@ -285,7 +288,7 @@ h1#schedule-user {
   margin-top:0.2em;
   line-height:1.3em;
 }
-#schedule .course .friends { display:none;
+#schedule .course .friends { 
   font-size:10px;
   margin-top:4px;
   padding-top:4px;
@@ -312,8 +315,29 @@ h1#schedule-user {
   width:220px;
 }
 #schedule .course .friends .facebox li {
+  position:relative;
   float:left;
   margin:2px 2px 0 0;
+}
+#schedule .course .friends .facebox li a {
+  text-decoration:none;
+}
+#schedule .course .friends .facebox li a .tooltip {
+  position:absolute;
+  top:-16px; left:0;
+  z-index:10;
+  padding:2px 4px;
+  color:#fff;
+  font-size:10px;
+  text-decoration:none;
+  background-color:#333;
+  white-space:nowrap;
+  border-radius:2px;
+}
+#schedule .course .friends .facebox li a .tooltip:after {
+  left:5px; bottom:-5px;
+  border-width:0 0 5px 5px;
+  border-color:transparent #333;
 }
 #schedule .course .friends .facebox li img {
   height:25px; 

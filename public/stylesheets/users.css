@@ -1,3 +1,31 @@
+
+/*************************************************************************
+ * UserPage Styles
+ *************************************************************************
+ */
+#user-pic {
+  float:left;
+  display:block;
+  margin-right:20px;
+  width:50px; height:50px;
+  background-color:#666;
+}
+h1#user-name {
+  padding-top:8px;
+  color:#188d8e;
+  font-size:20px;
+  font-weight:300;
+}
+#user-captions {
+  margin-top:2px;
+  color:#1fbbbd;
+  font-size:12px;
+  height:15px;
+}
+/*************************************************************************
+ * UserSettings Styles
+ *************************************************************************
+ */
 h1#settings-page-title {
   font-size:18px;
   color:#188d8e;

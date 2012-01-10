@@ -27,7 +27,7 @@ var Calendar = {
         }
         var open = !$(this).hasClass('open');
         $('#schedule').find('.sections').stop(true,true).slideUp();
-        $('#schedule').find('.friends').stop(true,true).slideUp();
+        $('#schedule').find('.friends .facebox, .friends .section-header').stop(true,true).slideUp();
         $('.open').removeClass('open');
         if (open) {
           $('.course'+$(this).find('.number').text()).find('.sections').slideDown();
@@ -47,11 +47,11 @@ var Calendar = {
       click: function() {
         var open = !$(this).closest('.course').hasClass('open');
         $('#schedule').find('.sections').stop(true,true).slideUp();
-        $('#schedule').find('.friends').stop(true,true).slideUp();
+        $('#schedule').find('.friends .facebox, .friends .section-header').stop(true,true).slideUp();
         $('.open').removeClass('open');
         if (open) {
           $('.course'+$(this).closest('.course')
-              .find('.number').text()).find('.friends').slideDown();
+              .find('.number').text()).find('.friends .facebox, .friends .section-header').slideDown();
           $('.course'+$(this).closest('.course')
               .find('.number').text()).addClass('open');
         }
@@ -104,6 +104,8 @@ var Calendar = {
   },
 
   addCourse: function(course) {
+
+    $(course).find('.friends .section-header, .friends .facebox').hide();
 
     var number = $(course).find('.number').text();
 

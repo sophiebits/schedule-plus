@@ -4,7 +4,7 @@ course.appendTo('#schedule');
 course.trigger('click');
 Calendar.color(course);
 Calendar.addCourse(course);
-$('#add-course input').val('');
+$('#add-course input[type=text]').val('');
 $('#total-units').html('Total: <%= @selection.schedule.units %> units');
 var days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
 for (var i = 0; i < days.length; ++i)

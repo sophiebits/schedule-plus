@@ -1,6 +1,7 @@
 <%
 # cs : CourseSelection
 editable = user_signed_in? && current_user == cs.schedule.user
+@semester ||= cs.schedule.semester
 %>
 <li class="course<%= cs.course.number %> course">
   <div class="course-options">
@@ -19,27 +20,28 @@ editable = user_signed_in? && current_user == cs.schedule.user
   <span class="name"><%= cs.name %></span><%
 if user_signed_in? %>
   <div class="friends"><% 
-  students = cs.course.students 
+  @semester_friends ||= current_user.friends.select {|f| f.active?(@semester) }
+  students = cs.course.students(@semester) 
   you = students.delete(current_user) 
-  friends = students & current_user.friends
+  friends = students & @semester_friends
 
   # FIXME THIS IS SO UGLY
   # FIXME HELP HELP HELPER? HELP
   if you
     if friends.length == 0
       if students.length == 0
-        %>you are in this course.<%
+        %>You are in this course.<%
       else
-        %>you and <a href="<%= course_path(cs.course) %>"><%= students.length %> <%= 
+        %>You and <a href="<%= course_path(cs.course) %>"><%= students.length %> <%= 
         if students.length > 1 then 'others' else 'other' end %></a> are in this course.<%
       end
     else
       if students.length <= 1
-        %>you and <%= link_to friends.first.name, 
-        schedule_path(friends.first.main_schedule) %> are in this course.<%
+        %>You and <%= link_to friends.first.name, 
+        schedule_path(friends.first.main_schedule(@semester)) %> are in this course.<%
       else
-        %>you, <%= link_to friends.first.name, 
-        schedule_path(friends.first.main_schedule) %>, and 
+        %>You, <%= link_to friends.first.name, 
+        schedule_path(friends.first.main_schedule(@semester)) %>, and 
         <a href="<%= course_path(cs.course) %>"><%= students.length - 1 %> <%=
         if students.length - 1 > 1 then 'others' else 'other' end %></a>.<%
       end
@@ -47,18 +49,18 @@ if user_signed_in? %>
   else
     if friends.length == 0
       if students.length == 0
-        %>no one is currently in this course.<%
+        %>No one is currently in this course.<%
       else
-        # fixme 1 person is not are
+        # FIXME 1 person is not are
         %><%= students.length %> people are in this course.<%
       end
     else
      if students.length <= 1
        %><%= link_to friends.first.name, 
-        schedule_path(friends.first.main_schedule) %> is in this course.<%
+        schedule_path(friends.first.main_schedule(@semester)) %> is in this course.<%
        else
         %><%= link_to friends.first.name, 
-        schedule_path(friends.first.main_schedule) %> and 
+        schedule_path(friends.first.main_schedule(@semester)) %> and 
         <a href="<%= course_path(cs.course) %>"><%= students.length - 1 %> <%=
         if students.length - 1 > 1 then 'others' else 'other' end %></a>.<%
       end
@@ -70,10 +72,11 @@ if user_signed_in? %>
   other_section = friends - section_students
   %>
     <!--<ul class="facebox"><%
-    friends.take(8).each do |f| %>
+    friends.first(8).each do |f| %>
       <li><%= link_to (image_tag "https://graph.facebook.com/"+f.uid.to_s+"/picture", 
                                  :alt => f.name),
-                      schedule_path(f.main_schedule) %></li><%
+                      schedule_path(f.main_schedule(@semester)),
+                      'tooltip' => f.name %></li><%
     end %>
     </ul>
     <div class="clear"></div>--><%
@@ -82,9 +85,10 @@ if user_signed_in? %>
     <span class="section-header">Section <%= cs.section.letter %></span>
     <ul class="facebox"><%
     same_section.each do |f| %>
-      <li><%= link_to (image_tag "https://graph.facebook.com/"+f.uid.to_s+"/picture?type=square", 
+      <li><%= link_to (image_tag "https://graph.facebook.com/"+f.uid.to_s+"/picture", 
                                  :alt => f.name),
-                      schedule_path(f.main_schedule) %></li><%
+                      schedule_path(f.main_schedule(@semester)), 
+                      'tooltip' => f.name %></li><%
     end %>
     </ul>
     <div class="clear"></div><%
@@ -95,7 +99,8 @@ if user_signed_in? %>
     other_section.each do |f| %>
       <li><%= link_to (image_tag "https://graph.facebook.com/"+f.uid.to_s+"/picture", 
                                  :alt => f.name),
-                      schedule_path(f.main_schedule) %></li><%
+                      schedule_path(f.main_schedule(@semester)),
+                      'tooltip' => f.name %></li><%
     end %>
     </ul>
     <div class="clear"></div><%

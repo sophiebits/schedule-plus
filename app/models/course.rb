@@ -40,15 +40,15 @@ class Course < ActiveRecord::Base
   end
 
   def prereqs_str
-    "Not Available" if prereqs.nil? || prereqs.empty?
+    fill prereqs
   end
 
   def coreqs_str
-    "Not Available" if coreqs.nil? || coreqs.empty?
+    fill coreqs
   end
 
   def description_str
-    "Not Available" if description.nil? || description.empty?
+    fill description
   end
 
   def instructors
@@ -61,9 +61,12 @@ class Course < ActiveRecord::Base
   end
 
   def students(semester=nil)
-    course_selections.map(&:schedule)
-                     .select {|s| s.primary && (semester.nil? || s.semester == semester) }
-                     .map(&:user)
+    if semester
+      cs = Course.find_by_number_and_semester_id(number, semester.id).course_selections
+    else
+      cs = Course.find_all_by_number(number).map(&:course_selections).flatten
+    end
+    cs.map(&:schedule).select(&:primary).map(&:user)
   end
   
   def add_department
@@ -73,6 +76,16 @@ class Course < ActiveRecord::Base
       true
     else
       false
+    end
+  end
+
+  private
+
+  def fill(str)
+    if str.nil? || str.empty?
+      "Not Available."
+    else
+      str
     end
   end
 end

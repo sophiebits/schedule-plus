@@ -12,12 +12,7 @@
     if user_signed_in? %>
     <div id="current-user">
       <a href="/logout" data-method="delete" id="logout">Logout</a>
-      <a href="<%= 
-        if current_user.main_schedule(current_semester)
-          schedule_path(current_user.main_schedule(current_semester))
-        else
-          schedules_path
-        end %>" id="current-user-schedule-link">
+      <a href="<%= user_path(current_user) %>" id="current-user-schedule-link">
         <span id="current-user-name"><%= current_user.fb.try(:name) %></span>
         <img id="current-user-pic" 
              alt="<%= current_user.fb.try(:name) %>"

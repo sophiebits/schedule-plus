@@ -1,6 +1,3 @@
-<%
-@friends = @friends.select {|f| !f.main_schedule.nil? }
-%>
 <div id="page-content" class="friends">
   <div id="content-header">
     <div class="container">
@@ -30,14 +27,14 @@
   <ul id="friends-list">
 <% @friends.each do |friend| %>
     <li>
-      <a href="<%= schedule_path(friend.main_schedule) %>" class="friend-link">
+      <a href="<%= user_path(friend) %>" class="friend-link">
         <img class="friend-pic"
              alt="<%= friend.name %>"
              src="http://graph.facebook.com/<%= friend.uid %>/picture" />
         <span class="friend-name"><%= friend.name %></span>
         <span class="friend-mutual-courses"><% 
         # mutual courses = intersection of two sets
-        if current_user.main_schedule then
+        if current_user.main_schedule && friend.main_schedule then
           mutuals = friend.courses & current_user.courses
         else
           mutuals = []
