@@ -2,7 +2,11 @@ require 'fb_graph'
 
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  
+
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_url, :alert => "You cannot see other user's data you sneaky user you"
+  end
+
   # Always redirect users to scheduleplus.org if they try to access through the heroku site
   # before_filter :check_uri
   def check_uri

@@ -30,6 +30,8 @@ gem 'sqlite3'
 #   gem 'webrat'
 # end
 
+#for user roles
+gem 'cancan'
 
 gem 'nifty-generators'
 gem 'mocha', :group => :test
