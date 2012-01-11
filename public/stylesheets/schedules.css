@@ -267,7 +267,7 @@ h1#schedule-user a {
   padding:8px;
   color:#333;
   background-color:#eee;
-  border:1px solid #aaa;
+  border:1px solid #999;
   border-left-width:4px;
   border-radius:5px;
 }
@@ -279,7 +279,6 @@ h1#schedule-user a {
 #schedule .course.highlight,
 #schedule .course:hover {
   color:#000;
-  border-color:#ccc;
   background-color:#fff;
 }
 #schedule .course-options {
@@ -466,8 +465,9 @@ h1#schedule-user a {
 #calendar #times {
   position:absolute;
   left:-45px; top:-1px;
-  width:715px;
-  height:100%;
+  width:675px;
+  height:705px;
+  overflow:hidden;
 }
 #calendar #times li {
   display:block;
@@ -476,7 +476,7 @@ h1#schedule-user a {
   color:#aaa;
   text-align:left;
   font-size:11px;
-  border-top:1px solid #fff;
+  border-top:1px solid #ccc;
   overflow:hidden;
 }
 #calendar #times li:last-child {
@@ -488,9 +488,9 @@ h1#schedule-user a {
 #calendar #times .half-hour {
   display:block;
   position:absolute;
-  bottom:-50%; left:30px;
+  bottom:-50%; left:45px;
   width:100%; height:100%;
-  /*border-top:1px dashed #ccc;*/
+  border-top:1px dashed #ddd;
 }
 .day-label {
   font-size:11px;
@@ -507,7 +507,6 @@ h1#schedule-user a {
   display:block;
   position:absolute;
   padding-top:4px;
-  color:#333;
   font-size:11px;
   text-align:left;
   background-color:#ddd;
@@ -537,6 +536,6 @@ h1#schedule-user a {
   display:block;
   margin:2px 4px;
   font-size:10px;
-  color:#777;
+  color:#666;
 }
 
