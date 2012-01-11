@@ -5,7 +5,7 @@ namespace :seed do
   	if ENV['semester'].nil?
   	  Seeder.seed_soc(nil)
   	else
-  	  Seeder.seed_soc(Semester.where("name #{DATABASE_OPERATOR[:like_operator]} ?", "%#{ENV['semester']}%").first)
+  	  Seeder.seed_soc(Semester.where("name " + Rails.application.config.like_operator + " ?", "%#{ENV['semester']}%").first)
   	end
   	puts "done!"
   end

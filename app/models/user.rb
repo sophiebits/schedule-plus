@@ -70,7 +70,7 @@ class User < ActiveRecord::Base
     current_day = %w(U M T W R F S)[current_time.wday]
 
     course_selections = self.main_schedule.course_selections.includes(
-      :section => [:scheduled_times, :lecture => :scheduled_times]).where('scheduled_times.days #{DATABASE_OPERATOR[:like_operator]} ?',
+      :section => [:scheduled_times, :lecture => :scheduled_times]).where('scheduled_times.days ' + Rails.application.config.like_operator + ' ?',
       "%#{current_day}%")
 
     current_course_selection = course_selections.where(
