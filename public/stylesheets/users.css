@@ -22,6 +22,62 @@ h1#user-name {
   font-size:12px;
   height:15px;
 }
+#user-notify {
+  display:block;
+  margin:10px 0 0;
+  padding:6px;
+  color:#666;
+  border:1px solid #666;
+  font-size:12px;
+  text-align:center;
+  border-width:1px 0;
+  background-color:#ddd;
+}
+#manage-link {
+  font-size:12px;
+  color:#188d8e;
+}
+h2 {
+  margin-top:20px;
+  padding-left:10px;
+  font-size:12px;
+  color:#aaa;
+  border-bottom:1px dotted #aaa;
+}
+#schedules {
+}
+.schedule {
+  float:left;
+  width:305px;
+  margin:10px 10px 0 0;
+  padding:12px;
+  color:#999;
+  background-color:#eee;
+  border:1px solid #ccc;
+  border-left-width:4px;
+  border-radius:5px;
+}
+.schedule:hover {
+  color:#666;
+  border-color:#1fbbbd;
+}
+.schedule h3 {
+  font-size:14px;
+  font-weight:300;
+}
+.course-selections {
+  position:relative;
+  margin-left:55px;
+  clear:both;
+  margin-top:10px;
+  font-size:12px;
+  line-height:14px;
+}
+.course-selections .number {
+  position:absolute; left:-55px;
+  font-weight:700;
+}
+
 /*************************************************************************
  * UserSettings Styles
  *************************************************************************

@@ -1,0 +1,13 @@
+<%
+if suggestions.length == 0 %>
+          <li id="suggestions-notify"><a>No results</a></li><%
+end %><%
+suggestions.first(5).each do |c| %>
+          <li><a href="<%= schedule_selections_path(@schedule, :id => c.sections.first) %>"
+            data-method="post" data-remote="true" class="suggestion">
+            <span class="number"><%= c.number %></span> <%= c.name %>
+          </a></li><%
+end %><%
+if suggestions.length > 5 %>
+          <li id="suggestions-notify"><a href="<%= courses_path(:search => @search_term) %>">See all <%= suggestions.length %> Results</a></li><%
+end %>

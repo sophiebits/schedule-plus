@@ -1,17 +1,15 @@
 class SchedulesController < ApplicationController
 
   def index
-    redirect_to root_path if !user_signed_in?
-    @schedules = current_user.schedules
+    if !user_signed_in?
+      redirect_to root_path 
+    else
+      @schedules = current_user.schedules
+    end
   end
 
   def show
-    if (params[:id]) 
-      @schedule = Schedule.find_by_url(params[:id])
-    elsif current_user
-      @schedule = current_user.main_schedule || Schedule.new
-    end
-    redirect_to root_path if @schedule.nil?
+    @schedule = Schedule.find_by_url(params[:id]) or not_found
   end
   
   def new
@@ -19,15 +17,22 @@ class SchedulesController < ApplicationController
   end
  
   def create
-    redirect_to root_path if !current_user
-    semester_id = params[:semester] || current_semester.id
-    @schedule = current_user.schedules.create(:semester_id => semester_id)
-    @schedule.copy!(Schedule.find_by_url(params[:clone])) if params[:clone]
-    redirect_to schedule_path(@schedule)
+    if !user_signed_in?
+      redirect_to root_path
+    else
+      semester_id = params[:semester] || current_semester.id
+      @schedule = current_user.schedules.create(:semester_id => semester_id)
+      if params[:clone]
+        # TODO check cloning semesters are the same
+        to_clone = Schedule.find_by_url(params[:clone]) or not_found
+        @schedule.copy!(to_clone)
+      end
+      redirect_to schedule_path(@schedule)
+    end
   end
 
   def destroy
-    @schedule = Schedule.find_by_url(params[:id])
+    @schedule = Schedule.find_by_url(params[:id]) or not_found
     @schedule.destroy
     respond_to do |format|
       format.html { redirect_to schedules_path }
@@ -36,7 +41,7 @@ class SchedulesController < ApplicationController
   end
 
   def update
-    @schedule = Schedule.find_by_url(params[:id])
+    @schedule = Schedule.find_by_url(params[:id]) or not_found
     if params[:schedule][:primary]
       @schedule.make_primary!
     else
@@ -72,6 +77,12 @@ class SchedulesController < ApplicationController
     else
       redirect_to '/schedules/' + session[:imported].to_s
     end
+  end
+
+  private
+
+  def not_found
+    raise ActiveRecord::RecordNotFound
   end
 
 end

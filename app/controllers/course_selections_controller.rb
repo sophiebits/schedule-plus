@@ -1,46 +1,44 @@
 class CourseSelectionsController < ApplicationController
   
   # POST
+  # FIXME this method is bloated to shit. please fix
   def create
-    schedule = Schedule.find_by_url(params[:schedule_id])
+    schedule = Schedule.find_by_url(params[:schedule_id]) or
+      raise ActiveRecord::RecordNotFound
     if params[:search]
-      # TODO text input parsing  
       parsed = parse_search(params[:search])
       search = parsed[0]
       section_letter = parsed[1] ? parsed[1].upcase : nil
-      
-      results = Course.by_semester(Semester.find(params[:semester]))
-                      .search(search)
-                      .select(&:offered)
-      if results.length == 1 && params[:confirm]
-				section = results.first.find_by_section(section_letter)
-				section_id = section ? section.id : nil
-        if section_id
-        	@selection = schedule.add_course(section_id)
+      @results = Rails.cache.fetch(search+'*semester='+params[:semester].to_s) do
+                   Course.by_semester(Semester.find(params[:semester]))
+                         .search(search)
+                         .select(&:offered)
+                 end
+      @results = @results.select {|c| !(schedule.courses.include?c) }
+      if params[:confirm]
+        if @results.length == 1 
+          course = @results.first
+          section = course.find_by_section(section_letter).try(:id) ||
+                    course.sections.first.id
+          @selection = schedule.add_course(section)
         else
-       		@selection = schedule.add_course(results.first.sections.first.id)
-       	end
-        respond_to do |format|
-          format.html { redirect_to schedule_path(params[:schedule_id]) }
-          format.js
+          @search = params[:search]
         end
-      else
-        # FIXME this doesn't work properly for json requests
-        # p results.map(&:number).join(", ")
-        redirect_to courses_path(:search => params[:search])
       end
+      @search_term = params[:search]
     else
-      @selection = Schedule.find_by_url(params[:schedule_id]).add_course(params[:id])
-      respond_to do |format|
-        format.html { redirect_to schedule_path(params[:schedule_id]) }
-        format.js
-      end
+      @selection = schedule.add_course(params[:id])
+    end
+    respond_to do |format|
+      format.html { redirect_to schedule_path(params[:schedule_id]) }
+      format.js
     end
   end
 
   # PUT
   def update
-    @selection = Schedule.find_by_url(params[:schedule_id]).add_course(params[:section_id])
+    @selection = Schedule.find_by_url(params[:schedule_id])
+                         .switch_section(params[:section_id])
     respond_to do |format|
       format.html { redirect_to schedule_path(params[:schedule_id]) }
       format.js
@@ -61,15 +59,17 @@ class CourseSelectionsController < ApplicationController
   # parses the search query into [course name/number, section letter]
   # (section letter is nil if not specified)
   def parse_search(search)
-  	# get the last 2 characters in the search
-  	section = search[-2,2]
-  	if is_letter?(section[1]) and (section[0] == ' ' or is_number?(section[0]))
-  		# 1-letter section: first char is a space/number; second char is a letter
-  		return [search[0..-2], section[1]]
-  	elsif is_letter?(section[0]) and (is_number?(section[1]) or is_letter?(section[1]))
-  		# 2-letter section: first char is a letter; second char is a number or letter
-  		return [search[0..-3], section]
-  	end
+  	if search.length >= 4
+  		# get the last 2 characters in the search
+      section = search[-2,2]
+      if is_letter?(section[1]) and (section[0] == ' ' or is_number?(section[0]))
+        # 1-letter section: first char is a space/number; second char is a letter
+        return [search[0..-2], section[1]]
+      elsif is_letter?(section[0]) and (is_number?(section[1]) or is_letter?(section[1]))
+        # 2-letter section: first char is a letter; second char is a number or letter
+        return [search[0..-3], section]
+      end
+    end
   	return [search, nil]
   end
   

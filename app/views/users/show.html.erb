@@ -20,14 +20,28 @@ end
     </div>
   </div>
   <div class="container">
-    <h2>Schedules</h2>
+    <h2>Schedules</h2><%
+    if current_user == @user %>
+    <span id="user-notify">
+      These are your primary schedules for each semester. Your friends will see these
+      schedules when they visit your profile. <%= 
+      link_to "Manage Schedules", schedules_path, :id => "manage-link"%>
+    </span><%
+    end %>
     <ul id="schedules"><%
     @user.schedules.select(&:primary).each do |s| %>
       <li class="schedule">
-        <%= link_to s.semester.name, schedule_path(s) %>
+        <h3><%= link_to s.semester.name, schedule_path(s) %></h3>
+        <ul class="course-selections"><% 
+        s.course_selections.each do |cs| %>
+          <li><span class="number"><%= 
+                cs.course.number %></span> <%= 
+                cs.course.name %></li><% 
+        end %>
+        </ul>
       </li><%
     end %>
     </ul>
-    <%= link_to "Manage Schedules", schedules_path if current_user == @user %>
+    <div class="clear"></div>
   </div>
 </div>

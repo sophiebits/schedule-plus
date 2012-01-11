@@ -197,10 +197,10 @@ h1#schedule-user a {
   border-bottom:1px dotted #ccc;
 }
 #add-course {
+  position:relative;
   display:block;
   width:100%;
-  height:20px;
-  padding:5px 0 5px;
+  margin-top:10px;
 }
 #add-course input {
   float:left;
@@ -211,8 +211,39 @@ h1#schedule-user a {
 #add-course input:focus {
   border-color:#1fbbbd;
 }
-#add-course input[type=submit] {
+#add-suggestions {
+  z-index:5;
+  font-size:12px;
+}
+#add-suggestions li a .number {
+  font-weight:700;
+}
+#add-suggestions li a {
+  clear:left;
   display:block;
+  color:#666;
+  width:203px; height:14px;
+  padding:2px 5px;
+  border:1px solid #ddd;
+  border-top:none;
+  border-radius:5px;
+  overflow:hidden;
+  white-space:nowrap;
+}
+#add-suggestions li a:hover,
+#add-suggestions li a:focus {
+  text-decoration:none;
+  background-color:#eee;
+  border-color:#ccc;
+}
+#add-suggestions li#suggestions-notify a {
+  background-color:#aaa;
+  text-align:center;
+  color:#fff;
+  border-color:#999
+}
+#add-course input[type=submit] {
+  display:block; float:right;
   margin-left:5px;
   width:20px; height:0; padding:20px 0 0 0;
   background-image:url('/images/sprites.png');
@@ -225,6 +256,8 @@ h1#schedule-user a {
   background-position:-160px -25px;
 }
 #schedule {
+  clear:both;
+  margin-top:10px;
   font-size:12px;
 }
 #schedule .course {

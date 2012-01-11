@@ -54,19 +54,26 @@ class Schedule < ActiveRecord::Base
       course_selections.create(:section => selection.section)
     }
   end
-  
-  # Adds a course by course_id and section_id.
-  # Assumes course_id and section_id are valid
-  # Uses section A by default.
+
+  def courses
+    course_selections.map(&:course)
+  end
+
+  # Adds a course by section_id; assumes section_id is valid.
   def add_course(section_id)
     course_id = Section.find(section_id).course_id
-    i = course_selections.map{|cs| cs.course.id}.index(course_id)
-    if i.nil? 
-      course_selections.create(:section_id => section_id)
-    else
-      course_selections[i].update_attributes(:section_id => section_id)
-      course_selections[i].reload()
+    if courses.include? Course.find(course_id)
+      switch_section(section_id)
+      return nil
     end
+    course_selections.create(:section_id => section_id)
+  end
+
+  def switch_section(section_id)
+    course_id = Section.find(section_id).course_id
+    i = course_selections.map {|cs| cs.course.id }.index(course_id)
+    course_selections[i].update_attributes(:section_id => section_id)
+    course_selections[i].reload()
   end
 
   # returns true is st1 and st2 overlap in time
