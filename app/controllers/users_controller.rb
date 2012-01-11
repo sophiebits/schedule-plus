@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  def show
-    # FIXME !!!! restrict access to non-private users
+  load_and_authorize_resource
+ def show
     if user_signed_in?
       @user = User.find(params[:id])
     else
