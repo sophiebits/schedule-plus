@@ -167,6 +167,7 @@ h3 {
   margin-top:182px;
   padding-left:50px;
   color:#1fbbbd;
+  text-align:left;
   letter-spacing:-2px;
   text-shadow:0 2px 0 #fff;
 }
@@ -193,8 +194,8 @@ h3 {
  * Slide1 Styles
  *************************************************************************
  */
-.slide h1 {
-  font-size:120px;
+.slide h2 {
+  font-size:42px;
   margin-top:150px;
   color:#1fbbbd;
   text-align:center;

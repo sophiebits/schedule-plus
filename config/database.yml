@@ -5,6 +5,11 @@ development:
   database: db/development.sqlite3
   pool: 5
   timeout: 5000
+#  adapter: postgresql
+#  database: acm-schedule-devel
+#  username: postgres
+#  password: 
+#  host: localhost
 
 old:
   adapter: sqlite3

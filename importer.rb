@@ -18,7 +18,7 @@ class OldUser < OldBase
   def to_model
     User.new do |u|
       u.name = self.name
-      u.uid = self.uid
+      u.uid = self.uid.to_s
     end
   end
 end
@@ -116,7 +116,8 @@ class Importer < ActiveRecord::Base
     OldUser.all.each do |u|
       active_id = OldActiveSchedule.find_by_user_id(u.id).try(:schedule).try(:id)
       if active_id
-        user = User.find_by_uid(u.uid) || User.create(:name => u.name, :uid => u.uid)
+        user = User.find_by_uid(u.uid.to_s) || User.create(:name => u.name, :uid => u.uid.to_s)
+        user.authentications.create(:provider => :facebook, :uid => user.uid)
         u.schedules.each_with_index do |s,i|
           schedule = user.schedules.create(:name => "Schedule " + (i+1).to_s,
                                            :semester_id => 1,
@@ -126,8 +127,9 @@ class Importer < ActiveRecord::Base
             schedule.course_selections.create(:section_id => section_id) if section_id
           end
         end
+        p 'Imported ' + u.name + ' (' + u.schedules.count.to_s + ')'
       else
-        p "Skipped " + u.name
+        p 'Skipped ' + u.name
       end
     end
     true

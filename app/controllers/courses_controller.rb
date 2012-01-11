@@ -20,7 +20,7 @@ class CoursesController < ApplicationController
   private
 
   def sort_column
-    Course.column_names.include?(params[:sort]) ? params[:sort] : "name"
+    Course.column_names.include?(params[:sort]) ? params[:sort] : "number"
   end
 
   def sort_direction

@@ -1,0 +1,16 @@
+<div id="page-content" class="department">
+  <div id="content-header">
+    <div class="container">
+      <h1>Browse By Department</h1>
+    </div>
+  </div>
+  <div class="container">
+    <ul id="departments"><%
+    @departments.each do |d| %>
+      <li class="department">
+        <%= link_to d.name, '/departments/' + d.id.to_s %>
+      </li><%
+    end %>
+    </ul>
+  </div>
+</div>
