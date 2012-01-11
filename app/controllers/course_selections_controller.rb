@@ -66,8 +66,8 @@ class CourseSelectionsController < ApplicationController
   	if is_letter?(section[1]) and (section[0] == ' ' or is_number?(section[0]))
   		# 1-letter section: first char is a space/number; second char is a letter
   		return [search[0..-2], section[1]]
-  	elsif is_letter?(section[0]) and is_number?(section[1])
-  		# 2-letter section: first char is a letter; second char is a number
+  	elsif is_letter?(section[0]) and (is_number?(section[1]) or is_letter?(section[1]))
+  		# 2-letter section: first char is a letter; second char is a number or letter
   		return [search[0..-3], section]
   	end
   	return [search, nil]
