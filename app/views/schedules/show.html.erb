@@ -35,7 +35,8 @@ end %>
       <div id="schedule-options">
         <%= link_to "Delete", schedule_path(@schedule), 
                     :id => 'schedule-delete', :method => :delete if editable %>
-        <%= link_to "Clone", schedules_path(:clone => @schedule),
+        <%= link_to "Clone", schedules_path(:semester => @schedule.semester, 
+                                            :clone => @schedule),
                     :id => "schedule-clone", :method => :post %>
         <%= link_to "Share", "#", # TODO
                     :id => "schedule-share" %>
@@ -72,13 +73,14 @@ end %>
       if editable %>
       <%= form_tag schedule_selections_path(@schedule),
                    :id => 'add-course', :method => :post, :remote => true do %>
-        <%= text_field_tag :search, nil, :placeholder => 'Add a Course' %>
+        <%= submit_tag "Add" %>
+        <%= text_field_tag :search, nil, :placeholder => 'Add a Course', :autocomplete => 'off' %>
+        <ul id="add-suggestions">
+        </ul>
+        <div class="clear"></div>
         <input type="hidden" name="semester" value="<%= @schedule.semester.id %>" />
-        <input type="hidden" name="confirm" value="true" />
-        <%= submit_tag "Add" %><% 
-      end %>
-<script type="text/javascript">
-</script><%
+        <input type="hidden" name="confirm" value="true" /><%
+      end %><%
       end %>
       <ul id="schedule">
         <%= render :partial => "course", :collection => selections, :as => :cs %>
@@ -89,16 +91,16 @@ end %>
     if editable 
       if @schedule.primary %>
       <span id="schedule-public-notify">
-      <strong>This is your public schedule</strong>. 
-      Your friends will see this schedule when they visit your page.
+      <strong>This is your primary schedule</strong>. 
+      Your friends will see this as your <%= @schedule.semester.name %> schedule. 
       </span><% 
       else %>
       <span id="schedule-private-notify">
-      <strong>This is a private schedule.</strong> Others will not see the
-      contents of this schedule. 
+      <strong>This is a private schedule.</strong> It will not be displayed on your
+      profile, but you may still directly link to it.
       <%= link_to 'Make public',
                   schedule_path(@schedule, :schedule => {:primary => true}),
-                  :method => 'put' %>
+                  :method => 'put' if false %>
       </span><% 
       end 
     end %>

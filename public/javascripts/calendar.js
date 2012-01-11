@@ -36,7 +36,7 @@ var Calendar = {
       },
       mouseenter: function() {
         $('.highlight').removeClass('highlight');
-        $('.course'+$(this).find('.number').html()).addClass('highlight');
+        $('.course'+$(this).find('.number').text()).addClass('highlight');
       },
       mouseleave: function() {
         $('.highlight').removeClass('highlight');
