@@ -7,13 +7,22 @@
   color:#188d8e;
   font-size:18px;
 }
-#friends-list {
-  margin-top:30px;
+h3.friends-list-header {
+  padding-left:17px;
+  margin:15px 0;
+  font-size:12px;
+  color:#ccc;
+  font-weight:700;
+  border-bottom:1px dotted #ddd;
+  clear:both;
+}
+.friends-list {
+  margin-top:20px;
   position:relative;
-  top:-15px;
+  top:-10px;
   font-size:11px;
 }
-#friends-list li {
+.friends-list li {
   float:left;
   margin:0 8px 8px 0;
 }
@@ -38,7 +47,7 @@ a.friend-link:hover {
   margin-right:10px;
   vertical-align:text-bottom;
 }
-#friends-list span { display:block; }
+.friends-list span { display:block; }
 .friend-name {
   color:#188d8e;
   font-size:13px;
@@ -50,4 +59,7 @@ a.friend-link:hover {
 .friend-status {
   margin-top:2px;
   color:#999;
+}
+.last-seen {
+  color:#aaa;  
 }

@@ -24,8 +24,12 @@
     </div>
   </div>
   <div class="container">
-  <ul id="friends-list">
-<% @friends.each do |friend| %>
+  <h3 class="friends-list-header">Friends with a <%= current_semester.name %> schedule</h3>
+  <ul class="friends-list"><% 
+curr_friends = @friends.select {|f| !f.main_schedule(current_semester).nil? }
+prev_friends = @friends.reject {|f| !f.main_schedule(current_semester).nil? }
+
+curr_friends.each do |friend| %>
     <li>
       <a href="<%= user_path(friend) %>" class="friend-link">
         <img class="friend-pic"
@@ -43,8 +47,26 @@
          %><%= mutuals.length %> mutual courses</span>
         <span class="friend-status"><%= friend.status %></span>
       </a>
-    </li>
-<% end %>
+    </li><% 
+end 
+%>
+  </ul>
+  <h3 class="friends-list-header">Other friends on schedule+</h3>
+  <ul class="friends-list"><% 
+prev_friends.each do |friend| %>
+    <li>
+      <a href="<%= user_path(friend) %>" class="friend-link">
+        <img class="friend-pic"
+             alt="<%= friend.name %>"
+             src="http://graph.facebook.com/<%= friend.uid %>/picture" />
+        <span class="friend-name"><%= friend.name %></span>
+        <span class="last-seen">Last seen: <%=
+        semesters_active = friend.schedules.primary.map(&:semester)
+        semesters_active.last.name
+        %></span>
+      </a>
+    </li><% 
+end %> 
   </ul>
   </div>
 </div>

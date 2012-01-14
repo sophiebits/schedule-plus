@@ -1,4 +1,4 @@
-
+h1#department-index-title,
 h1#course-index-title, 
 h1#course-page-title {
   font-size:18px;
@@ -31,8 +31,14 @@ form#courses-search-form {
 #courses-search-form input[type=submit]:hover {
   background-position:-120px -25px;
 }
+#all-courses-link,
+#departments-link {
+  display:inline-block;
+  margin:20px 0 0;
+  font-size:12px;
+}
 table#courses-table { 
-  margin:30px 0 20px;
+  margin:10px 0 20px;
   width:100%;
   border-bottom:1px solid #ddd;
 }
@@ -55,6 +61,30 @@ table#courses-table td {
 table#courses-table th a {
   color:#188d8e;
 }
+/*************************************************************************
+ * DepartmentsIndex Styles
+ *************************************************************************
+ */
+#departments {
+  position:relative;
+  margin-top:30px;
+  top:-20px;
+  border-top:1px solid #ddd;
+}
+#departments li {
+  width:33%;
+  float:left;
+}
+#departments li a {
+  display:block;
+  border-bottom:1px solid #ddd;
+  font-size:12px;
+  padding:5px 8px;
+}
+#departments li.even a {
+  background-color:#eee;
+}
+
 /*************************************************************************
  * CoursePage Styles
  *************************************************************************

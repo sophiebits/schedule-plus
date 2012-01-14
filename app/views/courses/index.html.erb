@@ -16,7 +16,7 @@
     </div>
   </div>
   <div class="container">
-    <%= link_to "Browse By Department", departments_path %>
+    <%= link_to "Browse By Department", departments_path, :id => "departments-link" %>
     <table id="courses-table">
       <thead><tr>
         <th><%= sortable "number" %></th>

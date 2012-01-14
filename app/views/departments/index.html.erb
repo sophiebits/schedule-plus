@@ -1,13 +1,18 @@
-<div id="page-content" class="department">
+<%
+content_for :javascript_includes do
+  stylesheet_link_tag "courses.css", :media => "all"
+end
+%><div id="page-content" class="department">
   <div id="content-header">
     <div class="container">
-      <h1>Browse By Department</h1>
+      <h1 id="department-index-title">Browse By Department</h1>
     </div>
   </div>
   <div class="container">
+    <%= link_to "All Courses", courses_path, :id => "all-courses-link" %>
     <ul id="departments"><%
     @departments.each do |d| %>
-      <li class="department">
+      <li class="department <%= cycle('odd', 'even') %>">
         <%= link_to d.name, '/departments/' + d.id.to_s %>
       </li><%
     end %>

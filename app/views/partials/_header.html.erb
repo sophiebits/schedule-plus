@@ -18,7 +18,7 @@
              alt="<%= current_user.fb.try(:name) %>"
              src="<%= current_user.fb.try(:picture) %>" />
       </a>
-      <a href="/settings" id="settings-link">Settings</a>
+      <!--a href="/settings" id="settings-link">Settings</a-->
     </div><% 
     else %>
     <%= link_to "Login", '/auth/facebook',
