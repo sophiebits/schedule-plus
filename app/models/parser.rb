@@ -81,8 +81,7 @@ class Parser < ActiveRecord::Base
     
     response = Hash.new
     response[:warnings] = []
-    response[:schedule] = Schedule.create(:user_id => current_user_id, :semester_id => semester_id,
-    													 						:url => url)
+    response[:schedule] = Schedule.create(:user_id => current_user_id, :semester_id => semester_id)
 
     # add course selections for each course
     @components.first.events.each do |course| 
