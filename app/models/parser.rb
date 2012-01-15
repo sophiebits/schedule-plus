@@ -16,54 +16,58 @@ def getsection(sec)
 end
 
 class Parser < ActiveRecord::Base
+
+	# creates a course selection with number and section letter for schedule in
+	# response[:schedule]
+  def self.create_course_selection(number, section_letter, semester_id, response)
+		begin
+			section = Course.find_by_number_and_semester_id(number, semester_id).sections.find_by_letter(section_letter)
+		rescue
+			puts "couldnt find num %s and letter %d" % [number, section_letter]
+			section = nil
+		end
+		if !section
+      Logger.new(STDOUT).info(number + ' ' + section_letter + ' does not exist in db!')
+      response[:warnings].push(number)
+      return
+    end
+		CourseSelection.create(:schedule_id => response[:schedule].id, :section_id => section.id)
+  end
   
   # Parse method for SIO calendar file
-  def self.parseSIO(file, current_user_id = -1)
+  def self.parseSIO(file, semester_id, current_user_id = -1)
     @components = RiCal.parse(file)
     
-    scheduled_courses = Hash.new
-    
+    response = Hash.new
+    response[:warnings] = []
+		response[:schedule] = Schedule.create(:user_id => current_user_id, :semester_id => semester_id)
+     
     @components.first.events.each do |course| 
       summary = course.summary.split('::')[1].strip.split(' ')
-      
       if summary.count > 0
         number = summary[0].insert(2,'-')
-        section = summary[1]
-      
-        if !(scheduled_courses[number])
-  				scheduled_courses[number] = Hash.new
-  			end
-      
-        # If course section is a number, assume lecture section; otherwise
-        # assume recitation section
-        if section.to_i != 0
-  				scheduled_courses[number][:lecture_section] = section
-        else
-          scheduled_courses[number][:recitation_section] = section
-        end
+        section_letter = summary[1]
+        self.create_course_selection(number, section_letter, semester_id, response)
       end
     end
     
-    self.check_errors(self.generate_schedule_response(scheduled_courses, current_user_id))
+    self.check_errors(response)
   end
 
   # Parse method for scheduleman url
-  def self.parse(url, current_user_id = -1)
+  def self.parse(url, semester_id, current_user_id = -1)
     #if the link has a trailing '/' remove it
     if (url[url.length-1] == '/')
        url[url.length-1] = ''
     end
- 
     #if the url has a trailing '.ics' remove it
     if ((url[url.length-4,url.length-1]).eql?(".ics"))
        url = url[0..(url.length-5)]
     end
-
     #if the url is http, add in the 's' to make it https
     if ((url[0..4]).eql?("http:"))
        url = "https" + url[4..(url.length-1)]
     end
-
     #if the url doesnt have any http/https protocal prefix, add it
     if (!url.include?("https://"))
        url = "https://" + url
@@ -71,41 +75,26 @@ class Parser < ActiveRecord::Base
 
     #append .ics to get the file from scheduleman server, not the html code
     file_url = url + ".ics"
-	
-		scheduled_courses = Hash.new
-		
     open(file_url) do |file|
       @components = RiCal.parse(file)
     end 
-      
+    
+    response = Hash.new
+    response[:warnings] = []
+    response[:schedule] = Schedule.create(:user_id => current_user_id, :semester_id => semester_id,
+    													 						:url => url)
+
+    # add course selections for each course
     @components.first.events.each do |course| 
       summary = course.summary.delete('"').split(' ')
-      
       if summary.include? "Lec"
-				number = summary[-2]
-				if number == "Lec"
-					number = summary[-3]
-				end
+      	next
+      end
+			number = summary[-2]
+			section_letter = getsection(summary[-1])
 			
-			  if !(scheduled_courses[number])
-  				scheduled_courses[number] = Hash.new
-  			end
-  			
-				section = getsection(summary[-1])
-				scheduled_courses[number][:lecture_section] = section
-			else
-				number = summary[-2]
-				section = getsection(summary[-1])
-        
-        if !(scheduled_courses[number])
-  				scheduled_courses[number] = Hash.new
-  			end
-  			
-				scheduled_courses[number][:recitation_section] = section
-			end
-    end   
-    
-    response = self.generate_schedule_response(scheduled_courses, current_user_id)
+			self.create_course_selection(number, section_letter, semester_id, response)
+    end
     
     # Need to check for TBA courses in scheduleman
     doc = open(url) { |f| Hpricot(f) }
@@ -116,27 +105,13 @@ class Parser < ActiveRecord::Base
       if response[:schedule].units != total_units
         # Units are different; need to parse TBA courses on the scheduleman
         courses = (doc/".course")
-        scheduled_course_numbers = response[:schedule].scheduled_courses.collect{|sc| sc.course.number}
-
+        scheduled_course_numbers = response[:schedule].courses.collect{|c| c.number}
         # Check each course in tehe html to find which one's aren't included in the user's schedule
         courses.each do |c|
           number = (c/".number").inner_text.strip[0,6]
           if !scheduled_course_numbers.include? number
-            section = (c/".selected_section").inner_text.strip
-            
-            tba_course = Course.find_by_number(number)
-            recitation = Recitation.where(:lecture_id => tba_course.lectures, :section => section)
-            lecture = nil
-            if recitation && recitation.first
-              lecture = recitation.first.lecture
-              recitation = recitation.first
-            else
-              lecture = Lecture.where(:course_id => tba_course, :section => section).first
-              recitation = nil
-            end
-            
-            # Manually add TBA course to schedule
-            self.add_to_schedule(tba_course, response[:schedule], lecture, recitation)
+            section_letter = (c/".selected_section").inner_text.strip
+            self.create_course_selection(number, section_letter, semester_id, response)
           end
         end
       end
@@ -154,65 +129,4 @@ class Parser < ActiveRecord::Base
 		
 		response
   end
-	
-	def self.generate_schedule_response(scheduled_courses, current_user_id)
-    response = Hash.new
-    response[:warnings] = []
-    schedule = Schedule.create(:user_id => current_user_id)
-
-		# Create scheduled courses
-		scheduled_courses.each do |number,sections|
-			course = Course.find_by_number(number)
-			
-		  if !course
-        Logger.new(STDOUT).info(number + ' does not exist in db!')
-        response[:warnings].push(number)
-        next
-      end
-
-			lec_id = nil
-			rec_id = nil
-			
-			# Get the lec and rec ids
-			if sections[:lecture_section]
-				lecture = course.lectures.find_by_section(sections[:lecture_section])
-				if lecture
-          recitation = lecture.recitations.find_by_section(sections[:recitation_section])
-        end
-			else
-				lecture = course.lectures.find_by_section(sections[:recitation_section])
-			end
-
-      if !lecture || (sections[:lecture_section] && !recitation)
-        Logger.new(STDOUT).info(number + ' is inconsistent with ScheduleMan.')
-        response[:warnings].push(number)
-        next
-      end
-			
-      self.add_to_schedule(course, schedule, lecture, recitation)
-		end
-
-    response[:schedule] = schedule
-    response
-  end
-  
-  def self.add_to_schedule(course, schedule, lecture, recitation)
-    lec_id = lecture.try(:id)
-    rec_id = recitation.try(:id)
-
-		# Get the scheduled course if it already exists
-		sc = nil
-		if lec_id && rec_id
-			sc = course.scheduled_courses.find_by_lecture_id_and_recitation_id(lec_id,rec_id)
-		else
-			sc = course.scheduled_courses.find_by_lecture_id(lec_id)
-		end
-		
-		if !sc
-			sc = ScheduledCourse.create(:course_id => course.id, :lecture_id => lec_id, :recitation_id => rec_id)
-		end
-
-    CourseSelection.create(:schedule_id => schedule.id, :scheduled_course_id => sc.id)
-  end
-
 end
