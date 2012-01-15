@@ -11,6 +11,14 @@ class User < ActiveRecord::Base
     end
   end
 
+  def last_name
+    if name then
+      name.split(" ").last
+    else
+      ""
+    end
+  end
+
   def main_schedule(semester=Semester.current)
     schedules.primary.by_semester(semester).all.first
   end

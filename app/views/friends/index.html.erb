@@ -14,10 +14,10 @@
   };
 
 
-  function listFilter(header, list) { // header is any element, list is an unordered list
+  function listFilter(header, list, list1) { // header is any element, list is an unordered list
     // create and add the filter form to the header
     var form = $("<form>").attr({"class":"filterform","action":"#"}),
-        input = $("<input>").attr({"class":"filterinput","type":"text"});
+        input = $("<input>").attr({"class":"filterinput","type":"text", "placeholder":"Search For Friends"});
     $(form).append(input).appendTo(header);
 
     $(input)
@@ -28,8 +28,12 @@
           // and hide the ones not containing the input while showing the ones that do
           $(list).find("a:not(:Contains(" + filter + "))").parent().slideUp();
           $(list).find("a:Contains(" + filter + ")").parent().slideDown();
+          $(list1).find("a:not(:Contains(" + filter + "))").parent().slideUp();
+          $(list1).find("a:Contains(" + filter + ")").parent().slideDown();
+
         } else {
           $(list).find("li").slideDown();
+          $(list1).find("li").slideDown();
         }
         return false;
       })
@@ -42,19 +46,19 @@
 
   //ondomready
   $(function () {
-    listFilter($("#header"), $("#list"));
+    listFilter($("#header"), $("#old_list"), $("#curr_list"));
   });
 }(jQuery));
-
   </script>
 
 <div class="container">
   <h3 class="friends-list-header">Friends with a <%= current_semester.name %> schedule</h3>
-  <ul id = "list", class="friends-list"><% 
-curr_friends = @friends.select {|f| !f.main_schedule(current_semester).nil? }
-prev_friends = @friends.reject {|f| !f.main_schedule(current_semester).nil? }
+  <ul id="curr_list", class="friends-list">
+<% sorted_friends = @friends.sort { |a,b| a.last_name.downcase <=> b.last_name.downcase } %>
+<% curr_friends = sorted_friends.select {|f| !f.main_schedule(current_semester).nil? } %>
+<% prev_friends = sorted_friends.reject {|f| !f.main_schedule(current_semester).nil? } %>
 
-curr_friends.each do |friend| %>
+<% curr_friends.each do |friend| %>
     <li>
       <a href="<%= user_path(friend) %>" class="friend-link">
         <img class="friend-pic"
@@ -77,7 +81,7 @@ end
 %>
   </ul>
   <h3 class="friends-list-header">Other friends on schedule+</h3>
-  <ul class="friends-list"><% 
+  <ul id = "old_list", class="friends-list"><% 
 prev_friends.each do |friend| %>
     <li>
       <a href="<%= user_path(friend) %>" class="friend-link">
