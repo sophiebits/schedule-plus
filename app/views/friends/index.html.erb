@@ -24,7 +24,7 @@
     </div>
   </div>
   <div class="container">
-  <h3 class="friends-list-header">Friends with a <%= current_semester.name %> schedule</h3>
+  <h3 class="friends-list-header">Spring 2012 friends</h3>
   <ul class="friends-list"><% 
 curr_friends = @friends.select {|f| !f.main_schedule(current_semester).nil? }
 prev_friends = @friends.reject {|f| !f.main_schedule(current_semester).nil? }
