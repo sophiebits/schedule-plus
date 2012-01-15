@@ -26,7 +26,8 @@ content_for :description do
 end %><%
 
 content_for :javascript_includes do %><%= 
-  javascript_include_tag "calendar.js" %><% 
+  javascript_include_tag "calendar.js" %><%=
+  javascript_include_tag "facebook.js"%><% 
 end %>
 <div id="page-content" class="schedule">
   <div id="content-header">
@@ -38,8 +39,8 @@ end %>
         <%= link_to "Clone", schedules_path(:semester => @schedule.semester, 
                                             :clone => @schedule),
                     :id => "schedule-clone", :method => :post %>
-        <%= link_to "Share", "#", # TODO
-                    :id => "schedule-share" %>
+        <%= link_to "Share", "#", 
+                    :id => "schedule-share", :class => "fb-share" %>
         <h3>Options</h3>
       </div><% 
       if viewable 

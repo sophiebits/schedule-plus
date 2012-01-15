@@ -5,13 +5,14 @@
       <%= link_to "Create a New Schedule", 
                   schedules_path, :method => :post, 
                   :id => "create-schedules-link" %><!--or import from ScheduleMan-->
-    </div>
+      <%= form_tag '/schedules/import', :id => 'import-scheduleman', :method => :get do %>
+      <%= text_field_tag :schedulemanurl, nil, :placeholder => 'https://scheduleman.org/schedules/cTUJ2tAnlw' %>
+      <%= submit_tag "Add" %>
+      <% end %>
+    
+   </div>
   </div>
   <div class="container">
-    <!--<form id="import-scheduleman">
-      <input name="url" type="text" placeholder="http://scheduleman.org/schedules/cTUj2lnAW" />
-      <input name="commit" type="submit" value="Import" />
-    </form>-->
     <ul id="schedules-list"><% 
     sgroups = @schedules.group_by(&:semester)
     if sgroups[Semester.current].nil? %><%=
