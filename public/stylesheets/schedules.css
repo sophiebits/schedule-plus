@@ -55,6 +55,7 @@ ul#schedules-list li.schedule .inner {
   padding:12px;
 }
 ul#schedules-list h3.schedule-title {
+  color:#1FBBBD;
   float:left;
   font-size:16px;
   font-weight:300;

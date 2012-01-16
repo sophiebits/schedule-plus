@@ -4,6 +4,6 @@ if (form.attr('class') == 'schedule-title-name') {
 	form.attr('class', 'schedule-title-rename');
 	form.children('input:text').select();
 } else {
-	form.html('<input type="hidden" name="schedule_id" value="<%= @schedule.id %>" /><%= link_to @schedule.name, schedule_path(@schedule) %> <input type="submit" value="rename" />');
+	form.html('<input type="hidden" name="schedule_id" value="<%= @schedule.id %>" /><span><%= @schedule.name %></span> <input type="submit" value="rename" />');
 	form.attr('class', 'schedule-title-name');
 }

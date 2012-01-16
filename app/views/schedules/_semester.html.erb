@@ -12,7 +12,7 @@
             <h3 class="schedule-title">
             <%= form_tag '/schedules-rename', :remote => true, :class => 'schedule-title-name', :method => 'get', :id => 'name-' + schedule.url do %>
             	<input type="hidden" name="schedule_id" value="<%= schedule.id %>" />
-            	<%= link_to schedule.name, schedule_path(schedule) %>
+            	<span><%= schedule.name %></span>
         			<%= submit_tag "rename" %>
      				<% end %>
             </h3>
@@ -39,8 +39,8 @@
                     cs.course.name %></li><% 
             end %>
             </ul>
-          </div></li><% 
-        end %>
+          </div></li>
+        	<% end %>
         </ul>
         <div class="clear"></div><%
         end %>
