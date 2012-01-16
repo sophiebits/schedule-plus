@@ -15,7 +15,7 @@
 
   function listFilter(header, list, list1) { // header is any element, list is an unordered list
     // create and add the filter form to the header
-    var form = $("<form>").attr({"class":"filterform","action":"#"}),
+    var form = $("<form>").attr({"class":"filterform","action":"#","id":"friends-search-form"}),
         input = $("<input>").attr({"class":"filterinput","type":"text", "placeholder":"Search For Friends"});
     $(form).append(input).appendTo(header);
 
@@ -45,7 +45,7 @@
 
   //ondomready
   $(function () {
-    listFilter($("#header"), $("#old_list"), $("#curr_list"));
+    listFilter($("#content-header .container"), $("#old_list"), $("#curr_list"));
   });
 }(jQuery));
   </script>
