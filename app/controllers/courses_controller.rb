@@ -10,7 +10,8 @@ class CoursesController < ApplicationController
   end
 
   def show
-    @course = Course.by_semester(current_semester)
+    semester = (Semester.find_by_short_name(params[:semester]) if params[:semester]) || current_semester
+    @course = Course.by_semester(semester)
                     .find_by_number(params[:id]) or raise ActiveRecord::RecordNotFound 
   end
 

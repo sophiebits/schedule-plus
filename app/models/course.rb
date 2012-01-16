@@ -62,7 +62,8 @@ class Course < ActiveRecord::Base
 
   def students(semester=nil)
     if semester
-      cs = Course.find_by_number_and_semester_id(number, semester.id).course_selections
+      cs = Course.find_by_number_and_semester_id(number, semester.id)
+                 .try(:course_selections) || []
     else
       cs = Course.find_all_by_number(number).map(&:course_selections).flatten
     end

@@ -10,6 +10,7 @@ AcmSchedule::Application.routes.draw do
   #######################################################
 
   resources :courses, :only => [:index, :show]
+  match "/courses/:id/:semester" => "courses#show"
 
   match "/departments" => "departments#index"
   match "/departments/:department_id" => "courses#index"

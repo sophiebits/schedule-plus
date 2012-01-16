@@ -14,7 +14,8 @@ editable = user_signed_in? && current_user == cs.schedule.user
                  :class => "course-delete-link" if editable %>
   </div>
   <div class="course-details">
-  <span class="number"><%= link_to cs.course.number, course_path(cs.course) %></span>
+  <span class="number"><%= 
+    link_to cs.course.number, '/courses/'+cs.course.number+'/'+cs.course.semester.short_name %></span>
   <span class="selected_section"><%= cs.selected_section %></span>
   <span class="units"><%= cs.course.units %> units</span>
   <span class="name"><%= cs.name %></span><%
@@ -96,7 +97,7 @@ if user_signed_in? %>
   if !other_section.empty? %>
     <span class="section-header">Other Sections</span>
     <ul class="facebox"><%
-    other_section.each do |f| %>
+    other_section.each do |f| %
       <li><%= link_to (image_tag "https://graph.facebook.com/"+f.uid.to_s+"/picture", 
                                  :alt => f.name),
                       schedule_path(f.main_schedule(@semester)),

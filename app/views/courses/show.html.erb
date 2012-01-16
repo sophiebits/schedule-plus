@@ -15,7 +15,7 @@ end
         <span class="course-number"><%= @course.number %></span>
         <%= @course.name %>
       </h1>
-      <span id="env-semester"><%= current_semester.name %></span>
+      <span id="env-semester"><%= @course.semester.name %></span>
     </div>
   </div>
   <div class="container">
@@ -78,13 +78,17 @@ end
     </dl><%
   if user_signed_in?  
     students_all = @course.students
-    students_now = @course.students(Semester.current)
+    students_now = @course.students(@course.semester)
     students_pre = students_all - students_now
     
     if !students_now.empty?
     %>
-    <h2 class="facebox-header"><%=
-    students_now.length %> people are taking <%= @course.number %> this semester.</h2>
+    <h2 class="facebox-header"><%
+    if @course.semester == Semester.current then %><%=
+      students_now.length %> people are taking <%= @course.number %> this semester.<%
+    else %><%=
+      students_now.length %> people took <%= @course.number %> in <%= @course.semester.name %>.<%
+    end %></h2>
     <div class="facebox">
       <ul id="course-now-list"><% 
       students_now.first(10).each do |s| %>
