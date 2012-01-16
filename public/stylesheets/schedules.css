@@ -63,6 +63,10 @@ ul#schedules-list h3.schedule-title {
 ul#schedules-list li.schedule:hover {
   color:#666;
   border-color:#1fbbbd;
+  cursor:pointer;
+}
+ul#schedules-list li.schedule input:hover {
+  cursor:pointer;
 }
 .schedule-options {
   float:right;
