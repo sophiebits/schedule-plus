@@ -22,21 +22,19 @@ var Calendar = {
      */
     $('#schedule .course, #calendar .event').live({
       click: function(event) {
-        if ($(event.target).is('a')) {
-          return false;
-        }
         var open = !$(this).hasClass('open');
         $('#schedule').find('.sections').stop(true,true).slideUp();
         $('#schedule').find('.friends .facebox, .friends .section-header').stop(true,true).slideUp();
         $('.open').removeClass('open');
         if (open) {
-          $('.course'+$(this).find('.number').text()).find('.sections').slideDown();
-          $('.course'+$(this).find('.number').text()).addClass('open');
+          alert('opening course'+$(this).find('.number').text().trim());
+          $('.course'+$(this).find('.number').text().trim()).find('.sections').slideDown();
+          $('.course'+$(this).find('.number').text().trim()).addClass('open');
         }
       },
       mouseenter: function() {
         $('.highlight').removeClass('highlight');
-        $('.course'+$(this).find('.number').text()).addClass('highlight');
+        $('.course'+$(this).find('.number').text().trim()).addClass('highlight');
       },
       mouseleave: function() {
         $('.highlight').removeClass('highlight');
@@ -51,9 +49,9 @@ var Calendar = {
         $('.open').removeClass('open');
         if (open) {
           $('.course'+$(this).closest('.course')
-              .find('.number').text()).find('.friends .facebox, .friends .section-header').slideDown();
+              .find('.number').text().trim()).find('.friends .facebox, .friends .section-header').slideDown();
           $('.course'+$(this).closest('.course')
-              .find('.number').text()).addClass('open');
+              .find('.number').text().trim()).addClass('open');
         }
       }
     });
@@ -107,7 +105,7 @@ var Calendar = {
 
     $(course).find('.friends .section-header, .friends .facebox').hide();
 
-    var number = $(course).find('.number').text();
+    var number = $(course).find('.number').text().trim();
 
     var section = $(course).find('.selected');
     var lecture = $(section).prevAll('.lecture').first();
