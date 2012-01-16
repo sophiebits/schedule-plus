@@ -208,7 +208,7 @@ class Seeder < ActiveRecord::Base
     # add new semesters to this list over time
   	semesters = ["Fall 2011", "Spring 2012"]
   	# set this variable to the name of the current semester
-  	current_semester_name = semesters[0]
+  	current_semester_name = semesters[1]
   	
   	# scan through all semesters and add or update them accordingly in the database
   	semesters.each do |name|
