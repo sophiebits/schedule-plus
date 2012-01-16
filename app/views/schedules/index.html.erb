@@ -16,7 +16,7 @@
     <ul id="schedules-list"><% 
     sgroups = @schedules.group_by(&:semester)
     if sgroups[Semester.current].nil? %><%=
-      render(:partial => 'semester', :locals => {:semester => Semester.last, 
+      render(:partial => 'semester', :locals => {:semester => Semester.current, 
                                                  :sgroup => []}) %><%
     end %><%
     sgroups.each do |semester, sgroup| %><%= 
