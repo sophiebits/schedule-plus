@@ -27,7 +27,6 @@ var Calendar = {
         $('#schedule').find('.friends .facebox, .friends .section-header').stop(true,true).slideUp();
         $('.open').removeClass('open');
         if (open) {
-          alert('opening course'+$(this).find('.number').text().trim());
           $('.course'+$(this).find('.number').text().trim()).find('.sections').slideDown();
           $('.course'+$(this).find('.number').text().trim()).addClass('open');
         }
