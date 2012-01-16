@@ -7,6 +7,8 @@ class Schedule < ActiveRecord::Base
 
   before_create :generate_url, :generate_name
  
+  validates_presence_of :name
+
   def as_json(options={})
     {
       :id      => self.id,
@@ -39,7 +41,10 @@ class Schedule < ActiveRecord::Base
   end
   
   def rename(new_name)
-  	update_attribute(:name, new_name)
+    #validated the schedule names
+    if (!new_name.empty? and new_name.length < 25)
+      update_attribute(:name, new_name)
+    end
   end
 
   def make_primary!
