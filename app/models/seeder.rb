@@ -214,7 +214,8 @@ class Seeder < ActiveRecord::Base
   	semesters.each do |name|
   	  sem = Semester.find_by_name(name)
   	  if sem.nil?
-  	  	Semester.create(:name => name, :current => (current_semester_name == name))
+  	  	Semester.create(:name => name, :current => (current_semester_name == name),
+  	  									:short_name => name[0] + name[-2,2])
   	  else
   	  	sem.update_attribute(:current, current_semester_name == name)
         sem.save!
