@@ -51,7 +51,7 @@
   </script>
 
 <div class="container">
-  <h3 class="friends-list-header">Friends with a <%= current_semester.name %> schedule</h3>
+  <h3 class="friends-list-header"><%= current_semester.name %> friends</h3>
   <ul id="curr_list", class="friends-list">
 <% sorted_friends = @friends.sort { |a,b| a.last_name.downcase <=> b.last_name.downcase } %>
 <% curr_friends = sorted_friends.select {|f| !f.main_schedule(current_semester).nil? } %>
