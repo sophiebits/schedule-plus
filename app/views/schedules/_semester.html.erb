@@ -9,8 +9,19 @@
         <ul class="semester-schedules"><% 
         sgroup.each_with_index do |schedule,index| %>
           <li class="schedule" id="<%= schedule.url %>"><div class="inner">
-            <h3 class="schedule-title"><%= 
-            link_to 'Schedule ' + (index + 1).to_s, schedule_path(schedule) %></h3>
+            <h3 class="schedule-title">
+            
+            
+            <%= form_tag '/schedules-rename', :remote => true, :class => 'schedule-title-name', :method => 'get', :id => 'name-' + schedule.url do %>
+            	<input type="hidden" name="schedule_id" value="<%= schedule.id %>" />
+            	<%= link_to schedule.name, schedule_path(schedule) %>
+        			<%= submit_tag "rename" %>
+     				<% end %>
+      
+      
+
+            </h3>
+            
             <div class="schedule-options">
               <%= link_to "Delete", 
                           schedule_path(schedule), 

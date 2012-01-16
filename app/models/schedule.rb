@@ -5,7 +5,7 @@ class Schedule < ActiveRecord::Base
   scope :primary, :conditions => { :primary => true }
   scope :by_semester, lambda {|sem| where(:semester_id => sem.id)}
 
-  before_create :generate_url
+  before_create :generate_url, :generate_name
  
   def as_json(options={})
     {
@@ -36,6 +36,10 @@ class Schedule < ActiveRecord::Base
     else
       return units_lower.to_s + '-' + units_upper.to_s
     end
+  end
+  
+  def rename(new_name)
+  	update_attribute(:name, new_name)
   end
 
   def make_primary!
@@ -114,5 +118,13 @@ class Schedule < ActiveRecord::Base
       self.url = url
     end
   end
-
+  
+  def generate_name
+  	if user.nil?
+  		self.name = 'New Schedule'
+  	else
+  		self.name = 'Schedule ' + (user.schedules.count + 1).to_s
+  	end
+	end
+	
 end

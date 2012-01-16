@@ -19,6 +19,7 @@ AcmSchedule::Application.routes.draw do
                             :only => [:create, :update, :destroy]}
   end
   match "/schedules/import" => "schedules#import"
+  match "/schedules-rename" => "schedules#rename"
 
   resources :users, :only => :show
   match "/settings" => "users#edit"
