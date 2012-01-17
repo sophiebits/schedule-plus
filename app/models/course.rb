@@ -71,7 +71,7 @@ class Course < ActiveRecord::Base
     if user.nil?
       students
     else
-      students.sort_by {|u| [(!user.friends.include? u).to_s, u.first_name, u.last_name] }
+      students.sort_by {|u| [(u != user).to_s, (!user.friends.include? u).to_s, u.first_name, u.last_name] }
     end
   end
   
