@@ -1,35 +1,39 @@
 class CourseSelectionsController < ApplicationController
 
-  load_and_authorize_resource
+  load_and_authorize_resource :except => [:create]
   # POST
   # FIXME this method is bloated to shit. please fix
   def create
     schedule = Schedule.find_by_url(params[:schedule_id]) or
       raise ActiveRecord::RecordNotFound
-    if params[:search]
-      parsed = parse_search(params[:search])
-      search = parsed[0]
-      section_letter = parsed[1] ? parsed[1].upcase : nil
-      @results = Rails.cache.fetch(search+'*semester='+params[:semester].to_s) do
-                   Course.by_semester(Semester.find(params[:semester]))
-                         .search(search)
-                         .select(&:offered)
-                 end
-      @results = @results.select {|c| !(schedule.courses.include?c) }
-      if params[:confirm]
-        if @results.length == 1 
-          course = @results.first
-          section = course.find_by_section(section_letter).try(:id) ||
-                    course.sections.first.id
-          @selection = schedule.add_course(section)
-        else
-          @search = params[:search]
+
+    if current_user == schedule.user
+      if params[:search]
+        parsed = parse_search(params[:search])
+        search = parsed[0]
+        section_letter = parsed[1] ? parsed[1].upcase : nil
+        @results = Rails.cache.fetch(search+'*semester='+params[:semester].to_s) do
+                     Course.by_semester(Semester.find(params[:semester]))
+                           .search(search)
+                           .select(&:offered)
+                   end
+        @results = @results.select {|c| !(schedule.courses.include?c) }
+        if params[:confirm]
+          if @results.length == 1 
+            course = @results.first
+            section = course.find_by_section(section_letter).try(:id) ||
+                      course.sections.first.id
+            @selection = schedule.add_course(section)
+          else
+            @search = params[:search]
+          end
         end
+        @search_term = params[:search]
+      else
+        @selection = schedule.add_course(params[:id])
       end
-      @search_term = params[:search]
-    else
-      @selection = schedule.add_course(params[:id])
     end
+    
     respond_to do |format|
       format.html { redirect_to schedule_path(params[:schedule_id]) }
       format.js
