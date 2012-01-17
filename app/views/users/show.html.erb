@@ -1,3 +1,10 @@
+<script>
+$(function() {
+	$('.schedule').click(function(){
+	  location.href = '/schedules/' + $(this).attr('id');
+	});
+});
+</script>
 <%
 content_for :title do %><%=
   @user.name %><%
@@ -30,8 +37,8 @@ end
     end %>
     <ul id="schedules"><%
     @user.schedules.select(&:primary).each do |s| %>
-      <li class="schedule">
-        <h3><%= link_to s.semester.name, schedule_path(s) %></h3>
+      <li id="<%= s.url %>" class="schedule">
+        <h3><%= s.semester.name %></h3>
         <ul class="course-selections"><% 
         s.course_selections.each do |cs| %>
           <li><span class="number"><%= 
