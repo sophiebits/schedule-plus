@@ -58,7 +58,7 @@ if user_signed_in? %>
         %>No one is currently in this course.<%
       else
         # FIXME 1 person is not are
-        %><%= students.length %> <%= students.length == 1 "person" : "people" %> are in this course.<%
+        %><%= students.length %> <%= students.length == 1 ? "person is" : "people are" %> in this course.<%
       end
     else
      if students.length <= 1
