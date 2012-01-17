@@ -163,7 +163,7 @@ h3 {
  *************************************************************************
  */
 #home-tagline {
-  font-size:52px;
+  font-size:49px;
   margin-top:182px;
   padding-left:50px;
   color:#1fbbbd;
@@ -181,7 +181,7 @@ h3 {
   margin-left:50%;
   left:-40px;
 }
-#home-blurb {
+.home-blurb {
   margin-top:10px;
   padding-left:50px;
   width:540px;
@@ -194,13 +194,16 @@ h3 {
  * Slide1 Styles
  *************************************************************************
  */
-.slide h2 {
-  font-size:42px;
-  margin-top:150px;
-  color:#1fbbbd;
-  text-align:center;
-  letter-spacing:-2px;
-  text-shadow:0 2px 0 #fff;
+.home-small {
+  margin:60px auto 10px;
+  font-size:14px;
+  color:#666;
+  text-shadow:0 1px 0 #fff;
+  width:550px;
+}
+.home-img {
+  display:block;
+  margin:0 auto;
 }
 /*************************************************************************
  * Slide2 Styles
