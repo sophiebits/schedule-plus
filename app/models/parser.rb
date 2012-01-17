@@ -19,11 +19,11 @@ class Parser < ActiveRecord::Base
 
 	# creates a course selection with number and section letter for schedule in
 	# response[:schedule]
-  def self.create_course_selection(number, section_letter, semester_id, response)
+  def self.create_course_selection(number, section_letter, response)
 		begin
-			section = Course.find_by_number_and_semester_id(number, semester_id).sections.find_by_letter(section_letter)
+			section = Course.find_by_number_and_semester_id(number, response[:schedule].semester.id).sections.find_by_letter(section_letter)
 		rescue
-			puts "couldnt find num %s and letter %d" % [number, section_letter]
+			puts "couldnt find num %s and letter %s" % [number, section_letter]
 			section = nil
 		end
 		if !section
@@ -35,19 +35,19 @@ class Parser < ActiveRecord::Base
   end
   
   # Parse method for SIO calendar file
-  def self.parseSIO(file, semester_id, current_user_id = -1)
+  def self.parseSIO(file, schedule)
     @components = RiCal.parse(file)
     
     response = Hash.new
     response[:warnings] = []
-		response[:schedule] = Schedule.create(:user_id => current_user_id, :semester_id => semester_id)
+		response[:schedule] = schedule
      
     @components.first.events.each do |course| 
       summary = course.summary.split('::')[1].strip.split(' ')
       if summary.count > 0
         number = summary[0].insert(2,'-')
         section_letter = summary[1]
-        self.create_course_selection(number, section_letter, semester_id, response)
+        self.create_course_selection(number, section_letter, response)
       end
     end
     
@@ -55,7 +55,7 @@ class Parser < ActiveRecord::Base
   end
 
   # Parse method for scheduleman url
-  def self.parse(url, semester_id, current_user_id = -1)
+  def self.parseScheduleman(url, schedule)
     #if the link has a trailing '/' remove it
     if (url[url.length-1] == '/')
        url[url.length-1] = ''
@@ -75,13 +75,21 @@ class Parser < ActiveRecord::Base
 
     #append .ics to get the file from scheduleman server, not the html code
     file_url = url + ".ics"
-    open(file_url) do |file|
-      @components = RiCal.parse(file)
-    end 
+    begin
+      open(file_url) do |file|
+        @components = RiCal.parse(file)
+      end
+    rescue
+      return
+    end
     
     response = Hash.new
     response[:warnings] = []
-    response[:schedule] = Schedule.create(:user_id => current_user_id, :semester_id => semester_id)
+    response[:schedule] = schedule
+    
+    if schedule.nil?
+      return
+    end
 
     # add course selections for each course
     @components.first.events.each do |course| 
@@ -92,7 +100,7 @@ class Parser < ActiveRecord::Base
 			number = summary[-2]
 			section_letter = getsection(summary[-1])
 			
-			self.create_course_selection(number, section_letter, semester_id, response)
+			self.create_course_selection(number, section_letter, response)
     end
     
     # Need to check for TBA courses in scheduleman
@@ -101,16 +109,16 @@ class Parser < ActiveRecord::Base
     
     if total_units
       total_units = total_units[/.*total:(.*?)units/,1].strip
-      if response[:schedule].units != total_units
+      if schedule.units != total_units
         # Units are different; need to parse TBA courses on the scheduleman
         courses = (doc/".course")
-        scheduled_course_numbers = response[:schedule].courses.collect{|c| c.number}
+        scheduled_course_numbers = schedule.courses.collect{|c| c.number}
         # Check each course in tehe html to find which one's aren't included in the user's schedule
         courses.each do |c|
           number = (c/".number").inner_text.strip[0,6]
           if !scheduled_course_numbers.include? number
             section_letter = (c/".selected_section").inner_text.strip
-            self.create_course_selection(number, section_letter, semester_id, response)
+            self.create_course_selection(number, section_letter, response)
           end
         end
       end

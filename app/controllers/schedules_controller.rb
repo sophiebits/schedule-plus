@@ -26,6 +26,7 @@ class SchedulesController < ApplicationController
         # TODO check cloning semesters are the same
         to_clone = Schedule.find_by_url(params[:clone]) or not_found
         @schedule.copy!(to_clone)
+        @schedule.update_attribute(:name, @schedule.name + ' (clone)')
       end
       redirect_to schedule_path(@schedule)
     end
@@ -66,27 +67,13 @@ class SchedulesController < ApplicationController
   end
 
   def import
-    if params[:import]
-      # Parse uploaded .ics file
-      file = params[:import][:uploaded_file].tempfile
-      parsed = Parser.parseSIO(file)   
-    else
-      # Parse scheduleman url
-      parsed = Parser.parse(params[:url])
+    @schedule = Schedule.find(params[:schedule_id])
+    if !params[:scheduleman_url].empty? && !@schedule.nil?
+      Parser.parseScheduleman(params[:scheduleman_url], @schedule)
     end
-    
-    if current_user
-      # authenticated, update active_schedule
-      current_user.update_active_schedule(parsed[:schedule])
-    else
-      # store imported schedule id in session var to retrieve after oauth
-      session[:imported] = parsed[:schedule].id
-    end
-
-    if request.xhr?
-      render :json => parsed
-    else
-      redirect_to '/schedules/' + session[:imported].to_s
+    respond_to do |format|
+      format.html { redirect_to schedule_path(@schedule) }
+      format.js
     end
   end
 

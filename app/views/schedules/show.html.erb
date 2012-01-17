@@ -26,8 +26,7 @@ content_for :description do
 end %><%
 
 content_for :javascript_includes do %><%= 
-  javascript_include_tag "calendar.js" %><%=
-  javascript_include_tag "facebook.js"%><% 
+  javascript_include_tag "calendar.js" %><% 
 end %>
 <script>
 $(function(){
@@ -85,10 +84,17 @@ $(function(){
   </div>
   <div class="container">
     <div id="schedule-container">
-      <span id="schedule-semester"><%= @schedule.semester.name %></span><%
-      if editable %>
-      <%= form_tag schedule_selections_path(@schedule),
-                   :id => 'add-course', :method => :post, :remote => true do %>
+      <span id="schedule-semester"><%= @schedule.semester.name %></span>
+      <% if editable %>
+        <% if @schedule.empty? %>
+          <%= form_tag '/schedules-import', :id => 'import-scheduleman', :method => :post do %>
+          <%= submit_tag "Add" %>
+          <%= text_field_tag :scheduleman_url, nil, :placeholder => 'https://scheduleman.org/schedules/cTUJ2tAnlw' %>
+          <input type="hidden" name="schedule_id" value="<%= @schedule.id %>" />
+          <% end %>
+          OR
+        <% end %>
+        <%= form_tag schedule_selections_path(@schedule), :id => 'add-course', :method => :post, :remote => true do %>
         <%= submit_tag "Add" %>
         <%= text_field_tag :search, nil, :placeholder => 'Add a Course', :autocomplete => 'off' %>
         <ul id="add-suggestions">

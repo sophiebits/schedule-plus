@@ -18,7 +18,7 @@ AcmSchedule::Application.routes.draw do
     resources :selections, {:controller => "CourseSelections",
                             :only => [:create, :update, :destroy]}
   end
-  match "/schedules/import" => "schedules#import"
+  match "/schedules-import" => "schedules#import"
   match "/schedules-rename" => "schedules#rename"
 
   resources :users, :only => :show

@@ -201,6 +201,36 @@ h1#schedule-user a {
   color:#aaa;
   border-bottom:1px dotted #ccc;
 }
+#import-scheduleman {
+  position:relative;
+  display:block;
+  width:100%;
+  margin-top:10px;
+  margin-bottom:10px;
+}
+#import-scheduleman input {
+	float:left;
+  width:203px;
+  height:14px;
+  border-color:#ddd;
+  font-size:12px;
+}
+#import-scheduleman input[type=submit] {
+  display:block; float:right;
+  margin-left:5px;
+  width:20px; height:0; padding:20px 0 0 0;
+  background-image:url('/images/sprites.png');
+  background-position:-140px -25px;
+  border:none;
+  overflow:hidden;
+  cursor:pointer;
+}
+#import-scheduleman input[type=submit]:hover {
+  background-position:-160px -25px;
+}
+#import-scheduleman input:focus {
+  border-color:#1fbbbd;
+}
 #add-course {
   position:relative;
   display:block;
@@ -209,7 +239,8 @@ h1#schedule-user a {
 }
 #add-course input {
   float:left;
-  width:203px; height:14px;
+  width:203px;
+  height:14px;
   border-color:#ddd;
   font-size:12px;
 }

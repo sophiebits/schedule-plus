@@ -6,8 +6,6 @@ class Schedule < ActiveRecord::Base
   scope :by_semester, lambda {|sem| where(:semester_id => sem.id)}
 
   before_create :generate_url, :generate_name
- 
-  validates_presence_of :name
 
   def as_json(options={})
     {
@@ -57,6 +55,7 @@ class Schedule < ActiveRecord::Base
   end
 
   def copy!(schedule)
+    update_attribute(:name, schedule.name)
     update_attribute(:semester, schedule.semester)
     course_selections.map(&:destroy)
     schedule.course_selections.each {|selection|
@@ -83,6 +82,10 @@ class Schedule < ActiveRecord::Base
     i = course_selections.map {|cs| cs.course.id }.index(course_id)
     course_selections[i].update_attributes(:section_id => section_id)
     course_selections[i].reload()
+  end
+  
+  def empty?
+    course_selections.count.zero?
   end
 
   # returns true is st1 and st2 overlap in time
