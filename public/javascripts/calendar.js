@@ -44,6 +44,7 @@ var Calendar = {
     $('#schedule .course .course-times-link').live({
       click: function(event) {
         event.stopPropagation();
+        event.preventDefault();
         var number = $(this).closest('.course').find('.number').text().trim();
         var open = !$(this).closest('.course').hasClass('open');
         $('#schedule').find('.sections').stop(true,true).slideUp();
