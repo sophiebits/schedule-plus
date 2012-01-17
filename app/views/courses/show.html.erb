@@ -84,8 +84,12 @@ end
     if !students_now.empty?
     %>
     <h2 class="facebox-header"><%
-    if @course.semester == Semester.current then %><%=
-      students_now.length %> people are taking <%= @course.number %> this semester.<%
+    if @course.semester == Semester.current then %>
+     <% var = "people are " # to make english work...%>
+     <% if students_now.length == 1 %>
+        <% var = "person is " %>
+      <% end %>
+     <%=students_now.length %> <%=var%> taking <%= @course.number %> this semester.<%
     else %><%=
       students_now.length %> people took <%= @course.number %> in <%= @course.semester.name %>.<%
     end %></h2>
