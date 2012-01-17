@@ -20,6 +20,17 @@ h1#schedule-index-title {
   border-left-width:4px;
   border-radius:5px;
 }
+.no-primary-notify {
+  display:block; 
+  margin:10px 0;
+  padding:6px;
+  color:#666;
+  border:1px solid #666;
+  font-size:12px;
+  text-align:center;
+  border-width:1px 0;
+  background-color:#ddd;
+}
 ul#schedules-list {
   margin-top:15px;
 }
