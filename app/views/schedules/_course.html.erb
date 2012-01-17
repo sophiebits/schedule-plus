@@ -5,8 +5,9 @@ editable = user_signed_in? && current_user == cs.schedule.user
 %>
 <li class="course<%= cs.course.number %> course">
   <div class="course-options">
-    <%= link_to "info", "#", :class => "course-info-link" %>
-    <%= link_to "friends", "#", :class => "course-friends-link" %>
+    <%= link_to "times", "#", :class => "course-times-link" %>
+    <!--<%= link_to "info", "/courses/"+cs.course.number+"/"+cs.schedule.semester.name, 
+                        :class => "course-info-link" %>-->
     <%= link_to "delete", 
                  schedule_selection_path(:schedule_id => cs.schedule, :id => cs.id),
                  :method => :delete,

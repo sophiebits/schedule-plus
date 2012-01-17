@@ -27,8 +27,10 @@ var Calendar = {
         $('#schedule').find('.friends .facebox, .friends .section-header').stop(true,true).slideUp();
         $('.open').removeClass('open');
         if (open) {
-          $('.course'+$(this).find('.number').text().trim()).find('.sections').slideDown();
-          $('.course'+$(this).find('.number').text().trim()).addClass('open');
+          $('.course'+$(this).closest('.course')
+              .find('.number').text().trim()).find('.friends .facebox, .friends .section-header').slideDown();
+          $('.course'+$(this).closest('.course')
+              .find('.number').text().trim()).addClass('open');
         }
       },
       mouseenter: function() {
@@ -40,18 +42,22 @@ var Calendar = {
       }
     });
 
-    $('#schedule .course .course-friends-link').live({
-      click: function() {
+    $('#schedule .course .course-times-link').live({
+      click: function(event) {
+        event.stopPropagation();
         var open = !$(this).closest('.course').hasClass('open');
         $('#schedule').find('.sections').stop(true,true).slideUp();
         $('#schedule').find('.friends .facebox, .friends .section-header').stop(true,true).slideUp();
         $('.open').removeClass('open');
         if (open) {
-          $('.course'+$(this).closest('.course')
-              .find('.number').text().trim()).find('.friends .facebox, .friends .section-header').slideDown();
-          $('.course'+$(this).closest('.course')
-              .find('.number').text().trim()).addClass('open');
+          $('.course'+$(this).find('.number').text().trim()).find('.sections').slideDown();
+          $('.course'+$(this).find('.number').text().trim()).addClass('open');
         }
+      }
+    });
+    $('#schedule .course .course-info-link, #schedule .course .number a').live({
+      click: function(event) {
+        event.stopPropagation();
       }
     });
 

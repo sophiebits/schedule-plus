@@ -54,6 +54,38 @@ ul#schedules-list li.schedule {
 ul#schedules-list li.schedule .inner {
   padding:12px;
 }
+.schedule-title-rename input[type="submit"],
+.schedule-title-name input[type="submit"] {
+  display:inline-block; 
+  margin-left:5px;
+  position:relative; top:2px;
+  width:15px; height:0; padding:15px 0 0 0;
+  background-color:transparent;
+  background-image:url('/images/sprites.png');
+  background-position:-65px -60px;
+  border:none;
+  overflow:hidden;
+  cursor:pointer;
+  border-radius:2px;
+}
+.schedule-title-rename input[type="submit"] {
+  margin-left:0;
+}
+.schedule-title-rename input[type="submit"]:hover,
+.schedule-title-name input[type="submit"]:hover {
+  background-position:-65px -75px;
+}
+.schedule-title-rename input {
+  position:relative; top:-1px;
+  height:15px;
+  font-size:12px;
+  padding:0;
+  border:none;
+  border-radius:2px;
+}
+.schedule-title-rename input:focus {
+  border:none;
+}
 ul#schedules-list h3.schedule-title {
   color:#1FBBBD;
   float:left;
@@ -283,13 +315,13 @@ h1#schedule-user a {
   margin-left:5px;
   width:20px; height:0; padding:20px 0 0 0;
   background-image:url('/images/sprites.png');
-  background-position:-140px -25px;
+  background-position:-130px -20px;
   border:none;
   overflow:hidden;
   cursor:pointer;
 }
 #add-course input[type=submit]:hover {
-  background-position:-160px -25px;
+  background-position:-150px -20px;
 }
 #schedule {
   clear:both;
@@ -330,12 +362,14 @@ h1#schedule-user a {
   background-image:url('/images/sprites.png');
   overflow:hidden;
 }
-#schedule .course-info-link { background-position:-80px -15px; }
-#schedule .course-friends-link { background-position:-80px -25px; }
-#schedule .course-delete-link { background-position:-80px -35px; }
-#schedule .course-info-link:hover { background-position:-90px -15px; }
-#schedule .course-friends-link:hover { background-position:-90px -25px; }
-#schedule .course-delete-link:hover { background-position:-90px -35px; }
+#schedule .course-info-link { background-position:0px -55px; }
+#schedule .course-times-link { background-position:0px -45px; }
+#schedule .course-friends-link { background-position:0px -45px; }
+#schedule .course-delete-link { background-position:0px -85px; }
+#schedule .course-info-link:hover { background-position:-10px -55px; }
+#schedule .course-times-link:hover { background-position:-10px -45px; }
+#schedule .course-friends-link:hover { background-position:-10px -45px; }
+#schedule .course-delete-link:hover { background-position:-10px -85px; }
 #schedule .course .number,
 #schedule .course .selected_section {
   font-weight:700;

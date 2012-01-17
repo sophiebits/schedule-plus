@@ -23,13 +23,13 @@ form#courses-search-form {
   margin-left:5px;
   width:20px; height:0; padding:20px 0 0 0;
   background-image:url('/images/sprites.png');
-  background-position:-100px -25px;
+  background-position:-90px -20px;
   border:none;
   overflow:hidden;
   cursor:pointer;
 }
 #courses-search-form input[type=submit]:hover {
-  background-position:-120px -25px;
+  background-position:-110px -20px;
 }
 #all-courses-link,
 #departments-link {
