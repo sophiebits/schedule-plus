@@ -16,7 +16,8 @@ editable = user_signed_in? && current_user == cs.schedule.user
   </div>
   <div class="course-details">
   <span class="number"><%= 
-    link_to cs.course.number, '/courses/'+cs.course.number+'/'+cs.course.semester.short_name 
+    course_path = '/courses/'+cs.course.number+'/'+cs.course.semester.short_name 
+    link_to cs.course.number, course_path
   %></span>
   <span class="selected_section"><%= cs.selected_section %></span>
   <span class="units"><%= cs.course.units %> units</span>
@@ -35,7 +36,7 @@ if user_signed_in? %>
       if students.length == 0
         %>You are in this course.<%
       else
-        %>You and <a href="<%= course_path(cs.course) %>" class="course-info-link"><%= students.length %> <%= 
+        %>You and <a href="<%= course_path %>" class="course-info-link"><%= students.length %> <%= 
         if students.length > 1 then 'others' else 'other' end %></a> are in this course.<%
       end
     else
@@ -47,7 +48,7 @@ if user_signed_in? %>
         %>You, <%= link_to friends.first.name, 
         schedule_path(friends.first.main_schedule(@semester)),
         :class => "course-info-link" %>, and 
-        <a href="<%= course_path(cs.course) %>" class="course-info-link"><%= students.length - 1 %> <%=
+        <a href="<%= course_path %>" class="course-info-link"><%= students.length - 1 %> <%=
         if students.length - 1 > 1 then 'others' else 'other' end %></a>.<%
       end
     end
@@ -68,7 +69,7 @@ if user_signed_in? %>
         %><%= link_to friends.first.name, 
         schedule_path(friends.first.main_schedule(@semester)),
         :class => "course-info-link" %> and 
-        <a href="<%= course_path(cs.course) %>" class="course-info-link"><%= students.length - 1 %> <%=
+        <a href="<%= course_path %>" class="course-info-link"><%= students.length - 1 %> <%=
         if students.length - 1 > 1 then 'others' else 'other' end %></a>.<%
       end
     end
