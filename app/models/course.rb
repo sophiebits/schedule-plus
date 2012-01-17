@@ -60,14 +60,19 @@ class Course < ActiveRecord::Base
     instructors.uniq.compact.join(", ")
   end
 
-  def students(semester=nil)
+  def students(semester=nil, user=nil)
     if semester
       cs = Course.find_by_number_and_semester_id(number, semester.id)
                  .try(:course_selections) || []
     else
       cs = Course.find_all_by_number(number).map(&:course_selections).flatten
     end
-    cs.map(&:schedule).select(&:primary).map(&:user)
+    students = cs.map(&:schedule).select(&:primary).map(&:user)
+    if user.nil?
+      students
+    else
+      students.sort_by {|u| [(!user.friends.include? u).to_s, u.last_name, u.first_name] }
+    end
   end
   
   def add_department
