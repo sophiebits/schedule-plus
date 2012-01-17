@@ -1,5 +1,6 @@
 class CourseSelectionsController < ApplicationController
-  
+
+  load_and_authorize_resource
   # POST
   # FIXME this method is bloated to shit. please fix
   def create
