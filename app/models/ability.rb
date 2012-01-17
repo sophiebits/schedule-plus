@@ -9,5 +9,8 @@ class Ability
     can [:update, :destroy], CourseSelection do |cs|
       cs.schedule.user == user
     end
+    can [:update, :destroy, :rename, :import], Schedule do |s|
+      s.user == user
+    end
   end
 end

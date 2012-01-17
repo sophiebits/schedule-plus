@@ -3,7 +3,7 @@
 editable = user_signed_in? && current_user == cs.schedule.user
 @semester ||= cs.schedule.semester
 %>
-<li class="course<%= cs.course.number %> course">
+<li id="course<%= cs.course.number %>" class="course<%= cs.course.number %> course">
   <div class="course-options">
     <%= link_to "times", "#", :class => "course-times-link" %>
     <%= link_to "info", "/courses/"+cs.course.number+"/"+cs.schedule.semester.name, 

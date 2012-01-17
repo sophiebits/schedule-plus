@@ -23,7 +23,6 @@ class Parser < ActiveRecord::Base
 		begin
 			section = Course.find_by_number_and_semester_id(number, response[:schedule].semester.id).sections.find_by_letter(section_letter)
 		rescue
-			puts "couldnt find num %s and letter %s" % [number, section_letter]
 			section = nil
 		end
 		if !section
@@ -31,7 +30,7 @@ class Parser < ActiveRecord::Base
       response[:warnings].push(number)
       return
     end
-		CourseSelection.create(:schedule_id => response[:schedule].id, :section_id => section.id)
+    response[:schedule].add_course(section.id)
   end
   
   # Parse method for SIO calendar file
