@@ -89,10 +89,10 @@ $(function(){
         <% if @schedule.empty? %>
           <%= form_tag '/schedules-import', :id => 'import-scheduleman', :method => :post do %>
           <%= submit_tag "Add" %>
-          <%= text_field_tag :scheduleman_url, nil, :placeholder => 'https://scheduleman.org/schedules/cTUJ2tAnlw' %>
+          <%= text_field_tag :scheduleman_url, nil, :placeholder => 'scheduleman.org/schedules/cTUJ2tAnlw' %>
           <input type="hidden" name="schedule_id" value="<%= @schedule.id %>" />
           <% end %>
-          OR
+          <span id="form-or">OR</span>
         <% end %>
         <%= form_tag schedule_selections_path(@schedule), :id => 'add-course', :method => :post, :remote => true do %>
         <%= submit_tag "Add" %>
