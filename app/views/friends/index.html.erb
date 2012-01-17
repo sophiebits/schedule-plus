@@ -1,10 +1,10 @@
+<%= javascript_include_tag "friends_sort.js" %>
 <div id="page-content" class="friends">
   <div id="content-header">
     <div class="container">
       <h1 id="header">Friends (<%= @friends.length %>)</h1>
     </div>
   </div>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 <script>
 (function ($) {
   // custom css expression for a case-insensitive contains()
@@ -51,11 +51,13 @@
   </script>
 
 <div class="container">
+  <button id="sort-name">name</button>
+  <button id="sort-mutual">mutual courses</button>
+  <button id="sort-free">free/not free</button>
   <h3 class="friends-list-header"><%= current_semester.name %> friends</h3>
   <ul id="curr_list", class="friends-list">
-<% sorted_friends = @friends.sort { |a,b| a.last_name.downcase <=> b.last_name.downcase } %>
-<% curr_friends = sorted_friends.select {|f| !f.main_schedule(current_semester).nil? } %>
-<% prev_friends = sorted_friends.reject {|f| !f.main_schedule(current_semester).nil? } %>
+<% curr_friends = @friends.select {|f| !f.main_schedule(current_semester).nil? } %>
+<% prev_friends = @friends.reject {|f| !f.main_schedule(current_semester).nil? } %>
 
 <% curr_friends.each do |friend| %>
     <li>
