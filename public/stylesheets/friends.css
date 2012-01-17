@@ -8,15 +8,6 @@
   font-size:18px;
   font-weight:300;
 }
-h3.friends-list-header {
-  padding-left:17px;
-  margin:15px 0;
-  font-size:12px;
-  color:#ccc;
-  font-weight:700;
-  border-bottom:1px dotted #ddd;
-  clear:both;
-}
 form#friends-search-form {
   position:absolute;
   top:0; left:140px;
@@ -25,6 +16,23 @@ form#friends-search-form {
   float:left;
   width:203px; height:14px;
   font-size:12px;
+}
+h3.friends-list-header {
+  padding-left:17px;
+  margin:15px 0 10px;
+  font-size:12px;
+  color:#ccc;
+  font-weight:700;
+  border-bottom:1px dotted #ddd;
+  clear:both;
+}
+#sort-options {
+  font-size:12px;
+  color:#666;
+}
+#sort-options a {
+  color:#1fbbbd;
+  cursor:pointer;
 }
 .friends-list {
   margin-top:20px;

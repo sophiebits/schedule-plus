@@ -51,15 +51,16 @@
   </script>
 
 <div class="container">
-  <button id="sort-name">name</button>
-  <button id="sort-mutual">mutual courses</button>
-  <button id="sort-free">free/not free</button>
   <h3 class="friends-list-header"><%= current_semester.name %> friends</h3>
+<% if @curr_friends.length > 0 then %>
+  <div id="sort-options">
+    sort by: 
+    <a id="sort-name">name</a>,
+    <a id="sort-mutual">mutual courses</a>, or
+    <a id="sort-free">free/not free</a>
+  </div>
   <ul id="curr_list", class="friends-list">
-<% curr_friends = @friends.select {|f| !f.main_schedule(current_semester).nil? } %>
-<% prev_friends = @friends.reject {|f| !f.main_schedule(current_semester).nil? } %>
-
-<% curr_friends.each do |friend| %>
+<% @curr_friends.each do |friend| %>
     <li>
       <a href="<%= user_path(friend) %>" class="friend-link">
         <img class="friend-pic"
@@ -81,9 +82,12 @@
 end 
 %>
   </ul>
+<% else %>
+<% # TODO say something about inviting some friends to use schedule+ %>
+<% end %>
   <h3 class="friends-list-header">Other friends on schedule+</h3>
   <ul id = "old_list", class="friends-list"><% 
-prev_friends.each do |friend| %>
+@prev_friends.each do |friend| %>
     <li>
       <a href="<%= user_path(friend) %>" class="friend-link">
         <img class="friend-pic"
@@ -103,30 +107,3 @@ end %>
   </ul>
   </div>
 </div>
-  
-<!-- BEGIN Old Friends Page -->
-  <script type="text/javascript">/*
-  $(document).ready(function() {
-		$('.common-courses .tooltip').hide();
-		$('.common-courses .tooltip > ul > li').textOverflow();
-		
-		$('#friends-container').delegate('.count','hover',function(e) {
-      if (e.type === 'mouseenter')
-        $(this).prev('.tooltip').show();
-      else
-		    $(this).prev('.tooltip').hide();
-		});
-	});*/
-  </script>  <!--
-  <form id="search-friends"><input type="text" placeholder="Search Friends" id="search-input"></input><img id="search-friends-cancel" src="/images/friends-search-cancel.png" /></form>
-	<div id="friends">
-		<div id="sort-friends">
-			<span id="sort-name">name</span>
-			<span id="sort-free">free/in class</span>
-			<span id="sort-cic">courses in common</span>
-		</div>
-	  <ul id="friends-container"></ul>
-	  <span class="nav-previous">previous page</span>
-	  <span class="nav-next">next page</span>
-  </div>
-<END Old Friends Page -->
