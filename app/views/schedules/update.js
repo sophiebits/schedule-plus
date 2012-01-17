@@ -1,3 +1,8 @@
+var schedule = $('#<%= @schedule.url %>');
+var semester = schedule.closest('.semester');
+var primary_notify = $('.no-primary-notify', semester);
+primary_notify.slideUp();
+
 if ($('#page-content').hasClass('schedules')) {
 	// in "Browse Schedules" view
 	$('.semester-schedules').each(function() {
