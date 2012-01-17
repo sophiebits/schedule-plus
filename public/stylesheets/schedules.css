@@ -54,6 +54,10 @@ ul#schedules-list li.schedule {
 ul#schedules-list li.schedule .inner {
   padding:12px;
 }
+form.schedule-title-rename,
+form.schedule-title-name {
+  height:20px;
+}
 .schedule-title-rename input[type="submit"],
 .schedule-title-name input[type="submit"] {
   display:inline-block; 
@@ -68,15 +72,25 @@ ul#schedules-list li.schedule .inner {
   cursor:pointer;
   border-radius:2px;
 }
+.schedule-title-name span {
+  margin-top:2px;
+  margin-right:5px;
+  float:left;
+}
 .schedule-title-rename input[type="submit"] {
-  margin-left:0;
+  float:left;
+  display:inline-block;
+  margin-left:5px;
+  margin-top:0;
 }
 .schedule-title-rename input[type="submit"]:hover,
 .schedule-title-name input[type="submit"]:hover {
   background-position:-65px -75px;
 }
 .schedule-title-rename input {
+  float:left;
   position:relative; top:-1px;
+  margin-top:3px;
   height:15px;
   font-size:12px;
   padding:0;
