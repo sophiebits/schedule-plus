@@ -79,6 +79,11 @@ var Slideshow = {
         $('#home-tagline img').css({ top:0, opacity:0 })
                               .delay(speed/2)
                               .animate({ top:'-60px', opacity:1 });
+      default:
+        $(Slideshow.slides[Slideshow.current_slide]).find('.home-img')
+                              .css({ top:'50px', opacity:0 })
+                              .delay(speed/2)
+                              .animate({ top:0, opacity:1 });
     }
     $('.slideshow .slide-container')
       .stop().animate({left:Slideshow.current_slide * -Slideshow.slide_width}, speed);

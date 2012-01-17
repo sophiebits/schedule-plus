@@ -144,7 +144,7 @@ h3 {
 }
 .slideshow .slide-links {
   position:absolute;
-  bottom:50px;
+  bottom:30px;
   margin:0 auto;
 }
 .slideshow .slide-links .control {
@@ -199,11 +199,12 @@ h3 {
   font-size:14px;
   color:#666;
   text-shadow:0 1px 0 #fff;
-  width:550px;
+  width:560px;
 }
 .home-img {
+  position:relative;
   display:block;
-  margin:0 auto;
+  margin:-15px auto 0;
 }
 /*************************************************************************
  * Slide2 Styles
