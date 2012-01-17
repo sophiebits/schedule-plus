@@ -35,6 +35,7 @@ class SchedulesController < ApplicationController
   def destroy
     @schedule = Schedule.find_by_url(params[:id]) or not_found
     @schedule.destroy
+    @none_left = current_user.schedules.by_semester(@schedule.semester).empty?
     respond_to do |format|
       format.html { redirect_to schedules_path }
       format.js

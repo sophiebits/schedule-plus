@@ -6,6 +6,11 @@
                     :method => :post %>.
         <!--or import from ScheduleMan.--></p><% 
         else %>
+        <% if sgroup.select(&:primary).empty? then %>
+        <span class="no-primary-notify">
+        <strong>You don't have any primary schedules for this semester</strong> (all of them are private). Your friends won't see which courses you're in!
+        </span>
+        <% end %>
         <ul class="semester-schedules"><% 
         sgroup.each_with_index do |schedule,index| %>
           <li class="schedule" id="<%= schedule.url %>"><div class="inner">
