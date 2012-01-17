@@ -22,6 +22,9 @@ class SchedulesController < ApplicationController
     else
       semester_id = params[:semester] || current_semester.id
       @schedule = current_user.schedules.create(:semester_id => semester_id)
+      if (current_user.schedules.select{|sched| sched.semester_id == semester_id}.length == 1)
+        @schedule.update_attribute(:primary, true)
+      end
       if params[:clone]
         # TODO check cloning semesters are the same
         to_clone = Schedule.find_by_url(params[:clone]) or not_found
