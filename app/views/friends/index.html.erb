@@ -89,8 +89,11 @@ prev_friends.each do |friend| %>
              src="http://graph.facebook.com/<%= friend.uid %>/picture" />
         <span class="friend-name"><%= friend.name %></span>
         <span class="last-seen">Last seen: <%=
-        semesters_active = friend.schedules.primary.map(&:semester)
-        semesters_active.last.name
+        begin
+          friend.schedules.primary.map(&:semester).last.name
+        rescue
+          "Never"
+        end
         %></span>
       </a>
     </li><% 
