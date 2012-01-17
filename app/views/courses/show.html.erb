@@ -77,8 +77,8 @@ end
       <dd><%= @course.coreqs_str %></dd>
     </dl><%
   if user_signed_in?  
-    students_all = @course.students
-    students_now = @course.students(@course.semester)
+    students_all = @course.students(nil, current_user)
+    students_now = @course.students(@course.semester, current_user)
     students_pre = students_all - students_now
     
     if !students_now.empty?
