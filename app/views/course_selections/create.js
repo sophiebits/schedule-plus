@@ -10,7 +10,7 @@
   var course = $('<%= escape_javascript(render(:partial => 'schedules/course', :locals => {:cs => @selection})) %>');
   course.find('.sections').hide();
   course.appendTo('#schedule');
-  course.trigger('click');
+  course.find('.course-times-link').trigger('click');
   Calendar.color(course);
   Calendar.addCourse(course);
   $('#add-course input[type=text]').val('');

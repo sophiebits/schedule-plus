@@ -35,17 +35,19 @@ if user_signed_in? %>
       if students.length == 0
         %>You are in this course.<%
       else
-        %>You and <a href="<%= course_path(cs.course) %>"><%= students.length %> <%= 
+        %>You and <a href="<%= course_path(cs.course) %>" class="course-info-link"><%= students.length %> <%= 
         if students.length > 1 then 'others' else 'other' end %></a> are in this course.<%
       end
     else
       if students.length <= 1
         %>You and <%= link_to friends.first.name, 
-        schedule_path(friends.first.main_schedule(@semester)) %> are in this course.<%
+        schedule_path(friends.first.main_schedule(@semester)),
+        :class => "course-info-link" %> are in this course.<%
       else
         %>You, <%= link_to friends.first.name, 
-        schedule_path(friends.first.main_schedule(@semester)) %>, and 
-        <a href="<%= course_path(cs.course) %>"><%= students.length - 1 %> <%=
+        schedule_path(friends.first.main_schedule(@semester)),
+        :class => "course-info-link" %>, and 
+        <a href="<%= course_path(cs.course) %>" class="course-info-link"><%= students.length - 1 %> <%=
         if students.length - 1 > 1 then 'others' else 'other' end %></a>.<%
       end
     end
@@ -60,11 +62,13 @@ if user_signed_in? %>
     else
      if students.length <= 1
        %><%= link_to friends.first.name, 
-        schedule_path(friends.first.main_schedule(@semester)) %> is in this course.<%
+        schedule_path(friends.first.main_schedule(@semester)),
+        :class => "course-info-link" %> is in this course.<%
        else
         %><%= link_to friends.first.name, 
-        schedule_path(friends.first.main_schedule(@semester)) %> and 
-        <a href="<%= course_path(cs.course) %>"><%= students.length - 1 %> <%=
+        schedule_path(friends.first.main_schedule(@semester)),
+        :class => "course-info-link" %> and 
+        <a href="<%= course_path(cs.course) %>" class="course-info-link"><%= students.length - 1 %> <%=
         if students.length - 1 > 1 then 'others' else 'other' end %></a>.<%
       end
     end
