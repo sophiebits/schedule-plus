@@ -51,11 +51,9 @@ class User < ActiveRecord::Base
   end
 
   def friends
-    Rails.cache.fetch('friends' + uid.to_s + 'all') do
-      return [] if !fb
-      fids = fb.friends.map(&:identifier)
-      User.where(:uid => fids).all
-    end
+    return [] if !fb
+    fids = fb.friends.map(&:identifier)
+    User.where(:uid => fids).all
   end
 
 ###############################################################################
