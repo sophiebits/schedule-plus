@@ -8,6 +8,7 @@ $(function() {
         count++;
         $(this).show();
       });
+      $(this).html('hide');
       // FIXME this is pretty hacked, need better way to "auto" resize the box
       facebox.animate({"height": (53 * Math.ceil(num_friends / 10) - 2)});
     },
@@ -19,6 +20,7 @@ $(function() {
           $(this).hide();
         });
       });
+      $(this).html('see all');
 
     }
   );
