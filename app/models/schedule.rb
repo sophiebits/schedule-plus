@@ -55,7 +55,6 @@ class Schedule < ActiveRecord::Base
   end
 
   def copy!(schedule)
-    update_attribute(:name, schedule.name)
     update_attribute(:semester, schedule.semester)
     update_attribute(:primary, false)
     course_selections.map(&:destroy)

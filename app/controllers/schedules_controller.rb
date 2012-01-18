@@ -28,7 +28,7 @@ class SchedulesController < ApplicationController
         # TODO check cloning semesters are the same
         to_clone = Schedule.find_by_url(params[:clone]) or not_found
         @schedule.copy!(to_clone)
-        @schedule.update_attribute(:name, @schedule.name + ' (clone)')
+        @schedule.update_attribute(:name, 'Cloned Schedule')
       end
       redirect_to schedule_path(@schedule)
     end
