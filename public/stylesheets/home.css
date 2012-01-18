@@ -199,7 +199,8 @@ h3 {
   font-size:14px;
   color:#666;
   text-shadow:0 1px 0 #fff;
-  width:560px;
+  text-align:center;
+  width:100%;
 }
 .home-img {
   position:relative;
