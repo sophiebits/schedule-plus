@@ -1,3 +1,4 @@
+<%= javascript_include_tag 'course_facebox.js' %> 
 <%
 #Page title and meta tag
 content_for :title do %><%=
@@ -95,14 +96,21 @@ end
     end %></h2>
     <div class="facebox">
       <ul id="course-now-list"><% 
-      students_now.first(10).each do |s| %>
+      students_now_first = students_now.first(10)
+      students_now_first.each do |s| %>
         <li><%= link_to (image_tag "https://graph.facebook.com/"+s.uid.to_s+"/picture",
                                     :alt => s.name),
                         user_path(s),
                         'tooltip' => s.name %></li><%
       end %>
+      <% (students_now - students_now_first).each do |s| %>
+        <li class="friends-expand"><%= link_to (image_tag "https://graph.facebook.com/"+s.uid.to_s+"/picture",
+                                    :alt => s.name),
+                        user_path(s),
+                        'tooltip' => s.name %></li><%
+      end %>
       </ul>
-      <span class="expand">see all</span>
+      <% if students_now.count >= 10 %><span class="expand">see all</span><% end %>
     </div><%
     end
     if !students_pre.empty? %>
@@ -110,14 +118,21 @@ end
     students_pre.length %> people have taken <%= @course.number %> previously.</h2>
     <div class="facebox">
       <ul id="course-prev-list"><% 
-      students_pre.first(10).each do |s| %>
+      students_pre_first = students_pre.first(10)
+      students_pre_first.each do |s| %>
         <li><%= link_to (image_tag "https://graph.facebook.com/"+s.uid.to_s+"/picture",
                                     :alt => s.name),
                         user_path(s),
                         'tooltip' => s.name %></li><%
       end %>
+      <% (students_pre - students_pre_first).each do |s| %>
+        <li class="friends-expand"><%= link_to (image_tag "https://graph.facebook.com/"+s.uid.to_s+"/picture",
+                                    :alt => s.name),
+                        user_path(s),
+                        'tooltip' => s.name %></li><%
+      end %>
       </ul>
-      <span class="expand">see all</span>
+      <% if students_pre.count >= 10 %><span class="expand">see all</span><% end %>
     </div><%
     end
   end %>

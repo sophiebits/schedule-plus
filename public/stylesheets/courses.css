@@ -169,11 +169,14 @@ dl#course-info dd {
 }
 .facebox {
   position:relative;
-  width:615px; height:50px;
+  width:610px; height:50px;
   padding:10px 0;
   background:transparent url('/images/eee-bg.gif');
   border:1px solid #ddd;
   border-width:1px 0;
+}
+.facebox .friends-expand {
+  display:none;
 }
 .facebox .expand {
   position:absolute;
