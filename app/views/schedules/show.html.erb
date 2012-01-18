@@ -97,11 +97,11 @@ $(function(){
           <%= text_field_tag :scheduleman_url, nil, :placeholder => 'scheduleman.org/schedules/cTUJ2tAnlw' %>
           <input type="hidden" name="schedule_id" value="<%= @schedule.id %>" />
           <% end %>
-          <span id="form-or">Import from ScheduleMan OR</span>
+          <span id="form-or">OR</span>
         <% end %>
         <%= form_tag schedule_selections_path(@schedule), :id => 'add-course', :method => :post, :remote => true do %>
         <%= submit_tag "Add" %>
-        <%= text_field_tag :search, nil, :placeholder => 'Add a Course', :autocomplete => 'off' %>
+        <%= text_field_tag :search, nil, :placeholder => 'Add a Course (99-101B, 76101, ...)', :autocomplete => 'off' %>
         <ul id="add-suggestions">
         </ul>
         <div class="clear"></div>
