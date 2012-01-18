@@ -75,7 +75,7 @@
           mutuals = []
         end
         # TODO on hover show actual courses
-         %><%= mutuals.length %> mutual courses</span>
+         %><%= mutuals.length %> mutual course<%= s if mutuals.length == 1 %></span>
         <span class="friend-status"><%= friend.status %></span>
       </a>
     </li><% 
