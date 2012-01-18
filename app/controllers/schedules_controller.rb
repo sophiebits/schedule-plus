@@ -20,6 +20,7 @@ class SchedulesController < ApplicationController
     if !user_signed_in?
       redirect_to root_path
     else
+      Rails.cache.clear
       semester_id = (params[:semester] || current_semester.id).to_i
       @schedule = current_user.schedules.create(:semester_id => semester_id)
       primary = current_user.schedules.select{|sched| sched.semester_id == semester_id}.length == 1
