@@ -82,6 +82,26 @@
 end 
 %>
   </ul>
+<% if @curr_friends.length < 10 %>
+<script>
+$(function(){
+	$('#facebook-share-notify a').click(function(e) {
+				e.preventDefault();
+				FB.ui({ method:'feed',
+					name:"schedule+",
+					picture:'http://scheduleplus.org/images/schedule-plus-logo-square.jpg',
+					description:'schedule+ connects you to your Carnegie Mellon friends on Facebook by matching your planned course schedules. See which courses are most common among your friends, or find out which of your friends is free for a lunchtime get-together.',
+					message:"I'm now using schedule+ to share my CMU schedule with friends. Check it out!"
+				});
+				return false;
+	});
+});
+</script>
+<span id="facebook-share-notify">
+You have <%= @curr_friends.length %> friends currently using schedule+ this
+semester. <a>Share schedule+ on facebook</a> and invite your friends to join!
+</span>
+<% end %>
 <% else %>
 <% # TODO say something about inviting some friends to use schedule+ %>
 <% end %>
