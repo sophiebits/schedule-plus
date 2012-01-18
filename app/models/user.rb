@@ -60,6 +60,10 @@ class User < ActiveRecord::Base
 
 ###############################################################################
 
+  def friends_with?(user)
+    self.friends.include? user
+  end
+
   # true if user is in the course
   def in_course?(course)
     main_schedule.course_selections.map(&:course).each do |my_course|
