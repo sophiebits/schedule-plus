@@ -28,6 +28,7 @@ end %><%
 content_for :javascript_includes do %><%= 
   javascript_include_tag "calendar.js" %><% 
 end %>
+<% if user_signed_in? %>
 <script>
 $(function(){
 	$('.fb-share').click(function(e) {
@@ -43,6 +44,7 @@ $(function(){
 	});
 });
 </script>
+<% end %>
 <div id="page-content" class="schedule">
   <div id="content-header">
     <div class="container"><% 
