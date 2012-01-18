@@ -73,7 +73,17 @@ class SchedulesController < ApplicationController
 
   def import
     @schedule = Schedule.find(params[:schedule_id])
-    if !params[:scheduleman_url].empty? && !@schedule.nil?
+    
+    if params[:upload]
+      # Parse uploaded .ics file
+      file = params[:upload][:uploaded_file].tempfile
+      parsed = Parser.parseSIO(file, @schedule)   
+ 
+      # store imported schedule id in session var to retrieve after oauth
+      #session[:imported] = parsed[:schedule].id
+ 
+      #redirect_to '/schedules/' + session[:imported].to_s
+    elsif !params[:scheduleman_url].empty? && !@schedule.nil?
       Parser.parseScheduleman(params[:scheduleman_url], @schedule)
     end
     respond_to do |format|
