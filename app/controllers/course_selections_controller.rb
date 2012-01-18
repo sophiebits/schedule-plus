@@ -33,7 +33,8 @@ class CourseSelectionsController < ApplicationController
         @selection = schedule.add_course(params[:id])
       end
     end
-    
+    @no_selections = schedule.course_selections.empty?
+
     respond_to do |format|
       format.html { redirect_to schedule_path(params[:schedule_id]) }
       format.js

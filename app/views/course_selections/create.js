@@ -19,3 +19,6 @@
   for (var i = 0; i < days.length; ++i)
     Calendar.layoutDay($('#main-schedule li.' + days[i] + ' .courses li'));
 <% end %>
+<% if !@no_selections %>
+$('#import-scheduleman, #form-or').slideUp();
+<% end %>

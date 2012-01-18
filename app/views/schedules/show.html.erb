@@ -87,17 +87,17 @@ $(function(){
       <span id="schedule-semester"><%= @schedule.semester.name %></span>
       <% if editable %>
         <% if @schedule.empty? %>
-          <%= form_for(:upload, :url => {:action=>'import', :controller => 'schedules'}, :html=> {:multipart=>true}) do |f| %>
+          <!--<%= form_for(:upload, :url => {:action=>'import', :controller => 'schedules'}, :html=> {:multipart=>true}) do |f| %>
             <%= f.file_field :uploaded_file %>
             <%= f.submit "upload" %>
           <input type="hidden" name="schedule_id" value="<%= @schedule.id %>" />
-          <% end %>
+          <% end %>-->
           <%= form_tag '/schedules-import', :id => 'import-scheduleman', :method => :post do %>
           <%= submit_tag "Add" %>
           <%= text_field_tag :scheduleman_url, nil, :placeholder => 'scheduleman.org/schedules/cTUJ2tAnlw' %>
           <input type="hidden" name="schedule_id" value="<%= @schedule.id %>" />
           <% end %>
-          <span id="form-or">OR</span>
+          <span id="form-or">Import from ScheduleMan OR</span>
         <% end %>
         <%= form_tag schedule_selections_path(@schedule), :id => 'add-course', :method => :post, :remote => true do %>
         <%= submit_tag "Add" %>
