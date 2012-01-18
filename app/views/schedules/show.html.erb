@@ -34,7 +34,7 @@ $(function(){
 	$('.fb-share').click(function(e) {
 				e.preventDefault();
 				FB.ui({ method:'feed',
-					name:"<%= current_user.first_name %>'s <%= @schedule.semester.name %> Schedule",
+					name:"<%= @schedule.user.first_name %>'s <%= @schedule.semester.name %> Schedule",
 					link:'http://scheduleplus.org/schedules/<%= @schedule.url %>',
 					picture:'http://scheduleplus.org/images/schedule-plus-logo-square.jpg',
 					description:'schedule+ connects you to your Carnegie Mellon friends on Facebook by matching your planned course schedules. See which courses are most common among your friends, or find out which of your friends is free for a lunchtime get-together.',
