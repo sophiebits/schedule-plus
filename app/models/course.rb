@@ -60,18 +60,23 @@ class Course < ActiveRecord::Base
     instructors.uniq.compact.join(", ")
   end
 
-  def students(semester=nil, user=nil)
+  def students(semester=nil, user=nil, option="all")
+    # option can be "all", "friends", or "others"
     if semester
-      cs = Course.find_by_number_and_semester_id(number, semester.id)
-                 .try(:course_selections) || []
+      cs = Course.find_by_number_and_semester_id(number, semester.id).try(:course_selections) || []
     else
       cs = Course.find_all_by_number(number).map(&:course_selections).flatten
     end
     students = cs.map(&:schedule).select(&:primary).map(&:user)
+    if option == "friends"
+      students = students.select {|s| user.friends_with? s}
+    elsif option == "others"
+      students = students.select {|s| !user.friends_with? s}
+    end
     if user.nil?
       students
     else
-      students.sort_by {|u| [(u != user).to_s, (!user.friends.include? u).to_s, u.first_name, u.last_name] }
+      students.sort_by {|u| [(u != user).to_s, (!user.friends_with? u).to_s, u.first_name, u.last_name] }
     end
   end
   

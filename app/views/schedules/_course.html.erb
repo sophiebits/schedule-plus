@@ -23,11 +23,10 @@ editable = user_signed_in? && current_user == cs.schedule.user
   <span class="units"><%= cs.course.units %> units</span>
   <span class="name"><%= cs.name %></span><%
 if user_signed_in? %>
-  <div class="friends"><% 
-  @semester_friends ||= current_user.friends.select {|f| f.active?(@semester) }
+  <div class="friends"><%
   students = cs.course.students(@semester) 
-  you = students.delete(current_user) 
-  friends = students & @semester_friends
+  friends = cs.course.students(@semester, current_user, "friends")
+  you = students.delete(current_user)
 
   # FIXME THIS IS SO UGLY
   # FIXME HELP HELP HELPER? HELP
