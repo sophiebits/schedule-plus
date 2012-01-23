@@ -582,7 +582,7 @@ h1#schedule-user a {
   color:#aaa;
   padding:5px;
 }
-.monday, .tuesday, .wednesday, .thursday, .friday {
+.sunday, .monday, .tuesday, .wednesday, .thursday, .friday, .saturday {
   float:left;
   position:relative;
   height:100%;

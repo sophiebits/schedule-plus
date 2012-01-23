@@ -15,9 +15,9 @@
   Calendar.addCourse(course);
   $('#add-course input[type=text]').val('');
   $('#total-units').html('Total: <%= @selection.schedule.units %> units');
-  var days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
+  var days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
   for (var i = 0; i < days.length; ++i)
-    Calendar.layoutDay($('#main-schedule li.' + days[i] + ' .courses li'));
+    Calendar.layoutDay($('#main-schedule li.' + days[i]+ ' .courses li'));
 <% end %>
 <% if !@no_selections %>
 $('#import-scheduleman, #form-or').slideUp();
