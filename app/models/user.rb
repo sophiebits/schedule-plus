@@ -80,21 +80,25 @@ class User < ActiveRecord::Base
     current_time = Time.now.in_time_zone
     current_time_in_min = current_time.hour*60 + current_time.min
     current_day = %w(U M T W R F S)[current_time.wday]
+    
+    cs = self.main_schedule.course_selections
 
-    course_selections = self.main_schedule.course_selections.includes(
-      :section => [:scheduled_times, :lecture => :scheduled_times]).where('scheduled_times.days ' + Rails.application.config.like_operator + ' ?',
-      "%#{current_day}%")
-
-    current_course_selection = course_selections.where(
-      'scheduled_times.begin <= ? AND scheduled_times.end >= ?',
-      current_time_in_min, current_time_in_min).first
-
+    course_selection_section = cs.includes(
+      :section => [:scheduled_times]).where('scheduled_times.days ' + Rails.application.config.like_operator + ' ?',
+      "%#{current_day}%").where('scheduled_times.begin <= ? AND scheduled_times.end >= ?', current_time_in_min, current_time_in_min).first
+    course_selection_lecture = cs.includes(
+      :section => [:lecture => :scheduled_times]).where('scheduled_times.days ' + Rails.application.config.like_operator + ' ?',
+      "%#{current_day}%").where('scheduled_times.begin <= ? AND scheduled_times.end >= ?', current_time_in_min, current_time_in_min).first
+      
     number = ''
     section = ''
 
-    if current_course_selection
-      number = current_course_selection.section.course.number
-      section = current_course_selection.section.letter
+    if course_selection_section
+      number = course_selection_section.section.course.number
+      section = course_selection_section.section.letter
+    elsif course_selection_lecture
+      number = course_selection_lecture.section.course.number
+      section = 'Lec' + course_selection_lecture.section.lecture.number.to_s
     end
 
     if number == ''
