@@ -106,13 +106,17 @@ var Calendar = {
     }
     
     function place(e) {
-      var dayss = $.trim(e.find('.days').html()).split('<br>');
-      var times = $.trim(e.find('.times').html()).split('<br>');
-      var locs = $.trim(e.find('.locations').html()).split('<br>');
+      var dayss = $.trim(e.find('.days').html()).split(/<br>/i);
+      var times = $.trim(e.find('.times').html()).split(/<br>/i);
+      var locs = $.trim(e.find('.locations').html()).split(/<br>/i);
 
       var day_map = { "M":"monday","T":"tuesday","W":"wednesday","R":"thursday","F":"friday" };
 
-      for (var i = 0; i < dayss.length - 1; ++i) {
+      for (var i = 0; i < dayss.length; ++i) {
+        if (dayss[i].length == 0) {
+          continue;
+        }
+
         var days = dayss[i].split("");
         for (var j = 0; j < days.length; ++j) {
           var start = strToMin(times[i].substr(0, times[i].indexOf("-")));
@@ -134,7 +138,7 @@ var Calendar = {
     place(lecture);
   },
 
-  delete: function(d) {
+  "delete": function(d) {
     Calendar.used_colors ^= 1 << $('#schedule').find(d).attr('color-index');
     $(d).fadeOut().remove();
     var days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
