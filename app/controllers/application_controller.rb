@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   # Always redirect users to scheduleplus.org if they try to access through the heroku site
   # before_filter :check_uri
   def check_uri
-	  redirect_to 'http://scheduleplus.org' if /heroku/.match(request.host)
+    redirect_to 'http://scheduleplus.org' if /heroku/.match(request.host)
   end
 
   helper_method :current_semester, :current_user, :user_signed_in?

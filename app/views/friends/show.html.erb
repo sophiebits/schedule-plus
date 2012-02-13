@@ -1,13 +1,13 @@
 <% content_for :content do %>
 <div class="main-aside">
  <!--<li class="nav-schedules">All Schedules</li>-->
-	<ul id="friends">
-	  <% @friends.each do |friend| %>
-	  <li><a href="/friends/<%= friend.id %>">
+  <ul id="friends">
+    <% @friends.each do |friend| %>
+    <li><a href="/friends/<%= friend.id %>">
       <img src="http://graph.facebook.com/<%= friend.uid %>/picture" /><span class="name"><%= friend.name %></span>
       <span class="status"><%= friend.status %></span>
     </a></li>
-	  <% end %>  
+    <% end %>  
   </ul>
 </div>
 <div id="article" class="friends">

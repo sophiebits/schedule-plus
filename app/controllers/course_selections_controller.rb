@@ -65,8 +65,8 @@ class CourseSelectionsController < ApplicationController
   # parses the search query into [course name/number, section letter]
   # (section letter is nil if not specified)
   def parse_search(search)
-  	if search.length >= 4
-  		# get the last 2 characters in the search
+    if search.length >= 4
+      # get the last 2 characters in the search
       section = search[-2,2]
       if is_letter?(section[1]) and (section[0] == ' ' or is_number?(section[0]))
         # 1-letter section: first char is a space/number; second char is a letter
@@ -76,17 +76,17 @@ class CourseSelectionsController < ApplicationController
         return [search[0..-3], section]
       end
     end
-  	return [search, nil]
+    return [search, nil]
   end
   
   private
 
   def is_letter?(letter)
-  	letter[/[a-zA-Z]/] == letter
+    letter[/[a-zA-Z]/] == letter
   end
   
   def is_number?(number)
-  	number[/[0-9]/] == number
+    number[/[0-9]/] == number
   end
 
 end

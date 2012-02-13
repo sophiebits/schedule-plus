@@ -6,26 +6,26 @@ require 'openssl'
 require 'hpricot'
 
 def getsection(sec)
-	if sec.include? 'Lec'
-		if sec == 'Lec'
-			return '1'
-		end
-		return sec[-1,1]
-	end
-	sec
+  if sec.include? 'Lec'
+    if sec == 'Lec'
+      return '1'
+    end
+    return sec[-1,1]
+  end
+  sec
 end
 
 class Parser < ActiveRecord::Base
 
-	# creates a course selection with number and section letter for schedule in
-	# response[:schedule]
+  # creates a course selection with number and section letter for schedule in
+  # response[:schedule]
   def self.create_course_selection(number, section_letter, response)
-		begin
-			section = Course.find_by_number_and_semester_id(number, response[:schedule].semester.id).sections.find_by_letter(section_letter)
-		rescue
-			section = nil
-		end
-		if !section
+    begin
+      section = Course.find_by_number_and_semester_id(number, response[:schedule].semester.id).sections.find_by_letter(section_letter)
+    rescue
+      section = nil
+    end
+    if !section
       Logger.new(STDOUT).info(number + ' ' + section_letter + ' does not exist in db!')
       response[:warnings].push(number)
       return
@@ -39,7 +39,7 @@ class Parser < ActiveRecord::Base
     
     response = Hash.new
     response[:warnings] = []
-		response[:schedule] = schedule
+    response[:schedule] = schedule
      
     @components.first.events.each do |course| 
       summary = course.summary.split('::')[1].strip.split(' ')
@@ -94,12 +94,12 @@ class Parser < ActiveRecord::Base
     @components.first.events.each do |course| 
       summary = course.summary.delete('"').split(' ')
       if summary.include? "Lec"
-      	next
+        next
       end
-			number = summary[-2]
-			section_letter = getsection(summary[-1])
-			
-			self.create_course_selection(number, section_letter, response)
+      number = summary[-2]
+      section_letter = getsection(summary[-1])
+      
+      self.create_course_selection(number, section_letter, response)
     end
     
     # Need to check for TBA courses in scheduleman
@@ -124,15 +124,15 @@ class Parser < ActiveRecord::Base
     end
     
     self.check_errors(response)
-	end
-	
-	def self.check_errors(response)
-		p response[:schedule].units.split('-')[0].to_s
-		# Check that schedule doesn't have over 100 units
-		if response[:schedule].units.split('-')[0].to_f > 100.0
-		  response[:error] = "Schedule is too large (total units are over 100)"
-		end
-		
-		response
+  end
+  
+  def self.check_errors(response)
+    p response[:schedule].units.split('-')[0].to_s
+    # Check that schedule doesn't have over 100 units
+    if response[:schedule].units.split('-')[0].to_f > 100.0
+      response[:error] = "Schedule is too large (total units are over 100)"
+    end
+    
+    response
   end
 end

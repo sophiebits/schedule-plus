@@ -39,7 +39,7 @@ module AcmSchedule
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
 
-		# Set the time zone for Eastern Time
-		config.time_zone = 'Eastern Time (US & Canada)'
+    # Set the time zone for Eastern Time
+    config.time_zone = 'Eastern Time (US & Canada)'
   end
 end

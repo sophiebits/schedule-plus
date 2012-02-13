@@ -128,11 +128,11 @@ class Schedule < ActiveRecord::Base
   end
   
   def generate_name
-  	if user.nil?
-  		self.name = 'New Schedule'
-  	else
-  		self.name = 'Schedule ' + (user.schedules.count + 1).to_s
-  	end
-	end
-	
+    if user.nil?
+      self.name = 'New Schedule'
+    else
+      self.name = 'Schedule ' + (user.schedules.count + 1).to_s
+    end
+  end
+  
 end

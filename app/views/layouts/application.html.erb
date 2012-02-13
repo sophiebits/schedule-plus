@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta name="title" content="<%= 
+  <meta name="title" content="<%= 
     if content_for? :title then 
       yield(:title)
     else
@@ -15,20 +15,20 @@
     else
       'schedule+' 
     end %></title>
-	<link rel="icon" type="image/ico" href="/favico.ico" />
+  <link rel="icon" type="image/ico" href="/favico.ico" />
   <link href='/stylesheets/nunito.css' rel='stylesheet' type='text/css' />
-	<%= stylesheet_link_tag "application", :media => "all" %>
-	<%= stylesheet_link_tag "style", :media => "all" %>
-	<%= controller_stylesheet_link_tag %>
+  <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= stylesheet_link_tag "style", :media => "all" %>
+  <%= controller_stylesheet_link_tag %>
   <%= javascript_include_tag :defaults %>
   <%= yield :javascript_includes %>
-	<%= csrf_meta_tag %>
-	<%= yield(:head) %>
+  <%= csrf_meta_tag %>
+  <%= yield(:head) %>
 </head>
 <body>
 <!-- BEGIN FB -->
   <div id="fb-root"></div>
-	<script src="http://connect.facebook.net/en_US/all.js"></script>
+  <script src="http://connect.facebook.net/en_US/all.js"></script>
   <script>
     FB.init({
       appId: 
@@ -36,7 +36,7 @@
             //'119881658106353',
       cookie: true,
       xfbml: true,
-			oauth: true
+      oauth: true
     });
   </script>
 <!-- END FB -->
@@ -53,8 +53,8 @@
 <!-- END UserVoice Feedback Box -->
 <%= render :partial => 'partials/header' %>
 <!--<% flash.each do |name, msg| %>
-	<%= content_tag :div, msg, :id => "flash_#{name}" %>
-	<% end %>-->
+  <%= content_tag :div, msg, :id => "flash_#{name}" %>
+  <% end %>-->
 <%= yield %>
 <div id="page-footer" class="container">
   <a href="http://ACMatCMU.org">

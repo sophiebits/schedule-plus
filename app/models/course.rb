@@ -19,10 +19,10 @@ class Course < ActiveRecord::Base
       search = search.gsub('-', '').strip
       result = where("REPLACE(number, '-', '') " + Rails.application.config.like_operator + " ?", "%#{search}%")
       if result.empty?
-      	terms = search.split
-      	result = terms.inject(scoped) do |combined_scope, term|	
-      		combined_scope.where("name " + Rails.application.config.like_operator + " ?", "%#{term}%")
-      	end
+        terms = search.split
+        result = terms.inject(scoped) do |combined_scope, term| 
+          combined_scope.where("name " + Rails.application.config.like_operator + " ?", "%#{term}%")
+        end
       end
       return result
     else

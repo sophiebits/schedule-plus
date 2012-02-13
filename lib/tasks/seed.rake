@@ -1,13 +1,13 @@
 namespace :seed do
   desc "Seed the database with SoC information"
   task :soc => :environment do
-  	print "Seeding SoC..."
-  	if ENV['semester'].nil?
-  	  Seeder.seed_soc(nil)
-  	else
-  	  Seeder.seed_soc(Semester.where("name " + Rails.application.config.like_operator + " ?", "%#{ENV['semester']}%").first)
-  	end
-  	puts "done!"
+    print "Seeding SoC..."
+    if ENV['semester'].nil?
+      Seeder.seed_soc(nil)
+    else
+      Seeder.seed_soc(Semester.where("name " + Rails.application.config.like_operator + " ?", "%#{ENV['semester']}%").first)
+    end
+    puts "done!"
   end
   
   desc "Seed the database with semester information"

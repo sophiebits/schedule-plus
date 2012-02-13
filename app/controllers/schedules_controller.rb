@@ -61,11 +61,11 @@ class SchedulesController < ApplicationController
   end
   
   def rename
-  	@schedule = Schedule.find(params[:schedule_id]) or not_found
-  	if params[:new_name]
-  		@schedule.rename(params[:new_name])
-  	end
-  	respond_to do |format|
+    @schedule = Schedule.find(params[:schedule_id]) or not_found
+    if params[:new_name]
+      @schedule.rename(params[:new_name])
+    end
+    respond_to do |format|
       format.html { redirect_to '/schedules/' }
       format.js
     end

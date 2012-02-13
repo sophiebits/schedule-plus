@@ -1,11 +1,11 @@
 <script>
 $(function() {
-	$('li .schedule .inner').click(function(e){
-		// don't open schedule link if clicked button
-		if (!$(e.target).is('input') && !$(e.target).is('a')) {
-			location.href = '/schedules/' + $(this).parent().attr('id');
-		}
-	});
+  $('li .schedule .inner').click(function(e){
+    // don't open schedule link if clicked button
+    if (!$(e.target).is('input') && !$(e.target).is('a')) {
+      location.href = '/schedules/' + $(this).parent().attr('id');
+    }
+  });
 });
 </script>
 <div id="page-content" class="schedules">
