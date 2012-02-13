@@ -41,7 +41,7 @@ var Calendar = {
      */
     $('#schedule .course, #calendar .event').live({
       click: function(event) {
-        var number = $(this).find('.number').text().trim();
+        var number = $.trim($(this).find('.number').text());
         var open = !$(this).hasClass('open');
         $('#schedule').find('.sections').stop(true,true).slideUp();
         $('#schedule').find('.friends .facebox, .friends .section-header').stop(true,true).slideUp();
@@ -53,7 +53,7 @@ var Calendar = {
       },
       mouseenter: function() {
         $('.highlight').removeClass('highlight');
-        $('.course'+$(this).find('.number').text().trim()).addClass('highlight');
+        $('.course'+$.trim($(this).find('.number').text())).addClass('highlight');
       },
       mouseleave: function() {
         $('.highlight').removeClass('highlight');
@@ -66,7 +66,7 @@ var Calendar = {
       click: function(event) {
         event.stopPropagation();
         event.preventDefault();
-        var number = $(this).closest('.course').find('.number').text().trim();
+        var number = $.trim($(this).closest('.course').find('.number').text());
         var open = !$(this).closest('.course').hasClass('open');
         $('#schedule').find('.sections').stop(true,true).slideUp();
         $('#schedule').find('.friends .facebox, .friends .section-header').stop(true,true).slideUp();
@@ -205,7 +205,7 @@ var Calendar = {
     
     var section = $(course).find('.selected');
     var lecture = $(section).prevAll('.lecture').first(); 
-    var number = $(course).find('.number').text().trim();
+    var number = $.trim($(course).find('.number').text());
 
     function has_weekend(e) 
     {
@@ -231,7 +231,7 @@ var Calendar = {
 
     $(course).find('.friends .section-header, .friends .facebox').hide();
 
-    var number = $(course).find('.number').text().trim();
+    var number = $.trim($(course).find('.number').text());
 
     var section = $(course).find('.selected');
     var lecture = $(section).prevAll('.lecture').first();
@@ -245,17 +245,21 @@ var Calendar = {
     }
     
     function place(e) {
-      var dayss = $.trim(e.find('.days').html()).split('<br>');
-      
-      var times = $.trim(e.find('.times').html()).split('<br>');
-      var locs = $.trim(e.find('.locations').html()).split('<br>');
+      var dayss = $.trim(e.find('.days').html()).split(/<br>/i);
+
+      var times = $.trim(e.find('.times').html()).split(/<br>/i);
+      var locs = $.trim(e.find('.locations').html()).split(/<br>/i);
 
       var section = $.trim(e.find('.lecture-num').html()) +
                     $.trim(e.find('.section-ltr').html());
 
       var day_map = { "U":"sunday", "M":"monday","T":"tuesday","W":"wednesday","R":"thursday","F":"friday", "S":"saturday"};
 
-      for (var i = 0; i < dayss.length - 1; ++i) {
+      for (var i = 0; i < dayss.length; ++i) {
+        if (dayss[i].length == 0) {
+          continue;
+        }
+
         var days = dayss[i].split("");
         for (var j = 0; j < days.length; ++j) {
           //If there is a saturday or sunday class, morph to weekend view
@@ -283,7 +287,7 @@ var Calendar = {
     place(lecture);
   },
 
-  delete: function(d) {
+  "delete": function(d) {
     Calendar.used_colors ^= 1 << $('#schedule').find(d).attr('color-index');
     $(d).fadeOut().remove();
     var days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday','saturday'];
