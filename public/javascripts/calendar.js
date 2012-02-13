@@ -90,9 +90,9 @@ var Calendar = {
 
     //$('#calendar').before('<input type="button" value="show weekend view" onclick="weekend()"/>');
     //$('#calendar').before('<input type="button" value="show week view" onclick="normal()"/>');
-    $('#calendar').append('<li><ul id="times"></ul></li>');
+    $('#calendar').append('<li id="times"><ul></ul></li>');
     for (var i = Calendar.start_time; i <= Calendar.end_time; ++i)
-      $('#times').append('<li style="height:'
+      $('#times ul').append('<li style="height:'
         + (2*Calendar.half_height) + 'px;top:'
         + ((i-Calendar.start_time)*2*Calendar.half_height) + 'px"> ' 
         + ((i - 1) % 12 + 1) + (parseInt(i / 12) ? ' PM' : ' AM')
@@ -277,7 +277,7 @@ var Calendar = {
             + '<span class="location">' + locs[i] + '</span>'
             + '</li>').css({
               'opacity': 0,
-              'border-left-color': $(course).css("border-left-color"),
+              'border-left-color': $(course).css("border-left-color")
             }).appendTo('#calendar .' + day_map[days[j]] + ' .courses');
         }
       }
